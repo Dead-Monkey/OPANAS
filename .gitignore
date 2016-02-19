@@ -1,0 +1,11 @@
+node_modules
+bower_components
+
+app/libs
+dist
+.tmp
+
+.idea
+
+*.log
+*~
