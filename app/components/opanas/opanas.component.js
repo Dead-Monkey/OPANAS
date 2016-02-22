@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../foodPage/food.component', '../sportPage/sport.component', '../restPage/rest.component', '../startPage/start.component'], function(exports_1) {
+System.register(['angular2/core', 'angular2/router', '../foodPage/food.component', '../sportPage/sport.component', '../restPage/rest.component', '../startPage/start.component', '../../shared/services/translate/translate.service'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,7 +8,7 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, food_component_1, sport_component_1, rest_component_1, start_component_1;
+    var core_1, router_1, food_component_1, sport_component_1, rest_component_1, start_component_1, translate_service_1;
     var OpanasComponent;
     return {
         setters:[
@@ -29,19 +29,34 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
             },
             function (start_component_1_1) {
                 start_component_1 = start_component_1_1;
+            },
+            function (translate_service_1_1) {
+                translate_service_1 = translate_service_1_1;
             }],
         execute: function() {
             OpanasComponent = (function () {
-                function OpanasComponent() {
+                function OpanasComponent(_translator) {
+                    this._translator = _translator;
                 }
+                //config app
+                OpanasComponent.prototype.ngOnInit = function () {
+                    this._translator.setLanguage('ru');
+                };
+                //replace this 2 userPage;
+                OpanasComponent.prototype.goEn = function () {
+                    this._translator.setLanguage('en');
+                };
+                OpanasComponent.prototype.goRu = function () {
+                    this._translator.setLanguage('ru');
+                };
                 OpanasComponent = __decorate([
                     core_1.Component({
                         selector: 'opanas-app',
                         directives: [router_1.ROUTER_DIRECTIVES],
-                        providers: [router_1.ROUTER_PROVIDERS],
-                        pipes: [],
-                        styles: ['.primary{color:red}'],
-                        template: "\n      <router-outlet></router-outlet>\n  <nav>\n     <a [routerLink]=\"['Food']\">FOOD</a>\n     <a [routerLink]=\"['Sport']\">SPORT</a>\n     <a [routerLink]=\"['Rest']\">REST</a>\n  </nav>\n    "
+                        providers: [router_1.ROUTER_PROVIDERS, translate_service_1.TranslateService],
+                        pipes: [translate_service_1.TranslatePipe],
+                        styles: [".primary{color:red;}"],
+                        template: "\n    <div (click)=\"goEn()\">english</div>\n    <div (click)=\"goRu()\">russian</div>\n      <router-outlet></router-outlet>\n  <nav>\n     <a [routerLink]=\"['Food']\">{{\"opanas.router.food\" | translate}}</a>\n     <a [routerLink]=\"['Sport']\">{{\"opanas.router.sport\" | translate}}</a>\n     <a [routerLink]=\"['Rest']\">{{\"opanas.router.rest\" | translate}}</a>\n  </nav>\n    "
                     }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
@@ -50,7 +65,7 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [translate_service_1.TranslateService])
                 ], OpanasComponent);
                 return OpanasComponent;
             })();
