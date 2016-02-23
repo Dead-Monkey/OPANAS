@@ -1,27 +1,34 @@
 import {Component, OnInit} from 'angular2/core';
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
-import {FoodComponent} from '../foodPage/food.component';
-import {SportComponent} from '../sportPage/sport.component';
-import {RestComponent} from '../restPage/rest.component';
-import {StartComponent} from '../startPage/start.component';
+import {FoodComponent} from '../food-page/food.component';
+import {SportComponent} from '../sport-page/sport.component';
+import {RestComponent} from '../rest-page/rest.component';
+import {StartComponent} from '../start-page/start.component';
+import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 
 @Component({
     selector: 'opanas-app',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, SideBar],
     providers: [ROUTER_PROVIDERS, TranslateService],
     pipes: [TranslatePipe],
-    styles: [`.primary{color:red;}`],
+    styles: [`
+      .sideBar {
+    color: red;
+  }
+      `],
     template: `
-    <div (click)="goEn()">english</div>
-    <div (click)="goRu()">russian</div>
-      <router-outlet></router-outlet>
-  <nav>
-     <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
-     <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
-     <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
-  </nav>
+<fm-side-bar [isOpen]="sideBarIsOpen"></fm-side-bar>
+<div (click)="goEn()">english</div>
+<div (click)="goRu()">russian</div>
+<div (click)="sideBarToggle()">sideBar</div>
+<router-outlet></router-outlet>
+<nav>
+  <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
+  <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
+  <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
+</nav>
     `
 })
 
@@ -34,7 +41,13 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 ])
 export class OpanasComponent implements OnInit {
 
+    private sideBarIsOpen: boolean = false;
+
     constructor(private _translator: TranslateService) { }
+
+    sideBarToggle() {
+        this.sideBarIsOpen = !this.sideBarIsOpen;
+    }
 
     //config app
     ngOnInit() {
