@@ -45,9 +45,6 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                 OpanasComponent.prototype.sideBarToggle = function () {
                     this.sideBarIsOpen = !this.sideBarIsOpen;
                 };
-                OpanasComponent.prototype.bla = function (e) {
-                    console.log(e);
-                };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
                     //translator config

@@ -3,7 +3,7 @@ import {Injectable} from 'angular2/core';
 @Injectable()
 export class TranslateService {
 
-    private defaultLenguage: string;
+    private defaultLanguage: string;
     private currentLanguage: string;
     private supportLanguages: Object;
     private keys: Object;
@@ -14,7 +14,7 @@ export class TranslateService {
             'supportLang': 'is not suport language. We are support:',
             'badKey': 'does not exist key!',
             'translate': '!translate error! :-(',
-            'currentLanguage':'please set currentLanguage'
+            'currentLanguage': 'please set currentLanguage'
         }
     }
 
@@ -24,13 +24,13 @@ export class TranslateService {
     }
 
     getDefaultLanguage(): string {
-        return this.defaultLenguage;
+        return this.defaultLanguage;
     }
 
     setDefaultLanguage(lang: string) {
         for (let key in this.supportLanguages) {
             if (this.supportLanguages.hasOwnProperty(lang)) {
-                this.defaultLenguage = lang;
+                this.defaultLanguage = lang;
                 return this.currentLanguage;
             }
         }
@@ -74,9 +74,12 @@ export class TranslateService {
             for (let key in this.keys[this.currentLanguage]) {
                 if (this.keys[this.currentLanguage].hasOwnProperty(word)) {
                     res = this.keys[this.currentLanguage][word];
-                } else if (this.defaultLenguage) {
-                    if (this.keys[this.defaultLenguage].hasOwnProperty(word)) {
-                        res = this.keys[this.defaultLenguage][word];
+                } else if (this.defaultLanguage) {
+                    if (this.keys[this.defaultLanguage].hasOwnProperty(word)) {
+                        res = this.keys[this.defaultLanguage][word];
+                    } else {
+                        console.log(`${word} - ${this.messages.error.badKey}`);
+                        res = `${this.messages.error.translate}`;
                     }
                 } else {
                     console.log(`${word} - ${this.messages.error.badKey}`);

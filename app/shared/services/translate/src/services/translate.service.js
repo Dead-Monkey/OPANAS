@@ -32,12 +32,12 @@ System.register(['angular2/core'], function(exports_1) {
                     this.setKeys(this.messages.error.setKeys);
                 }
                 TranslateService.prototype.getDefaultLanguage = function () {
-                    return this.defaultLenguage;
+                    return this.defaultLanguage;
                 };
                 TranslateService.prototype.setDefaultLanguage = function (lang) {
                     for (var key in this.supportLanguages) {
                         if (this.supportLanguages.hasOwnProperty(lang)) {
-                            this.defaultLenguage = lang;
+                            this.defaultLanguage = lang;
                             return this.currentLanguage;
                         }
                     }
@@ -74,9 +74,13 @@ System.register(['angular2/core'], function(exports_1) {
                             if (this.keys[this.currentLanguage].hasOwnProperty(word)) {
                                 res = this.keys[this.currentLanguage][word];
                             }
-                            else if (this.defaultLenguage) {
-                                if (this.keys[this.defaultLenguage].hasOwnProperty(word)) {
-                                    res = this.keys[this.defaultLenguage][word];
+                            else if (this.defaultLanguage) {
+                                if (this.keys[this.defaultLanguage].hasOwnProperty(word)) {
+                                    res = this.keys[this.defaultLanguage][word];
+                                }
+                                else {
+                                    console.log(word + " - " + this.messages.error.badKey);
+                                    res = "" + this.messages.error.translate;
                                 }
                             }
                             else {

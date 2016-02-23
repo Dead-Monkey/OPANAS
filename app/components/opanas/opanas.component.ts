@@ -48,10 +48,6 @@ export class OpanasComponent implements OnInit {
     sideBarToggle() {
         this.sideBarIsOpen = !this.sideBarIsOpen;
     }
-    
-    bla(e){
-      console.log(e);
-    }
 
     //config app
     ngOnInit() {
