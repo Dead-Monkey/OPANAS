@@ -18,14 +18,20 @@ System.register(['angular2/core'], function(exports_1) {
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
+                    this.isOpenChange = new core_1.EventEmitter();
                 }
                 SideBar.prototype.toggle = function () {
-                    this.isOpen = !this.isOpen;
+                    this.isOpen = false;
+                    this.isOpenChange.emit(this.isOpen);
                 };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
                     core_1.Component({
                         selector: 'fm-side-bar',

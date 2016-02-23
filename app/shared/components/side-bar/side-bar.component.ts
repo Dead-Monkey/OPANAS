@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, Output, EventEmitter} from 'angular2/core';
 
 @Component({
     selector: 'fm-side-bar',
@@ -33,9 +33,11 @@ import {Component, Input} from 'angular2/core';
 })
 export class SideBar {
     @Input() isOpen: boolean;
+    @Output() isOpenChange = new EventEmitter();
 
     toggle() {
-        this.isOpen = !this.isOpen;
+        this.isOpen = false;
+        this.isOpenChange.emit(this.isOpen);
     }
 
 }

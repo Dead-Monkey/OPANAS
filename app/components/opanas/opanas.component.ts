@@ -19,7 +19,7 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   }
       `],
     template: `
-<fm-side-bar [isOpen]="sideBarIsOpen"></fm-side-bar>
+<fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
 <div (click)="goEn()">english</div>
 <div (click)="goRu()">russian</div>
 <div (click)="sideBarToggle()">sideBar</div>
@@ -47,6 +47,10 @@ export class OpanasComponent implements OnInit {
 
     sideBarToggle() {
         this.sideBarIsOpen = !this.sideBarIsOpen;
+    }
+    
+    bla(e){
+      console.log(e);
     }
 
     //config app

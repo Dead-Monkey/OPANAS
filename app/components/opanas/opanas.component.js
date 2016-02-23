@@ -45,6 +45,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                 OpanasComponent.prototype.sideBarToggle = function () {
                     this.sideBarIsOpen = !this.sideBarIsOpen;
                 };
+                OpanasComponent.prototype.bla = function (e) {
+                    console.log(e);
+                };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
                     //translator config
@@ -69,7 +72,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         providers: [router_1.ROUTER_PROVIDERS, translate_service_1.TranslateService],
                         pipes: [translate_service_1.TranslatePipe],
                         styles: ["\n      .sideBar {\n    color: red;\n  }\n      "],
-                        template: "\n<fm-side-bar [isOpen]=\"sideBarIsOpen\"></fm-side-bar>\n<div (click)=\"goEn()\">english</div>\n<div (click)=\"goRu()\">russian</div>\n<div (click)=\"sideBarToggle()\">sideBar</div>\n<router-outlet></router-outlet>\n<nav>\n  <a [routerLink]=\"['Food']\">{{\"opanas.router.food\" | translate}}</a>\n  <a [routerLink]=\"['Sport']\">{{\"opanas.router.sport\" | translate}}</a>\n  <a [routerLink]=\"['Rest']\">{{\"opanas.router.rest\" | translate}}</a>\n</nav>\n    "
+                        template: "\n<fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n<div (click)=\"goEn()\">english</div>\n<div (click)=\"goRu()\">russian</div>\n<div (click)=\"sideBarToggle()\">sideBar</div>\n<router-outlet></router-outlet>\n<nav>\n  <a [routerLink]=\"['Food']\">{{\"opanas.router.food\" | translate}}</a>\n  <a [routerLink]=\"['Sport']\">{{\"opanas.router.sport\" | translate}}</a>\n  <a [routerLink]=\"['Rest']\">{{\"opanas.router.rest\" | translate}}</a>\n</nav>\n    "
                     }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
