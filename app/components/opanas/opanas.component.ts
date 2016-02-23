@@ -34,18 +34,45 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 ])
 export class OpanasComponent implements OnInit {
 
-    constructor(private _translator: TranslateService) {}
+    constructor(private _translator: TranslateService) { }
 
     //config app
     ngOnInit() {
-        this._translator.setLanguage('ru');
-    }
 
+        //translator config
+        this._translator.setSupportLanguages(languages);
+        this._translator.setKeys(keysVendor);
+        //basic language of application
+        this._translator.setCurrentLanguage('ru');
+        //default language will be use if current language dont has key. it's an optional.
+        this._translator.setDefaultLanguage('en');
+    }
     //replace this 2 userPage;
     goEn() {
-        this._translator.setLanguage('en');
+        this._translator.setCurrentLanguage('en');
     }
     goRu() {
-        this._translator.setLanguage('ru');
+        this._translator.setCurrentLanguage('ru');
+    }
+}
+
+
+let languages: Object = {
+    'en': 'english',
+    'ru': 'russian'
+};
+
+let keysVendor: Object = {
+
+    'en': {
+        'opanas.router.food': 'food',
+        'opanas.router.sport': 'sport',
+        'opanas.router.rest': 'rest'
+    },
+
+    'ru': {
+        'opanas.router.food': 'еда',
+        'opanas.router.sport': 'спорт',
+        'opanas.router.rest': 'отдых'
     }
 }

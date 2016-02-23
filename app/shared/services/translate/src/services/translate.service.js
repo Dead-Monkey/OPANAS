@@ -9,7 +9,7 @@ System.register(['angular2/core'], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var TranslateService, keysVendor;
+    var TranslateService;
     return {
         setters:[
             function (core_1_1) {
@@ -18,22 +18,76 @@ System.register(['angular2/core'], function(exports_1) {
         execute: function() {
             TranslateService = (function () {
                 function TranslateService() {
-                    this.defaultLenguage = 'en';
-                    this.language = 'en';
-                    this.keys = keysVendor;
+                    this.messages = {
+                        'error': {
+                            'setLanguages': 'you are dont set any languages! :-(',
+                            'setKeys': 'you are dont set any keys! :-(',
+                            'supportLang': 'is not suport language. We are support:',
+                            'badKey': 'does not exist key!',
+                            'translate': '!translate error! :-(',
+                            'currentLanguage': 'please set currentLanguage'
+                        }
+                    };
+                    this.setSupportLanguages(this.messages.error.setLanguages);
+                    this.setKeys(this.messages.error.setKeys);
                 }
-                TranslateService.prototype.setLanguage = function (lang) {
-                    this.language = lang;
-                    return this.language;
+                TranslateService.prototype.getDefaultLanguage = function () {
+                    return this.defaultLenguage;
                 };
-                TranslateService.prototype.getTranslate = function (word) {
-                    var res = '';
-                    for (var key in this.keys[this.language]) {
-                        if (this.keys[this.language].hasOwnProperty(word)) {
-                            res = this.keys[this.language][word];
+                TranslateService.prototype.setDefaultLanguage = function (lang) {
+                    for (var key in this.supportLanguages) {
+                        if (this.supportLanguages.hasOwnProperty(lang)) {
+                            this.defaultLenguage = lang;
+                            return this.currentLanguage;
                         }
                     }
-                    return "" + res;
+                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
+                };
+                TranslateService.prototype.getCurrentLanguage = function () {
+                    return this.currentLanguage;
+                };
+                TranslateService.prototype.setCurrentLanguage = function (lang) {
+                    for (var key in this.supportLanguages) {
+                        if (this.supportLanguages.hasOwnProperty(lang)) {
+                            this.currentLanguage = lang;
+                            return this.currentLanguage;
+                        }
+                    }
+                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
+                };
+                TranslateService.prototype.getSupportLanguages = function () {
+                    return this.supportLanguages;
+                };
+                TranslateService.prototype.setSupportLanguages = function (lang) {
+                    this.supportLanguages = lang;
+                };
+                TranslateService.prototype.getKeys = function () {
+                    return this.keys;
+                };
+                TranslateService.prototype.setKeys = function (keys) {
+                    this.keys = keys;
+                };
+                TranslateService.prototype.getTranslate = function (word) {
+                    var res = "" + this.messages.error.translate;
+                    if (this.currentLanguage) {
+                        for (var key in this.keys[this.currentLanguage]) {
+                            if (this.keys[this.currentLanguage].hasOwnProperty(word)) {
+                                res = this.keys[this.currentLanguage][word];
+                            }
+                            else if (this.defaultLenguage) {
+                                if (this.keys[this.defaultLenguage].hasOwnProperty(word)) {
+                                    res = this.keys[this.defaultLenguage][word];
+                                }
+                            }
+                            else {
+                                console.log(word + " - " + this.messages.error.badKey);
+                                res = "" + this.messages.error.translate;
+                            }
+                        }
+                        return "" + res;
+                    }
+                    console.log(this.messages.error.translate + " :: " + this.messages.error.currentLanguage);
+                    return "" + this.messages.error.translate;
                 };
                 TranslateService = __decorate([
                     core_1.Injectable(), 
@@ -42,18 +96,6 @@ System.register(['angular2/core'], function(exports_1) {
                 return TranslateService;
             })();
             exports_1("TranslateService", TranslateService);
-            keysVendor = {
-                'en': {
-                    'opanas.router.food': 'food',
-                    'opanas.router.sport': 'sport',
-                    'opanas.router.rest': 'food'
-                },
-                'ru': {
-                    'opanas.router.food': 'еда',
-                    'opanas.router.sport': 'спорт',
-                    'opanas.router.rest': 'отдых'
-                }
-            };
         }
     }
 });

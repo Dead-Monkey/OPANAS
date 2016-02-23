@@ -9,7 +9,7 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1, food_component_1, sport_component_1, rest_component_1, start_component_1, translate_service_1;
-    var OpanasComponent;
+    var OpanasComponent, languages, keysVendor;
     return {
         setters:[
             function (core_1_1) {
@@ -40,14 +40,20 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
                 }
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
-                    this._translator.setLanguage('ru');
+                    //translator config
+                    this._translator.setSupportLanguages(languages);
+                    this._translator.setKeys(keysVendor);
+                    //basic language of application
+                    this._translator.setCurrentLanguage('ru');
+                    //default language will be use if current language dont has key. it's an optional.
+                    this._translator.setDefaultLanguage('en');
                 };
                 //replace this 2 userPage;
                 OpanasComponent.prototype.goEn = function () {
-                    this._translator.setLanguage('en');
+                    this._translator.setCurrentLanguage('en');
                 };
                 OpanasComponent.prototype.goRu = function () {
-                    this._translator.setLanguage('ru');
+                    this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
                     core_1.Component({
@@ -70,6 +76,22 @@ System.register(['angular2/core', 'angular2/router', '../foodPage/food.component
                 return OpanasComponent;
             })();
             exports_1("OpanasComponent", OpanasComponent);
+            languages = {
+                'en': 'english',
+                'ru': 'russian'
+            };
+            keysVendor = {
+                'en': {
+                    'opanas.router.food': 'food',
+                    'opanas.router.sport': 'sport',
+                    'opanas.router.rest': 'rest'
+                },
+                'ru': {
+                    'opanas.router.food': 'еда',
+                    'opanas.router.sport': 'спорт',
+                    'opanas.router.rest': 'отдых'
+                }
+            };
         }
     }
 });
