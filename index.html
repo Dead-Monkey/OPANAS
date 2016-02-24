@@ -19,13 +19,13 @@
   <script>
     System.config({
       packages: {
-        build: {
+        dist: {
           format: 'register',
           defaultExtension: 'js'
         }
       }
     });
-    System.import('build/main')
+    System.import('dist/main')
       .then(null, console.error.bind(console));
   </script>
 </head>
