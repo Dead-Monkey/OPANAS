@@ -1,4 +1,6 @@
-System.register(['./src/services/translate.service', './src/pipes/translate.pipe'], function(exports_1) {
+System.register(['./src/services/translate.service', './src/pipes/translate.pipe'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     return {
         setters:[
             function (translate_service_1_1) {

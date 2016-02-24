@@ -1,4 +1,6 @@
-System.register(['angular2/core'], function(exports_1) {
+System.register(['angular2/core'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9,31 +11,31 @@ System.register(['angular2/core'], function(exports_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var RestComponent;
+    var FoodComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            RestComponent = (function () {
-                function RestComponent() {
+            FoodComponent = (function () {
+                function FoodComponent() {
                 }
-                RestComponent = __decorate([
+                FoodComponent = __decorate([
                     core_1.Component({
-                        selector: 'op-rest',
+                        selector: 'op-food',
                         directives: [],
                         providers: [],
                         pipes: [],
-                        styles: [],
-                        template: "\n    <h1 class=\"primary\">REST</h1>\n    "
+                        styles: ['.primary{color:blue}'],
+                        template: "\n    <h1 class=\"primary\">FOOD</h1>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
-                ], RestComponent);
-                return RestComponent;
-            })();
-            exports_1("RestComponent", RestComponent);
+                ], FoodComponent);
+                return FoodComponent;
+            }());
+            exports_1("FoodComponent", FoodComponent);
         }
     }
 });
-//# sourceMappingURL=rest.component.js.map
+//# sourceMappingURL=food.component.js.map
