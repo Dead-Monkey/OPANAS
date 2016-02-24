@@ -5,7 +5,6 @@ import {SportComponent} from '../sport-page/sport.component';
 import {RestComponent} from '../rest-page/rest.component';
 import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
-
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 
 @Component({
@@ -14,17 +13,61 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     providers: [ROUTER_PROVIDERS, TranslateService],
     pipes: [TranslatePipe],
     styles: [`
-      .sideBar {
-    color: red;
-  }
+      .startPage_navigator {
+        display: flex;
+        flex-flow: row nowrap;
+        position: absolute;
+        justify-content: space-around;
+        ;
+        align-items: center;
+        width: 100vw;
+        height: 20vh;
+        bottom: 0;
+        left: 0;
+        background-color: gray;
+      }
+      .sideBar_toggle {
+        background-color: gray;
+        position: absolute;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        left: 0;
+        top: 0;
+        height: 50px;
+        width: 50px;
+      }
+
+      .temorary {
+        position: absolute;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+        right: 0;
+        top: 0;
+        height: 50px;
+        width: 100px;
+      }
       `],
     template: `
+<div class="sideBar_toggle" (click)="sideBarToggle()">sideBar</div>
 <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
-<div (click)="goEn()">english</div>
-<div (click)="goRu()">russian</div>
-<div (click)="sideBarToggle()">sideBar</div>
+
+<div class="temorary">
+  <div (click)="goEn()">english</div>
+  <div (click)="goRu()">russian</div>
+</div>
+
+<br>
+<br>
+<br>
+
 <router-outlet></router-outlet>
-<nav>
+
+<nav class="startPage_navigator">
   <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
   <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
   <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
@@ -80,12 +123,15 @@ let keysVendor: Object = {
     'en': {
         'opanas.router.food': 'food',
         'opanas.router.sport': 'sport',
-        'opanas.router.rest': 'rest'
+        'opanas.router.rest': 'rest',
+        'sport-page.title':'sport pagie'
     },
 
     'ru': {
         'opanas.router.food': 'еда',
         'opanas.router.sport': 'спорт',
-        'opanas.router.rest': 'отдых'
+        'opanas.router.rest': 'отдых',
+        'sport-page.title':'спорт страничга'
+
     }
 }
