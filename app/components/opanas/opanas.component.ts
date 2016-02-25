@@ -13,65 +13,76 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     providers: [ROUTER_PROVIDERS, TranslateService],
     pipes: [TranslatePipe],
     styles: [`
-      .startPage_navigator {
-        display: flex;
-        flex-flow: row nowrap;
-        position: absolute;
-        justify-content: space-around;
-        ;
-        align-items: center;
-        width: 100vw;
-        height: 20vh;
-        bottom: 0;
-        left: 0;
-        background-color: gray;
-      }
-      .sideBar_toggle {
-        background-color: gray;
-        position: absolute;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        left: 0;
-        top: 0;
-        height: 50px;
-        width: 50px;
-      }
+    .header{
+      height: 50px;
+      width: 100vw;
+      background-color: #ccc;
+    }
 
-      .temorary {
-        position: absolute;
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        background-color: green;
-        right: 0;
-        top: 0;
-        height: 50px;
-        width: 100px;
+        .startPage_navigator {
+    display: flex;
+    flex-flow: row nowrap;
+    position: absolute;
+    justify-content: space-around;
+    ;
+    align-items: center;
+    width: 100vw;
+    height: 20vh;
+    bottom: 0;
+    left: 0;
+    background-color: gray;
+  }
+
+  .sideBar_toggle {
+    background-color: gray;
+    opacity: 0.3;
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    top: 0;
+    height: 50px;
+    width: 50px;
+  }
+  .temorary {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: green;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 100px;
+    opacity: 0.3;
       }
       `],
     template: `
-<div class="sideBar_toggle" (click)="sideBarToggle()">sideBar</div>
-<fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
+<div class="container">
 
-<div class="temorary">
-  <div (click)="goEn()">english</div>
-  <div (click)="goRu()">russian</div>
+  <div class="header">
+    <div class="sideBar_toggle" (click)="sideBarToggle()">sideBar</div>
+    <div class="temorary">
+      <div (click)="goEn()">english</div>
+      <div (click)="goRu()">russian</div>
+    </div>
+  </div>
+
+  <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
+
+
+
+  <router-outlet></router-outlet>
+
+  <nav class="startPage_navigator">
+    <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
+    <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
+    <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
+  </nav>
 </div>
-
-<br>
-<br>
-<br>
-
-<router-outlet></router-outlet>
-
-<nav class="startPage_navigator">
-  <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
-  <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
-  <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
-</nav>
     `
 })
 
