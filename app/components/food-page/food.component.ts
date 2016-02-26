@@ -71,7 +71,13 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
   </div>
 </form>
 <div class="food_list">
-  <div class="food_listItem" *ngFor="#item of pickedFoodContainer; #i = index">{{i}} {{item?.name}} {{item?.weight}} {{item?.calories}}</div>
+  <div class="food_listItem" *ngFor="#item of pickedFoodContainer; #i = index">
+    {{i}} {{item?.name}}
+    <input class="food_inputWeight" type="number" min="1" [(ngModel)]="item.weight">
+    {{item?.calories}}
+    <input type="checkbox" [(ngModel)]="item.picked" (click)="checkBoxToggle(item)">
+    <button (click)="minusFodd(i, item)">minus</button>
+  </div>
 </div>
     `
 })
@@ -113,15 +119,21 @@ export class FoodComponent implements OnInit {
     onSubmit(food) {
 
         this.pickedFood['weight'] = food.value.weight;
+        this.pickedFood['picked'] = true;
+
         this.pickedFoodContainer.push(this.pickedFood);
 
-        this.calculateFull(this.pickedFood);
-        this.calculateMayBe(this.pickedFood);
+        this.calculateFood(this.pickedFood);
 
         this.pickedFood = <Food>{};
         this.model = {};
         this.correctFood = false;
 
+    }
+
+    minusFodd(index:number, food:Food) {
+        this.pickedFoodContainer.splice(index, 1);
+        this.calculateFoodMinus(food);
     }
 
     pickFoodInput(name) {
@@ -134,10 +146,30 @@ export class FoodComponent implements OnInit {
             }
         }
     }
+
     pickFood(food: Food) {
         this.pickedFood = Object.assign({}, food);
         this.model['name'] = food.name;
         this.correctFood = true;
+    }
+
+    checkBoxToggle(food: Food) {
+        if (food['picked']) {
+            this.calculateFullMinus(food);
+        } else {
+            this.calculateFull(food);
+        }
+
+    }
+
+    calculateFood(food: Food) {
+        this.calculateFull(food);
+        this.calculateMayBe(food);
+    }
+
+    calculateFoodMinus(food: Food) {
+        this.calculateFullMinus(food);
+        this.calculateMayBeMinus(food);
     }
 
     calculateFull(food: Food) {
@@ -154,4 +186,17 @@ export class FoodComponent implements OnInit {
         this.totalFood.fat.maybe = this.totalFood.fat.maybe + food.fat;
     }
 
+    calculateFullMinus(food: Food) {
+        this.totalFood.calories.full = this.totalFood.calories.full - food.calories;
+        this.totalFood.protein.full = this.totalFood.protein.full - food.protein;
+        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - food.carbohydrates;
+        this.totalFood.fat.full = this.totalFood.fat.full - food.fat;
+    }
+
+    calculateMayBeMinus(food: Food) {
+        this.totalFood.calories.maybe = this.totalFood.calories.maybe - food.calories;
+        this.totalFood.protein.maybe = this.totalFood.protein.maybe - food.protein;
+        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - food.carbohydrates;
+        this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
+    }
 }
