@@ -6,11 +6,12 @@ import {RestComponent} from '../rest-page/rest.component';
 import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
+import {FoodService} from '../../services/food/food.service';
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
-    providers: [ROUTER_PROVIDERS, TranslateService],
+    providers: [ROUTER_PROVIDERS, TranslateService, FoodService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
