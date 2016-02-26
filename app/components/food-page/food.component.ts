@@ -59,7 +59,7 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
   <label for="foodName"></label>
-  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" #spy (change)="isCorrectFood(name.value)">
+  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (keyup)="pickFoodInput(model.name)">
 
   <label for="foodWeight"></label>
   <input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
@@ -67,7 +67,7 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
   <button type="submit" class="food_inputButton" [disabled]="!foodForm.form.valid || !correctFood">GO</button>
 
   <div *ngIf="name.valid" class="food_serchContainer">
-    <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name' : name.value; #i = index; " (click)="pickFood(item);">{{i}} {{item?.name}} {{item?.weight}}</div>
+    <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;" (click)="pickFood(item);">{{i}} name: {{item?.name}} weight: {{item?.weight}}</div>
   </div>
 </form>
 <div class="food_list">
@@ -122,35 +122,32 @@ export class FoodComponent implements OnInit {
         this.model = {};
         this.correctFood = false;
 
-
     }
 
-    isCorrectFood(name: string) {
+    pickFoodInput(name) {
         for (let obj of this.foodContainer) {
             if (obj['name'] === name) {
-                this.correctFood = true;
-                console.log(`correctFood`);
-                this.pickedFood = obj;
+                return this.pickFood(obj);
             } else {
+                this.correctFood = false;
                 console.log(`unCorrectFood`);
             }
         }
     }
-
-    pickFood(food) {
-        this.pickedFood = food;
+    pickFood(food: Food) {
+        this.pickedFood = Object.assign({}, food);
         this.model['name'] = food.name;
-        this.isCorrectFood(food.name);
+        this.correctFood = true;
     }
 
-    calculateFull(food:Food) {
+    calculateFull(food: Food) {
         this.totalFood.calories.full = this.totalFood.calories.full + food.calories;
         this.totalFood.protein.full = this.totalFood.protein.full + food.protein;
         this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + food.carbohydrates;
         this.totalFood.fat.full = this.totalFood.fat.full + food.fat;
     }
 
-    calculateMayBe(food:Food) {
+    calculateMayBe(food: Food) {
         this.totalFood.calories.maybe = this.totalFood.calories.maybe + food.calories;
         this.totalFood.protein.maybe = this.totalFood.protein.maybe + food.protein;
         this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + food.carbohydrates;
