@@ -28,7 +28,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
   left: 70vw;
   top: 0;
   background-color: black;
-  opacity: 0.2;
+  opacity: 0.5;
 }
       `],
     template: `

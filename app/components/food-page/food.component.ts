@@ -3,11 +3,12 @@ import {TranslatePipe} from '../../shared/services/translate/translate.service';
 import {ProgressBar} from '../../shared/components/progress-bar/progress-bar.component';
 import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
+import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 
 @Component({
     selector: 'op-food',
     directives: [ProgressBar],
-    providers: [],
+    providers: [CalendarService],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
   .food_form {
@@ -79,6 +80,7 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
     <button (click)="minusFodd(i, item)">minus</button>
   </div>
 </div>
+<div (click)="yaClick()">ya button</div>
     `
 })
 
@@ -86,6 +88,7 @@ export class FoodComponent implements OnInit {
 
     private model: Object = {};
     private foodContainer: Food[];
+    private calendar: Array<Day>;
 
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
@@ -110,10 +113,28 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService) { }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService) {
+
+
+    }
+
+    yaClick() {
+        this._calendarService.addDay();
+        console.log(this.calendar);
+        console.log(this.pickedFoodContainer);
+
+    }
 
     ngOnInit() {
         this.foodContainer = this._foodServe.getAllFood();
+        this.calendar = this._calendarService.getCalendar();
+        console.log(this.calendar);
+        this._calendarService.addDay();
+        this.pickedFoodContainer = this._calendarService.getDailyFood(new Date());
+        console.log(this.pickedFoodContainer, "111");
+
+
+
     }
 
     onSubmit(food) {
@@ -131,7 +152,7 @@ export class FoodComponent implements OnInit {
 
     }
 
-    minusFodd(index:number, food:Food) {
+    minusFodd(index: number, food: Food) {
         this.pickedFoodContainer.splice(index, 1);
         this.calculateFoodMinus(food);
     }
