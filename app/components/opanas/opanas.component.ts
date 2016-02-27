@@ -15,30 +15,70 @@ import {FoodService} from '../../services/food/food.service';
     pipes: [TranslatePipe],
     styles: [`
     .header{
-      height: 50px;
-      width: 100vw;
-      background-color: #ccc;
+    height: 50px;
+    width: 100vw;
     }
-
-        .startPage_navigator {
+		.container {
+      display: flex;
+      background: url(./src/img/backwalp.jpg) no-repeat center fixed;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      position: absolute;
+      margin: auto;
+    }
+    .startPage_navigator {
+      display: flex;
+      flex-flow: row nowrap;
+      position: absolute;
+      justify-content: space-around;
+      align-items: center;
+      width: 100vw;
+      height: 20vh;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+  }
+  .startPage_navigatorStart {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: column nowrap;
     position: absolute;
     justify-content: space-around;
-    ;
     align-items: center;
-    width: 100vw;
-    height: 20vh;
+    width: 30vw;
+    height: 170vw;
     bottom: 0;
-    left: 0;
-    background-color: gray;
+    left: 35vw;
+    overflow: hidden;
+}
+    .foodButton {
+    display: flex;
+    background: url('./src/img/food.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
   }
-
+  .sportButton {
+    display: flex;
+    background: url('./src/img/sport.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
+  }
+  .restButton {
+    display: flex;
+    background: url('./src/img/rest.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
+  }
   .sideBar_toggle {
     background-color: gray;
     opacity: 0.3;
-    position: absolute;
-    display: flex;
+    position: absolute;    display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
@@ -59,8 +99,8 @@ import {FoodService} from '../../services/food/food.service';
     height: 50px;
     width: 100px;
     opacity: 0.3;
-      }
-      `],
+  }
+  `],
     template: `
 <div class="container">
 
@@ -74,18 +114,22 @@ import {FoodService} from '../../services/food/food.service';
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
 
-
-
   <router-outlet></router-outlet>
 
-  <nav class="startPage_navigator">
-    <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
-    <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
-    <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
+  <nav class="startPage_navigatorStart">
+    <a [routerLink]="['Food']">
+      <div class="foodButton"></div>
+    </a>
+    <a [routerLink]="['Sport']">
+      <div class="sportButton"></div>
+    </a>
+    <a [routerLink]="['Rest']">
+      <div class="restButton"></div>
+    </a>
   </nav>
 </div>
-    `
-})
+
+`})
 
 @RouteConfig([
     { path: '/', name: 'Start', component: StartComponent, useAsDefault: true },
@@ -133,16 +177,10 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-        'opanas.router.food': 'food',
-        'opanas.router.sport': 'sport',
-        'opanas.router.rest': 'rest',
         'sport-page.title':'sport pagie'
     },
 
     'ru': {
-        'opanas.router.food': 'еда',
-        'opanas.router.sport': 'спорт',
-        'opanas.router.rest': 'отдых',
         'sport-page.title':'спорт страничга'
 
     }
