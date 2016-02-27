@@ -93,8 +93,8 @@ export class FoodComponent implements OnInit {
 
     private totalFood = {
         "calories": {
-            "full": 0,
-            "maybe": 0
+            "full": 50,
+            "maybe": 51
         },
         "protein": {
             "full": 0,

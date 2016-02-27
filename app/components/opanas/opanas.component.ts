@@ -116,7 +116,7 @@ import {FoodService} from '../../services/food/food.service';
 
   <router-outlet></router-outlet>
 
-  <nav class="startPage_navigatorStart">
+  <nav class="startPage_navigator">
     <a [routerLink]="['Food']">
       <div class="foodButton"></div>
     </a>
