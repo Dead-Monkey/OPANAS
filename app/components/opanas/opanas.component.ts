@@ -20,7 +20,7 @@ import {FoodService} from '../../services/food/food.service';
     }
 		.container {
       display: flex;
-      background: url(./src/img/backwalp.jpg) no-repeat center fixed;
+      background: url(./src/img/tempBackground.png) no-repeat center fixed;
       width: 100vw;
       height: 100vh;
       flex-direction: column;
@@ -52,7 +52,6 @@ import {FoodService} from '../../services/food/food.service';
     overflow: hidden;
 }
     .foodButton {
-    display: flex;
     background: url('./src/img/food.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
@@ -60,7 +59,6 @@ import {FoodService} from '../../services/food/food.service';
     height: 27vw;
   }
   .sportButton {
-    display: flex;
     background: url('./src/img/sport.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
@@ -68,7 +66,6 @@ import {FoodService} from '../../services/food/food.service';
     height: 27vw;
   }
   .restButton {
-    display: flex;
     background: url('./src/img/rest.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
@@ -76,16 +73,12 @@ import {FoodService} from '../../services/food/food.service';
     height: 27vw;
   }
   .sideBar_toggle {
-    background-color: gray;
-    opacity: 0.3;
-    position: absolute;    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    left: 0;
-    top: 0;
-    height: 50px;
-    width: 50px;
+    background: url('./src/img/menu-icon.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    margin-left: 2vw;
+    width: 15vw;
+    height: 15vw;
   }
   .temorary {
     position: absolute;
@@ -105,7 +98,7 @@ import {FoodService} from '../../services/food/food.service';
 <div class="container">
 
   <div class="header">
-    <div class="sideBar_toggle" (click)="sideBarToggle()">sideBar</div>
+    <div class="sideBar_toggle" (click)="sideBarToggle()"></div>
     <div class="temorary">
       <div (click)="goEn()">english</div>
       <div (click)="goRu()">russian</div>

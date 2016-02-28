@@ -11,7 +11,7 @@ width: 90vw;
 height: 7vw;
 position: relative;
 margin-top: 10px;
-left:5vw;
+left: 5vw;
 background-color: rgba(49, 51, 61, 0.7);
 box-sizing: border-box;
 border: 5px solid #0C1017;
@@ -46,7 +46,6 @@ border-radius: 10px;
     template: `
 <div class="progress_container">
   <div class="progress_secondLine" [style.width.%]="getSecondLine()">
-    +8
   </div>
   <div class="progress_mainLine" [style.width.%]="getMainLine()">
     1488
