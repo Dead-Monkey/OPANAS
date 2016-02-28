@@ -4,6 +4,7 @@ import {ProgressBar} from '../../shared/components/progress-bar/progress-bar.com
 import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
+import {RefreshDateService} from '../../services/refresh/refresh-date.service';
 
 @Component({
     selector: 'op-food',
@@ -113,15 +114,17 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService, private _calendarService: CalendarService) {
-
-
-    }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
     yaClick() {
-        this._calendarService.addDay();
         console.log(this.calendar);
         console.log(this.pickedFoodContainer);
+
+        this._refreshDateService.refresher(() => {
+            this.pickedFoodContainer = this._calendarService.getDailyFood(new Date(2015, 2, 2))
+            setTimeout(() => this.pickedFoodContainer = this._calendarService.getDailyFood(new Date()), 3000)
+        });
+
     }
 
     ngOnInit() {

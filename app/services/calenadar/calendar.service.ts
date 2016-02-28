@@ -8,16 +8,10 @@ export class CalendarService {
     private calendar: Array<Day> = [];
 
     constructor() {
-
-        let today = new Date();
-        let tomorrow = new Date();
-        tomorrow.setHours(0, 0, 0, 0);
-        tomorrow.setDate(today.getDate() + 1)
-        console.log(tomorrow.getTime() - today.getTime());
-        
         if (this.calendar) {
             this.createCalendar();
         }
+
     }
 
     createCalendar() {

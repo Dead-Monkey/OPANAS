@@ -8,12 +8,13 @@ import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {FoodService} from '../../services/food/food.service';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
+import {RefreshDateService} from '../../services/refresh/refresh-date.service';
 
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
-    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService],
+    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService, RefreshDateService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
@@ -100,7 +101,7 @@ export class OpanasComponent implements OnInit {
 
     private sideBarIsOpen: boolean = false;
 
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService) { }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
     sideBarToggle() {
         this.sideBarIsOpen = !this.sideBarIsOpen;
