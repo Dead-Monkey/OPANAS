@@ -7,11 +7,13 @@ import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {FoodService} from '../../services/food/food.service';
+import {CalendarService, Day} from '../../services/calenadar/calendar.service';
+
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
-    providers: [ROUTER_PROVIDERS, TranslateService, FoodService],
+    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
@@ -98,7 +100,7 @@ export class OpanasComponent implements OnInit {
 
     private sideBarIsOpen: boolean = false;
 
-    constructor(private _translator: TranslateService) { }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService) { }
 
     sideBarToggle() {
         this.sideBarIsOpen = !this.sideBarIsOpen;
@@ -106,7 +108,6 @@ export class OpanasComponent implements OnInit {
 
     //config app
     ngOnInit() {
-
         //translator config
         this._translator.setSupportLanguages(languages);
         this._translator.setKeys(keysVendor);
@@ -136,14 +137,14 @@ let keysVendor: Object = {
         'opanas.router.food': 'food',
         'opanas.router.sport': 'sport',
         'opanas.router.rest': 'rest',
-        'sport-page.title':'sport pagie'
+        'sport-page.title': 'sport pagie'
     },
 
     'ru': {
         'opanas.router.food': 'еда',
         'opanas.router.sport': 'спорт',
         'opanas.router.rest': 'отдых',
-        'sport-page.title':'спорт страничга'
+        'sport-page.title': 'спорт страничга'
 
     }
 }

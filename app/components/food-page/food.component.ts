@@ -8,7 +8,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 @Component({
     selector: 'op-food',
     directives: [ProgressBar],
-    providers: [CalendarService],
+    providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
   .food_form {
@@ -122,20 +122,17 @@ export class FoodComponent implements OnInit {
         this._calendarService.addDay();
         console.log(this.calendar);
         console.log(this.pickedFoodContainer);
-
     }
 
     ngOnInit() {
         this.foodContainer = this._foodServe.getAllFood();
         this.calendar = this._calendarService.getCalendar();
         console.log(this.calendar);
-        this._calendarService.addDay();
         this.pickedFoodContainer = this._calendarService.getDailyFood(new Date());
-        console.log(this.pickedFoodContainer, "111");
-
-
-
+        console.log(this.pickedFoodContainer, "111", "!!!!!!!!!!!!!!!!!!!!");
     }
+
+
 
     onSubmit(food) {
 
