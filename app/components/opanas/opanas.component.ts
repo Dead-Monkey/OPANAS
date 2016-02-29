@@ -18,37 +18,70 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     pipes: [TranslatePipe],
     styles: [`
     .header{
-      height: 50px;
-      width: 100vw;
-      background-color: #ccc;
-    }
-
-        .startPage_navigator {
-    display: flex;
-    flex-flow: row nowrap;
-    position: absolute;
-    justify-content: space-around;
-    ;
-    align-items: center;
+    height: 50px;
     width: 100vw;
-    height: 20vh;
-    bottom: 0;
-    left: 0;
-    background-color: gray;
+    }
+		.container {
+      display: flex;
+      background: url(./src/img/tempBackground.png) no-repeat center fixed;
+      width: 100vw;
+      height: 100vh;
+      flex-direction: column;
+      position: absolute;
+      margin: auto;
+    }
+    .startPage_navigator {
+      display: flex;
+      flex-flow: row nowrap;
+      position: absolute;
+      justify-content: space-around;
+      align-items: center;
+      width: 100vw;
+      height: 20vh;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
   }
-
-  .sideBar_toggle {
-    background-color: gray;
-    opacity: 0.3;
-    position: absolute;
+  .startPage_navigatorStart {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: center;
+    position: absolute;
+    justify-content: space-around;
     align-items: center;
-    left: 0;
-    top: 0;
-    height: 50px;
-    width: 50px;
+    width: 30vw;
+    height: 170vw;
+    bottom: 0;
+    left: 35vw;
+    overflow: hidden;
+}
+    .foodButton {
+    background: url('./src/img/food.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
+  }
+  .sportButton {
+    background: url('./src/img/sport.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
+  }
+  .restButton {
+    background: url('./src/img/rest.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    width: 27vw;
+    height: 27vw;
+  }
+  .sideBar_toggle {
+    background: url('./src/img/menu-icon.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    margin-left: 2vw;
+    width: 15vw;
+    height: 15vw;
   }
   .temorary {
     position: absolute;
@@ -62,13 +95,13 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     height: 50px;
     width: 100px;
     opacity: 0.3;
-      }
-      `],
+  }
+  `],
     template: `
 <div class="container">
 
   <div class="header">
-    <div class="sideBar_toggle" (click)="sideBarToggle()">sideBar</div>
+    <div class="sideBar_toggle" (click)="sideBarToggle()"></div>
     <div class="temorary">
       <div (click)="goEn()">english</div>
       <div (click)="goRu()">russian</div>
@@ -77,18 +110,22 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
 
-
-
   <router-outlet></router-outlet>
 
   <nav class="startPage_navigator">
-    <a [routerLink]="['Food']">{{"opanas.router.food" | translate}}</a>
-    <a [routerLink]="['Sport']">{{"opanas.router.sport" | translate}}</a>
-    <a [routerLink]="['Rest']">{{"opanas.router.rest" | translate}}</a>
+    <a [routerLink]="['Food']">
+      <div class="foodButton"></div>
+    </a>
+    <a [routerLink]="['Sport']">
+      <div class="sportButton"></div>
+    </a>
+    <a [routerLink]="['Rest']">
+      <div class="restButton"></div>
+    </a>
   </nav>
 </div>
-    `
-})
+
+`})
 
 @RouteConfig([
     { path: '/', name: 'Start', component: StartComponent, useAsDefault: true },
@@ -135,17 +172,12 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-        'opanas.router.food': 'food',
-        'opanas.router.sport': 'sport',
-        'opanas.router.rest': 'rest',
-        'sport-page.title': 'sport pagie'
+
+        'sport-page.title':'sport pagie'
     },
 
     'ru': {
-        'opanas.router.food': 'еда',
-        'opanas.router.sport': 'спорт',
-        'opanas.router.rest': 'отдых',
-        'sport-page.title': 'спорт страничга'
+        'sport-page.title':'спорт страничга'
 
     }
 }

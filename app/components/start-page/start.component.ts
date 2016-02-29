@@ -5,10 +5,8 @@ import {Component} from 'angular2/core';
     directives: [],
     providers: [],
     pipes:[],
-    styles: ['.primary{color:blue}'],
-    template: `
-    <h1 class="primary">Картинко и логотип</h1>
-    `
+    styles: [],
+    template: ``
 
 })
 export class StartComponent { }
