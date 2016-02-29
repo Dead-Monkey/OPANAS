@@ -10,7 +10,6 @@ import {Component, Input} from 'angular2/core';
 width: 90vw;
 height: 7vw;
 position: relative;
-margin-top: 10px;
 left: 5vw;
 background-color: rgba(49, 51, 61, 0.7);
 box-sizing: border-box;
@@ -37,13 +36,18 @@ border-radius: 10px;
   height: 100%;
   border-radius: 5px;
   text-align: right;
-  /*padding-right: 5px;*/
   color: #E48426;
   font-size: 4vw;
+}
+.progress_barHeader {
+    text-align: center;
+    color: #E48426;
+    font-size: 5vw;
 }
 
  `],
     template: `
+<div class="progress_barHeader">CALORIES</div>
 <div class="progress_container">
   <div class="progress_secondLine" [style.width.%]="getSecondLine()">
   </div>
