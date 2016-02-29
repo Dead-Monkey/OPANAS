@@ -9,12 +9,12 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 import {FoodService} from '../../services/food/food.service';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {RefreshDateService} from '../../services/refresh/refresh-date.service';
-
+import {StorageService} from '../../shared/services/storage/storage.service';
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
-    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService, RefreshDateService],
+    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService, RefreshDateService, StorageService],
     pipes: [TranslatePipe],
     styles: [`
     .header{

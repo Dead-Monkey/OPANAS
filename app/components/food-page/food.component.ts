@@ -78,10 +78,12 @@ import {RefreshDateService} from '../../services/refresh/refresh-date.service';
     <input class="food_inputWeight" type="number" min="1" [(ngModel)]="item.weight">
     {{item?.calories}}
     <input type="checkbox" [(ngModel)]="item.picked" (click)="checkBoxToggle(item)">
-    <button (click)="minusFodd(i, item)">minus</button>
+    <button (click)="removeFodd(i, item)">minus</button>
   </div>
 </div>
-<div (click)="yaClick()">ya button</div>
+<br/>
+<div (click)="yaClick2()">ya button 4 storage</div>
+
     `
 })
 
@@ -90,6 +92,7 @@ export class FoodComponent implements OnInit {
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;
+    private currentDate: Date = new Date();
 
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
@@ -116,23 +119,29 @@ export class FoodComponent implements OnInit {
 
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
-    yaClick() {
-        console.log(this.calendar);
-        console.log(this.pickedFoodContainer);
-
-        this._refreshDateService.refresher(() => {
-            this.pickedFoodContainer = this._calendarService.getDailyFood(new Date(2015, 2, 2))
-            setTimeout(() => this.pickedFoodContainer = this._calendarService.getDailyFood(new Date()), 3000)
-        });
+    yaClick2() {
+        console.log(`storage`);
+        this._calendarService.testStorage();
 
     }
 
     ngOnInit() {
         this.foodContainer = this._foodServe.getAllFood();
-        this.calendar = this._calendarService.getCalendar();
-        console.log(this.calendar);
-        this.pickedFoodContainer = this._calendarService.getDailyFood(new Date());
-        console.log(this.pickedFoodContainer, "111", "!!!!!!!!!!!!!!!!!!!!");
+
+        this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
+        for (let food of this.pickedFoodContainer) {
+            this.calculateFood(food);
+        }
+        console.log(this.pickedFoodContainer ,"111");
+        
+        //refresh view on 00:00
+        this._refreshDateService.refresher(() => {
+            this.currentDate = new Date();
+            this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate)
+            for (let food of this.pickedFoodContainer) {
+                this.calculateFood(food);
+            }
+        });
     }
 
 
@@ -141,9 +150,7 @@ export class FoodComponent implements OnInit {
 
         this.pickedFood['weight'] = food.value.weight;
         this.pickedFood['picked'] = true;
-
-        this.pickedFoodContainer.push(this.pickedFood);
-
+        this._calendarService.setDailyFood(this.pickedFood, this.currentDate);
         this.calculateFood(this.pickedFood);
 
         this.pickedFood = <Food>{};
@@ -152,8 +159,8 @@ export class FoodComponent implements OnInit {
 
     }
 
-    minusFodd(index: number, food: Food) {
-        this.pickedFoodContainer.splice(index, 1);
+    removeFodd(index: number, food: Food) {
+        this._calendarService.removeDailyFood(index, this.currentDate);
         this.calculateFoodMinus(food);
     }
 

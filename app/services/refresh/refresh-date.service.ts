@@ -20,10 +20,12 @@ export class RefreshDateService {
     }
 
     refresher(...arg) {
-        setInterval(() => {
+        console.log(`refresher in da house. refresh will make badaboom in ${this.timer / 1000 / 60} minutes`);
+        console.log(`the refresher observes:${arg}`);
+        setTimeout(() => {
             arg.map((item) => item());
             this.timerMaker();
-            console.log(`refresher in da house ${this.timer}`);
+            this.refresher();
         }, this.timer);
     }
 }
