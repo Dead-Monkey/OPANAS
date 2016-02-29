@@ -12,19 +12,57 @@ import {RefreshDateService} from '../../services/refresh/refresh-date.service';
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
+
   .food_form {
     position: relative;
-    margin: 10px;
+    margin: 5vw;
+    height: 10vw;
   }
   .food_inputFood {
-    height: 20px;
-    width: 60wv;
+    position: absolute;
+    height: 10vw;
+    width: 60vw;
+    background-color: rgba(49, 51, 61, 0.3);
+    box-sizing: border-box;
+    border: 1.5vw solid #0C1017;
+    border-radius: 2vw;
   }
   .food_inputWeight {
-    height: 20px;
-    width: 20vw;
+    position: absolute;
+    height: 10vw;
+    width: 16vw;
+    left: 61vw;
+    background-color: rgba(49, 51, 61, 0.3);
+    box-sizing: border-box;
+    color: #0d0e15;
+    border: 1.5vw solid #0C1017;
+    border-radius: 2vw;
   }
-  .food_inputButton {}
+  .food_inputButton_off {
+    position: absolute;
+    right: 0;
+    height: 10vw;
+    width: 12vw;
+    background: url('./src/img/check-off.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border: 1.5vw solid #0C1017;
+    border-radius: 2vw;
+  }
+  .food_inputButton_on {
+    position: absolute;
+    right: 0;
+    height: 10vw;
+    width: 12vw;
+    background: url('./src/img/check-on.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border: 1.5vw solid #0C1017;
+    border-radius: 2vw;
+  }
+
   .food_serchContainer {
     position: absolute;
     background-color: #aaa;
@@ -36,20 +74,58 @@ import {RefreshDateService} from '../../services/refresh/refresh-date.service';
     overflow-y: scroll;
   }
   .food_list {
-    width: 100vw;
-    height: 200px;
-    background-color: silver;
+    position: relative;
+    margin: 5vw;
+    width: 90vw;
+    height: 30vw;
     overflow-y: scroll;
   }
   .food_listItem {
-    width: 100vw;
-    height: 30px;
+    position: absolute;
+    height: 12vw;
+    width: 60vw;
+    line-height: 12vw;
+    box-sizing: border-box;
+    background-color: #3f414a;
+    color: #ff9d2d;
+    font-size: 6vw;
+    text-align: center;
+    border-radius: 2vw;
+    line-height: 12vw;
+
+  }
+  .food_listWeight {
+    position: absolute;
+    height: 12vw;
+    width: 15vw;
+    left: 61vw;
+    line-height: 12vw;
+    background-color: #3f414a;
+    box-sizing: border-box;
+    color: #ff9d2d;
+    font-size: 6vw;
+    text-align: center;
+    border-radius: 2vw;
+    border: none;
+  }
+
+  .food_listButton {
+    position: absolute;
+    right: 0;
+    height: 12vw;
+    width: 12vw;
+    background: url('./src/img/check-on.png') no-repeat center center;
+    background-color: #3f414a;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border-radius: 2vw;
   }
   .ng-valid[required] {
-    border-left: 10px solid green;
+    border-left: 5px solid green;
   }
   .ng-invalid {
-    border-left: 10px solid red;
+    border-left: 5px solid #de5200;
   }
     `],
     template: `
@@ -66,24 +142,26 @@ import {RefreshDateService} from '../../services/refresh/refresh-date.service';
   <label for="foodWeight"></label>
   <input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
 
-  <button type="submit" class="food_inputButton" [disabled]="!foodForm.form.valid || !correctFood">GO</button>
+  <button type="submit" class="food_inputButton_off" [disabled]="!foodForm.form.valid || !correctFood"></button>
 
   <div *ngIf="name.valid" class="food_serchContainer">
-    <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;" (click)="pickFood(item);">{{i}} name: {{item?.name}} weight: {{item?.weight}}</div>
+    <!-- class="food_listItem" этот класс униз -->
+    <div *ngFor="#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;" (click)="pickFood(item);">{{item?.name}}</div>
   </div>
 </form>
 <div class="food_list">
-  <div class="food_listItem" *ngFor="#item of pickedFoodContainer; #i = index">
+  <!-- class="food_listItem" -->
+  <div  *ngFor="#item of pickedFoodContainer; #i = index">
     {{i}} {{item?.name}}
-    <input class="food_inputWeight" type="number" min="1" [(ngModel)]="item.weight">
+    <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
     {{item?.calories}}
     <input type="checkbox" [(ngModel)]="item.picked" (click)="checkBoxToggle(item)">
+
     <button (click)="removeFodd(i, item)">minus</button>
   </div>
-</div>
-<br/>
-<div (click)="yaClick2()">ya button 4 storage</div>
+  <!-- <div class="food_listButton"></div> -->
 
+</div>
     `
 })
 
@@ -119,21 +197,17 @@ export class FoodComponent implements OnInit {
 
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
-    yaClick2() {
-        console.log(`storage`);
-        this._calendarService.testStorage();
-
-    }
-
     ngOnInit() {
+
         this.foodContainer = this._foodServe.getAllFood();
+        console.log(this.foodContainer);
 
         this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
         for (let food of this.pickedFoodContainer) {
             this.calculateFood(food);
         }
         console.log(this.pickedFoodContainer ,"111");
-        
+
         //refresh view on 00:00
         this._refreshDateService.refresher(() => {
             this.currentDate = new Date();
