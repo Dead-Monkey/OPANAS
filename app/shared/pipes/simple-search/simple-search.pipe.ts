@@ -9,6 +9,6 @@ export class SimpleSearch implements PipeTransform {
 
     transform(value, [field, letter]:[string,string]): any {
 
-        return value.filter((item) => item[field].includes(letter))
+        return value.filter((item) => item[field].toLowerCase().includes(letter.toLowerCase()))
     }
 }
