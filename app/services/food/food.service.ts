@@ -44,19 +44,19 @@ let food: Food[] = [
         "fat": 20
     },
     {
-        "id": 4,
-        "name": "tomato",
-        "calories": 30,
-        "protein": 30,
-        "carbohydrates": 30,
-        "fat": 5
+      "id": 4,
+      "name": "tomato",
+      "calories": 20,
+      "protein": 20,
+      "carbohydrates": 20,
+      "fat": 20
     },
     {
         "id": 5,
         "name": "apple",
-        "calories": 5,
-        "protein": 10,
-        "carbohydrates": 10,
-        "fat": 3
+        "calories": 12,
+        "protein": 12,
+        "carbohydrates": 11,
+        "fat": 10
     }
 ]

@@ -8,7 +8,7 @@ import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {FoodService} from '../../services/food/food.service';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
-import {RefreshDateService} from '../../services/refresh/refresh-date.service';
+import {RefreshDateService} from '../../services/refresh-date/refresh-date.service';
 import {StorageService} from '../../shared/services/storage/storage.service';
 
 @Component({
@@ -172,12 +172,18 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-
-        'sport-page.title':'sport pagie'
+        'sport-page.title':'sport pagie',
+        'calories':'calories',
+        'protein': 'protein',
+        'carbohydrates':'carbohydrates',
+        'fat':'fat'
     },
 
     'ru': {
-        'sport-page.title':'спорт страничга'
-
+        'sport-page.title':'спорт страничга',
+        'calories':'калории',
+        'protein': 'белки',
+        'carbohydrates':'углеводы',
+        'fat':'жиры'
     }
 }

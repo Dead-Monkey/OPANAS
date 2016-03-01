@@ -1,10 +1,12 @@
 import {Component, Input} from 'angular2/core';
+import {TranslatePipe} from '../../services/translate/translate.service';
+
 
 @Component({
     selector: 'fm-progress-bar',
     directives: [],
     providers: [],
-    pipes: [],
+    pipes: [TranslatePipe],
     styles: [`
 .progress_container {
 width: 90vw;
@@ -47,7 +49,7 @@ border-radius: 10px;
 
  `],
     template: `
-<div class="progress_barHeader">CALORIES</div>
+<div class="progress_barHeader">{{name|translate|uppercase}}</div>
 <div class="progress_container">
   <div class="progress_secondLine" [style.width.%]="getSecondLine()">
   </div>
@@ -60,9 +62,9 @@ border-radius: 10px;
 
 })
 export class ProgressBar {
+    @Input() private name: string;
     @Input() private mainLine: number;
     @Input() private secondLine: number;
-
     getMainLine() {
         this.mainLine = (this.mainLine > 100) ? 100 : this.mainLine;
         return this.mainLine;
