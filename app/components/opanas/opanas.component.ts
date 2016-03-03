@@ -1,5 +1,5 @@
-import {Component, OnInit} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from 'angular2/router';
+import {Component, OnInit, provide} from 'angular2/core';
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {FoodComponent} from '../food-page/food.component';
 import {SportComponent} from '../sport-page/sport.component';
 import {RestComponent} from '../rest-page/rest.component';
@@ -14,7 +14,8 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
-    providers: [ROUTER_PROVIDERS, TranslateService, FoodService, CalendarService, RefreshDateService, StorageService],
+    providers: [ROUTER_PROVIDERS, provide(LocationStrategy,
+        { useClass: HashLocationStrategy }), TranslateService, FoodService, CalendarService, RefreshDateService, StorageService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
@@ -22,24 +23,22 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     width: 100vw;
     }
 		.container {
-      display: flex;
-      background: url(./src/img/tempBackground.png) no-repeat center fixed;
+      background: url(./src/img/tempBackground.png) no-repeat center center;
       width: 100vw;
       height: 100vh;
-      flex-direction: column;
-      position: absolute;
-      margin: auto;
     }
     .startPage_navigator {
       display: flex;
       flex-flow: row nowrap;
-      position: absolute;
+      position:absolute;
       justify-content: space-around;
       align-items: center;
       width: 100vw;
-      height: 20vh;
+      height: 30vw;
       bottom: 0;
       left: 0;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
   }
   .startPage_navigatorStart {
@@ -83,7 +82,7 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     width: 15vw;
     height: 15vw;
   }
-  .temorary {
+  .temporary {
     position: absolute;
     display: flex;
     flex-flow: column nowrap;
@@ -102,7 +101,7 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 
   <div class="header">
     <div class="sideBar_toggle" (click)="sideBarToggle()"></div>
-    <div class="temorary">
+    <div class="temporary">
       <div (click)="goEn()">english</div>
       <div (click)="goRu()">russian</div>
     </div>
@@ -172,18 +171,18 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-        'sport-page.title':'sport pagie',
-        'calories':'calories',
+        'sport-page.title': 'sport pagie',
+        'calories': 'calories',
         'protein': 'protein',
-        'carbohydrates':'carbohydrates',
-        'fat':'fat'
+        'carbohydrates': 'carbohydrates',
+        'fat': 'fat'
     },
 
     'ru': {
-        'sport-page.title':'спорт страничга',
-        'calories':'калории',
+        'sport-page.title': 'спорт страничга',
+        'calories': 'калории',
         'protein': 'белки',
-        'carbohydrates':'углеводы',
-        'fat':'жиры'
+        'carbohydrates': 'углеводы',
+        'fat': 'жиры'
     }
 }

@@ -3,19 +3,18 @@
 
 <head>
   <title>OPANAS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <base href="/">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
   <link rel="stylesheet" href="src/css/main.css">
   <!-- 1. Load libraries -->
   <!-- IE required polyfills, in this exact order -->
-  <script src="node_modules/es6-shim/es6-shim.min.js"></script>
-  <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+  <script src="dist/build/lib/es6-shim.min.js"></script>
+  <script src="dist/build/lib/system-polyfills.js"></script>
 
-  <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
-  <script src="node_modules/rxjs/bundles/Rx.js"></script>
-  <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-  <script src="node_modules/angular2/bundles/router.dev.js"></script>
+  <script src="dist/build/lib/angular2-polyfills.min.js"></script>
+  <script src="dist/build/lib/system.src.js"></script>
+  <script src="dist/build/lib/Rx.min.js"></script>
+  <script src="dist/build/lib/angular2.dev.js"></script>
+  <script src="dist/build/lib/router.dev.js"></script>
 
   <!-- 2. Configure SystemJS -->
   <script>

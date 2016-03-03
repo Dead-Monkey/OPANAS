@@ -16,7 +16,7 @@ export class RefreshDateService {
         this.tomorrow = new Date();
         this.tomorrow.setHours(0, 0, 0, 0);
         this.tomorrow.setDate(this.today.getDate() + 1);
-        this.timer = this.tomorrow.getTime() - this.today.getTime();
+        this.timer = this.tomorrow.getTime() - this.today.getTime() + 10000;
     }
 
     refresher(...arg) {
@@ -25,7 +25,8 @@ export class RefreshDateService {
         setTimeout(() => {
             arg.map((item) => item());
             this.timerMaker();
-            this.refresher();
-        }, this.timer);
+            this.refresher(...arg);
+            console.log(`refresher da best`);
+        },this.timer);
     }
 }

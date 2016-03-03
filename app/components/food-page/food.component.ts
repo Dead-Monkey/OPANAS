@@ -155,6 +155,10 @@ import {RefreshDateService} from '../../services/refresh-date/refresh-date.servi
   </div>
 </div>
 </form>
+<div (touchstart)="bla($event)">touchstart</div>
+<div (touchmove)="bla2($event)">touchmove</div>
+
+
 <div class="food_list">
 <div *ngFor="#item of pickedFoodContainer; #i = index">
 
@@ -201,8 +205,33 @@ export class FoodComponent implements OnInit {
         }
     }
 
+    private totalFoodEmpty = {
+        "calories": {
+            "full": 0,
+            "maybe": 0
+        },
+        "protein": {
+            "full": 0,
+            "maybe": 0
+        },
+        "carbohydrates": {
+            "full": 0,
+            "maybe": 0
+        },
+        "fat": {
+            "full": 0,
+            "maybe": 0
+        }
+    }
+
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
+    bla(event) {
+        console.log(event);
+    }
+    bla2(enent) {
+        console.log(event);
+    }
     ngOnInit() {
 
         this.foodContainer = this._foodServe.getAllFood();
@@ -217,6 +246,9 @@ export class FoodComponent implements OnInit {
         this._refreshDateService.refresher(() => {
             this.currentDate = new Date();
             this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate)
+
+            //4 progress bar
+            this.totalFood = this.totalFoodEmpty;
             for (let food of this.pickedFoodContainer) {
                 this.calculateFood(food);
             }
