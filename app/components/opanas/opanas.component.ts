@@ -24,8 +24,8 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     }
 		.container {
       background: url(./src/img/tempBackground.png) no-repeat center center;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
     }
     .startPage_navigator {
       display: flex;
@@ -74,14 +74,7 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     width: 27vw;
     height: 27vw;
   }
-  .sideBar_toggle {
-    background: url('./src/img/menu-icon.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    margin-left: 2vw;
-    width: 15vw;
-    height: 15vw;
-  }
+
   .temporary {
     position: absolute;
     display: flex;
@@ -100,7 +93,6 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 <div class="container">
 
   <div class="header">
-    <div class="sideBar_toggle" (click)="sideBarToggle()"></div>
     <div class="temporary">
       <div (click)="goEn()">english</div>
       <div (click)="goRu()">russian</div>
@@ -139,10 +131,6 @@ export class OpanasComponent implements OnInit {
 
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
-    sideBarToggle() {
-        this.sideBarIsOpen = !this.sideBarIsOpen;
-    }
-
     //config app
     ngOnInit() {
         //translator config
@@ -153,6 +141,7 @@ export class OpanasComponent implements OnInit {
         //default language will be use if current language dont has key. it's an optional.
         this._translator.setDefaultLanguage('en');
     }
+
     //replace this 2 userPage;
     goEn() {
         this._translator.setCurrentLanguage('en');

@@ -17,6 +17,7 @@ background-color: rgba(49, 51, 61, 0.7);
 box-sizing: border-box;
 border: 5px solid #0C1017;
 border-radius: 10px;
+z-index:1;
 
 }
 .progress_mainLine {

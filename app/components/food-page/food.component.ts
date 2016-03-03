@@ -155,9 +155,6 @@ import {RefreshDateService} from '../../services/refresh-date/refresh-date.servi
   </div>
 </div>
 </form>
-<div (touchstart)="bla($event)">touchstart</div>
-<div (touchmove)="bla2($event)">touchmove</div>
-
 
 <div class="food_list">
 <div *ngFor="#item of pickedFoodContainer; #i = index">
@@ -226,12 +223,6 @@ export class FoodComponent implements OnInit {
 
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
-    bla(event) {
-        console.log(event);
-    }
-    bla2(enent) {
-        console.log(event);
-    }
     ngOnInit() {
 
         this.foodContainer = this._foodServe.getAllFood();
