@@ -1,11 +1,5 @@
-import {
-    Component, Input, Output, EventEmitter
-}
-from 'angular2/core';
-import {
-    ROUTER_DIRECTIVES
-}
-from 'angular2/router';
+import {Component, Input, Output, EventEmitter}from 'angular2/core';
+import {  ROUTER_DIRECTIVES}from 'angular2/router';
 @Component({
     selector: 'fm-side-bar', directives: [ROUTER_DIRECTIVES], providers: [], pipes: [], styles: [`
     .sideBarContainer {
@@ -64,8 +58,9 @@ from 'angular2/router';
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
-<div *ngIf="!isOpen" class="sideBarSwipePlace" (touchmove)="move($event)" (touchstart)="start($event)" (touchend)="end($event)">touchmove</div>
-    `}
+<div *ngIf="!isOpen" class="sideBarSwipePlace" (touchmove)="move($event)" (touchstart)="start($event)" (touchend)="end($event)"></div>
+    `
+}
 ) export class SideBar {
     @Input() isOpen: boolean;
     @Output() isOpenChange = new EventEmitter();

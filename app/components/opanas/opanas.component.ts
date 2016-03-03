@@ -27,53 +27,6 @@ import {StorageService} from '../../shared/services/storage/storage.service';
       width: 100%;
       height: 100%;
     }
-    .startPage_navigator {
-      display: flex;
-      flex-flow: row nowrap;
-      position:absolute;
-      justify-content: space-around;
-      align-items: center;
-      width: 100vw;
-      height: 30vw;
-      bottom: 0;
-      left: 0;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-  }
-  .startPage_navigatorStart {
-    display: flex;
-    flex-flow: column nowrap;
-    position: absolute;
-    justify-content: space-around;
-    align-items: center;
-    width: 30vw;
-    height: 170vw;
-    bottom: 0;
-    left: 35vw;
-    overflow: hidden;
-}
-    .foodButton {
-    background: url('./src/img/food.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    width: 27vw;
-    height: 27vw;
-  }
-  .sportButton {
-    background: url('./src/img/sport.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    width: 27vw;
-    height: 27vw;
-  }
-  .restButton {
-    background: url('./src/img/rest.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    width: 27vw;
-    height: 27vw;
-  }
 
   .temporary {
     position: absolute;
@@ -102,18 +55,6 @@ import {StorageService} from '../../shared/services/storage/storage.service';
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
 
   <router-outlet></router-outlet>
-
-  <nav class="startPage_navigator">
-    <a [routerLink]="['Food']">
-      <div class="foodButton"></div>
-    </a>
-    <a [routerLink]="['Sport']">
-      <div class="sportButton"></div>
-    </a>
-    <a [routerLink]="['Rest']">
-      <div class="restButton"></div>
-    </a>
-  </nav>
 </div>
 
 `})
