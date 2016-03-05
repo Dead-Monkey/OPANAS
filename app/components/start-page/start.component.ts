@@ -15,10 +15,11 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
         justify-content: space-around;
         align-items: center;
         width: 30vw;
-        height: 170vw;
+        height: 100vh;
         bottom: 0;
         left: 35vw;
         overflow: hidden;
+        background-color: silver;
       }
       .startPage_foodButton {
       background: url('./src/img/food.png') no-repeat center center;

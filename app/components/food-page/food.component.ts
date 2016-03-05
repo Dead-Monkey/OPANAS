@@ -136,7 +136,7 @@ import {RefreshDateService} from '../../services/refresh-date/refresh-date.servi
     template: `
 <fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full" [secondLine]="totalFood.calories.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full" [secondLine]="totalFood.protein.maybe"></fm-progress-bar>
-<fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.carbohydrates.maybe"></fm-progress-bar>
+<fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.fat.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'carbohydrates'" [mainLine]="totalFood.carbohydrates.full" [secondLine]="totalFood.carbohydrates.maybe"></fm-progress-bar>
 
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
@@ -202,25 +202,6 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    private totalFoodEmpty = {
-        "calories": {
-            "full": 0,
-            "maybe": 0
-        },
-        "protein": {
-            "full": 0,
-            "maybe": 0
-        },
-        "carbohydrates": {
-            "full": 0,
-            "maybe": 0
-        },
-        "fat": {
-            "full": 0,
-            "maybe": 0
-        }
-    }
-
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
 
     ngOnInit() {
@@ -236,17 +217,16 @@ export class FoodComponent implements OnInit {
         //refresh view on 00:00
         this._refreshDateService.refresher(() => {
             this.currentDate = new Date();
+            // this.currentDate.setDate(this.currentDate.getDate()+1);
             this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate)
-
+            console.log(`refresher 4o-li`);
             //4 progress bar
-            this.totalFood = this.totalFoodEmpty;
+            this.calculateFoodRefresh();
             for (let food of this.pickedFoodContainer) {
                 this.calculateFood(food);
             }
         });
     }
-
-
 
     onSubmit(food) {
 
@@ -303,6 +283,17 @@ export class FoodComponent implements OnInit {
         this.calculateMayBeMinus(food);
     }
 
+    calculateFoodRefresh() {
+        this.totalFood.calories.full = 0;
+        this.totalFood.protein.full = 0;
+        this.totalFood.carbohydrates.full = 0;
+        this.totalFood.fat.full = 0;
+        this.totalFood.calories.maybe = 0;
+        this.totalFood.protein.maybe = 0;
+        this.totalFood.carbohydrates.maybe = 0;
+        this.totalFood.fat.maybe = 0;
+    }
+
     calculateFull(food: Food) {
         this.totalFood.calories.full = this.totalFood.calories.full + food.calories;
         this.totalFood.protein.full = this.totalFood.protein.full + food.protein;
@@ -330,4 +321,5 @@ export class FoodComponent implements OnInit {
         this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - food.carbohydrates;
         this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
     }
+
 }
