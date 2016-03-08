@@ -47,7 +47,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     this._storageService.setItem(this.storageKeys.userFood, this.userFood);
                 };
                 FoodService.prototype.prepareFood = function () {
-                    this.allFood = [];
+                    this.allFood.length = 0;
                     for (var _i = 0, _a = this.food; _i < _a.length; _i++) {
                         var itemFood = _a[_i];
                         if (this.userFood.length) {

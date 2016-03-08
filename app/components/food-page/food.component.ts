@@ -6,11 +6,12 @@ import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
+import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
 
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar, AddFoodComponent],
+    directives: [ProgressBar, AddFoodComponent, SwipeHoldertDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -138,9 +139,10 @@ import {UserService} from '../../services/user/user.service';
     position: absolute;
     right: 0;
     top: 0;
-    width: 15vw;
+    width: 20vw;
     height: 15vw;
     background-color: blue;
+    overflow: hidden;
   }
     `],
     template: `
@@ -169,14 +171,13 @@ import {UserService} from '../../services/user/user.service';
 </form>
 
 <div class="food_list">
-  <div *ngFor="#item of pickedFoodContainer; #i = index">
+  <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFodd(i, item)" (fmSwipeRight)="removeFodd(i, item)">
 
     <div class="food_listItem">
       {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
 
-    <button (click)="removeFodd(i, item)">minus</button>
     <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(item)"></div>
 
   </div>
@@ -185,7 +186,9 @@ import {UserService} from '../../services/user/user.service';
 })
 
 export class FoodComponent implements OnInit {
-
+bla(e){
+  console.log(e);
+}
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;

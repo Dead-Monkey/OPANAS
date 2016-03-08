@@ -46,6 +46,9 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 }
                 AddFoodComponent.prototype.ngOnInit = function () {
                 };
+                AddFoodComponent.prototype.getUserFood = function () {
+                    console.log(this._foodServe.getUserFood());
+                };
                 AddFoodComponent.prototype.setFood = function () {
                     this._foodServe.setUserFood({
                         "id": 1,
@@ -65,7 +68,10 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 AddFoodComponent.prototype.removeFood = function () {
                     this._foodServe.removeUserFood({
                         "id": 99,
-                        "name": "pizza",
+                        "name": {
+                            "en": "pizza",
+                            "ru": "пицца"
+                        },
                         "custom": true,
                         "calories": 2,
                         "protein": 1,
@@ -81,7 +87,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                         providers: [],
                         pipes: [translate_service_1.TranslatePipe, simple_search_pipe_1.SimpleSearch],
                         styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 90vh;\n  z-index:10;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
-                        template: "\n<div class=\"container\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n</div>\n    "
+                        template: "\n<div class=\"container\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n  <div class=\"tmp\" (click)=\"getUserFood()\">get</div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_1.FoodService, calendar_service_1.CalendarService])
                 ], AddFoodComponent);

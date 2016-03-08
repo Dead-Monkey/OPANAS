@@ -30,6 +30,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   <div>{{item?.name}}</div>
   <div class="tmp" (click)="setFood()">set</div>
   <div class="tmp" (click)="removeFood()">remove</div>
+  <div class="tmp" (click)="getUserFood()">get</div>
+
 </div>
     `
 })
@@ -53,7 +55,9 @@ export class AddFoodComponent implements OnInit {
 
     ngOnInit() {
     }
-
+    getUserFood() {
+        console.log(this._foodServe.getUserFood());
+    }
     setFood() {
         this._foodServe.setUserFood({
             "id": 1,
@@ -73,7 +77,10 @@ export class AddFoodComponent implements OnInit {
     removeFood() {
         this._foodServe.removeUserFood({
             "id": 99,
-            "name": "pizza",
+            "name": {
+                "en": "pizza",
+                "ru": "пицца"
+            },
             "custom": true,
             "calories": 2,
             "protein": 1,

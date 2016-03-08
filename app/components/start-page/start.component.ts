@@ -18,7 +18,6 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
         bottom: 0;
         left: 35vw;
         overflow: hidden;
-        background-color: silver;
       }
       .startPage_foodButton {
       background: url('./src/img/food.png') no-repeat center center;

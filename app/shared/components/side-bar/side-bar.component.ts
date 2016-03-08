@@ -1,7 +1,14 @@
 import {Component, Input, Output, EventEmitter}from 'angular2/core';
-import {  ROUTER_DIRECTIVES}from 'angular2/router';
+import {ROUTER_DIRECTIVES}from 'angular2/router';
+import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.directive';
+
+
 @Component({
-    selector: 'fm-side-bar', directives: [ROUTER_DIRECTIVES], providers: [], pipes: [], styles: [`
+    selector: 'fm-side-bar',
+    directives: [ROUTER_DIRECTIVES, SwipeHoldertDirective],
+    providers: [],
+    pipes: [],
+    styles: [`
     .sideBarContainer {
     position: absolute;
     display: flex;
@@ -29,10 +36,10 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
     position: fixed;
     top:0;
     left:0;
-    background-color: silver;
+    // background-color: silver;
+    // opacity:0.5;
     height:100vh;
     width:10vw;
-    opacity:0.5;
     z-index: 999;
   }
   .sideBarShadow {
@@ -48,7 +55,7 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
   `], template: `
 <div class="sideBar_toggle" (click)="toggle()"></div>
 
-<div class="sideBarContainer" *ngIf="isOpen" (touchmove)="move($event)" (touchstart)="start($event)" (touchend)="end($event)">
+<div class="sideBarContainer" *ngIf="isOpen" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()">
   <a [routerLink]="['Food']">
      {{"opanas.router.food"}}
   </a>
@@ -60,63 +67,13 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
-<div *ngIf="!isOpen" class="sideBarSwipePlace" (touchmove)="move($event)" (touchstart)="start($event)" (touchend)="end($event)"></div>
+<div *ngIf="!isOpen" class="sideBarSwipePlace" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()"></div>
     `
 }
 ) export class SideBar {
     @Input() isOpen: boolean;
     @Output() isOpenChange = new EventEmitter();
-    private xDown;
-    private yDown;
 
-    start(evt) {
-        this.xDown = evt.touches[0].clientX;
-        this.yDown = evt.touches[0].clientY;
-        console.log(`start`, evt, screen.width, window.innerWidth);
-    }
-
-    move(evt) {
-        console.log(event);
-        if (!this.xDown || !this.yDown) {
-            return;
-        }
-        let xUp = evt.touches[0].clientX;
-        let yUp = evt.touches[0].clientY;
-        let xDiff = this.xDown - xUp;
-        let yDiff = this.yDown - yUp;
-        if (Math.abs(xDiff) > Math.abs(yDiff)) {
-            /*most significant*/
-            if (xDiff > 0) {
-                /* left swip */
-                console.log(`left swipe`);
-                this.toggle();
-
-            }
-            else {
-                /* right swipe */
-                console.log(`right swipe`);
-                this.toggle();
-            }
-        }
-        else {
-            if (yDiff > 0) {
-                /* up swip */
-                console.log(`up swipe`);
-            }
-            else {
-                /* down swipe */
-                console.log(`down swipe`);
-            }
-        }
-        this.xDown = evt.touches[0].clientX;
-        this.yDown = evt.touches[0].clientY;
-    }
-    end(evt) {
-        /* reset values */
-        this.xDown = null;
-        this.yDown = null;
-        console.log(`end`);
-    }
     toggle() {
         this.isOpen = !this.isOpen;
         this.isOpenChange.emit(this.isOpen);

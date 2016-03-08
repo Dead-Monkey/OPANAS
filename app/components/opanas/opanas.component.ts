@@ -27,6 +27,7 @@ import {UserService} from '../../services/user/user.service';
       background: url(./src/img/tempBackground.png) no-repeat center center;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
 
   .temporary {

@@ -30,7 +30,7 @@ export class FoodService {
     }
 
     prepareFood() {
-        this.allFood = [];
+        this.allFood.length = 0;
         for (let itemFood of this.food) {
             if (this.userFood.length) {
                 for (let itemUser of this.userFood) {
