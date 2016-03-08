@@ -55,20 +55,23 @@ export class AddFoodComponent implements OnInit {
     }
 
     setFood() {
-        this._foodServe.setUserFood(  {
-              "id": 1,
-              "name": "pizza",
-              "custom": false,
-              "calories": 999,
-              "protein": 10,
-              "carbohydrates": 10,
-              "fat": 10
-          })
+        this._foodServe.setUserFood({
+            "id": 1,
+            "name": {
+                "en": "pizza",
+                "ru": "пицца"
+            },
+            "custom": false,
+            "calories": 999,
+            "protein": 10,
+            "carbohydrates": 10,
+            "fat": 10
+        })
         // console.log(this._foodServe.getUserFood());
         this.item = this._foodServe.getUserFood();
     }
     removeFood() {
-      this._foodServe.removeUserFood({
+        this._foodServe.removeUserFood({
             "id": 99,
             "name": "pizza",
             "custom": true,
@@ -77,7 +80,7 @@ export class AddFoodComponent implements OnInit {
             "carbohydrates": 10,
             "fat": 3
         });
-      this.item = this._foodServe.getUserFood();
+        this.item = this._foodServe.getUserFood();
     }
 
 

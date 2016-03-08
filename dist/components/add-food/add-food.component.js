@@ -49,7 +49,10 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 AddFoodComponent.prototype.setFood = function () {
                     this._foodServe.setUserFood({
                         "id": 1,
-                        "name": "pizza",
+                        "name": {
+                            "en": "pizza",
+                            "ru": "пицца"
+                        },
                         "custom": false,
                         "calories": 999,
                         "protein": 10,

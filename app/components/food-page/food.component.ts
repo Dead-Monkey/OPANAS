@@ -134,9 +134,18 @@ import {UserService} from '../../services/user/user.service';
     color: #0d0e15;
     border-radius: 2vw;
   }
+  .plusBar{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15vw;
+    height: 15vw;
+    background-color: blue;
+  }
     `],
     template: `
-<op-add-food *ngIf="addFoodToggle"></op-add-food>
+<div class="plusBar" (click)="addFoodToggle()">addFood</div>
+<op-add-food *ngIf="addFood"></op-add-food>
 <fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full" [secondLine]="totalFood.calories.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full" [secondLine]="totalFood.protein.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.fat.maybe"></fm-progress-bar>
@@ -163,7 +172,7 @@ import {UserService} from '../../services/user/user.service';
   <div *ngFor="#item of pickedFoodContainer; #i = index">
 
     <div class="food_listItem">
-      {{item?.name}}
+      {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
 
@@ -186,7 +195,7 @@ export class FoodComponent implements OnInit {
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
     private correctFood: boolean = false;
-    private addFoodToggle: boolean = false;
+    private addFood: boolean = false;
 
     private totalFood = {
         "calories": {
@@ -221,7 +230,9 @@ export class FoodComponent implements OnInit {
         }
         console.log(this.pickedFoodContainer);
     }
-
+    addFoodToggle() {
+        this.addFood = !this.addFood;
+    }
     onSubmit(food) {
 
         this.pickedFood['weight'] = food.value.weight;
@@ -242,7 +253,7 @@ export class FoodComponent implements OnInit {
 
     pickFoodInput(name) {
         for (let obj of this.foodContainer) {
-            if (obj['name'] === name) {
+            if (obj['name'][this.language] === name) {
                 return this.pickFood(obj);
             } else {
                 this.correctFood = false;
@@ -253,7 +264,7 @@ export class FoodComponent implements OnInit {
 
     pickFood(food: Food) {
         this.pickedFood = Object.assign({}, food);
-        this.model['name'] = food.name;
+        this.model['name'] = food.name[this.language];
         this.correctFood = true;
     }
 
