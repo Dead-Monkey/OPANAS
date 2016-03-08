@@ -19,14 +19,11 @@ export class RefreshDateService {
         this.timer = this.tomorrow.getTime() - this.today.getTime();
     }
 
-    refresher(...arg) {
+    refresher() {
         console.log(`refresher in da house. refresh will make badaboom in ${this.timer / 1000 / 60} minutes`);
-        console.log(`the refresher observes:${arg}`);
         setTimeout(() => {
-            arg.map((item) => item());
-            this.timerMaker();
-            this.refresher(...arg);
             console.log(`refresher da best`);
+            location.reload();
         }, this.timer);
     }
 }

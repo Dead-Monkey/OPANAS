@@ -212,115 +212,15 @@ System.register("shared/components/progress-bar/progress-bar.component", ['angul
         }
     }
 });
-System.register("services/food/food.service", ['angular2/core'], function(exports_5, context_5) {
+System.register("shared/services/storage/storage.service", ['angular2/core'], function(exports_5, context_5) {
     "use strict";
     var __moduleName = context_5 && context_5.id;
     var core_4;
-    var FoodService, food;
+    var StorageService;
     return {
         setters:[
             function (core_4_1) {
                 core_4 = core_4_1;
-            }],
-        execute: function() {
-            FoodService = (function () {
-                function FoodService() {
-                }
-                FoodService.prototype.getAllFood = function () {
-                    return food;
-                };
-                FoodService = __decorate([
-                    core_4.Injectable(), 
-                    __metadata('design:paramtypes', [])
-                ], FoodService);
-                return FoodService;
-            }());
-            exports_5("FoodService", FoodService);
-            food = [
-                {
-                    "id": 1,
-                    "name": "pizza",
-                    "calories": 10,
-                    "protein": 10,
-                    "carbohydrates": 10,
-                    "fat": 10
-                },
-                {
-                    "id": 2,
-                    "name": "meet",
-                    "calories": 5,
-                    "protein": 5,
-                    "carbohydrates": 5,
-                    "fat": 5
-                },
-                {
-                    "id": 3,
-                    "name": "patato",
-                    "calories": 20,
-                    "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
-                },
-                {
-                    "id": 4,
-                    "name": "tomato",
-                    "calories": 20,
-                    "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
-                },
-                {
-                    "id": 5,
-                    "name": "apple",
-                    "calories": 12,
-                    "protein": 12,
-                    "carbohydrates": 11,
-                    "fat": 10
-                }
-            ];
-        }
-    }
-});
-System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core'], function(exports_6, context_6) {
-    "use strict";
-    var __moduleName = context_6 && context_6.id;
-    var core_5;
-    var SimpleSearch;
-    return {
-        setters:[
-            function (core_5_1) {
-                core_5 = core_5_1;
-            }],
-        execute: function() {
-            SimpleSearch = (function () {
-                function SimpleSearch() {
-                }
-                SimpleSearch.prototype.transform = function (value, _a) {
-                    var field = _a[0], letter = _a[1];
-                    return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
-                };
-                SimpleSearch = __decorate([
-                    core_5.Pipe({
-                        name: 'simpleSearch',
-                        pure: false
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], SimpleSearch);
-                return SimpleSearch;
-            }());
-            exports_6("SimpleSearch", SimpleSearch);
-        }
-    }
-});
-System.register("shared/services/storage/storage.service", ['angular2/core'], function(exports_7, context_7) {
-    "use strict";
-    var __moduleName = context_7 && context_7.id;
-    var core_6;
-    var StorageService;
-    return {
-        setters:[
-            function (core_6_1) {
-                core_6 = core_6_1;
             }],
         execute: function() {
             StorageService = (function () {
@@ -336,28 +236,247 @@ System.register("shared/services/storage/storage.service", ['angular2/core'], fu
                     }
                     return JSON.parse(localStorage.getItem(name));
                 };
+                StorageService.prototype.removeItem = function (name) {
+                    localStorage.removeItem(name);
+                };
                 StorageService = __decorate([
-                    core_6.Injectable(), 
+                    core_4.Injectable(), 
                     __metadata('design:paramtypes', [])
                 ], StorageService);
                 return StorageService;
             }());
-            exports_7("StorageService", StorageService);
+            exports_5("StorageService", StorageService);
         }
     }
 });
-System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_8, context_8) {
+System.register("services/user/user.service", ['angular2/core'], function(exports_6, context_6) {
+    "use strict";
+    var __moduleName = context_6 && context_6.id;
+    var core_5;
+    var UserService;
+    return {
+        setters:[
+            function (core_5_1) {
+                core_5 = core_5_1;
+            }],
+        execute: function() {
+            UserService = (function () {
+                function UserService() {
+                    this.language = 'ru';
+                }
+                UserService.prototype.getLanguage = function () {
+                    return this.language;
+                };
+                UserService = __decorate([
+                    core_5.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], UserService);
+                return UserService;
+            }());
+            exports_6("UserService", UserService);
+        }
+    }
+});
+System.register("services/food/food.service", ['angular2/core', "shared/services/storage/storage.service", "services/user/user.service"], function(exports_7, context_7) {
+    "use strict";
+    var __moduleName = context_7 && context_7.id;
+    var core_6, storage_service_1, user_service_1;
+    var FoodService, foodVendor;
+    return {
+        setters:[
+            function (core_6_1) {
+                core_6 = core_6_1;
+            },
+            function (storage_service_1_1) {
+                storage_service_1 = storage_service_1_1;
+            },
+            function (user_service_1_1) {
+                user_service_1 = user_service_1_1;
+            }],
+        execute: function() {
+            FoodService = (function () {
+                function FoodService(_storageService, _userServe) {
+                    this._storageService = _storageService;
+                    this._userServe = _userServe;
+                    this.food = foodVendor;
+                    this.userFood = [];
+                    this.allFood = [];
+                    this.storageKeys = {
+                        'userFood': 'userFood'
+                    };
+                    if (this._storageService.getItem(this.storageKeys.userFood)) {
+                        this.userFood = this._storageService.getItem(this.storageKeys.userFood);
+                    }
+                    this.prepareFood();
+                }
+                FoodService.prototype.getAllFood = function () {
+                    this.prepareFood();
+                    return this.allFood;
+                };
+                FoodService.prototype.refreshUserFood = function () {
+                    this._storageService.setItem(this.storageKeys.userFood, this.userFood);
+                };
+                FoodService.prototype.prepareFood = function () {
+                    this.allFood = [];
+                    for (var _i = 0, _a = this.food; _i < _a.length; _i++) {
+                        var itemFood = _a[_i];
+                        if (this.userFood.length) {
+                            for (var _b = 0, _c = this.userFood; _b < _c.length; _b++) {
+                                var itemUser = _c[_b];
+                                if (itemUser.name[this._userServe.getLanguage()].trim() === itemFood.name[this._userServe.getLanguage()].trim()) {
+                                    this.allFood.push(itemUser);
+                                }
+                                else {
+                                    this.allFood.push(itemFood);
+                                }
+                            }
+                        }
+                        else {
+                            this.allFood.push(itemFood);
+                        }
+                    }
+                };
+                FoodService.prototype.getUserFood = function () {
+                    return this.userFood;
+                };
+                FoodService.prototype.setUserFood = function (food) {
+                    for (var _i = 0, _a = this.userFood; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name[this._userServe.getLanguage()].trim() === food.name[this._userServe.getLanguage()].trim()) {
+                            var rem = this.userFood.indexOf(item);
+                            this.userFood.splice(rem, 1);
+                        }
+                    }
+                    this.userFood.push(food);
+                    this.refreshUserFood();
+                    this.prepareFood();
+                };
+                FoodService.prototype.removeUserFood = function (food) {
+                    for (var _i = 0, _a = this.userFood; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name[this._userServe.getLanguage()].trim() === food.name[this._userServe.getLanguage()].trim()) {
+                            var rem = this.userFood.indexOf(item);
+                            this.userFood.splice(rem, 1);
+                        }
+                    }
+                    this.refreshUserFood();
+                    this.prepareFood();
+                };
+                FoodService = __decorate([
+                    core_6.Injectable(), 
+                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService])
+                ], FoodService);
+                return FoodService;
+            }());
+            exports_7("FoodService", FoodService);
+            foodVendor = [
+                {
+                    "id": 1,
+                    "name": {
+                        "en": "pizza",
+                        "ru": "пицца"
+                    },
+                    "custom": false,
+                    "calories": 10,
+                    "protein": 10,
+                    "carbohydrates": 10,
+                    "fat": 10
+                },
+                {
+                    "id": 2,
+                    "name": {
+                        "en": "apple",
+                        "ru": "яблоко"
+                    },
+                    "custom": false,
+                    "calories": 5,
+                    "protein": 5,
+                    "carbohydrates": 5,
+                    "fat": 5
+                },
+                {
+                    "id": 3,
+                    "name": {
+                        "en": "tomato",
+                        "ru": "помидор"
+                    },
+                    "custom": false,
+                    "calories": 20,
+                    "protein": 20,
+                    "carbohydrates": 20,
+                    "fat": 20
+                },
+                {
+                    "id": 4,
+                    "name": {
+                        "en": "potato",
+                        "ru": "картофан"
+                    },
+                    "custom": false,
+                    "calories": 20,
+                    "protein": 20,
+                    "carbohydrates": 20,
+                    "fat": 20
+                },
+                {
+                    "id": 5,
+                    "name": {
+                        "en": "niceThing",
+                        "ru": "ништяк"
+                    },
+                    "custom": false,
+                    "calories": 12,
+                    "protein": 12,
+                    "carbohydrates": 11,
+                    "fat": 10
+                }
+            ];
+        }
+    }
+});
+System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core'], function(exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
-    var core_7, storage_service_1;
-    var CalendarService;
+    var core_7;
+    var SimpleSearch;
     return {
         setters:[
             function (core_7_1) {
                 core_7 = core_7_1;
+            }],
+        execute: function() {
+            SimpleSearch = (function () {
+                function SimpleSearch() {
+                }
+                SimpleSearch.prototype.transform = function (value, _a) {
+                    var field = _a[0], letter = _a[1];
+                    return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
+                };
+                SimpleSearch = __decorate([
+                    core_7.Pipe({
+                        name: 'simpleSearch',
+                        pure: false
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], SimpleSearch);
+                return SimpleSearch;
+            }());
+            exports_8("SimpleSearch", SimpleSearch);
+        }
+    }
+});
+System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_9, context_9) {
+    "use strict";
+    var __moduleName = context_9 && context_9.id;
+    var core_8, storage_service_2;
+    var CalendarService;
+    return {
+        setters:[
+            function (core_8_1) {
+                core_8 = core_8_1;
             },
-            function (storage_service_1_1) {
-                storage_service_1 = storage_service_1_1;
+            function (storage_service_2_1) {
+                storage_service_2 = storage_service_2_1;
             }],
         execute: function() {
             CalendarService = (function () {
@@ -369,10 +488,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                     };
                     this.saveCalendar();
                 }
-                CalendarService.prototype.testStorage = function () {
-                    this._storageService.setItem('name', this.calendar);
-                    console.log(this._storageService.getItem('name'));
-                };
                 CalendarService.prototype.createCalendar = function () {
                     var startYear = 2014;
                     var lastYear = 2020;
@@ -465,68 +580,20 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 CalendarService.prototype.setDailyRest = function () {
                 };
                 CalendarService = __decorate([
-                    core_7.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_1.StorageService])
+                    core_8.Injectable(), 
+                    __metadata('design:paramtypes', [storage_service_2.StorageService])
                 ], CalendarService);
                 return CalendarService;
             }());
-            exports_8("CalendarService", CalendarService);
+            exports_9("CalendarService", CalendarService);
         }
     }
 });
-System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_9, context_9) {
-    "use strict";
-    var __moduleName = context_9 && context_9.id;
-    var core_8;
-    var RefreshDateService;
-    return {
-        setters:[
-            function (core_8_1) {
-                core_8 = core_8_1;
-            }],
-        execute: function() {
-            RefreshDateService = (function () {
-                function RefreshDateService() {
-                    this.today = new Date();
-                    this.timerMaker();
-                }
-                RefreshDateService.prototype.timerMaker = function () {
-                    this.today = new Date();
-                    this.tomorrow = new Date();
-                    this.tomorrow.setHours(0, 0, 0, 0);
-                    this.tomorrow.setDate(this.today.getDate() + 1);
-                    this.timer = this.tomorrow.getTime() - this.today.getTime();
-                };
-                RefreshDateService.prototype.refresher = function () {
-                    var _this = this;
-                    var arg = [];
-                    for (var _i = 0; _i < arguments.length; _i++) {
-                        arg[_i - 0] = arguments[_i];
-                    }
-                    console.log("refresher in da house. refresh will make badaboom in " + this.timer / 1000 / 60 + " minutes");
-                    console.log("the refresher observes:" + arg);
-                    setTimeout(function () {
-                        arg.map(function (item) { return item(); });
-                        _this.timerMaker();
-                        _this.refresher.apply(_this, arg);
-                        console.log("refresher da best");
-                    }, this.timer);
-                };
-                RefreshDateService = __decorate([
-                    core_8.Injectable(), 
-                    __metadata('design:paramtypes', [])
-                ], RefreshDateService);
-                return RefreshDateService;
-            }());
-            exports_9("RefreshDateService", RefreshDateService);
-        }
-    }
-});
-System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service"], function(exports_10, context_10) {
+System.register("components/add-food/add-food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service"], function(exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
-    var core_9, translate_service_4, progress_bar_component_1, food_service_1, simple_search_pipe_1, calendar_service_1, refresh_date_service_1;
-    var FoodComponent;
+    var core_9, translate_service_4, progress_bar_component_1, food_service_1, simple_search_pipe_1, calendar_service_1;
+    var AddFoodComponent;
     return {
         setters:[
             function (core_9_1) {
@@ -546,21 +613,106 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
             },
             function (calendar_service_1_1) {
                 calendar_service_1 = calendar_service_1_1;
-            },
-            function (refresh_date_service_1_1) {
-                refresh_date_service_1 = refresh_date_service_1_1;
             }],
         execute: function() {
-            FoodComponent = (function () {
-                function FoodComponent(_foodServe, _calendarService, _refreshDateService) {
+            AddFoodComponent = (function () {
+                function AddFoodComponent(_foodServe, _calendarService) {
                     this._foodServe = _foodServe;
                     this._calendarService = _calendarService;
-                    this._refreshDateService = _refreshDateService;
                     this.model = {};
                     this.currentDate = new Date();
                     this.pickedFood = {};
                     this.pickedFoodContainer = [];
                     this.correctFood = false;
+                    this.item = this._foodServe.getUserFood();
+                }
+                AddFoodComponent.prototype.ngOnInit = function () {
+                };
+                AddFoodComponent.prototype.setFood = function () {
+                    this._foodServe.setUserFood({
+                        "id": 1,
+                        "name": "pizza",
+                        "custom": false,
+                        "calories": 999,
+                        "protein": 10,
+                        "carbohydrates": 10,
+                        "fat": 10
+                    });
+                    // console.log(this._foodServe.getUserFood());
+                    this.item = this._foodServe.getUserFood();
+                };
+                AddFoodComponent.prototype.removeFood = function () {
+                    this._foodServe.removeUserFood({
+                        "id": 99,
+                        "name": "pizza",
+                        "custom": true,
+                        "calories": 2,
+                        "protein": 1,
+                        "carbohydrates": 10,
+                        "fat": 3
+                    });
+                    this.item = this._foodServe.getUserFood();
+                };
+                AddFoodComponent = __decorate([
+                    core_9.Component({
+                        selector: 'op-add-food',
+                        directives: [progress_bar_component_1.ProgressBar],
+                        providers: [],
+                        pipes: [translate_service_4.TranslatePipe, simple_search_pipe_1.SimpleSearch],
+                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 90vh;\n  z-index:10;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
+                        template: "\n<div class=\"container\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n</div>\n    "
+                    }), 
+                    __metadata('design:paramtypes', [food_service_1.FoodService, calendar_service_1.CalendarService])
+                ], AddFoodComponent);
+                return AddFoodComponent;
+            }());
+            exports_10("AddFoodComponent", AddFoodComponent);
+        }
+    }
+});
+System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/add-food/add-food.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service"], function(exports_11, context_11) {
+    "use strict";
+    var __moduleName = context_11 && context_11.id;
+    var core_10, translate_service_5, progress_bar_component_2, add_food_component_1, food_service_2, simple_search_pipe_2, calendar_service_2, user_service_2;
+    var FoodComponent;
+    return {
+        setters:[
+            function (core_10_1) {
+                core_10 = core_10_1;
+            },
+            function (translate_service_5_1) {
+                translate_service_5 = translate_service_5_1;
+            },
+            function (progress_bar_component_2_1) {
+                progress_bar_component_2 = progress_bar_component_2_1;
+            },
+            function (add_food_component_1_1) {
+                add_food_component_1 = add_food_component_1_1;
+            },
+            function (food_service_2_1) {
+                food_service_2 = food_service_2_1;
+            },
+            function (simple_search_pipe_2_1) {
+                simple_search_pipe_2 = simple_search_pipe_2_1;
+            },
+            function (calendar_service_2_1) {
+                calendar_service_2 = calendar_service_2_1;
+            },
+            function (user_service_2_1) {
+                user_service_2 = user_service_2_1;
+            }],
+        execute: function() {
+            FoodComponent = (function () {
+                function FoodComponent(_foodServe, _calendarService, _userServe) {
+                    this._foodServe = _foodServe;
+                    this._calendarService = _calendarService;
+                    this._userServe = _userServe;
+                    this.model = {};
+                    this.currentDate = new Date();
+                    this.pickedFood = {};
+                    this.pickedFoodContainer = [];
+                    this.correctFood = false;
+                    this.addFoodToggle = false;
                     this.totalFood = {
                         "calories": {
                             "full": 0,
@@ -581,7 +733,6 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
-                    var _this = this;
                     this.foodContainer = this._foodServe.getAllFood();
                     this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
                     //4 calculate progress-bar
@@ -589,19 +740,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         var food = _a[_i];
                         this.calculateFood(food);
                     }
-                    //refresh view on 00:00
-                    this._refreshDateService.refresher(function () {
-                        _this.currentDate = new Date();
-                        // this.currentDate.setDate(this.currentDate.getDate()+1);
-                        _this.pickedFoodContainer = _this._calendarService.getDailyFood(_this.currentDate);
-                        console.log("refresher 4o-li");
-                        //4 progress bar
-                        _this.calculateFoodRefresh();
-                        for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
-                            var food = _a[_i];
-                            _this.calculateFood(food);
-                        }
-                    });
+                    console.log(this.pickedFoodContainer);
                 };
                 FoodComponent.prototype.onSubmit = function (food) {
                     this.pickedFood['weight'] = food.value.weight;
@@ -685,45 +824,45 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
                 };
                 FoodComponent = __decorate([
-                    core_9.Component({
+                    core_10.Component({
                         selector: 'op-food',
-                        directives: [progress_bar_component_1.ProgressBar],
+                        directives: [progress_bar_component_2.ProgressBar, add_food_component_1.AddFoodComponent],
                         providers: [],
-                        pipes: [translate_service_4.TranslatePipe, simple_search_pipe_1.SimpleSearch],
+                        pipes: [translate_service_5.TranslatePipe, simple_search_pipe_2.SimpleSearch],
                         styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n\n  .food_serchContainer {\n    position: absolute;\n    background-color: #aaa;\n    width: 60vw;\n    left: 0;\n    right: 10px;\n    height: 200px;\n    top: 27px;\n    overflow-y: scroll;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 60vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
-                        template: "\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full\" [secondLine]=\"totalFood.calories.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full\" [secondLine]=\"totalFood.protein.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full\" [secondLine]=\"totalFood.fat.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full\" [secondLine]=\"totalFood.carbohydrates.maybe\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n<label for=\"foodName\"></label>\n<input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (keyup)=\"pickFoodInput(model.name)\">\n\n<label for=\"foodWeight\"></label>\n<input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n<button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n<div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n  <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name}}\n  </div>\n</div>\n</form>\n\n<div class=\"food_list\">\n<div *ngFor=\"#item of pickedFoodContainer; #i = index\">\n\n  <div class=\"food_listItem\">\n    {{item?.name}}\n  </div>\n  <input class=\"food_listWeight\" type=\"number\" min=\"1\" [(ngModel)]=\"item.weight\">\n\n  <button (click)=\"removeFodd(i, item)\">minus</button>\n  <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\"  (click)=\"checkBoxToggle(item)\"></div>\n\n</div>\n</div>\n    "
+                        template: "\n<op-add-food *ngIf=\"addFoodToggle\"></op-add-food>\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full\" [secondLine]=\"totalFood.calories.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full\" [secondLine]=\"totalFood.protein.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full\" [secondLine]=\"totalFood.fat.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full\" [secondLine]=\"totalFood.carbohydrates.maybe\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (keyup)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n    <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\">\n\n    <div class=\"food_listItem\">\n      {{item?.name}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"1\" [(ngModel)]=\"item.weight\">\n\n    <button (click)=\"removeFodd(i, item)\">minus</button>\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(item)\"></div>\n\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_1.FoodService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService])
+                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_2.CalendarService, user_service_2.UserService])
                 ], FoodComponent);
                 return FoodComponent;
             }());
-            exports_10("FoodComponent", FoodComponent);
+            exports_11("FoodComponent", FoodComponent);
         }
     }
 });
-System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service"], function(exports_11, context_11) {
+System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service"], function(exports_12, context_12) {
     "use strict";
-    var __moduleName = context_11 && context_11.id;
-    var core_10, translate_service_5;
+    var __moduleName = context_12 && context_12.id;
+    var core_11, translate_service_6;
     var SportComponent;
     return {
         setters:[
-            function (core_10_1) {
-                core_10 = core_10_1;
+            function (core_11_1) {
+                core_11 = core_11_1;
             },
-            function (translate_service_5_1) {
-                translate_service_5 = translate_service_5_1;
+            function (translate_service_6_1) {
+                translate_service_6 = translate_service_6_1;
             }],
         execute: function() {
             SportComponent = (function () {
                 function SportComponent() {
                 }
                 SportComponent = __decorate([
-                    core_10.Component({
+                    core_11.Component({
                         selector: 'op-sport',
                         directives: [],
                         providers: [],
-                        pipes: [translate_service_5.TranslatePipe],
+                        pipes: [translate_service_6.TranslatePipe],
                         styles: [],
                         template: "\n    <h1 class=\"primary\">{{\"sport-page.title\" | translate}}</h1>\n    "
                     }), 
@@ -731,26 +870,26 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 ], SportComponent);
                 return SportComponent;
             }());
-            exports_11("SportComponent", SportComponent);
+            exports_12("SportComponent", SportComponent);
         }
     }
 });
-System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_12, context_12) {
+System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_13, context_13) {
     "use strict";
-    var __moduleName = context_12 && context_12.id;
-    var core_11;
+    var __moduleName = context_13 && context_13.id;
+    var core_12;
     var RestComponent;
     return {
         setters:[
-            function (core_11_1) {
-                core_11 = core_11_1;
+            function (core_12_1) {
+                core_12 = core_12_1;
             }],
         execute: function() {
             RestComponent = (function () {
                 function RestComponent() {
                 }
                 RestComponent = __decorate([
-                    core_11.Component({
+                    core_12.Component({
                         selector: 'op-rest',
                         directives: [],
                         providers: [],
@@ -762,19 +901,19 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
                 ], RestComponent);
                 return RestComponent;
             }());
-            exports_12("RestComponent", RestComponent);
+            exports_13("RestComponent", RestComponent);
         }
     }
 });
-System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_13, context_13) {
+System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_14, context_14) {
     "use strict";
-    var __moduleName = context_13 && context_13.id;
-    var core_12, router_1;
+    var __moduleName = context_14 && context_14.id;
+    var core_13, router_1;
     var StartComponent;
     return {
         setters:[
-            function (core_12_1) {
-                core_12 = core_12_1;
+            function (core_13_1) {
+                core_13 = core_13_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -784,31 +923,31 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 function StartComponent() {
                 }
                 StartComponent = __decorate([
-                    core_12.Component({
+                    core_13.Component({
                         selector: 'op-start',
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [],
-                        styles: ["\n      .startPage_navigator {\n        display: flex;\n        flex-flow: column nowrap;\n        position: absolute;\n        justify-content: space-around;\n        align-items: center;\n        width: 30vw;\n        height: 100vh;\n        bottom: 0;\n        left: 35vw;\n        overflow: hidden;\n        background-color: silver;\n      }\n      .startPage_foodButton {\n      background: url('./src/img/food.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n    }\n    .startPage_sportButton {\n      background: url('./src/img/sport.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n    }\n    .startPage_restButton {\n      background: url('./src/img/rest.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n    }\n      "],
+                        styles: ["\n      .startPage_navigator {\n        display: flex;\n        flex-flow: column nowrap;\n        position: absolute;\n        justify-content: space-around;\n        width: 30vw;\n        height: 100vh;\n        bottom: 0;\n        left: 35vw;\n        overflow: hidden;\n        background-color: silver;\n      }\n      .startPage_foodButton {\n      background: url('./src/img/food.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n    }\n    .startPage_sportButton {\n      background: url('./src/img/sport.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n    .startPage_restButton {\n      background: url('./src/img/rest.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n      "],
                         template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_foodButton\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_sportButton\"></div>\n      </a>\n      <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_restButton\"></div>\n      </a>\n    </nav>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StartComponent);
                 return StartComponent;
             }());
-            exports_13("StartComponent", StartComponent);
+            exports_14("StartComponent", StartComponent);
         }
     }
 });
-System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router'], function(exports_14, context_14) {
+System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router'], function(exports_15, context_15) {
     "use strict";
-    var __moduleName = context_14 && context_14.id;
-    var core_13, router_2;
+    var __moduleName = context_15 && context_15.id;
+    var core_14, router_2;
     var SideBar;
     return {
         setters:[
-            function (core_13_1) {
-                core_13 = core_13_1;
+            function (core_14_1) {
+                core_14 = core_14_1;
             },
             function (router_2_1) {
                 router_2 = router_2_1;
@@ -816,7 +955,7 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
-                    this.isOpenChange = new core_13.EventEmitter();
+                    this.isOpenChange = new core_14.EventEmitter();
                 }
                 SideBar.prototype.start = function (evt) {
                     this.xDown = evt.touches[0].clientX;
@@ -869,34 +1008,74 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
                     this.isOpenChange.emit(this.isOpen);
                 };
                 __decorate([
-                    core_13.Input(), 
+                    core_14.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
                 __decorate([
-                    core_13.Output(), 
+                    core_14.Output(), 
                     __metadata('design:type', Object)
                 ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
-                    core_13.Component({
-                        selector: 'fm-side-bar', directives: [router_2.ROUTER_DIRECTIVES], providers: [], pipes: [], styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: silver;\n    height:100vh;\n    width:10vw;\n    z-index: 999;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\">\n  <a [routerLink]=\"['Food']\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\">\n     {{\"opanas.router.sport\"}}\n  </a> <a [routerLink]=\"['Rest']\">\n     {{\"opanas.router.rest\"}}\n  </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\"></div>\n    "
+                    core_14.Component({
+                        selector: 'fm-side-bar', directives: [router_2.ROUTER_DIRECTIVES], providers: [], pipes: [], styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: silver;\n    height:100vh;\n    width:10vw;\n    opacity:0.5;\n    z-index: 999;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\">\n  <a [routerLink]=\"['Food']\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\">\n     {{\"opanas.router.sport\"}}\n  </a> <a [routerLink]=\"['Rest']\">\n     {{\"opanas.router.rest\"}}\n  </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);
                 return SideBar;
             }());
-            exports_14("SideBar", SideBar);
+            exports_15("SideBar", SideBar);
         }
     }
 });
-System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service"], function(exports_15, context_15) {
+System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_16, context_16) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var core_14, router_3, food_component_1, sport_component_1, rest_component_1, start_component_1, side_bar_component_1, translate_service_6, food_service_2, calendar_service_2, refresh_date_service_2, storage_service_2;
+    var __moduleName = context_16 && context_16.id;
+    var core_15;
+    var RefreshDateService;
+    return {
+        setters:[
+            function (core_15_1) {
+                core_15 = core_15_1;
+            }],
+        execute: function() {
+            RefreshDateService = (function () {
+                function RefreshDateService() {
+                    this.today = new Date();
+                    this.timerMaker();
+                }
+                RefreshDateService.prototype.timerMaker = function () {
+                    this.today = new Date();
+                    this.tomorrow = new Date();
+                    this.tomorrow.setHours(0, 0, 0, 0);
+                    this.tomorrow.setDate(this.today.getDate() + 1);
+                    this.timer = this.tomorrow.getTime() - this.today.getTime();
+                };
+                RefreshDateService.prototype.refresher = function () {
+                    console.log("refresher in da house. refresh will make badaboom in " + this.timer / 1000 / 60 + " minutes");
+                    setTimeout(function () {
+                        console.log("refresher da best");
+                        location.reload();
+                    }, this.timer);
+                };
+                RefreshDateService = __decorate([
+                    core_15.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], RefreshDateService);
+                return RefreshDateService;
+            }());
+            exports_16("RefreshDateService", RefreshDateService);
+        }
+    }
+});
+System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_17, context_17) {
+    "use strict";
+    var __moduleName = context_17 && context_17.id;
+    var core_16, router_3, food_component_1, sport_component_1, rest_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, calendar_service_3, refresh_date_service_1, storage_service_3, user_service_3;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
-            function (core_14_1) {
-                core_14 = core_14_1;
+            function (core_16_1) {
+                core_16 = core_16_1;
             },
             function (router_3_1) {
                 router_3 = router_3_1;
@@ -916,20 +1095,23 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (side_bar_component_1_1) {
                 side_bar_component_1 = side_bar_component_1_1;
             },
-            function (translate_service_6_1) {
-                translate_service_6 = translate_service_6_1;
+            function (translate_service_7_1) {
+                translate_service_7 = translate_service_7_1;
             },
-            function (food_service_2_1) {
-                food_service_2 = food_service_2_1;
+            function (food_service_3_1) {
+                food_service_3 = food_service_3_1;
             },
-            function (calendar_service_2_1) {
-                calendar_service_2 = calendar_service_2_1;
+            function (calendar_service_3_1) {
+                calendar_service_3 = calendar_service_3_1;
             },
-            function (refresh_date_service_2_1) {
-                refresh_date_service_2 = refresh_date_service_2_1;
+            function (refresh_date_service_1_1) {
+                refresh_date_service_1 = refresh_date_service_1_1;
             },
-            function (storage_service_2_1) {
-                storage_service_2 = storage_service_2_1;
+            function (storage_service_3_1) {
+                storage_service_3 = storage_service_3_1;
+            },
+            function (user_service_3_1) {
+                user_service_3 = user_service_3_1;
             }],
         execute: function() {
             OpanasComponent = (function () {
@@ -939,8 +1121,13 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._refreshDateService = _refreshDateService;
                     this.sideBarIsOpen = false;
                 }
+                OpanasComponent.prototype.bla = function () {
+                    location.reload();
+                };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
+                    //refresh-date
+                    this._refreshDateService.refresher();
                     //translator config
                     this._translator.setSupportLanguages(languages);
                     this._translator.setKeys(keysVendor);
@@ -957,13 +1144,13 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
-                    core_14.Component({
+                    core_16.Component({
                         selector: 'opanas-app',
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_14.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_6.TranslateService, food_service_2.FoodService, calendar_service_2.CalendarService, refresh_date_service_2.RefreshDateService, storage_service_2.StorageService],
-                        pipes: [translate_service_6.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 50px;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 0;\n    top: 0;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n      <div (click)=\"goEn()\">english</div>\n      <div (click)=\"goRu()\">russian</div>\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        providers: [router_3.ROUTER_PROVIDERS, core_16.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_3.StorageService, user_service_3.UserService],
+                        pipes: [translate_service_7.TranslatePipe],
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 0;\n    top: 0;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n      <div (click)=\"goEn()\">english</div>\n      <div (click)=\"goRu()\">russian</div>\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_3.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
@@ -971,11 +1158,11 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_6.TranslateService, calendar_service_2.CalendarService, refresh_date_service_2.RefreshDateService])
+                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
-            exports_15("OpanasComponent", OpanasComponent);
+            exports_17("OpanasComponent", OpanasComponent);
             languages = {
                 'en': 'english',
                 'ru': 'russian'
@@ -999,9 +1186,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
         }
     }
 });
-System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_16, context_16) {
+System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_18, context_18) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
+    var __moduleName = context_18 && context_18.id;
     var browser_1, opanas_component_1;
     return {
         setters:[

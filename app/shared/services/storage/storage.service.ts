@@ -14,4 +14,8 @@ export class StorageService {
         }
         return JSON.parse(localStorage.getItem(name));
     }
+
+    removeItem(name:string){
+      localStorage.removeItem(name);
+    }
 }

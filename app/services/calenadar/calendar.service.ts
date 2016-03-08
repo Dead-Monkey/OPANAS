@@ -15,12 +15,6 @@ export class CalendarService {
         this.saveCalendar();
     }
 
-    testStorage() {
-        this._storageService.setItem('name', this.calendar);
-        console.log(this._storageService.getItem('name'));
-
-    }
-
     createCalendar() {
         let startYear = 2014;
         let lastYear = 2020;

@@ -11,40 +11,31 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var RefreshDateService;
+    var UserService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            RefreshDateService = (function () {
-                function RefreshDateService() {
-                    this.today = new Date();
-                    this.timerMaker();
+            UserService = (function () {
+                function UserService() {
+                    this.language = 'ru';
                 }
-                RefreshDateService.prototype.timerMaker = function () {
-                    this.today = new Date();
-                    this.tomorrow = new Date();
-                    this.tomorrow.setHours(0, 0, 0, 0);
-                    this.tomorrow.setDate(this.today.getDate() + 1);
-                    this.timer = this.tomorrow.getTime() - this.today.getTime();
+                UserService.prototype.getLanguage = function () {
+                    return this.language;
                 };
-                RefreshDateService.prototype.refresher = function () {
-                    console.log("refresher in da house. refresh will make badaboom in " + this.timer / 1000 / 60 + " minutes");
-                    setTimeout(function () {
-                        console.log("refresher da best");
-                        location.reload();
-                    }, this.timer);
+                UserService.prototype.setLanguage = function (language) {
+                    this.language = language;
                 };
-                RefreshDateService = __decorate([
+                UserService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])
-                ], RefreshDateService);
-                return RefreshDateService;
+                ], UserService);
+                return UserService;
             }());
-            exports_1("RefreshDateService", RefreshDateService);
+            exports_1("UserService", UserService);
         }
     }
 });
-//# sourceMappingURL=refresh-date.service.js.map
+//# sourceMappingURL=user.service.js.map

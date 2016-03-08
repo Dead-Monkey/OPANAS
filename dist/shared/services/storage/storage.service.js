@@ -31,6 +31,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     }
                     return JSON.parse(localStorage.getItem(name));
                 };
+                StorageService.prototype.removeItem = function (name) {
+                    localStorage.removeItem(name);
+                };
                 StorageService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

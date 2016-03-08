@@ -1,14 +1,16 @@
 import {Component, OnInit} from 'angular2/core';
 import {TranslatePipe} from '../../shared/services/translate/translate.service';
 import {ProgressBar} from '../../shared/components/progress-bar/progress-bar.component';
+import {AddFoodComponent} from '../add-food/add-food.component';
 import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
-import {RefreshDateService} from '../../services/refresh-date/refresh-date.service';
+import {UserService} from '../../services/user/user.service';
+
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar],
+    directives: [ProgressBar, AddFoodComponent],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -134,6 +136,7 @@ import {RefreshDateService} from '../../services/refresh-date/refresh-date.servi
   }
     `],
     template: `
+<op-add-food *ngIf="addFoodToggle"></op-add-food>
 <fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full" [secondLine]="totalFood.calories.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full" [secondLine]="totalFood.protein.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.fat.maybe"></fm-progress-bar>
@@ -141,33 +144,33 @@ import {RefreshDateService} from '../../services/refresh-date/refresh-date.servi
 
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
-<label for="foodName"></label>
-<input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (keyup)="pickFoodInput(model.name)">
+  <label for="foodName"></label>
+  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (keyup)="pickFoodInput(model.name)">
 
-<label for="foodWeight"></label>
-<input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
+  <label for="foodWeight"></label>
+  <input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
 
-<button type="submit" [ngClass]="{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}" [disabled]="!foodForm.form.valid || !correctFood"></button>
+  <button type="submit" [ngClass]="{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}" [disabled]="!foodForm.form.valid || !correctFood"></button>
 
-<div *ngIf="name.valid" class="food_serchContainer">
-  <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;" (click)="pickFood(item);">
-      {{item?.name}}
+  <div *ngIf="name.valid" class="food_serchContainer">
+    <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
+      {{item?.name[language]}}
+    </div>
   </div>
-</div>
 </form>
 
 <div class="food_list">
-<div *ngFor="#item of pickedFoodContainer; #i = index">
+  <div *ngFor="#item of pickedFoodContainer; #i = index">
 
-  <div class="food_listItem">
-    {{item?.name}}
+    <div class="food_listItem">
+      {{item?.name}}
+    </div>
+    <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
+
+    <button (click)="removeFodd(i, item)">minus</button>
+    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(item)"></div>
+
   </div>
-  <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
-
-  <button (click)="removeFodd(i, item)">minus</button>
-  <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}"  (click)="checkBoxToggle(item)"></div>
-
-</div>
 </div>
     `
 })
@@ -178,10 +181,12 @@ export class FoodComponent implements OnInit {
     private foodContainer: Food[];
     private calendar: Array<Day>;
     private currentDate: Date = new Date();
+    private language: string = 'en';
 
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
     private correctFood: boolean = false;
+    private addFoodToggle: boolean = false;
 
     private totalFood = {
         "calories": {
@@ -202,10 +207,11 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService) { }
 
     ngOnInit() {
 
+        this.language = this._userServe.getLanguage();
         this.foodContainer = this._foodServe.getAllFood();
         this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
 
@@ -213,19 +219,7 @@ export class FoodComponent implements OnInit {
         for (let food of this.pickedFoodContainer) {
             this.calculateFood(food);
         }
-
-        //refresh view on 00:00
-        this._refreshDateService.refresher(() => {
-            this.currentDate = new Date();
-            // this.currentDate.setDate(this.currentDate.getDate()+1);
-            this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate)
-            console.log(`refresher 4o-li`);
-            //4 progress bar
-            this.calculateFoodRefresh();
-            for (let food of this.pickedFoodContainer) {
-                this.calculateFood(food);
-            }
-        });
+        console.log(this.pickedFoodContainer);
     }
 
     onSubmit(food) {

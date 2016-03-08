@@ -10,16 +10,17 @@ import {FoodService} from '../../services/food/food.service';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {RefreshDateService} from '../../services/refresh-date/refresh-date.service';
 import {StorageService} from '../../shared/services/storage/storage.service';
+import {UserService} from '../../services/user/user.service';
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
     providers: [ROUTER_PROVIDERS, provide(LocationStrategy,
-        { useClass: HashLocationStrategy }), TranslateService, FoodService, CalendarService, RefreshDateService, StorageService],
+        { useClass: HashLocationStrategy }), TranslateService, FoodService, CalendarService, RefreshDateService, StorageService, UserService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
-    height: 50px;
+    height: 15vw;
     width: 100vw;
     }
 		.container {
@@ -35,8 +36,8 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     justify-content: center;
     align-items: center;
     background-color: green;
-    right: 0;
-    top: 0;
+    right: 40vw;
+    top: 40;
     height: 50px;
     width: 100px;
     opacity: 0.3;
@@ -49,11 +50,12 @@ import {StorageService} from '../../shared/services/storage/storage.service';
     <div class="temporary">
       <div (click)="goEn()">english</div>
       <div (click)="goRu()">russian</div>
+      <div (click)="bla()">reload</div>
+
     </div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
-
   <router-outlet></router-outlet>
 </div>
 
@@ -71,9 +73,13 @@ export class OpanasComponent implements OnInit {
     private sideBarIsOpen: boolean = false;
 
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
-
+    bla() {
+        location.reload();
+    }
     //config app
     ngOnInit() {
+        //refresh-date
+        this._refreshDateService.refresher();
         //translator config
         this._translator.setSupportLanguages(languages);
         this._translator.setKeys(keysVendor);

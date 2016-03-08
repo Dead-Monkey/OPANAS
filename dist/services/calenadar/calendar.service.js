@@ -30,10 +30,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     };
                     this.saveCalendar();
                 }
-                CalendarService.prototype.testStorage = function () {
-                    this._storageService.setItem('name', this.calendar);
-                    console.log(this._storageService.getItem('name'));
-                };
                 CalendarService.prototype.createCalendar = function () {
                     var startYear = 2014;
                     var lastYear = 2020;

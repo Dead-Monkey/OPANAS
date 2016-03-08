@@ -32,6 +32,7 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
     background-color: silver;
     height:100vh;
     width:10vw;
+    opacity:0.5;
     z-index: 999;
   }
   .sideBarShadow {
@@ -42,6 +43,7 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
     top: 0;
     background-color: black;
     opacity: 0.5;
+    z-index:998;
   }
   `], template: `
 <div class="sideBar_toggle" (click)="toggle()"></div>

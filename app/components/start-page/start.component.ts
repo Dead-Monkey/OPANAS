@@ -13,7 +13,6 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
         flex-flow: column nowrap;
         position: absolute;
         justify-content: space-around;
-        align-items: center;
         width: 30vw;
         height: 100vh;
         bottom: 0;
@@ -27,6 +26,7 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
       box-sizing: border-box;
       width: 27vw;
       height: 27vw;
+      margin: auto;
     }
     .startPage_sportButton {
       background: url('./src/img/sport.png') no-repeat center center;
@@ -34,6 +34,8 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
       box-sizing: border-box;
       width: 27vw;
       height: 27vw;
+      margin: auto;
+
     }
     .startPage_restButton {
       background: url('./src/img/rest.png') no-repeat center center;
@@ -41,6 +43,8 @@ import {  ROUTER_DIRECTIVES}from 'angular2/router';
       box-sizing: border-box;
       width: 27vw;
       height: 27vw;
+      margin: auto;
+
     }
       `],
     template: `

@@ -22,8 +22,13 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function SimpleSearch() {
                 }
                 SimpleSearch.prototype.transform = function (value, _a) {
-                    var field = _a[0], letter = _a[1];
-                    return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
+                    var field = _a[0], field2 = _a[1], letter = _a[2];
+                    if (field2) {
+                        return value.filter(function (item) { return item[field][field2].toLowerCase().includes(letter.toLowerCase()); });
+                    }
+                    else {
+                        return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
+                    }
                 };
                 SimpleSearch = __decorate([
                     core_1.Pipe({
