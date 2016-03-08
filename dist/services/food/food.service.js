@@ -48,23 +48,24 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 };
                 FoodService.prototype.prepareFood = function () {
                     this.allFood.length = 0;
-                    for (var _i = 0, _a = this.food; _i < _a.length; _i++) {
-                        var itemFood = _a[_i];
-                        if (this.userFood.length) {
-                            for (var _b = 0, _c = this.userFood; _b < _c.length; _b++) {
-                                var itemUser = _c[_b];
-                                if (itemUser.name[this._userServe.getLanguage()].trim() === itemFood.name[this._userServe.getLanguage()].trim()) {
-                                    this.allFood.push(itemUser);
-                                }
-                                else {
-                                    this.allFood.push(itemFood);
+                    var container = this.food.slice();
+                    if (this.userFood.length) {
+                        for (var _i = 0, _a = this.userFood; _i < _a.length; _i++) {
+                            var itemUser = _a[_i];
+                            for (var _b = 0, container_1 = container; _b < container_1.length; _b++) {
+                                var itemContainer = container_1[_b];
+                                if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
+                                    var rem = this.food.indexOf(itemContainer);
+                                    container.splice(rem, 1);
                                 }
                             }
                         }
-                        else {
-                            this.allFood.push(itemFood);
-                        }
+                        (_c = this.allFood).push.apply(_c, container.concat(this.userFood));
                     }
+                    else {
+                        (_d = this.allFood).push.apply(_d, this.food);
+                    }
+                    var _c, _d;
                 };
                 FoodService.prototype.getUserFood = function () {
                     return this.userFood;
@@ -101,7 +102,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
             exports_1("FoodService", FoodService);
             foodVendor = [
                 {
-                    "id": 1,
                     "name": {
                         "en": "pizza",
                         "ru": "пицца"
@@ -109,11 +109,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "custom": false,
                     "calories": 10,
                     "protein": 10,
-                    "carbohydrates": 10,
-                    "fat": 10
+                    "fat": 10,
+                    "carbohydrates": 10
                 },
                 {
-                    "id": 2,
                     "name": {
                         "en": "apple",
                         "ru": "яблоко"
@@ -121,11 +120,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "custom": false,
                     "calories": 5,
                     "protein": 5,
-                    "carbohydrates": 5,
-                    "fat": 5
+                    "fat": 5,
+                    "carbohydrates": 5
                 },
                 {
-                    "id": 3,
                     "name": {
                         "en": "tomato",
                         "ru": "помидор"
@@ -133,11 +131,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "custom": false,
                     "calories": 20,
                     "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
+                    "fat": 20,
+                    "carbohydrates": 20
                 },
                 {
-                    "id": 4,
                     "name": {
                         "en": "potato",
                         "ru": "картофан"
@@ -145,11 +142,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "custom": false,
                     "calories": 20,
                     "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
+                    "fat": 20,
+                    "carbohydrates": 20
                 },
                 {
-                    "id": 5,
                     "name": {
                         "en": "niceThing",
                         "ru": "ништяк"
@@ -157,8 +153,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "custom": false,
                     "calories": 12,
                     "protein": 12,
-                    "carbohydrates": 11,
-                    "fat": 10
+                    "fat": 10,
+                    "carbohydrates": 11
                 }
             ];
         }

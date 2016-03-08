@@ -11,7 +11,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, translate_service_1, progress_bar_component_1, food_service_1, simple_search_pipe_1, calendar_service_1;
-    var AddFoodComponent;
+    var PlusComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -33,25 +33,26 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 calendar_service_1 = calendar_service_1_1;
             }],
         execute: function() {
-            AddFoodComponent = (function () {
-                function AddFoodComponent(_foodServe, _calendarService) {
+            PlusComponent = (function () {
+                function PlusComponent(_foodServe, _calendarService) {
                     this._foodServe = _foodServe;
                     this._calendarService = _calendarService;
-                    this.model = {};
-                    this.currentDate = new Date();
-                    this.pickedFood = {};
-                    this.pickedFoodContainer = [];
-                    this.correctFood = false;
+                    this.isOpen = true;
+                    this.isOpenChange = new core_1.EventEmitter();
                     this.item = this._foodServe.getUserFood();
+                    this.model = {};
                 }
-                AddFoodComponent.prototype.ngOnInit = function () {
+                PlusComponent.prototype.ngOnInit = function () { };
+                PlusComponent.prototype.toggle = function () {
+                    this.isOpen = !this.isOpen;
+                    this.isOpenChange.emit(this.isOpen);
                 };
-                AddFoodComponent.prototype.getUserFood = function () {
+                //4 food
+                PlusComponent.prototype.getUserFood = function () {
                     console.log(this._foodServe.getUserFood());
                 };
-                AddFoodComponent.prototype.setFood = function () {
+                PlusComponent.prototype.setFood = function () {
                     this._foodServe.setUserFood({
-                        "id": 1,
                         "name": {
                             "en": "pizza",
                             "ru": "пицца"
@@ -65,9 +66,8 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     // console.log(this._foodServe.getUserFood());
                     this.item = this._foodServe.getUserFood();
                 };
-                AddFoodComponent.prototype.removeFood = function () {
+                PlusComponent.prototype.removeFood = function () {
                     this._foodServe.removeUserFood({
-                        "id": 99,
                         "name": {
                             "en": "pizza",
                             "ru": "пицца"
@@ -80,20 +80,28 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     });
                     this.item = this._foodServe.getUserFood();
                 };
-                AddFoodComponent = __decorate([
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], PlusComponent.prototype, "isOpen", void 0);
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], PlusComponent.prototype, "isOpenChange", void 0);
+                PlusComponent = __decorate([
                     core_1.Component({
-                        selector: 'op-add-food',
+                        selector: 'op-plus',
                         directives: [progress_bar_component_1.ProgressBar],
                         providers: [],
                         pipes: [translate_service_1.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 90vh;\n  z-index:10;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
-                        template: "\n<div class=\"container\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n  <div class=\"tmp\" (click)=\"getUserFood()\">get</div>\n\n</div>\n    "
+                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar{\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 20vw;\n  height: 15vw;\n  background-color: blue;\n  overflow: hidden;\n}\n.closeMe{\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
+                        template: "\n<div class=\"plusBar\" (click)=\"toggle()\">PLUS</div>\n<div class=\"container\" *ngIf=\"isOpen\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n  <div class=\"tmp\" (click)=\"getUserFood()\">get</div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_1.FoodService, calendar_service_1.CalendarService])
-                ], AddFoodComponent);
-                return AddFoodComponent;
+                ], PlusComponent);
+                return PlusComponent;
             }());
-            exports_1("AddFoodComponent", AddFoodComponent);
+            exports_1("PlusComponent", PlusComponent);
         }
     }
 });

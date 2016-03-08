@@ -13,7 +13,7 @@ export class FoodService {
         'userFood': 'userFood'
     }
 
-    constructor(private _storageService: StorageService, private _userServe:UserService) {
+    constructor(private _storageService: StorageService, private _userServe: UserService) {
         if (this._storageService.getItem(this.storageKeys.userFood)) {
             this.userFood = this._storageService.getItem(this.storageKeys.userFood);
         }
@@ -31,19 +31,22 @@ export class FoodService {
 
     prepareFood() {
         this.allFood.length = 0;
-        for (let itemFood of this.food) {
-            if (this.userFood.length) {
-                for (let itemUser of this.userFood) {
-                    if (itemUser.name[this._userServe.getLanguage()].trim() === itemFood.name[this._userServe.getLanguage()].trim()) {
-                        this.allFood.push(itemUser);
-                    } else {
-                        this.allFood.push(itemFood)
+        let container= this.food.slice();
+        if (this.userFood.length) {
+
+            for (let itemUser of this.userFood) {
+                for (let itemContainer of container) {
+                    if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
+                        let rem = this.food.indexOf(itemContainer);
+                        container.splice(rem, 1);
                     }
                 }
-            } else {
-                this.allFood.push(itemFood)
             }
+            this.allFood.push(...container, ...this.userFood);
+        } else {
+            this.allFood.push(...this.food);
         }
+
     }
 
 
@@ -76,7 +79,6 @@ export class FoodService {
 }
 
 export interface Food {
-    id: number;
     name: Object;
     custom: boolean;
     calories: number;
@@ -88,63 +90,60 @@ export interface Food {
 
 let foodVendor: Food[] = [
     {
-        "id": 1,
         "name": {
-          "en":"pizza",
-          "ru":"пицца"
+            "en": "pizza",
+            "ru": "пицца"
         },
         "custom": false,
         "calories": 10,
         "protein": 10,
-        "carbohydrates": 10,
-        "fat": 10
+        "fat": 10,
+        "carbohydrates": 10
+
     },
     {
-        "id": 2,
         "name": {
-          "en":"apple",
-          "ru":"яблоко"
+            "en": "apple",
+            "ru": "яблоко"
         },
         "custom": false,
         "calories": 5,
         "protein": 5,
-        "carbohydrates": 5,
-        "fat": 5
+        "fat": 5,
+        "carbohydrates": 5
+
     },
     {
-        "id": 3,
         "name": {
-          "en":"tomato",
-          "ru":"помидор"
+            "en": "tomato",
+            "ru": "помидор"
         },
         "custom": false,
         "calories": 20,
         "protein": 20,
-        "carbohydrates": 20,
-        "fat": 20
+        "fat": 20,
+        "carbohydrates": 20
     },
     {
-        "id": 4,
         "name": {
-          "en":"potato",
-          "ru":"картофан"
+            "en": "potato",
+            "ru": "картофан"
         },
         "custom": false,
         "calories": 20,
         "protein": 20,
-        "carbohydrates": 20,
-        "fat": 20
+        "fat": 20,
+        "carbohydrates": 20
     },
     {
-        "id": 5,
         "name": {
-          "en":"niceThing",
-          "ru":"ништяк"
+            "en": "niceThing",
+            "ru": "ништяк"
         },
         "custom": false,
         "calories": 12,
         "protein": 12,
-        "carbohydrates": 11,
-        "fat": 10
+        "fat": 10,
+        "carbohydrates": 11
     }
 ]

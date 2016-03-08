@@ -1,7 +1,7 @@
 import {Component, OnInit} from 'angular2/core';
 import {TranslatePipe} from '../../shared/services/translate/translate.service';
 import {ProgressBar} from '../../shared/components/progress-bar/progress-bar.component';
-import {AddFoodComponent} from '../add-food/add-food.component';
+import {PlusComponent} from '../plus-bar/plus-bar.component';
 import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
@@ -11,7 +11,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar, AddFoodComponent, SwipeHoldertDirective],
+    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -135,19 +135,9 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     color: #0d0e15;
     border-radius: 2vw;
   }
-  .plusBar{
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 20vw;
-    height: 15vw;
-    background-color: blue;
-    overflow: hidden;
-  }
     `],
     template: `
-<div class="plusBar" (click)="addFoodToggle()">addFood</div>
-<op-add-food *ngIf="addFood"></op-add-food>
+<op-plus [(isOpen)]="plusIsOpen"></op-plus>
 <fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full" [secondLine]="totalFood.calories.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full" [secondLine]="totalFood.protein.maybe"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.fat.maybe"></fm-progress-bar>
@@ -186,9 +176,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 })
 
 export class FoodComponent implements OnInit {
-bla(e){
-  console.log(e);
-}
+
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;
@@ -198,7 +186,7 @@ bla(e){
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
     private correctFood: boolean = false;
-    private addFood: boolean = false;
+    private plusIsOpen: boolean = false;
 
     private totalFood = {
         "calories": {
@@ -233,9 +221,7 @@ bla(e){
         }
         console.log(this.pickedFoodContainer);
     }
-    addFoodToggle() {
-        this.addFood = !this.addFood;
-    }
+
     onSubmit(food) {
 
         this.pickedFood['weight'] = food.value.weight;
