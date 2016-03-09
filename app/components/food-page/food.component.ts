@@ -146,7 +146,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
   <label for="foodName"></label>
-  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (keyup)="pickFoodInput(model.name)">
+  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
 
   <label for="foodWeight"></label>
   <input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
@@ -166,7 +166,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     <div class="food_listItem">
       {{item?.name[language]}}
     </div>
-    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (keyup)="changeFoodWeight(i, item)">
+    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (input)="changeFoodWeight(i, item)">
 
     <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
 

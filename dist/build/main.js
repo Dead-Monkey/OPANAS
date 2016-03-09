@@ -174,14 +174,36 @@ System.register("shared/components/progress-bar/progress-bar.component", ['angul
         execute: function() {
             ProgressBar = (function () {
                 function ProgressBar() {
+                    this.maxNumber = 0;
+                    this.minNumber = 0;
                 }
-                ProgressBar.prototype.getMainLine = function () {
-                    this.mainLine = (this.mainLine > 100) ? 100 : this.mainLine;
-                    return this.mainLine;
-                };
-                ProgressBar.prototype.getSecondLine = function () {
-                    this.secondLine = (this.secondLine > 100) ? 100 : this.secondLine;
-                    return this.secondLine;
+                ProgressBar.prototype.ngOnChanges = function (changes) {
+                    if (changes['mainLine']) {
+                        if (isNaN(changes['mainLine'].currentValue)) {
+                            this.mainLine = 0;
+                        }
+                        if (changes['mainLine'].currentValue > 100 || this.mainLine > 100) {
+                            this.mainLine = 100;
+                        }
+                    }
+                    if (changes['secondLine']) {
+                        if (isNaN(changes['secondLine'].currentValue)) {
+                            this.secondLine = 0;
+                        }
+                        if (changes['secondLine'].currentValue > 100 || this.secondLine > 100) {
+                            this.secondLine = 100;
+                        }
+                    }
+                    if (changes['maxNumber']) {
+                        if (isNaN(changes['maxNumber'].currentValue)) {
+                            this.maxNumber = 0;
+                        }
+                    }
+                    if (changes['minNumber']) {
+                        if (isNaN(changes['minNumber'].currentValue)) {
+                            this.minNumber = 0;
+                        }
+                    }
                 };
                 __decorate([
                     core_3.Input(), 
@@ -195,14 +217,22 @@ System.register("shared/components/progress-bar/progress-bar.component", ['angul
                     core_3.Input(), 
                     __metadata('design:type', Number)
                 ], ProgressBar.prototype, "secondLine", void 0);
+                __decorate([
+                    core_3.Input(), 
+                    __metadata('design:type', Number)
+                ], ProgressBar.prototype, "maxNumber", void 0);
+                __decorate([
+                    core_3.Input(), 
+                    __metadata('design:type', Number)
+                ], ProgressBar.prototype, "minNumber", void 0);
                 ProgressBar = __decorate([
                     core_3.Component({
                         selector: 'fm-progress-bar',
                         directives: [],
                         providers: [],
                         pipes: [translate_service_3.TranslatePipe],
-                        styles: ["\n.progress_container {\nwidth: 90vw;\nheight: 7vw;\nposition: relative;\nleft: 5vw;\nbackground-color: rgba(49, 51, 61, 0.7);\nbox-sizing: border-box;\nborder: 5px solid #0C1017;\nborder-radius: 10px;\nz-index:1;\n\n}\n.progress_mainLine {\n  position:absolute;\n  top:0;\n  left:0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top:0;\n  left:0;\n  background-color: #181A21;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n    text-align: center;\n    color: #E48426;\n    font-size: 5vw;\n}\n\n "],
-                        template: "\n<div class=\"progress_barHeader\">{{name|translate|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"getSecondLine()\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"getMainLine()\">\n    1488\n  </div>\n\n</div>\n    "
+                        styles: ["\n.progress_container {\n  width: 90vw;\n  height: 7vw;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border: 5px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 5vw;\n}\n.numbers {\n  position: absolute;\n  color: blue;\n  height: 7vw;\n  width: 90vw;\n  overflow: hidden;\n}\n "],
+                        template: "\n<div class=\"progress_barHeader\">{{name|translate|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProgressBar);
@@ -263,12 +293,41 @@ System.register("services/user/user.service", ['angular2/core'], function(export
             UserService = (function () {
                 function UserService() {
                     this.language = 'ru';
+                    this.foodSets = {
+                        "calories": {
+                            "full": 2000
+                        },
+                        "protein": {
+                            "full": 150
+                        },
+                        "fat": {
+                            "full": 80
+                        },
+                        "carbohydrates": {
+                            "full": 300
+                        }
+                    };
                 }
                 UserService.prototype.getLanguage = function () {
                     return this.language;
                 };
                 UserService.prototype.setLanguage = function (language) {
                     this.language = language;
+                };
+                UserService.prototype.getUserFoodSets = function () {
+                    return this.foodSets;
+                };
+                UserService.prototype.setUserCalories = function (value) {
+                    this.foodSets['calories']['full'] = value;
+                };
+                UserService.prototype.setUserProtein = function (value) {
+                    this.foodSets['protein']['full'] = value;
+                };
+                UserService.prototype.setUserFat = function (value) {
+                    this.foodSets['fat']['full'] = value;
+                };
+                UserService.prototype.setUserCarbohydrates = function (value) {
+                    this.foodSets['carbohydrates']['full'] = value;
                 };
                 UserService = __decorate([
                     core_5.Injectable(), 
@@ -380,10 +439,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                         "ru": "пицца"
                     },
                     "custom": false,
-                    "calories": 10,
-                    "protein": 10,
-                    "fat": 10,
-                    "carbohydrates": 10
+                    "calories": 100,
+                    "protein": 75,
+                    "fat": 50,
+                    "carbohydrates": 25
                 },
                 {
                     "name": {
@@ -495,10 +554,11 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                     this._translateService = _translateService;
                     this.isOpen = true;
                     this.isOpenChange = new core_8.EventEmitter();
-                    this.item = this._foodServe.getUserFood();
                     this.model = {};
                 }
                 PlusComponent.prototype.ngOnInit = function () {
+                    this.customFood = this._foodServe.getUserFood();
+                    console.log(this.customFood);
                     this.refreshModel();
                 };
                 PlusComponent.prototype.toggle = function () {
@@ -538,11 +598,11 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                 };
                 PlusComponent.prototype.setFood = function (food) {
                     this._foodServe.setUserFood(food);
-                    this.item = this._foodServe.getUserFood();
+                    this.customFood = this._foodServe.getUserFood();
                 };
                 PlusComponent.prototype.removeFood = function () {
-                    this.item = this._foodServe.getUserFood();
-                    console.log(this.item);
+                    this.customFood = this._foodServe.getUserFood();
+                    console.log(this.customFood);
                 };
                 __decorate([
                     core_8.Input(), 
@@ -558,8 +618,8 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                         directives: [],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar{\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 20vw;\n  height: 15vw;\n  background-color: blue;\n  overflow: hidden;\n}\n.closeMe{\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" (click)=\"toggle()\">PLUS</div>\n<div class=\"container\" *ngIf=\"isOpen\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n  <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n    <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n    <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n  </form>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
+                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar{\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 20vw;\n  height: 15vw;\n  background-color: blue;\n  overflow: hidden;\n}\n.closeMe{\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.tmp{\n  width: 80vw;\n  position: relative;\n  top:50%;\n}\n.tmp2{\n  height: 12vw;\n  width: 80vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  font-size: 6vw;\n  text-align: center;\n  line-height: 12vw;\n}\n    "],
+                        template: "\n<div class=\"plusBar\" (click)=\"toggle()\">PLUS</div>\n<div class=\"container\" *ngIf=\"isOpen\">\n  <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n    <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n    <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n  </form>\n  <div class=\"tmp\" *ngFor=\"#item of customFood\">\n    <div class=\"tmp2\">name: {{item.name.ru}} calories: {{item.calories}}</div>\n  </div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_1.FoodService, translate_service_4.TranslateService])
                 ], PlusComponent);
@@ -665,6 +725,16 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
                             day['food'].push(food);
+                        }
+                    }
+                    this.refreshCalendar();
+                };
+                CalendarService.prototype.changeDailyFood = function (index, date, food) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            day['food'].splice(index, 1, food);
                         }
                     }
                     this.refreshCalendar();
@@ -838,24 +908,29 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.totalFood = {
                         "calories": {
                             "full": 0,
-                            "maybe": 0
+                            "maybe": 0,
+                            "dailyProcent": 0
                         },
                         "protein": {
                             "full": 0,
-                            "maybe": 0
-                        },
-                        "carbohydrates": {
-                            "full": 0,
-                            "maybe": 0
+                            "maybe": 0,
+                            "dailyProcent": 0
                         },
                         "fat": {
                             "full": 0,
-                            "maybe": 0
+                            "maybe": 0,
+                            "dailyProcent": 0
+                        },
+                        "carbohydrates": {
+                            "full": 0,
+                            "maybe": 0,
+                            "dailyProcent": 0
                         }
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
                     this.language = this._userServe.getLanguage();
+                    this.userSets = this._userServe.getUserFoodSets();
                     this.foodContainer = this._foodServe.getAllFood();
                     this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
                     //4 calculate progress-bar
@@ -874,10 +949,6 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.model = {};
                     this.correctFood = false;
                 };
-                FoodComponent.prototype.removeFodd = function (index, food) {
-                    this._calendarService.removeDailyFood(index, this.currentDate);
-                    this.calculateFoodMinus(food);
-                };
                 FoodComponent.prototype.pickFoodInput = function (name) {
                     for (var _i = 0, _a = this.foodContainer; _i < _a.length; _i++) {
                         var obj = _a[_i];
@@ -895,7 +966,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.model['name'] = food.name[this.language];
                     this.correctFood = true;
                 };
-                FoodComponent.prototype.checkBoxToggle = function (food) {
+                FoodComponent.prototype.checkBoxToggle = function (index, food) {
                     if (food['picked']) {
                         this.calculateFullMinus(food);
                     }
@@ -903,10 +974,45 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         this.calculateFull(food);
                     }
                     food['picked'] = !food['picked'];
+                    this._calendarService.changeDailyFood(index, this.currentDate, food);
+                };
+                FoodComponent.prototype.removeFodd = function (index, food) {
+                    this._calendarService.removeDailyFood(index, this.currentDate);
+                    this.calculateFoodMinus(food);
+                };
+                FoodComponent.prototype.changeFoodWeight = function (index, food) {
+                    var _this = this;
+                    var timer;
+                    if (!isNaN(food['weight'])) {
+                        this._calendarService.changeDailyFood(index, this.currentDate, food);
+                        this.calculateFoodRefresh();
+                        for (var _i = 0, _a = this.pickedFoodContainer; _i < _a.length; _i++) {
+                            var variable = _a[_i];
+                            this.calculateFood(variable);
+                        }
+                    }
+                    else {
+                        timer = setTimeout(function () {
+                            if (isNaN(food['weight'])) {
+                                food['weight'] = 0;
+                                _this._calendarService.changeDailyFood(index, _this.currentDate, food);
+                                _this.calculateFoodRefresh();
+                                for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
+                                    var variable = _a[_i];
+                                    _this.calculateFood(variable);
+                                }
+                            }
+                        }, 1500);
+                    }
                 };
                 FoodComponent.prototype.calculateFood = function (food) {
-                    this.calculateFull(food);
-                    this.calculateMayBe(food);
+                    if (food['picked']) {
+                        this.calculateFull(food);
+                        this.calculateMayBe(food);
+                    }
+                    else {
+                        this.calculateMayBe(food);
+                    }
                 };
                 FoodComponent.prototype.calculateFoodMinus = function (food) {
                     this.calculateFullMinus(food);
@@ -923,28 +1029,28 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.totalFood.fat.maybe = 0;
                 };
                 FoodComponent.prototype.calculateFull = function (food) {
-                    this.totalFood.calories.full = this.totalFood.calories.full + food.calories;
-                    this.totalFood.protein.full = this.totalFood.protein.full + food.protein;
-                    this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + food.carbohydrates;
-                    this.totalFood.fat.full = this.totalFood.fat.full + food.fat;
+                    this.totalFood.calories.full = this.totalFood.calories.full + Math.round((food.calories * food['weight'] / 100));
+                    this.totalFood.protein.full = this.totalFood.protein.full + Math.round((food.protein * food['weight'] / 100));
+                    this.totalFood.fat.full = this.totalFood.fat.full + Math.round((food.fat * food['weight'] / 100));
+                    this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + Math.round((food.carbohydrates * food['weight'] / 100));
                 };
                 FoodComponent.prototype.calculateMayBe = function (food) {
-                    this.totalFood.calories.maybe = this.totalFood.calories.maybe + food.calories;
-                    this.totalFood.protein.maybe = this.totalFood.protein.maybe + food.protein;
-                    this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + food.carbohydrates;
-                    this.totalFood.fat.maybe = this.totalFood.fat.maybe + food.fat;
+                    this.totalFood.calories.maybe = this.totalFood.calories.maybe + Math.round((food.calories * food['weight'] / 100));
+                    this.totalFood.protein.maybe = this.totalFood.protein.maybe + Math.round((food.protein * food['weight'] / 100));
+                    this.totalFood.fat.maybe = this.totalFood.fat.maybe + Math.round((food.fat * food['weight'] / 100));
+                    this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + Math.round((food.carbohydrates * food['weight'] / 100));
                 };
                 FoodComponent.prototype.calculateFullMinus = function (food) {
-                    this.totalFood.calories.full = this.totalFood.calories.full - food.calories;
-                    this.totalFood.protein.full = this.totalFood.protein.full - food.protein;
-                    this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - food.carbohydrates;
-                    this.totalFood.fat.full = this.totalFood.fat.full - food.fat;
+                    this.totalFood.calories.full = this.totalFood.calories.full - Math.round((food.calories * food['weight'] / 100));
+                    this.totalFood.protein.full = this.totalFood.protein.full - Math.round((food.protein * food['weight'] / 100));
+                    this.totalFood.fat.full = this.totalFood.fat.full - Math.round((food.fat * food['weight'] / 100));
+                    this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - Math.round((food.carbohydrates * food['weight'] / 100));
                 };
                 FoodComponent.prototype.calculateMayBeMinus = function (food) {
-                    this.totalFood.calories.maybe = this.totalFood.calories.maybe - food.calories;
-                    this.totalFood.protein.maybe = this.totalFood.protein.maybe - food.protein;
-                    this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - food.carbohydrates;
-                    this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
+                    this.totalFood.calories.maybe = this.totalFood.calories.maybe - Math.round((food.calories * food['weight'] / 100));
+                    this.totalFood.protein.maybe = this.totalFood.protein.maybe - Math.round((food.protein * food['weight'] / 100));
+                    this.totalFood.fat.maybe = this.totalFood.fat.maybe - Math.round((food.fat * food['weight'] / 100));
+                    this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - Math.round((food.carbohydrates * food['weight'] / 100));
                 };
                 FoodComponent = __decorate([
                     core_11.Component({
@@ -953,7 +1059,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_2.SimpleSearch],
                         styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n\n  .food_serchContainer {\n    position: absolute;\n    background-color: #aaa;\n    width: 60vw;\n    left: 0;\n    right: 10px;\n    height: 200px;\n    top: 27px;\n    overflow-y: scroll;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 60vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
-                        template: "\n<op-plus [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full\" [secondLine]=\"totalFood.calories.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full\" [secondLine]=\"totalFood.protein.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full\" [secondLine]=\"totalFood.fat.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full\" [secondLine]=\"totalFood.carbohydrates.maybe\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (keyup)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n    <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFodd(i, item)\" (fmSwipeRight)=\"removeFodd(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"1\" [(ngModel)]=\"item.weight\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(item)\"></div>\n\n  </div>\n</div>\n    "
+                        template: "\n<op-plus [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n    <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFodd(i, item)\" (fmSwipeRight)=\"removeFodd(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (input)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_2.UserService])
                 ], FoodComponent);

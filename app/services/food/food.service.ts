@@ -31,14 +31,13 @@ export class FoodService {
 
     prepareFood() {
         this.allFood.length = 0;
-        let container= this.food.slice();
+        let container = this.food.slice();
         if (this.userFood.length) {
-
             for (let itemUser of this.userFood) {
                 for (let itemContainer of container) {
                     if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
-                        let rem = this.food.indexOf(itemContainer);
-                        container.splice(rem, 1);
+                        let rem = container.indexOf(itemContainer);
+                        let aa = container.splice(rem, 1);
                     }
                 }
             }
@@ -46,7 +45,6 @@ export class FoodService {
         } else {
             this.allFood.push(...this.food);
         }
-
     }
 
 

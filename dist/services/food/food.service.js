@@ -55,8 +55,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             for (var _b = 0, container_1 = container; _b < container_1.length; _b++) {
                                 var itemContainer = container_1[_b];
                                 if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
-                                    var rem = this.food.indexOf(itemContainer);
-                                    container.splice(rem, 1);
+                                    var rem = container.indexOf(itemContainer);
+                                    var aa = container.splice(rem, 1);
                                 }
                             }
                         }
