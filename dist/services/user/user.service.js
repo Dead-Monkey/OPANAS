@@ -21,12 +21,41 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             UserService = (function () {
                 function UserService() {
                     this.language = 'ru';
+                    this.foodSets = {
+                        "calories": {
+                            "full": 2000
+                        },
+                        "protein": {
+                            "full": 150
+                        },
+                        "fat": {
+                            "full": 80
+                        },
+                        "carbohydrates": {
+                            "full": 300
+                        }
+                    };
                 }
                 UserService.prototype.getLanguage = function () {
                     return this.language;
                 };
                 UserService.prototype.setLanguage = function (language) {
                     this.language = language;
+                };
+                UserService.prototype.getUserFoodSets = function () {
+                    return this.foodSets;
+                };
+                UserService.prototype.setUserCalories = function (value) {
+                    this.foodSets['calories']['full'] = value;
+                };
+                UserService.prototype.setUserProtein = function (value) {
+                    this.foodSets['protein']['full'] = value;
+                };
+                UserService.prototype.setUserFat = function (value) {
+                    this.foodSets['fat']['full'] = value;
+                };
+                UserService.prototype.setUserCarbohydrates = function (value) {
+                    this.foodSets['carbohydrates']['full'] = value;
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 

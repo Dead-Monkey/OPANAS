@@ -138,10 +138,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     `],
     template: `
 <op-plus [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full" [secondLine]="totalFood.calories.maybe"></fm-progress-bar>
-<fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full" [secondLine]="totalFood.protein.maybe"></fm-progress-bar>
-<fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full" [secondLine]="totalFood.fat.maybe"></fm-progress-bar>
-<fm-progress-bar [name]="'carbohydrates'" [mainLine]="totalFood.carbohydrates.full" [secondLine]="totalFood.carbohydrates.maybe"></fm-progress-bar>
+<fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
+<fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
+<fm-progress-bar [name]="'carbohydrates'" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
 
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
@@ -166,9 +166,9 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     <div class="food_listItem">
       {{item?.name[language]}}
     </div>
-    <input class="food_listWeight" type="number" min="1" [(ngModel)]="item.weight">
+    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (keyup)="changeFoodWeight(i, item)">
 
-    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(item)"></div>
+    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
 
   </div>
 </div>
@@ -182,6 +182,7 @@ export class FoodComponent implements OnInit {
     private calendar: Array<Day>;
     private currentDate: Date = new Date();
     private language: string = 'en';
+    private userSets;
 
     private pickedFood: Food = <Food>{};
     private pickedFoodContainer: Food[] = [];
@@ -191,19 +192,23 @@ export class FoodComponent implements OnInit {
     private totalFood = {
         "calories": {
             "full": 0,
-            "maybe": 0
+            "maybe": 0,
+            "dailyProcent": 0
         },
         "protein": {
             "full": 0,
-            "maybe": 0
-        },
-        "carbohydrates": {
-            "full": 0,
-            "maybe": 0
+            "maybe": 0,
+            "dailyProcent": 0
         },
         "fat": {
             "full": 0,
-            "maybe": 0
+            "maybe": 0,
+            "dailyProcent": 0
+        },
+        "carbohydrates": {
+            "full": 0,
+            "maybe": 0,
+            "dailyProcent": 0
         }
     }
 
@@ -212,6 +217,7 @@ export class FoodComponent implements OnInit {
     ngOnInit() {
 
         this.language = this._userServe.getLanguage();
+        this.userSets = this._userServe.getUserFoodSets();
         this.foodContainer = this._foodServe.getAllFood();
         this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
 
@@ -235,11 +241,6 @@ export class FoodComponent implements OnInit {
 
     }
 
-    removeFodd(index: number, food: Food) {
-        this._calendarService.removeDailyFood(index, this.currentDate);
-        this.calculateFoodMinus(food);
-    }
-
     pickFoodInput(name) {
         for (let obj of this.foodContainer) {
             if (obj['name'][this.language] === name) {
@@ -257,19 +258,55 @@ export class FoodComponent implements OnInit {
         this.correctFood = true;
     }
 
-    checkBoxToggle(food: Food) {
+    checkBoxToggle(index: number, food: Food) {
         if (food['picked']) {
             this.calculateFullMinus(food);
         } else {
             this.calculateFull(food);
         }
         food['picked'] = !food['picked'];
+        this._calendarService.changeDailyFood(index, this.currentDate, food);
+    }
 
+    removeFodd(index: number, food: Food) {
+        this._calendarService.removeDailyFood(index, this.currentDate);
+        this.calculateFoodMinus(food);
+    }
+
+    changeFoodWeight(index: number, food: Food) {
+        let timer;
+        if (!isNaN(food['weight'])) {
+
+
+            this._calendarService.changeDailyFood(index, this.currentDate, food);
+            this.calculateFoodRefresh();
+            for (let variable of this.pickedFoodContainer) {
+                this.calculateFood(variable);
+            }
+
+
+        } else {
+            timer = setTimeout(() => {
+                if (isNaN(food['weight'])) {
+                    food['weight'] = 0
+                    this._calendarService.changeDailyFood(index, this.currentDate, food);
+                    this.calculateFoodRefresh();
+                    for (let variable of this.pickedFoodContainer) {
+                        this.calculateFood(variable);
+                    }
+                }
+
+            }, 1500);
+        }
     }
 
     calculateFood(food: Food) {
-        this.calculateFull(food);
-        this.calculateMayBe(food);
+        if (food['picked']) {
+            this.calculateFull(food);
+            this.calculateMayBe(food);
+        } else {
+            this.calculateMayBe(food);
+        }
     }
 
     calculateFoodMinus(food: Food) {
@@ -288,32 +325,32 @@ export class FoodComponent implements OnInit {
         this.totalFood.fat.maybe = 0;
     }
 
-    calculateFull(food: Food) {
-        this.totalFood.calories.full = this.totalFood.calories.full + food.calories;
-        this.totalFood.protein.full = this.totalFood.protein.full + food.protein;
-        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + food.carbohydrates;
-        this.totalFood.fat.full = this.totalFood.fat.full + food.fat;
+    calculateFull(food) {
+        this.totalFood.calories.full = this.totalFood.calories.full + Math.round((food.calories * food['weight'] / 100));
+        this.totalFood.protein.full = this.totalFood.protein.full + Math.round((food.protein * food['weight'] / 100));
+        this.totalFood.fat.full = this.totalFood.fat.full + Math.round((food.fat * food['weight'] / 100));
+        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + Math.round((food.carbohydrates * food['weight'] / 100));
     }
 
-    calculateMayBe(food: Food) {
-        this.totalFood.calories.maybe = this.totalFood.calories.maybe + food.calories;
-        this.totalFood.protein.maybe = this.totalFood.protein.maybe + food.protein;
-        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + food.carbohydrates;
-        this.totalFood.fat.maybe = this.totalFood.fat.maybe + food.fat;
+    calculateMayBe(food) {
+        this.totalFood.calories.maybe = this.totalFood.calories.maybe + Math.round((food.calories * food['weight'] / 100));
+        this.totalFood.protein.maybe = this.totalFood.protein.maybe + Math.round((food.protein * food['weight'] / 100));
+        this.totalFood.fat.maybe = this.totalFood.fat.maybe + Math.round((food.fat * food['weight'] / 100));
+        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + Math.round((food.carbohydrates * food['weight'] / 100));
     }
 
-    calculateFullMinus(food: Food) {
-        this.totalFood.calories.full = this.totalFood.calories.full - food.calories;
-        this.totalFood.protein.full = this.totalFood.protein.full - food.protein;
-        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - food.carbohydrates;
-        this.totalFood.fat.full = this.totalFood.fat.full - food.fat;
+    calculateFullMinus(food) {
+        this.totalFood.calories.full = this.totalFood.calories.full - Math.round((food.calories * food['weight'] / 100));
+        this.totalFood.protein.full = this.totalFood.protein.full - Math.round((food.protein * food['weight'] / 100));
+        this.totalFood.fat.full = this.totalFood.fat.full - Math.round((food.fat * food['weight'] / 100));
+        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - Math.round((food.carbohydrates * food['weight'] / 100));
     }
 
-    calculateMayBeMinus(food: Food) {
-        this.totalFood.calories.maybe = this.totalFood.calories.maybe - food.calories;
-        this.totalFood.protein.maybe = this.totalFood.protein.maybe - food.protein;
-        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - food.carbohydrates;
-        this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
+    calculateMayBeMinus(food) {
+        this.totalFood.calories.maybe = this.totalFood.calories.maybe - Math.round((food.calories * food['weight'] / 100));
+        this.totalFood.protein.maybe = this.totalFood.protein.maybe - Math.round((food.protein * food['weight'] / 100));
+        this.totalFood.fat.maybe = this.totalFood.fat.maybe - Math.round((food.fat * food['weight'] / 100));
+        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - Math.round((food.carbohydrates * food['weight'] / 100));
     }
 
 }

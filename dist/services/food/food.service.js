@@ -107,10 +107,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         "ru": "пицца"
                     },
                     "custom": false,
-                    "calories": 10,
-                    "protein": 10,
-                    "fat": 10,
-                    "carbohydrates": 10
+                    "calories": 100,
+                    "protein": 75,
+                    "fat": 50,
+                    "carbohydrates": 25
                 },
                 {
                     "name": {

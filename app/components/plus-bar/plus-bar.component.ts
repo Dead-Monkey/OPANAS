@@ -128,15 +128,23 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   border-radius: 2vw;
 }
 .tmp{
-  background-color: green;
-  width: 100%;
+  width: 80vw;
+  position: relative;
+  top:50%;
+}
+.tmp2{
+  height: 12vw;
+  width: 80vw;
+  line-height: 12vw;
+  box-sizing: border-box;
+  font-size: 6vw;
+  text-align: center;
+  line-height: 12vw;
 }
     `],
     template: `
 <div class="plusBar" (click)="toggle()">PLUS</div>
 <div class="container" *ngIf="isOpen">
-  <div>{{item?.name}}</div>
-  <div class="tmp" (click)="removeFood()">remove</div>
   <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
     <label style="left:0; border:none;" class="food_inputFood" for="name">foodName</label>
@@ -157,6 +165,9 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
 
   </form>
+  <div class="tmp" *ngFor="#item of customFood">
+    <div class="tmp2">name: {{item.name.ru}} calories: {{item.calories}}</div>
+  </div>
 </div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
     `
@@ -167,12 +178,14 @@ export class PlusComponent implements OnInit {
     @Input() isOpen: boolean = true;
     @Output() isOpenChange = new EventEmitter();
 
-    private item = this._foodServe.getUserFood();
+    private customFood;
     private model: Object = {};
 
     constructor(private _foodServe: FoodService, private _translateService: TranslateService) { }
 
     ngOnInit() {
+        this.customFood = this._foodServe.getUserFood();
+        console.log(this.customFood);
         this.refreshModel();
     }
 
@@ -183,9 +196,9 @@ export class PlusComponent implements OnInit {
 
     checkForm(value) {
         if (value) {
-          if(value.trim()){
-            return true
-          }
+            if (value.trim()) {
+                return true
+            }
         }
         return false;
     }
@@ -217,12 +230,11 @@ export class PlusComponent implements OnInit {
     }
     setFood(food: Food) {
         this._foodServe.setUserFood(food);
-        this.item = this._foodServe.getUserFood();
+        this.customFood = this._foodServe.getUserFood();
     }
     removeFood() {
-
-        this.item = this._foodServe.getUserFood();
-        console.log(this.item);
+        this.customFood = this._foodServe.getUserFood();
+        console.log(this.customFood);
     }
 
 

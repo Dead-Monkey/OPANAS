@@ -93,6 +93,16 @@ export class CalendarService {
         this.refreshCalendar();
     }
 
+    changeDailyFood(index, date: Date, food:Food) {
+        date.setHours(0, 0, 0, 0);
+        for (let day of this.calendar) {
+            if (day['date'].getTime() === date.getTime()) {
+                day['food'].splice(index, 1, food);
+            }
+        }
+        this.refreshCalendar();
+    }
+
     removeDailyFood(index, date: Date) {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {

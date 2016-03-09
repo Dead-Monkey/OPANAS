@@ -23,14 +23,36 @@ System.register(['angular2/core', '../../services/translate/translate.service'],
         execute: function() {
             ProgressBar = (function () {
                 function ProgressBar() {
+                    this.maxNumber = 0;
+                    this.minNumber = 0;
                 }
-                ProgressBar.prototype.getMainLine = function () {
-                    this.mainLine = (this.mainLine > 100) ? 100 : this.mainLine;
-                    return this.mainLine;
-                };
-                ProgressBar.prototype.getSecondLine = function () {
-                    this.secondLine = (this.secondLine > 100) ? 100 : this.secondLine;
-                    return this.secondLine;
+                ProgressBar.prototype.ngOnChanges = function (changes) {
+                    if (changes['mainLine']) {
+                        if (isNaN(changes['mainLine'].currentValue)) {
+                            this.mainLine = 0;
+                        }
+                        if (changes['mainLine'].currentValue > 100 || this.mainLine > 100) {
+                            this.mainLine = 100;
+                        }
+                    }
+                    if (changes['secondLine']) {
+                        if (isNaN(changes['secondLine'].currentValue)) {
+                            this.secondLine = 0;
+                        }
+                        if (changes['secondLine'].currentValue > 100 || this.secondLine > 100) {
+                            this.secondLine = 100;
+                        }
+                    }
+                    if (changes['maxNumber']) {
+                        if (isNaN(changes['maxNumber'].currentValue)) {
+                            this.maxNumber = 0;
+                        }
+                    }
+                    if (changes['minNumber']) {
+                        if (isNaN(changes['minNumber'].currentValue)) {
+                            this.minNumber = 0;
+                        }
+                    }
                 };
                 __decorate([
                     core_1.Input(), 
@@ -44,14 +66,22 @@ System.register(['angular2/core', '../../services/translate/translate.service'],
                     core_1.Input(), 
                     __metadata('design:type', Number)
                 ], ProgressBar.prototype, "secondLine", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Number)
+                ], ProgressBar.prototype, "maxNumber", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Number)
+                ], ProgressBar.prototype, "minNumber", void 0);
                 ProgressBar = __decorate([
                     core_1.Component({
                         selector: 'fm-progress-bar',
                         directives: [],
                         providers: [],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n.progress_container {\nwidth: 90vw;\nheight: 7vw;\nposition: relative;\nleft: 5vw;\nbackground-color: rgba(49, 51, 61, 0.7);\nbox-sizing: border-box;\nborder: 5px solid #0C1017;\nborder-radius: 10px;\nz-index:1;\n\n}\n.progress_mainLine {\n  position:absolute;\n  top:0;\n  left:0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top:0;\n  left:0;\n  background-color: #181A21;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n    text-align: center;\n    color: #E48426;\n    font-size: 5vw;\n}\n\n "],
-                        template: "\n<div class=\"progress_barHeader\">{{name|translate|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"getSecondLine()\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"getMainLine()\">\n    1488\n  </div>\n\n</div>\n    "
+                        styles: ["\n.progress_container {\n  width: 90vw;\n  height: 7vw;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border: 5px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 5vw;\n}\n.numbers {\n  position: absolute;\n  color: blue;\n  height: 7vw;\n  width: 90vw;\n  overflow: hidden;\n}\n "],
+                        template: "\n<div class=\"progress_barHeader\">{{name|translate|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProgressBar);

@@ -267,6 +267,9 @@ System.register("services/user/user.service", ['angular2/core'], function(export
                 UserService.prototype.getLanguage = function () {
                     return this.language;
                 };
+                UserService.prototype.setLanguage = function (language) {
+                    this.language = language;
+                };
                 UserService = __decorate([
                     core_5.Injectable(), 
                     __metadata('design:paramtypes', [])
@@ -317,24 +320,25 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     this._storageService.setItem(this.storageKeys.userFood, this.userFood);
                 };
                 FoodService.prototype.prepareFood = function () {
-                    this.allFood = [];
-                    for (var _i = 0, _a = this.food; _i < _a.length; _i++) {
-                        var itemFood = _a[_i];
-                        if (this.userFood.length) {
-                            for (var _b = 0, _c = this.userFood; _b < _c.length; _b++) {
-                                var itemUser = _c[_b];
-                                if (itemUser.name[this._userServe.getLanguage()].trim() === itemFood.name[this._userServe.getLanguage()].trim()) {
-                                    this.allFood.push(itemUser);
-                                }
-                                else {
-                                    this.allFood.push(itemFood);
+                    this.allFood.length = 0;
+                    var container = this.food.slice();
+                    if (this.userFood.length) {
+                        for (var _i = 0, _a = this.userFood; _i < _a.length; _i++) {
+                            var itemUser = _a[_i];
+                            for (var _b = 0, container_1 = container; _b < container_1.length; _b++) {
+                                var itemContainer = container_1[_b];
+                                if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
+                                    var rem = this.food.indexOf(itemContainer);
+                                    container.splice(rem, 1);
                                 }
                             }
                         }
-                        else {
-                            this.allFood.push(itemFood);
-                        }
+                        (_c = this.allFood).push.apply(_c, container.concat(this.userFood));
                     }
+                    else {
+                        (_d = this.allFood).push.apply(_d, this.food);
+                    }
+                    var _c, _d;
                 };
                 FoodService.prototype.getUserFood = function () {
                     return this.userFood;
@@ -371,7 +375,6 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
             exports_7("FoodService", FoodService);
             foodVendor = [
                 {
-                    "id": 1,
                     "name": {
                         "en": "pizza",
                         "ru": "пицца"
@@ -379,11 +382,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "custom": false,
                     "calories": 10,
                     "protein": 10,
-                    "carbohydrates": 10,
-                    "fat": 10
+                    "fat": 10,
+                    "carbohydrates": 10
                 },
                 {
-                    "id": 2,
                     "name": {
                         "en": "apple",
                         "ru": "яблоко"
@@ -391,11 +393,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "custom": false,
                     "calories": 5,
                     "protein": 5,
-                    "carbohydrates": 5,
-                    "fat": 5
+                    "fat": 5,
+                    "carbohydrates": 5
                 },
                 {
-                    "id": 3,
                     "name": {
                         "en": "tomato",
                         "ru": "помидор"
@@ -403,11 +404,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "custom": false,
                     "calories": 20,
                     "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
+                    "fat": 20,
+                    "carbohydrates": 20
                 },
                 {
-                    "id": 4,
                     "name": {
                         "en": "potato",
                         "ru": "картофан"
@@ -415,11 +415,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "custom": false,
                     "calories": 20,
                     "protein": 20,
-                    "carbohydrates": 20,
-                    "fat": 20
+                    "fat": 20,
+                    "carbohydrates": 20
                 },
                 {
-                    "id": 5,
                     "name": {
                         "en": "niceThing",
                         "ru": "ништяк"
@@ -427,8 +426,8 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "custom": false,
                     "calories": 12,
                     "protein": 12,
-                    "carbohydrates": 11,
-                    "fat": 10
+                    "fat": 10,
+                    "carbohydrates": 11
                 }
             ];
         }
@@ -449,8 +448,13 @@ System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core
                 function SimpleSearch() {
                 }
                 SimpleSearch.prototype.transform = function (value, _a) {
-                    var field = _a[0], letter = _a[1];
-                    return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
+                    var field = _a[0], field2 = _a[1], letter = _a[2];
+                    if (field2) {
+                        return value.filter(function (item) { return item[field][field2].toLowerCase().includes(letter.toLowerCase()); });
+                    }
+                    else {
+                        return value.filter(function (item) { return item[field].toLowerCase().includes(letter.toLowerCase()); });
+                    }
                 };
                 SimpleSearch = __decorate([
                     core_7.Pipe({
@@ -465,15 +469,115 @@ System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core
         }
     }
 });
-System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_9, context_9) {
+System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service"], function(exports_9, context_9) {
     "use strict";
     var __moduleName = context_9 && context_9.id;
-    var core_8, storage_service_2;
-    var CalendarService;
+    var core_8, food_service_1, simple_search_pipe_1, translate_service_4;
+    var PlusComponent;
     return {
         setters:[
             function (core_8_1) {
                 core_8 = core_8_1;
+            },
+            function (food_service_1_1) {
+                food_service_1 = food_service_1_1;
+            },
+            function (simple_search_pipe_1_1) {
+                simple_search_pipe_1 = simple_search_pipe_1_1;
+            },
+            function (translate_service_4_1) {
+                translate_service_4 = translate_service_4_1;
+            }],
+        execute: function() {
+            PlusComponent = (function () {
+                function PlusComponent(_foodServe, _translateService) {
+                    this._foodServe = _foodServe;
+                    this._translateService = _translateService;
+                    this.isOpen = true;
+                    this.isOpenChange = new core_8.EventEmitter();
+                    this.item = this._foodServe.getUserFood();
+                    this.model = {};
+                }
+                PlusComponent.prototype.ngOnInit = function () {
+                    this.refreshModel();
+                };
+                PlusComponent.prototype.toggle = function () {
+                    this.isOpen = !this.isOpen;
+                    this.isOpenChange.emit(this.isOpen);
+                };
+                PlusComponent.prototype.checkForm = function (value) {
+                    if (value) {
+                        if (value.trim()) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+                //4 food
+                PlusComponent.prototype.onSubmit = function (food) {
+                    if (food.value.name.trim()) {
+                        var name_1 = food.value.name.trim();
+                        food.value['name'] = {};
+                        for (var key in this._translateService.getSupportLanguages()) {
+                            food.value['name'][key] = name_1;
+                        }
+                        food.value['custom'] = true;
+                        this.setFood(food.value);
+                        this.refreshModel();
+                    }
+                };
+                PlusComponent.prototype.refreshModel = function () {
+                    this.model['name'] = '';
+                    this.model['calories'] = 0;
+                    this.model['protein'] = 0;
+                    this.model['fat'] = 0;
+                    this.model['carbohydrates'] = 0;
+                };
+                PlusComponent.prototype.getFood = function () {
+                    console.log(this._foodServe.getUserFood());
+                };
+                PlusComponent.prototype.setFood = function (food) {
+                    this._foodServe.setUserFood(food);
+                    this.item = this._foodServe.getUserFood();
+                };
+                PlusComponent.prototype.removeFood = function () {
+                    this.item = this._foodServe.getUserFood();
+                    console.log(this.item);
+                };
+                __decorate([
+                    core_8.Input(), 
+                    __metadata('design:type', Boolean)
+                ], PlusComponent.prototype, "isOpen", void 0);
+                __decorate([
+                    core_8.Output(), 
+                    __metadata('design:type', Object)
+                ], PlusComponent.prototype, "isOpenChange", void 0);
+                PlusComponent = __decorate([
+                    core_8.Component({
+                        selector: 'op-plus',
+                        directives: [],
+                        providers: [],
+                        pipes: [translate_service_4.TranslatePipe, simple_search_pipe_1.SimpleSearch],
+                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar{\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 20vw;\n  height: 15vw;\n  background-color: blue;\n  overflow: hidden;\n}\n.closeMe{\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
+                        template: "\n<div class=\"plusBar\" (click)=\"toggle()\">PLUS</div>\n<div class=\"container\" *ngIf=\"isOpen\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n  <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n    <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n    <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n    <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n    <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n  </form>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
+                    }), 
+                    __metadata('design:paramtypes', [food_service_1.FoodService, translate_service_4.TranslateService])
+                ], PlusComponent);
+                return PlusComponent;
+            }());
+            exports_9("PlusComponent", PlusComponent);
+        }
+    }
+});
+System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_10, context_10) {
+    "use strict";
+    var __moduleName = context_10 && context_10.id;
+    var core_9, storage_service_2;
+    var CalendarService;
+    return {
+        setters:[
+            function (core_9_1) {
+                core_9 = core_9_1;
             },
             function (storage_service_2_1) {
                 storage_service_2 = storage_service_2_1;
@@ -580,114 +684,128 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 CalendarService.prototype.setDailyRest = function () {
                 };
                 CalendarService = __decorate([
-                    core_8.Injectable(), 
+                    core_9.Injectable(), 
                     __metadata('design:paramtypes', [storage_service_2.StorageService])
                 ], CalendarService);
                 return CalendarService;
             }());
-            exports_9("CalendarService", CalendarService);
+            exports_10("CalendarService", CalendarService);
         }
     }
 });
-System.register("components/add-food/add-food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service"], function(exports_10, context_10) {
-    "use strict";
-    var __moduleName = context_10 && context_10.id;
-    var core_9, translate_service_4, progress_bar_component_1, food_service_1, simple_search_pipe_1, calendar_service_1;
-    var AddFoodComponent;
-    return {
-        setters:[
-            function (core_9_1) {
-                core_9 = core_9_1;
-            },
-            function (translate_service_4_1) {
-                translate_service_4 = translate_service_4_1;
-            },
-            function (progress_bar_component_1_1) {
-                progress_bar_component_1 = progress_bar_component_1_1;
-            },
-            function (food_service_1_1) {
-                food_service_1 = food_service_1_1;
-            },
-            function (simple_search_pipe_1_1) {
-                simple_search_pipe_1 = simple_search_pipe_1_1;
-            },
-            function (calendar_service_1_1) {
-                calendar_service_1 = calendar_service_1_1;
-            }],
-        execute: function() {
-            AddFoodComponent = (function () {
-                function AddFoodComponent(_foodServe, _calendarService) {
-                    this._foodServe = _foodServe;
-                    this._calendarService = _calendarService;
-                    this.model = {};
-                    this.currentDate = new Date();
-                    this.pickedFood = {};
-                    this.pickedFoodContainer = [];
-                    this.correctFood = false;
-                    this.item = this._foodServe.getUserFood();
-                }
-                AddFoodComponent.prototype.ngOnInit = function () {
-                };
-                AddFoodComponent.prototype.setFood = function () {
-                    this._foodServe.setUserFood({
-                        "id": 1,
-                        "name": "pizza",
-                        "custom": false,
-                        "calories": 999,
-                        "protein": 10,
-                        "carbohydrates": 10,
-                        "fat": 10
-                    });
-                    // console.log(this._foodServe.getUserFood());
-                    this.item = this._foodServe.getUserFood();
-                };
-                AddFoodComponent.prototype.removeFood = function () {
-                    this._foodServe.removeUserFood({
-                        "id": 99,
-                        "name": "pizza",
-                        "custom": true,
-                        "calories": 2,
-                        "protein": 1,
-                        "carbohydrates": 10,
-                        "fat": 3
-                    });
-                    this.item = this._foodServe.getUserFood();
-                };
-                AddFoodComponent = __decorate([
-                    core_9.Component({
-                        selector: 'op-add-food',
-                        directives: [progress_bar_component_1.ProgressBar],
-                        providers: [],
-                        pipes: [translate_service_4.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-                        styles: ["\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  background-color: silver;\n  width:90vw;\n  height: 90vh;\n  z-index:10;\n}\n.tmp{\n  background-color: green;\n  width: 100%;\n}\n    "],
-                        template: "\n<div class=\"container\">\n  <div>{{item?.name}}</div>\n  <div class=\"tmp\" (click)=\"setFood()\">set</div>\n  <div class=\"tmp\" (click)=\"removeFood()\">remove</div>\n</div>\n    "
-                    }), 
-                    __metadata('design:paramtypes', [food_service_1.FoodService, calendar_service_1.CalendarService])
-                ], AddFoodComponent);
-                return AddFoodComponent;
-            }());
-            exports_10("AddFoodComponent", AddFoodComponent);
-        }
-    }
-});
-System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/add-food/add-food.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service"], function(exports_11, context_11) {
+System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angular2/core'], function(exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
-    var core_10, translate_service_5, progress_bar_component_2, add_food_component_1, food_service_2, simple_search_pipe_2, calendar_service_2, user_service_2;
-    var FoodComponent;
+    var core_10;
+    var SwipeHoldertDirective;
     return {
         setters:[
             function (core_10_1) {
                 core_10 = core_10_1;
+            }],
+        execute: function() {
+            SwipeHoldertDirective = (function () {
+                function SwipeHoldertDirective(el) {
+                    this.fmSwipe = new core_10.EventEmitter();
+                    this.fmSwipeRight = new core_10.EventEmitter();
+                    this.fmSwipeLeft = new core_10.EventEmitter();
+                    this.fmSwipeDown = new core_10.EventEmitter();
+                    this.fmSwipeUp = new core_10.EventEmitter();
+                }
+                SwipeHoldertDirective.prototype.start = function (evt) {
+                    this.xStart = evt.touches[0].clientX;
+                    this.yStart = evt.touches[0].clientY;
+                };
+                SwipeHoldertDirective.prototype.move = function (evt) {
+                    if (!this.xStart || !this.yStart) {
+                        return;
+                    }
+                    var xNew = evt.touches[0].clientX;
+                    var yNew = evt.touches[0].clientY;
+                    var xDiff = this.xStart - xNew;
+                    var yDiff = this.yStart - yNew;
+                    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                        if (xDiff > 0) {
+                            this.fmSwipe.emit(['leftSwipe', xNew, yNew, evt]);
+                            this.fmSwipeLeft.emit(['leftSwipe', xNew, evt]);
+                        }
+                        else {
+                            this.fmSwipe.emit(['rightSwipe', xNew, yNew, evt]);
+                            this.fmSwipeRight.emit(['rightSwipe', xNew, evt]);
+                        }
+                    }
+                    else {
+                        if (yDiff > 0) {
+                            this.fmSwipe.emit(['upSwipe', xNew, yNew, evt]);
+                            this.fmSwipeUp.emit(['upSwipe', yNew, evt]);
+                        }
+                        else {
+                            this.fmSwipe.emit(['downSwipe', xNew, yNew, evt]);
+                            this.fmSwipeDown.emit(['downSwipe', yNew, evt]);
+                        }
+                    }
+                    this.xStart = evt.touches[0].clientX;
+                    this.yStart = evt.touches[0].clientY;
+                };
+                SwipeHoldertDirective.prototype.end = function (evt) {
+                    this.xStart = null;
+                    this.yStart = null;
+                };
+                __decorate([
+                    core_10.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipe", void 0);
+                __decorate([
+                    core_10.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeRight", void 0);
+                __decorate([
+                    core_10.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeLeft", void 0);
+                __decorate([
+                    core_10.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeDown", void 0);
+                __decorate([
+                    core_10.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeUp", void 0);
+                SwipeHoldertDirective = __decorate([
+                    core_10.Directive({
+                        selector: '[fmSwipe]',
+                        host: {
+                            '(touchstart)': 'start($event)',
+                            '(touchmove)': 'move($event)',
+                            '(touchend)': 'end($event)'
+                        }
+                    }), 
+                    __metadata('design:paramtypes', [core_10.ElementRef])
+                ], SwipeHoldertDirective);
+                return SwipeHoldertDirective;
+            }());
+            exports_11("SwipeHoldertDirective", SwipeHoldertDirective);
+        }
+    }
+});
+System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_12, context_12) {
+    "use strict";
+    var __moduleName = context_12 && context_12.id;
+    var core_11, translate_service_5, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_2, swipe_holder_directive_1;
+    var FoodComponent;
+    return {
+        setters:[
+            function (core_11_1) {
+                core_11 = core_11_1;
             },
             function (translate_service_5_1) {
                 translate_service_5 = translate_service_5_1;
             },
-            function (progress_bar_component_2_1) {
-                progress_bar_component_2 = progress_bar_component_2_1;
+            function (progress_bar_component_1_1) {
+                progress_bar_component_1 = progress_bar_component_1_1;
             },
-            function (add_food_component_1_1) {
-                add_food_component_1 = add_food_component_1_1;
+            function (plus_bar_component_1_1) {
+                plus_bar_component_1 = plus_bar_component_1_1;
             },
             function (food_service_2_1) {
                 food_service_2 = food_service_2_1;
@@ -695,11 +813,14 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
             function (simple_search_pipe_2_1) {
                 simple_search_pipe_2 = simple_search_pipe_2_1;
             },
-            function (calendar_service_2_1) {
-                calendar_service_2 = calendar_service_2_1;
+            function (calendar_service_1_1) {
+                calendar_service_1 = calendar_service_1_1;
             },
             function (user_service_2_1) {
                 user_service_2 = user_service_2_1;
+            },
+            function (swipe_holder_directive_1_1) {
+                swipe_holder_directive_1 = swipe_holder_directive_1_1;
             }],
         execute: function() {
             FoodComponent = (function () {
@@ -709,10 +830,11 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this._userServe = _userServe;
                     this.model = {};
                     this.currentDate = new Date();
+                    this.language = 'en';
                     this.pickedFood = {};
                     this.pickedFoodContainer = [];
                     this.correctFood = false;
-                    this.addFoodToggle = false;
+                    this.plusIsOpen = false;
                     this.totalFood = {
                         "calories": {
                             "full": 0,
@@ -733,6 +855,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
+                    this.language = this._userServe.getLanguage();
                     this.foodContainer = this._foodServe.getAllFood();
                     this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
                     //4 calculate progress-bar
@@ -758,7 +881,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                 FoodComponent.prototype.pickFoodInput = function (name) {
                     for (var _i = 0, _a = this.foodContainer; _i < _a.length; _i++) {
                         var obj = _a[_i];
-                        if (obj['name'] === name) {
+                        if (obj['name'][this.language] === name) {
                             return this.pickFood(obj);
                         }
                         else {
@@ -769,7 +892,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                 };
                 FoodComponent.prototype.pickFood = function (food) {
                     this.pickedFood = Object.assign({}, food);
-                    this.model['name'] = food.name;
+                    this.model['name'] = food.name[this.language];
                     this.correctFood = true;
                 };
                 FoodComponent.prototype.checkBoxToggle = function (food) {
@@ -824,31 +947,31 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this.totalFood.fat.maybe = this.totalFood.fat.maybe - food.fat;
                 };
                 FoodComponent = __decorate([
-                    core_10.Component({
+                    core_11.Component({
                         selector: 'op-food',
-                        directives: [progress_bar_component_2.ProgressBar, add_food_component_1.AddFoodComponent],
+                        directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_1.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_2.SimpleSearch],
                         styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 1.5vw solid #0C1017;\n    border-radius: 2vw;\n  }\n\n  .food_serchContainer {\n    position: absolute;\n    background-color: #aaa;\n    width: 60vw;\n    left: 0;\n    right: 10px;\n    height: 200px;\n    top: 27px;\n    overflow-y: scroll;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 60vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
-                        template: "\n<op-add-food *ngIf=\"addFoodToggle\"></op-add-food>\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full\" [secondLine]=\"totalFood.calories.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full\" [secondLine]=\"totalFood.protein.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full\" [secondLine]=\"totalFood.fat.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full\" [secondLine]=\"totalFood.carbohydrates.maybe\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (keyup)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n    <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name' : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\">\n\n    <div class=\"food_listItem\">\n      {{item?.name}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"1\" [(ngModel)]=\"item.weight\">\n\n    <button (click)=\"removeFodd(i, item)\">minus</button>\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(item)\"></div>\n\n  </div>\n</div>\n    "
+                        template: "\n<op-plus [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'\" [mainLine]=\"totalFood.calories.full\" [secondLine]=\"totalFood.calories.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'\" [mainLine]=\"totalFood.protein.full\" [secondLine]=\"totalFood.protein.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'\" [mainLine]=\"totalFood.fat.full\" [secondLine]=\"totalFood.fat.maybe\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'\" [mainLine]=\"totalFood.carbohydrates.full\" [secondLine]=\"totalFood.carbohydrates.maybe\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (keyup)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" min=\"1\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button type=\"submit\" [ngClass]=\"{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"name.valid\" class=\"food_serchContainer\">\n    <div class=\"food_listItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFodd(i, item)\" (fmSwipeRight)=\"removeFodd(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"1\" [(ngModel)]=\"item.weight\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(item)\"></div>\n\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_2.CalendarService, user_service_2.UserService])
+                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_2.UserService])
                 ], FoodComponent);
                 return FoodComponent;
             }());
-            exports_11("FoodComponent", FoodComponent);
+            exports_12("FoodComponent", FoodComponent);
         }
     }
 });
-System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service"], function(exports_12, context_12) {
+System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service"], function(exports_13, context_13) {
     "use strict";
-    var __moduleName = context_12 && context_12.id;
-    var core_11, translate_service_6;
+    var __moduleName = context_13 && context_13.id;
+    var core_12, translate_service_6;
     var SportComponent;
     return {
         setters:[
-            function (core_11_1) {
-                core_11 = core_11_1;
+            function (core_12_1) {
+                core_12 = core_12_1;
             },
             function (translate_service_6_1) {
                 translate_service_6 = translate_service_6_1;
@@ -858,7 +981,7 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 function SportComponent() {
                 }
                 SportComponent = __decorate([
-                    core_11.Component({
+                    core_12.Component({
                         selector: 'op-sport',
                         directives: [],
                         providers: [],
@@ -870,26 +993,26 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 ], SportComponent);
                 return SportComponent;
             }());
-            exports_12("SportComponent", SportComponent);
+            exports_13("SportComponent", SportComponent);
         }
     }
 });
-System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_13, context_13) {
+System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_14, context_14) {
     "use strict";
-    var __moduleName = context_13 && context_13.id;
-    var core_12;
+    var __moduleName = context_14 && context_14.id;
+    var core_13;
     var RestComponent;
     return {
         setters:[
-            function (core_12_1) {
-                core_12 = core_12_1;
+            function (core_13_1) {
+                core_13 = core_13_1;
             }],
         execute: function() {
             RestComponent = (function () {
                 function RestComponent() {
                 }
                 RestComponent = __decorate([
-                    core_12.Component({
+                    core_13.Component({
                         selector: 'op-rest',
                         directives: [],
                         providers: [],
@@ -901,19 +1024,19 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
                 ], RestComponent);
                 return RestComponent;
             }());
-            exports_13("RestComponent", RestComponent);
+            exports_14("RestComponent", RestComponent);
         }
     }
 });
-System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_14, context_14) {
+System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_15, context_15) {
     "use strict";
-    var __moduleName = context_14 && context_14.id;
-    var core_13, router_1;
+    var __moduleName = context_15 && context_15.id;
+    var core_14, router_1;
     var StartComponent;
     return {
         setters:[
-            function (core_13_1) {
-                core_13 = core_13_1;
+            function (core_14_1) {
+                core_14 = core_14_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -923,119 +1046,80 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 function StartComponent() {
                 }
                 StartComponent = __decorate([
-                    core_13.Component({
+                    core_14.Component({
                         selector: 'op-start',
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [],
-                        styles: ["\n      .startPage_navigator {\n        display: flex;\n        flex-flow: column nowrap;\n        position: absolute;\n        justify-content: space-around;\n        width: 30vw;\n        height: 100vh;\n        bottom: 0;\n        left: 35vw;\n        overflow: hidden;\n        background-color: silver;\n      }\n      .startPage_foodButton {\n      background: url('./src/img/food.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n    }\n    .startPage_sportButton {\n      background: url('./src/img/sport.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n    .startPage_restButton {\n      background: url('./src/img/rest.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n      "],
+                        styles: ["\n      .startPage_navigator {\n        display: flex;\n        flex-flow: column nowrap;\n        position: absolute;\n        justify-content: space-around;\n        width: 30vw;\n        height: 100vh;\n        bottom: 0;\n        left: 35vw;\n        overflow: hidden;\n      }\n      .startPage_foodButton {\n      background: url('./src/img/food.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n    }\n    .startPage_sportButton {\n      background: url('./src/img/sport.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n    .startPage_restButton {\n      background: url('./src/img/rest.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n      "],
                         template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_foodButton\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_sportButton\"></div>\n      </a>\n      <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_restButton\"></div>\n      </a>\n    </nav>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StartComponent);
                 return StartComponent;
             }());
-            exports_14("StartComponent", StartComponent);
+            exports_15("StartComponent", StartComponent);
         }
     }
 });
-System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router'], function(exports_15, context_15) {
+System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_16, context_16) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var core_14, router_2;
+    var __moduleName = context_16 && context_16.id;
+    var core_15, router_2, swipe_holder_directive_2;
     var SideBar;
     return {
         setters:[
-            function (core_14_1) {
-                core_14 = core_14_1;
+            function (core_15_1) {
+                core_15 = core_15_1;
             },
             function (router_2_1) {
                 router_2 = router_2_1;
+            },
+            function (swipe_holder_directive_2_1) {
+                swipe_holder_directive_2 = swipe_holder_directive_2_1;
             }],
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
-                    this.isOpenChange = new core_14.EventEmitter();
+                    this.isOpenChange = new core_15.EventEmitter();
                 }
-                SideBar.prototype.start = function (evt) {
-                    this.xDown = evt.touches[0].clientX;
-                    this.yDown = evt.touches[0].clientY;
-                    console.log("start", evt, screen.width, window.innerWidth);
-                };
-                SideBar.prototype.move = function (evt) {
-                    console.log(event);
-                    if (!this.xDown || !this.yDown) {
-                        return;
-                    }
-                    var xUp = evt.touches[0].clientX;
-                    var yUp = evt.touches[0].clientY;
-                    var xDiff = this.xDown - xUp;
-                    var yDiff = this.yDown - yUp;
-                    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-                        /*most significant*/
-                        if (xDiff > 0) {
-                            /* left swip */
-                            console.log("left swipe");
-                            this.toggle();
-                        }
-                        else {
-                            /* right swipe */
-                            console.log("right swipe");
-                            this.toggle();
-                        }
-                    }
-                    else {
-                        if (yDiff > 0) {
-                            /* up swip */
-                            console.log("up swipe");
-                        }
-                        else {
-                            /* down swipe */
-                            console.log("down swipe");
-                        }
-                    }
-                    this.xDown = evt.touches[0].clientX;
-                    this.yDown = evt.touches[0].clientY;
-                };
-                SideBar.prototype.end = function (evt) {
-                    /* reset values */
-                    this.xDown = null;
-                    this.yDown = null;
-                    console.log("end");
-                };
                 SideBar.prototype.toggle = function () {
                     this.isOpen = !this.isOpen;
                     this.isOpenChange.emit(this.isOpen);
                 };
                 __decorate([
-                    core_14.Input(), 
+                    core_15.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
                 __decorate([
-                    core_14.Output(), 
+                    core_15.Output(), 
                     __metadata('design:type', Object)
                 ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
-                    core_14.Component({
-                        selector: 'fm-side-bar', directives: [router_2.ROUTER_DIRECTIVES], providers: [], pipes: [], styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: silver;\n    height:100vh;\n    width:10vw;\n    opacity:0.5;\n    z-index: 999;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\">\n  <a [routerLink]=\"['Food']\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\">\n     {{\"opanas.router.sport\"}}\n  </a> <a [routerLink]=\"['Rest']\">\n     {{\"opanas.router.rest\"}}\n  </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" (touchmove)=\"move($event)\" (touchstart)=\"start($event)\" (touchend)=\"end($event)\"></div>\n    "
+                    core_15.Component({
+                        selector: 'fm-side-bar',
+                        directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_2.SwipeHoldertDirective],
+                        providers: [],
+                        pipes: [],
+                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 999;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\">\n     {{\"opanas.router.sport\"}}\n  </a> <a [routerLink]=\"['Rest']\">\n     {{\"opanas.router.rest\"}}\n  </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);
                 return SideBar;
             }());
-            exports_15("SideBar", SideBar);
+            exports_16("SideBar", SideBar);
         }
     }
 });
-System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_16, context_16) {
+System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_17, context_17) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
-    var core_15;
+    var __moduleName = context_17 && context_17.id;
+    var core_16;
     var RefreshDateService;
     return {
         setters:[
-            function (core_15_1) {
-                core_15 = core_15_1;
+            function (core_16_1) {
+                core_16 = core_16_1;
             }],
         execute: function() {
             RefreshDateService = (function () {
@@ -1058,24 +1142,24 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
                     }, this.timer);
                 };
                 RefreshDateService = __decorate([
-                    core_15.Injectable(), 
+                    core_16.Injectable(), 
                     __metadata('design:paramtypes', [])
                 ], RefreshDateService);
                 return RefreshDateService;
             }());
-            exports_16("RefreshDateService", RefreshDateService);
+            exports_17("RefreshDateService", RefreshDateService);
         }
     }
 });
-System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_17, context_17) {
+System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_18, context_18) {
     "use strict";
-    var __moduleName = context_17 && context_17.id;
-    var core_16, router_3, food_component_1, sport_component_1, rest_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, calendar_service_3, refresh_date_service_1, storage_service_3, user_service_3;
+    var __moduleName = context_18 && context_18.id;
+    var core_17, router_3, food_component_1, sport_component_1, rest_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, calendar_service_2, refresh_date_service_1, storage_service_3, user_service_3;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
-            function (core_16_1) {
-                core_16 = core_16_1;
+            function (core_17_1) {
+                core_17 = core_17_1;
             },
             function (router_3_1) {
                 router_3 = router_3_1;
@@ -1101,8 +1185,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (food_service_3_1) {
                 food_service_3 = food_service_3_1;
             },
-            function (calendar_service_3_1) {
-                calendar_service_3 = calendar_service_3_1;
+            function (calendar_service_2_1) {
+                calendar_service_2 = calendar_service_2_1;
             },
             function (refresh_date_service_1_1) {
                 refresh_date_service_1 = refresh_date_service_1_1;
@@ -1144,12 +1228,12 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
-                    core_16.Component({
+                    core_17.Component({
                         selector: 'opanas-app',
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_16.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_3.StorageService, user_service_3.UserService],
+                        providers: [router_3.ROUTER_PROVIDERS, core_17.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, calendar_service_2.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_3.StorageService, user_service_3.UserService],
                         pipes: [translate_service_7.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 0;\n    top: 0;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n      <div (click)=\"goEn()\">english</div>\n      <div (click)=\"goRu()\">russian</div>\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_3.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
@@ -1158,11 +1242,11 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService])
+                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_2.CalendarService, refresh_date_service_1.RefreshDateService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
-            exports_17("OpanasComponent", OpanasComponent);
+            exports_18("OpanasComponent", OpanasComponent);
             languages = {
                 'en': 'english',
                 'ru': 'russian'
@@ -1186,9 +1270,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
         }
     }
 });
-System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_18, context_18) {
+System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_19, context_19) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
+    var __moduleName = context_19 && context_19.id;
     var browser_1, opanas_component_1;
     return {
         setters:[

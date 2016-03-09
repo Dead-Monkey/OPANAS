@@ -107,6 +107,16 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     }
                     this.refreshCalendar();
                 };
+                CalendarService.prototype.changeDailyFood = function (index, date, food) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            day['food'].splice(index, 1, food);
+                        }
+                    }
+                    this.refreshCalendar();
+                };
                 CalendarService.prototype.removeDailyFood = function (index, date) {
                     date.setHours(0, 0, 0, 0);
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
