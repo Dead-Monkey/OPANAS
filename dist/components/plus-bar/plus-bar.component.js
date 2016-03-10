@@ -37,7 +37,6 @@ System.register(['angular2/core', '../../services/food/food.service', '../../sha
                 }
                 PlusComponent.prototype.ngOnInit = function () {
                     this.customFood = this._foodServe.getUserFood();
-                    console.log(this.customFood);
                     this.refreshModel();
                 };
                 PlusComponent.prototype.toggle = function () {

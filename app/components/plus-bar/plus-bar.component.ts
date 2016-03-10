@@ -185,7 +185,6 @@ export class PlusComponent implements OnInit {
 
     ngOnInit() {
         this.customFood = this._foodServe.getUserFood();
-        console.log(this.customFood);
         this.refreshModel();
     }
 

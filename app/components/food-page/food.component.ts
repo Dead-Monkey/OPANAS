@@ -161,12 +161,12 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 </form>
 
 <div class="food_list">
-  <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFodd(i, item)" (fmSwipeRight)="removeFodd(i, item)">
+  <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFood(i, item)" (fmSwipeRight)="removeFood(i, item)">
 
     <div class="food_listItem">
       {{item?.name[language]}}
     </div>
-    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (input)="changeFoodWeight(i, item)">
+    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)" (change)="changeFoodWeight(i, item)" (input)="changeFoodWeight(i, item)">
 
     <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
 
@@ -192,23 +192,19 @@ export class FoodComponent implements OnInit {
     private totalFood = {
         "calories": {
             "full": 0,
-            "maybe": 0,
-            "dailyProcent": 0
+            "maybe": 0
         },
         "protein": {
             "full": 0,
-            "maybe": 0,
-            "dailyProcent": 0
+            "maybe": 0
         },
         "fat": {
             "full": 0,
-            "maybe": 0,
-            "dailyProcent": 0
+            "maybe": 0
         },
         "carbohydrates": {
             "full": 0,
-            "maybe": 0,
-            "dailyProcent": 0
+            "maybe": 0
         }
     }
 
@@ -225,7 +221,6 @@ export class FoodComponent implements OnInit {
         for (let food of this.pickedFoodContainer) {
             this.calculateFood(food);
         }
-        console.log(this.pickedFoodContainer);
     }
 
     onSubmit(food) {
@@ -268,23 +263,21 @@ export class FoodComponent implements OnInit {
         this._calendarService.changeDailyFood(index, this.currentDate, food);
     }
 
-    removeFodd(index: number, food: Food) {
+    removeFood(index: number, food: Food) {
         this._calendarService.removeDailyFood(index, this.currentDate);
-        this.calculateFoodMinus(food);
+        this.calculateFoodRefresh();
+        for (let food of this.pickedFoodContainer) {
+            this.calculateFood(food);
+        }
     }
-
     changeFoodWeight(index: number, food: Food) {
         let timer;
         if (!isNaN(food['weight'])) {
-
-
             this._calendarService.changeDailyFood(index, this.currentDate, food);
             this.calculateFoodRefresh();
             for (let variable of this.pickedFoodContainer) {
                 this.calculateFood(variable);
             }
-
-
         } else {
             timer = setTimeout(() => {
                 if (isNaN(food['weight'])) {
@@ -296,7 +289,7 @@ export class FoodComponent implements OnInit {
                     }
                 }
 
-            }, 1500);
+            }, 1000);
         }
     }
 
@@ -315,42 +308,36 @@ export class FoodComponent implements OnInit {
     }
 
     calculateFoodRefresh() {
-        this.totalFood.calories.full = 0;
-        this.totalFood.protein.full = 0;
-        this.totalFood.carbohydrates.full = 0;
-        this.totalFood.fat.full = 0;
-        this.totalFood.calories.maybe = 0;
-        this.totalFood.protein.maybe = 0;
-        this.totalFood.carbohydrates.maybe = 0;
-        this.totalFood.fat.maybe = 0;
+        for (let prop in this.totalFood) {
+          for (let key in this.totalFood[prop]) {
+            this.totalFood[prop][key] = 0;
+            this.totalFood[prop][key] = 0;
+          }
+        }
     }
 
     calculateFull(food) {
-        this.totalFood.calories.full = this.totalFood.calories.full + Math.round((food.calories * food['weight'] / 100));
-        this.totalFood.protein.full = this.totalFood.protein.full + Math.round((food.protein * food['weight'] / 100));
-        this.totalFood.fat.full = this.totalFood.fat.full + Math.round((food.fat * food['weight'] / 100));
-        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full + Math.round((food.carbohydrates * food['weight'] / 100));
+      for (let prop in this.totalFood) {
+          this.totalFood[prop]['full'] = this.totalFood[prop]['full'] + Math.round((food[prop] * food['weight'] / 100));
+      }
     }
 
     calculateMayBe(food) {
-        this.totalFood.calories.maybe = this.totalFood.calories.maybe + Math.round((food.calories * food['weight'] / 100));
-        this.totalFood.protein.maybe = this.totalFood.protein.maybe + Math.round((food.protein * food['weight'] / 100));
-        this.totalFood.fat.maybe = this.totalFood.fat.maybe + Math.round((food.fat * food['weight'] / 100));
-        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe + Math.round((food.carbohydrates * food['weight'] / 100));
+      for (let prop in this.totalFood) {
+          this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] + Math.round((food[prop] * food['weight'] / 100));
+      }
     }
 
     calculateFullMinus(food) {
-        this.totalFood.calories.full = this.totalFood.calories.full - Math.round((food.calories * food['weight'] / 100));
-        this.totalFood.protein.full = this.totalFood.protein.full - Math.round((food.protein * food['weight'] / 100));
-        this.totalFood.fat.full = this.totalFood.fat.full - Math.round((food.fat * food['weight'] / 100));
-        this.totalFood.carbohydrates.full = this.totalFood.carbohydrates.full - Math.round((food.carbohydrates * food['weight'] / 100));
+      for (let prop in this.totalFood) {
+          this.totalFood[prop]['full'] = this.totalFood[prop]['full'] - Math.round((food[prop] * food['weight'] / 100));
+      }
     }
 
     calculateMayBeMinus(food) {
-        this.totalFood.calories.maybe = this.totalFood.calories.maybe - Math.round((food.calories * food['weight'] / 100));
-        this.totalFood.protein.maybe = this.totalFood.protein.maybe - Math.round((food.protein * food['weight'] / 100));
-        this.totalFood.fat.maybe = this.totalFood.fat.maybe - Math.round((food.fat * food['weight'] / 100));
-        this.totalFood.carbohydrates.maybe = this.totalFood.carbohydrates.maybe - Math.round((food.carbohydrates * food['weight'] / 100));
+      for (let prop in this.totalFood) {
+          this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] - Math.round((food[prop] * food['weight'] / 100));
+      }
     }
 
 }
