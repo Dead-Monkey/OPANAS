@@ -29,6 +29,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         'calendar': 'calendar'
                     };
                     this.saveCalendar();
+                    console.log(this.getDay(new Date()));
                 }
                 CalendarService.prototype.createCalendar = function () {
                     var startYear = 2014;

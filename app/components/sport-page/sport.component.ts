@@ -25,7 +25,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         width: 70vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputWeight {
@@ -37,7 +37,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
         color: #0d0e15;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputCount {
@@ -49,7 +49,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
         color: #0d0e15;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputTime {
@@ -61,7 +61,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
         color: #0d0e15;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputButton_off {
@@ -73,7 +73,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputButton_on {
@@ -85,7 +85,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 1.5vw solid #0C1017;
+        border: 5px solid #0C1017;
         border-radius: 2vw;
       }
 
@@ -98,6 +98,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         height: 200px;
         top: 27px;
         overflow-y: scroll;
+        z-index: 10;
       }
 
       .sport_list {
@@ -177,7 +178,6 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         box-sizing: border-box;
         color: #0d0e15;
         border-radius: 2vw;
-        z-index: 999;
       }
       .sport_listButton_off {
       float: left;
@@ -189,7 +189,6 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       box-sizing: border-box;
       color: #0d0e15;
       border-radius: 2vw;
-      z-index: 999;
     }
     .repeatLine {
       float: left;
@@ -198,6 +197,9 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       width: 100%;
       height: 1.5vw;
       background-color: #0C1017;
+    }
+    .tmp{
+height: 2vh;
     }
       `],
     template: `
@@ -223,7 +225,8 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 
   <div *ngIf="name.valid" class="sport_serchContainer">
     <div class="sport_listItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSport(item);">
-      {{item?.name[language]}}
+
+  {{item?.name[language]}}
     </div>
   </div>
 </form>

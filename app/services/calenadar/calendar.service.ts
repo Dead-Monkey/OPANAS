@@ -14,6 +14,7 @@ export class CalendarService {
 
     constructor(private _storageService: StorageService) {
         this.saveCalendar();
+        console.log(this.getDay(new Date()));
     }
 
     createCalendar() {

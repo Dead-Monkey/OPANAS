@@ -27,7 +27,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     width: 60vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 1.5vw solid #0C1017;
+    border: 5px solid #0C1017;
     border-radius: 2vw;
   }
   .food_inputWeight {
@@ -38,7 +38,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
     color: #0d0e15;
-    border: 1.5vw solid #0C1017;
+    border: 5px solid #0C1017;
     border-radius: 2vw;
   }
   .food_inputButton_off {
@@ -50,7 +50,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 1.5vw solid #0C1017;
+    border: 5px solid #0C1017;
     border-radius: 2vw;
   }
   .food_inputButton_on {
@@ -62,7 +62,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 1.5vw solid #0C1017;
+    border: 5px solid #0C1017;
     border-radius: 2vw;
   }
 
