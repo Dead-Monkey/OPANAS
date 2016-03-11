@@ -127,7 +127,45 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     }
                     this.refreshCalendar();
                 };
-                CalendarService.prototype.setDailySport = function () {
+                CalendarService.prototype.getDailySport = function (date) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            return day['sport'];
+                        }
+                    }
+                    console.log("not exist date");
+                };
+                CalendarService.prototype.setDailySport = function (sport, date) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            day['sport'].push(sport);
+                        }
+                    }
+                    this.refreshCalendar();
+                };
+                CalendarService.prototype.changeDailySport = function (index, date, sport) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            day['sport'].splice(index, 1, sport);
+                        }
+                    }
+                    this.refreshCalendar();
+                };
+                CalendarService.prototype.removeDailySport = function (index, date) {
+                    date.setHours(0, 0, 0, 0);
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getTime() === date.getTime()) {
+                            day['sport'].splice(index, 1);
+                        }
+                    }
+                    this.refreshCalendar();
                 };
                 CalendarService.prototype.setDailyRest = function () {
                 };

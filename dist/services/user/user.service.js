@@ -35,6 +35,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             "full": 300
                         }
                     };
+                    this.sportSets = {};
                 }
                 UserService.prototype.getLanguage = function () {
                     return this.language;
@@ -56,6 +57,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 };
                 UserService.prototype.setUserCarbohydrates = function (value) {
                     this.foodSets['carbohydrates']['full'] = value;
+                };
+                UserService.prototype.getUserSportSets = function () {
+                    return this.sportSets;
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 

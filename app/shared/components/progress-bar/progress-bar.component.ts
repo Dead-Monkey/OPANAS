@@ -1,12 +1,11 @@
 import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
-import {TranslatePipe} from '../../services/translate/translate.service';
 
 
 @Component({
     selector: 'fm-progress-bar',
     directives: [],
     providers: [],
-    pipes: [TranslatePipe],
+    pipes: [],
     styles: [`
 .progress_container {
   width: 90vw;
@@ -55,7 +54,7 @@ import {TranslatePipe} from '../../services/translate/translate.service';
 }
  `],
     template: `
-<div class="progress_barHeader">{{name|translate|uppercase}}</div>
+<div class="progress_barHeader">{{name|uppercase}}</div>
 <div class="progress_container">
   <div class="progress_secondLine" [style.width.%]="secondLine">
   </div>

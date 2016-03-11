@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../services/translate/translate.service'], function(exports_1, context_1) {
+System.register(['angular2/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,12 @@ System.register(['angular2/core', '../../services/translate/translate.service'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, translate_service_1;
+    var core_1;
     var ProgressBar;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (translate_service_1_1) {
-                translate_service_1 = translate_service_1_1;
             }],
         execute: function() {
             ProgressBar = (function () {
@@ -79,9 +76,9 @@ System.register(['angular2/core', '../../services/translate/translate.service'],
                         selector: 'fm-progress-bar',
                         directives: [],
                         providers: [],
-                        pipes: [translate_service_1.TranslatePipe],
+                        pipes: [],
                         styles: ["\n.progress_container {\n  width: 90vw;\n  height: 7vw;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border: 5px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 5vw;\n}\n.numbers {\n  position: absolute;\n  color: blue;\n  height: 7vw;\n  width: 90vw;\n  overflow: hidden;\n}\n "],
-                        template: "\n<div class=\"progress_barHeader\">{{name|translate|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
+                        template: "\n<div class=\"progress_barHeader\">{{name|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], ProgressBar);

@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
 import {FoodService, Food} from '../../services/food/food.service';
+import {SportService, Sport} from '../../services/sport/sport.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 
@@ -144,7 +145,8 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     `],
     template: `
 <div class="plusBar" (click)="toggle()">PLUS</div>
-<div class="container" *ngIf="isOpen">
+<div class="container" *ngIf="isOpen && (iAm === 'food')">
+
   <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
     <label style="left:0; border:none;" class="food_inputFood" for="name">foodName</label>
@@ -169,6 +171,21 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     <div class="tmp2">name: {{item.name.ru}} calories: {{item.calories}}</div>
   </div>
 </div>
+<div class="container" *ngIf="isOpen && (iAm === 'sport')">
+
+
+  <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
+
+    <label style="left:0; border:none;" class="food_inputFood" for="name">sportName</label>
+    <input class="food_inputFood" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
+
+    <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+
+  </form>
+  <div class="tmp" *ngFor="#item of customSport">
+    <div class="tmp2">name: {{item.name.ru}} </div>
+  </div>
+</div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
     `
 })
@@ -176,16 +193,20 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 export class PlusComponent implements OnInit {
 
     @Input() isOpen: boolean = true;
+    @Input() iAm: string;
     @Output() isOpenChange = new EventEmitter();
 
     private customFood;
+    private customSport;
     private model: Object = {};
+    private modelSport: Object = {};
 
-    constructor(private _foodServe: FoodService, private _translateService: TranslateService) { }
+    constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService) { }
 
     ngOnInit() {
         this.customFood = this._foodServe.getUserFood();
         this.refreshModel();
+        this.customSport = this._sportServe.getUserSport();
     }
 
     toggle() {
@@ -224,17 +245,30 @@ export class PlusComponent implements OnInit {
         this.model['carbohydrates'] = 0;
     }
 
-    getFood() {
-        console.log(this._foodServe.getUserFood());
-    }
     setFood(food: Food) {
         this._foodServe.setUserFood(food);
         this.customFood = this._foodServe.getUserFood();
     }
-    removeFood() {
-        this.customFood = this._foodServe.getUserFood();
-        console.log(this.customFood);
-    }
 
+    //4 sport
+    onSubmitSport(sport) {
+        if (sport.value.name.trim()) {
+            let name = sport.value.name.trim();
+            sport.value['name'] = {};
+            for (let key in this._translateService.getSupportLanguages()) {
+                sport.value['name'][key] = name;
+            }
+            sport.value['custom'] = true;
+
+
+            this.setSport(sport.value);
+            this.modelSport['name'] = '';
+
+        }
+    }
+    setSport(sport: Sport) {
+        this._sportServe.setUserSport(sport);
+        this.customSport = this._sportServe.getUserSport();
+    }
 
 }

@@ -7,6 +7,7 @@ import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {FoodService} from '../../services/food/food.service';
+import {SportService} from '../../services/sport/sport.service';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {RefreshDateService} from '../../services/refresh-date/refresh-date.service';
 import {StorageService} from '../../shared/services/storage/storage.service';
@@ -16,7 +17,7 @@ import {UserService} from '../../services/user/user.service';
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
     providers: [ROUTER_PROVIDERS, provide(LocationStrategy,
-        { useClass: HashLocationStrategy }), TranslateService, FoodService, CalendarService, RefreshDateService, StorageService, UserService],
+        { useClass: HashLocationStrategy }), TranslateService, FoodService, SportService, CalendarService, RefreshDateService, StorageService, UserService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
@@ -108,7 +109,12 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-        'sport-page.title': 'sport pagie',
+        'progress': 'progress',
+        'search': 'search',
+        'weight': 'weight',
+        'sport.weight': 'weight',
+        'sport.numbers':'numbers',
+        'sport.time':'time',
         'calories': 'calories',
         'protein': 'protein',
         'carbohydrates': 'carbohydrates',
@@ -116,7 +122,12 @@ let keysVendor: Object = {
     },
 
     'ru': {
-        'sport-page.title': 'спорт страничга',
+        'progress': 'прогресс',
+        'search': 'поиск',
+        'weight': 'вес',
+        'sport.weight': 'какой вес',
+        'sport.numbers':'сколько раз',
+        'sport.time':'время',
         'calories': 'калории',
         'protein': 'белки',
         'carbohydrates': 'углеводы',

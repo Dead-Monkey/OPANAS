@@ -1,5 +1,6 @@
 import {Injectable} from 'angular2/core';
 import {Food} from '../food/food.service';
+import {Sport} from '../sport/sport.service';
 import {StorageService} from '../../shared/services/storage/storage.service';
 
 @Injectable()
@@ -113,8 +114,46 @@ export class CalendarService {
         this.refreshCalendar();
     }
 
-    setDailySport() {
 
+
+    getDailySport(date: Date): Array<Sport> {
+        date.setHours(0, 0, 0, 0);
+        for (let day of this.calendar) {
+            if (day['date'].getTime() === date.getTime()) {
+                return day['sport'];
+            }
+        }
+        console.log(`not exist date`);
+    }
+
+    setDailySport(sport: Sport, date: Date) {
+        date.setHours(0, 0, 0, 0);
+        for (let day of this.calendar) {
+            if (day['date'].getTime() === date.getTime()) {
+                day['sport'].push(sport);
+            }
+        }
+        this.refreshCalendar();
+    }
+
+    changeDailySport(index, date: Date, sport: Sport) {
+        date.setHours(0, 0, 0, 0);
+        for (let day of this.calendar) {
+            if (day['date'].getTime() === date.getTime()) {
+                day['sport'].splice(index, 1, sport);
+            }
+        }
+        this.refreshCalendar();
+    }
+
+    removeDailySport(index, date: Date) {
+        date.setHours(0, 0, 0, 0);
+        for (let day of this.calendar) {
+            if (day['date'].getTime() === date.getTime()) {
+                day['sport'].splice(index, 1);
+            }
+        }
+        this.refreshCalendar();
     }
 
     setDailyRest() {
@@ -126,6 +165,6 @@ export class CalendarService {
 export interface Day {
     date: Date;
     food: Array<Food>;
-    sport: Array<Object>;
+    sport: Array<Sport>;
     rest: Array<Object>;
 }

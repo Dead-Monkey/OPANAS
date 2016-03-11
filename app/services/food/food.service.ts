@@ -37,7 +37,7 @@ export class FoodService {
                 for (let itemContainer of container) {
                     if (itemUser.name[this._userServe.getLanguage()].trim() === itemContainer.name[this._userServe.getLanguage()].trim()) {
                         let rem = container.indexOf(itemContainer);
-                        let aa = container.splice(rem, 1);
+                        container.splice(rem, 1);
                     }
                 }
             }

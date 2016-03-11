@@ -19,6 +19,9 @@ export class UserService {
             "full": 300
         }
     }
+    private sportSets: Object = {
+    }
+
 
     getLanguage(): string {
         return this.language;
@@ -43,5 +46,9 @@ export class UserService {
     }
     setUserCarbohydrates(value: number) {
         this.foodSets['carbohydrates']['full'] = value;
+    }
+
+    getUserSportSets() {
+        return this.sportSets
     }
 }

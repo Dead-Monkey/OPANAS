@@ -31,6 +31,7 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     box-sizing: border-box;
     width: 15vw;
     height: 15vw;
+    z-index: 998;
   }
   .sideBarSwipePlace {
     position: fixed;
@@ -40,7 +41,7 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     // opacity:0.5;
     height:100vh;
     width:10vw;
-    z-index: 999;
+    z-index: 997;
   }
   .sideBarShadow {
     position: absolute;

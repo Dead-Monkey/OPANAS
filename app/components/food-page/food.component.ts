@@ -137,19 +137,19 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   }
     `],
     template: `
-<op-plus [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar [name]="'calories'" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
-<fm-progress-bar [name]="'protein'" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
-<fm-progress-bar [name]="'fat'" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
-<fm-progress-bar [name]="'carbohydrates'" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
+<op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
+<fm-progress-bar [name]="'weight'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
+<fm-progress-bar [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
+<fm-progress-bar [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
 
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
   <label for="foodName"></label>
-  <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
+  <input class="food_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
 
   <label for="foodWeight"></label>
-  <input type="number" min="1" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
+  <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
 
   <button type="submit" [ngClass]="{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}" [disabled]="!foodForm.form.valid || !correctFood"></button>
 
@@ -166,7 +166,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     <div class="food_listItem">
       {{item?.name[language]}}
     </div>
-    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)" (change)="changeFoodWeight(i, item)" (input)="changeFoodWeight(i, item)">
+    <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)">
 
     <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
 
@@ -288,7 +288,6 @@ export class FoodComponent implements OnInit {
                         this.calculateFood(variable);
                     }
                 }
-
             }, 1000);
         }
     }
