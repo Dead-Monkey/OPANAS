@@ -933,6 +933,11 @@ System.register("angular2/src/facade/collection", ["angular2/src/facade/lang"], 
     ListWrapper.clone = function(array) {
       return array.slice(0);
     };
+    ListWrapper.createImmutable = function(array) {
+      var result = ListWrapper.clone(array);
+      Object.seal(result);
+      return result;
+    };
     ListWrapper.forEachWithIndex = function(array, fn) {
       for (var i = 0; i < array.length; i++) {
         fn(array[i], i);
@@ -1054,6 +1059,9 @@ System.register("angular2/src/facade/collection", ["angular2/src/facade/lang"], 
       }
       return solution;
     };
+    ListWrapper.isImmutable = function(list) {
+      return Object.isSealed(list);
+    };
     return ListWrapper;
   })();
   exports.ListWrapper = ListWrapper;
@@ -1128,12 +1136,79 @@ System.register("angular2/src/facade/collection", ["angular2/src/facade/lang"], 
   return module.exports;
 });
 
-System.register("angular2/src/facade/exception_handler", ["angular2/src/facade/lang", "angular2/src/facade/exceptions", "angular2/src/facade/collection"], true, function(require, exports, module) {
+System.register("angular2/src/facade/base_wrapped_exception", [], true, function(require, exports, module) {
+  var global = System.global,
+      __define = global.define;
+  global.define = undefined;
+  var __extends = (this && this.__extends) || function(d, b) {
+    for (var p in b)
+      if (b.hasOwnProperty(p))
+        d[p] = b[p];
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+  var BaseWrappedException = (function(_super) {
+    __extends(BaseWrappedException, _super);
+    function BaseWrappedException(message) {
+      _super.call(this, message);
+    }
+    Object.defineProperty(BaseWrappedException.prototype, "wrapperMessage", {
+      get: function() {
+        return '';
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(BaseWrappedException.prototype, "wrapperStack", {
+      get: function() {
+        return null;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(BaseWrappedException.prototype, "originalException", {
+      get: function() {
+        return null;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(BaseWrappedException.prototype, "originalStack", {
+      get: function() {
+        return null;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(BaseWrappedException.prototype, "context", {
+      get: function() {
+        return null;
+      },
+      enumerable: true,
+      configurable: true
+    });
+    Object.defineProperty(BaseWrappedException.prototype, "message", {
+      get: function() {
+        return '';
+      },
+      enumerable: true,
+      configurable: true
+    });
+    return BaseWrappedException;
+  })(Error);
+  exports.BaseWrappedException = BaseWrappedException;
+  global.define = __define;
+  return module.exports;
+});
+
+System.register("angular2/src/facade/exception_handler", ["angular2/src/facade/lang", "angular2/src/facade/base_wrapped_exception", "angular2/src/facade/collection"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   var lang_1 = require("angular2/src/facade/lang");
-  var exceptions_1 = require("angular2/src/facade/exceptions");
+  var base_wrapped_exception_1 = require("angular2/src/facade/base_wrapped_exception");
   var collection_1 = require("angular2/src/facade/collection");
   var _ArrayLogger = (function() {
     function _ArrayLogger() {
@@ -1206,14 +1281,14 @@ System.register("angular2/src/facade/exception_handler", ["angular2/src/facade/l
         throw exception;
     };
     ExceptionHandler.prototype._extractMessage = function(exception) {
-      return exception instanceof exceptions_1.WrappedException ? exception.wrapperMessage : exception.toString();
+      return exception instanceof base_wrapped_exception_1.BaseWrappedException ? exception.wrapperMessage : exception.toString();
     };
     ExceptionHandler.prototype._longStackTrace = function(stackTrace) {
       return collection_1.isListLikeIterable(stackTrace) ? stackTrace.join("\n\n-----async gap-----\n") : stackTrace.toString();
     };
     ExceptionHandler.prototype._findContext = function(exception) {
       try {
-        if (!(exception instanceof exceptions_1.WrappedException))
+        if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
           return null;
         return lang_1.isPresent(exception.context) ? exception.context : this._findContext(exception.originalException);
       } catch (e) {
@@ -1221,22 +1296,22 @@ System.register("angular2/src/facade/exception_handler", ["angular2/src/facade/l
       }
     };
     ExceptionHandler.prototype._findOriginalException = function(exception) {
-      if (!(exception instanceof exceptions_1.WrappedException))
+      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
         return null;
       var e = exception.originalException;
-      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
         e = e.originalException;
       }
       return e;
     };
     ExceptionHandler.prototype._findOriginalStack = function(exception) {
-      if (!(exception instanceof exceptions_1.WrappedException))
+      if (!(exception instanceof base_wrapped_exception_1.BaseWrappedException))
         return null;
       var e = exception;
       var stack = exception.originalStack;
-      while (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+      while (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
         e = e.originalException;
-        if (e instanceof exceptions_1.WrappedException && lang_1.isPresent(e.originalException)) {
+        if (e instanceof base_wrapped_exception_1.BaseWrappedException && lang_1.isPresent(e.originalException)) {
           stack = e.originalStack;
         }
       }
@@ -2472,22 +2547,25 @@ System.register("angular2/src/core/change_detection/differs/default_iterable_dif
       var item;
       var itemTrackBy;
       if (lang_2.isArray(collection)) {
-        var list = collection;
-        this._length = collection.length;
-        for (index = 0; index < this._length; index++) {
-          item = list[index];
-          itemTrackBy = this._trackByFn(index, item);
-          if (record === null || !lang_2.looseIdentical(record.trackById, itemTrackBy)) {
-            record = this._mismatch(record, item, itemTrackBy, index);
-            mayBeDirty = true;
-          } else {
-            if (mayBeDirty) {
-              record = this._verifyReinsertion(record, item, itemTrackBy, index);
+        if (collection !== this._collection || !collection_1.ListWrapper.isImmutable(collection)) {
+          var list = collection;
+          this._length = collection.length;
+          for (index = 0; index < this._length; index++) {
+            item = list[index];
+            itemTrackBy = this._trackByFn(index, item);
+            if (record === null || !lang_2.looseIdentical(record.trackById, itemTrackBy)) {
+              record = this._mismatch(record, item, itemTrackBy, index);
+              mayBeDirty = true;
+            } else {
+              if (mayBeDirty) {
+                record = this._verifyReinsertion(record, item, itemTrackBy, index);
+              }
+              if (!lang_2.looseIdentical(record.item, item))
+                this._addIdentityChange(record, item);
             }
-            if (!lang_2.looseIdentical(record.item, item))
-              this._addIdentityChange(record, item);
+            record = record._next;
           }
-          record = record._next;
+          this._truncate(record);
         }
       } else {
         index = 0;
@@ -2507,8 +2585,8 @@ System.register("angular2/src/core/change_detection/differs/default_iterable_dif
           index++;
         });
         this._length = index;
+        this._truncate(record);
       }
-      this._truncate(record);
       this._collection = collection;
       return this.isDirty;
     };
@@ -3046,7 +3124,7 @@ System.register("angular2/src/core/change_detection/differs/default_keyvalue_dif
           if (records.has(key)) {
             newSeqRecord = records.get(key);
           } else {
-            newSeqRecord = new KVChangeRecord(key);
+            newSeqRecord = new KeyValueChangeRecord(key);
             records.set(key, newSeqRecord);
             newSeqRecord.currentValue = value;
             _this._addToAdditions(newSeqRecord);
@@ -3189,8 +3267,8 @@ System.register("angular2/src/core/change_detection/differs/default_keyvalue_dif
     return DefaultKeyValueDiffer;
   })();
   exports.DefaultKeyValueDiffer = DefaultKeyValueDiffer;
-  var KVChangeRecord = (function() {
-    function KVChangeRecord(key) {
+  var KeyValueChangeRecord = (function() {
+    function KeyValueChangeRecord(key) {
       this.key = key;
       this.previousValue = null;
       this.currentValue = null;
@@ -3201,12 +3279,12 @@ System.register("angular2/src/core/change_detection/differs/default_keyvalue_dif
       this._prevRemoved = null;
       this._nextChanged = null;
     }
-    KVChangeRecord.prototype.toString = function() {
+    KeyValueChangeRecord.prototype.toString = function() {
       return lang_1.looseIdentical(this.previousValue, this.currentValue) ? lang_1.stringify(this.key) : (lang_1.stringify(this.key) + '[' + lang_1.stringify(this.previousValue) + '->' + lang_1.stringify(this.currentValue) + ']');
     };
-    return KVChangeRecord;
+    return KeyValueChangeRecord;
   })();
-  exports.KVChangeRecord = KVChangeRecord;
+  exports.KeyValueChangeRecord = KeyValueChangeRecord;
   global.define = __define;
   return module.exports;
 });
@@ -7358,7 +7436,7 @@ System.register("angular2/src/core/di/decorators", ["angular2/src/core/di/metada
   return module.exports;
 });
 
-System.register("angular2/src/facade/exceptions", ["angular2/src/facade/exception_handler", "angular2/src/facade/exception_handler"], true, function(require, exports, module) {
+System.register("angular2/src/facade/exceptions", ["angular2/src/facade/base_wrapped_exception", "angular2/src/facade/exception_handler", "angular2/src/facade/exception_handler"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
@@ -7371,6 +7449,7 @@ System.register("angular2/src/facade/exceptions", ["angular2/src/facade/exceptio
     }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
   };
+  var base_wrapped_exception_1 = require("angular2/src/facade/base_wrapped_exception");
   var exception_handler_1 = require("angular2/src/facade/exception_handler");
   var exception_handler_2 = require("angular2/src/facade/exception_handler");
   exports.ExceptionHandler = exception_handler_2.ExceptionHandler;
@@ -7446,7 +7525,7 @@ System.register("angular2/src/facade/exceptions", ["angular2/src/facade/exceptio
       return this.message;
     };
     return WrappedException;
-  })(Error);
+  })(base_wrapped_exception_1.BaseWrappedException);
   exports.WrappedException = WrappedException;
   function makeTypeError(message) {
     return new TypeError(message);
@@ -12099,7 +12178,7 @@ System.register("angular2/src/core/di", ["angular2/src/core/di/metadata", "angul
   return module.exports;
 });
 
-System.register("angular2/src/core/change_detection/change_detection", ["angular2/src/core/change_detection/differs/iterable_differs", "angular2/src/core/change_detection/differs/default_iterable_differ", "angular2/src/core/change_detection/differs/keyvalue_differs", "angular2/src/core/change_detection/differs/default_keyvalue_differ", "angular2/src/facade/lang", "angular2/src/core/change_detection/parser/ast", "angular2/src/core/change_detection/parser/lexer", "angular2/src/core/change_detection/parser/parser", "angular2/src/core/change_detection/parser/locals", "angular2/src/core/change_detection/exceptions", "angular2/src/core/change_detection/interfaces", "angular2/src/core/change_detection/constants", "angular2/src/core/change_detection/proto_change_detector", "angular2/src/core/change_detection/jit_proto_change_detector", "angular2/src/core/change_detection/binding_record", "angular2/src/core/change_detection/directive_record", "angular2/src/core/change_detection/dynamic_change_detector", "angular2/src/core/change_detection/change_detector_ref", "angular2/src/core/change_detection/differs/iterable_differs", "angular2/src/core/change_detection/differs/keyvalue_differs", "angular2/src/core/change_detection/change_detection_util"], true, function(require, exports, module) {
+System.register("angular2/src/core/change_detection/change_detection", ["angular2/src/core/change_detection/differs/iterable_differs", "angular2/src/core/change_detection/differs/default_iterable_differ", "angular2/src/core/change_detection/differs/keyvalue_differs", "angular2/src/core/change_detection/differs/default_keyvalue_differ", "angular2/src/facade/lang", "angular2/src/core/change_detection/differs/default_keyvalue_differ", "angular2/src/core/change_detection/differs/default_iterable_differ", "angular2/src/core/change_detection/parser/ast", "angular2/src/core/change_detection/parser/lexer", "angular2/src/core/change_detection/parser/parser", "angular2/src/core/change_detection/parser/locals", "angular2/src/core/change_detection/exceptions", "angular2/src/core/change_detection/interfaces", "angular2/src/core/change_detection/constants", "angular2/src/core/change_detection/proto_change_detector", "angular2/src/core/change_detection/jit_proto_change_detector", "angular2/src/core/change_detection/binding_record", "angular2/src/core/change_detection/directive_record", "angular2/src/core/change_detection/dynamic_change_detector", "angular2/src/core/change_detection/change_detector_ref", "angular2/src/core/change_detection/differs/iterable_differs", "angular2/src/core/change_detection/differs/keyvalue_differs", "angular2/src/core/change_detection/change_detection_util"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
@@ -12108,6 +12187,12 @@ System.register("angular2/src/core/change_detection/change_detection", ["angular
   var keyvalue_differs_1 = require("angular2/src/core/change_detection/differs/keyvalue_differs");
   var default_keyvalue_differ_1 = require("angular2/src/core/change_detection/differs/default_keyvalue_differ");
   var lang_1 = require("angular2/src/facade/lang");
+  var default_keyvalue_differ_2 = require("angular2/src/core/change_detection/differs/default_keyvalue_differ");
+  exports.DefaultKeyValueDifferFactory = default_keyvalue_differ_2.DefaultKeyValueDifferFactory;
+  exports.KeyValueChangeRecord = default_keyvalue_differ_2.KeyValueChangeRecord;
+  var default_iterable_differ_2 = require("angular2/src/core/change_detection/differs/default_iterable_differ");
+  exports.DefaultIterableDifferFactory = default_iterable_differ_2.DefaultIterableDifferFactory;
+  exports.CollectionChangeRecord = default_iterable_differ_2.CollectionChangeRecord;
   var ast_1 = require("angular2/src/core/change_detection/parser/ast");
   exports.ASTWithSource = ast_1.ASTWithSource;
   exports.AST = ast_1.AST;
@@ -12315,6 +12400,8 @@ System.register("angular2/src/core/change_detection", ["angular2/src/core/change
   exports.SimpleChange = change_detection_1.SimpleChange;
   exports.IterableDiffers = change_detection_1.IterableDiffers;
   exports.KeyValueDiffers = change_detection_1.KeyValueDiffers;
+  exports.CollectionChangeRecord = change_detection_1.CollectionChangeRecord;
+  exports.KeyValueChangeRecord = change_detection_1.KeyValueChangeRecord;
   global.define = __define;
   return module.exports;
 });
@@ -14672,30 +14759,30 @@ System.register("angular2/src/common/directives/ng_class", ["angular2/src/facade
           v = v.split(' ');
         }
         this._rawClass = v;
+        this._iterableDiffer = null;
+        this._keyValueDiffer = null;
         if (lang_1.isPresent(v)) {
           if (collection_1.isListLikeIterable(v)) {
-            this._differ = this._iterableDiffers.find(v).create(null);
-            this._mode = 'iterable';
+            this._iterableDiffer = this._iterableDiffers.find(v).create(null);
           } else {
-            this._differ = this._keyValueDiffers.find(v).create(null);
-            this._mode = 'keyValue';
+            this._keyValueDiffer = this._keyValueDiffers.find(v).create(null);
           }
-        } else {
-          this._differ = null;
         }
       },
       enumerable: true,
       configurable: true
     });
     NgClass.prototype.ngDoCheck = function() {
-      if (lang_1.isPresent(this._differ)) {
-        var changes = this._differ.diff(this._rawClass);
+      if (lang_1.isPresent(this._iterableDiffer)) {
+        var changes = this._iterableDiffer.diff(this._rawClass);
         if (lang_1.isPresent(changes)) {
-          if (this._mode == 'iterable') {
-            this._applyIterableChanges(changes);
-          } else {
-            this._applyKeyValueChanges(changes);
-          }
+          this._applyIterableChanges(changes);
+        }
+      }
+      if (lang_1.isPresent(this._keyValueDiffer)) {
+        var changes = this._keyValueDiffer.diff(this._rawClass);
+        if (lang_1.isPresent(changes)) {
+          this._applyKeyValueChanges(changes);
         }
       }
     };
@@ -14748,7 +14835,7 @@ System.register("angular2/src/common/directives/ng_class", ["angular2/src/facade
           });
         } else {
           collection_1.StringMapWrapper.forEach(rawClassVal, function(expVal, className) {
-            if (expVal)
+            if (lang_1.isPresent(expVal))
               _this._toggleClass(className, !isCleanup);
           });
         }
@@ -19514,14 +19601,25 @@ System.register("angular2/src/compiler/parse_util", [], true, function(require, 
     return ParseSourceFile;
   })();
   exports.ParseSourceFile = ParseSourceFile;
+  var ParseSourceSpan = (function() {
+    function ParseSourceSpan(start, end) {
+      this.start = start;
+      this.end = end;
+    }
+    ParseSourceSpan.prototype.toString = function() {
+      return this.start.file.content.substring(this.start.offset, this.end.offset);
+    };
+    return ParseSourceSpan;
+  })();
+  exports.ParseSourceSpan = ParseSourceSpan;
   var ParseError = (function() {
-    function ParseError(location, msg) {
-      this.location = location;
+    function ParseError(span, msg) {
+      this.span = span;
       this.msg = msg;
     }
     ParseError.prototype.toString = function() {
-      var source = this.location.file.content;
-      var ctxStart = this.location.offset;
+      var source = this.span.start.file.content;
+      var ctxStart = this.span.start.offset;
       if (ctxStart > source.length - 1) {
         ctxStart = source.length - 1;
       }
@@ -19548,23 +19646,12 @@ System.register("angular2/src/compiler/parse_util", [], true, function(require, 
           }
         }
       }
-      var context = source.substring(ctxStart, this.location.offset) + '[ERROR ->]' + source.substring(this.location.offset, ctxEnd + 1);
-      return this.msg + " (\"" + context + "\"): " + this.location;
+      var context = source.substring(ctxStart, this.span.start.offset) + '[ERROR ->]' + source.substring(this.span.start.offset, ctxEnd + 1);
+      return this.msg + " (\"" + context + "\"): " + this.span.start;
     };
     return ParseError;
   })();
   exports.ParseError = ParseError;
-  var ParseSourceSpan = (function() {
-    function ParseSourceSpan(start, end) {
-      this.start = start;
-      this.end = end;
-    }
-    ParseSourceSpan.prototype.toString = function() {
-      return this.start.file.content.substring(this.start.offset, this.end.offset);
-    };
-    return ParseSourceSpan;
-  })();
-  exports.ParseSourceSpan = ParseSourceSpan;
   global.define = __define;
   return module.exports;
 });
@@ -22167,8 +22254,8 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
   exports.HtmlToken = HtmlToken;
   var HtmlTokenError = (function(_super) {
     __extends(HtmlTokenError, _super);
-    function HtmlTokenError(errorMsg, tokenType, location) {
-      _super.call(this, location, errorMsg);
+    function HtmlTokenError(errorMsg, tokenType, span) {
+      _super.call(this, span, errorMsg);
       this.tokenType = tokenType;
     }
     return HtmlTokenError;
@@ -22285,6 +22372,15 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
     _HtmlTokenizer.prototype._getLocation = function() {
       return new parse_util_1.ParseLocation(this.file, this.index, this.line, this.column);
     };
+    _HtmlTokenizer.prototype._getSpan = function(start, end) {
+      if (lang_1.isBlank(start)) {
+        start = this._getLocation();
+      }
+      if (lang_1.isBlank(end)) {
+        end = this._getLocation();
+      }
+      return new parse_util_1.ParseSourceSpan(start, end);
+    };
     _HtmlTokenizer.prototype._beginToken = function(type, start) {
       if (start === void 0) {
         start = null;
@@ -22308,15 +22404,15 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
       this.currentTokenType = null;
       return token;
     };
-    _HtmlTokenizer.prototype._createError = function(msg, position) {
-      var error = new HtmlTokenError(msg, this.currentTokenType, position);
+    _HtmlTokenizer.prototype._createError = function(msg, span) {
+      var error = new HtmlTokenError(msg, this.currentTokenType, span);
       this.currentTokenStart = null;
       this.currentTokenType = null;
       return new ControlFlowError(error);
     };
     _HtmlTokenizer.prototype._advance = function() {
       if (this.index >= this.length) {
-        throw this._createError(unexpectedCharacterErrorMsg($EOF), this._getLocation());
+        throw this._createError(unexpectedCharacterErrorMsg($EOF), this._getSpan());
       }
       if (this.peek === $LF) {
         this.line++;
@@ -22344,7 +22440,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
     _HtmlTokenizer.prototype._requireCharCode = function(charCode) {
       var location = this._getLocation();
       if (!this._attemptCharCode(charCode)) {
-        throw this._createError(unexpectedCharacterErrorMsg(this.peek), location);
+        throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getSpan(location, location));
       }
     };
     _HtmlTokenizer.prototype._attemptStr = function(chars) {
@@ -22366,7 +22462,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
     _HtmlTokenizer.prototype._requireStr = function(chars) {
       var location = this._getLocation();
       if (!this._attemptStr(chars)) {
-        throw this._createError(unexpectedCharacterErrorMsg(this.peek), location);
+        throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getSpan(location));
       }
     };
     _HtmlTokenizer.prototype._attemptCharCodeUntilFn = function(predicate) {
@@ -22378,7 +22474,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
       var start = this._getLocation();
       this._attemptCharCodeUntilFn(predicate);
       if (this.index - start.offset < len) {
-        throw this._createError(unexpectedCharacterErrorMsg(this.peek), start);
+        throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getSpan(start, start));
       }
     };
     _HtmlTokenizer.prototype._attemptUntilChar = function(char) {
@@ -22403,7 +22499,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
         var numberStart = this._getLocation().offset;
         this._attemptCharCodeUntilFn(isDigitEntityEnd);
         if (this.peek != $SEMICOLON) {
-          throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getLocation());
+          throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getSpan());
         }
         this._advance();
         var strNum = this.input.substring(numberStart, this.index - 1);
@@ -22412,7 +22508,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
           return lang_1.StringWrapper.fromCharCode(charCode);
         } catch (e) {
           var entity = this.input.substring(start.offset + 1, this.index - 1);
-          throw this._createError(unknownEntityErrorMsg(entity), start);
+          throw this._createError(unknownEntityErrorMsg(entity), this._getSpan(start));
         }
       } else {
         var startPosition = this._savePosition();
@@ -22425,7 +22521,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
         var name_1 = this.input.substring(start.offset + 1, this.index - 1);
         var char = html_tags_1.NAMED_ENTITIES[name_1];
         if (lang_1.isBlank(char)) {
-          throw this._createError(unknownEntityErrorMsg(name_1), start);
+          throw this._createError(unknownEntityErrorMsg(name_1), this._getSpan(start));
         }
         return char;
       }
@@ -22500,7 +22596,7 @@ System.register("angular2/src/compiler/html_lexer", ["angular2/src/facade/lang",
       var lowercaseTagName;
       try {
         if (!isAsciiLetter(this.peek)) {
-          throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getLocation());
+          throw this._createError(unexpectedCharacterErrorMsg(this.peek), this._getSpan());
         }
         var nameStart = this.index;
         this._consumeTagOpenStart(start);
@@ -23151,12 +23247,12 @@ System.register("angular2/src/compiler/html_parser", ["angular2/src/facade/lang"
   var html_tags_1 = require("angular2/src/compiler/html_tags");
   var HtmlTreeError = (function(_super) {
     __extends(HtmlTreeError, _super);
-    function HtmlTreeError(elementName, location, msg) {
-      _super.call(this, location, msg);
+    function HtmlTreeError(elementName, span, msg) {
+      _super.call(this, span, msg);
       this.elementName = elementName;
     }
-    HtmlTreeError.create = function(elementName, location, msg) {
-      return new HtmlTreeError(elementName, location, msg);
+    HtmlTreeError.create = function(elementName, span, msg) {
+      return new HtmlTreeError(elementName, span, msg);
     };
     return HtmlTreeError;
   })(parse_util_1.ParseError);
@@ -23265,7 +23361,7 @@ System.register("angular2/src/compiler/html_parser", ["angular2/src/facade/lang"
         this._advance();
         selfClosing = true;
         if (html_tags_1.getNsPrefix(fullName) == null && !html_tags_1.getHtmlTagDefinition(fullName).isVoid) {
-          this.errors.push(HtmlTreeError.create(fullName, startTagToken.sourceSpan.start, "Only void and foreign elements can be self closed \"" + startTagToken.parts[1] + "\""));
+          this.errors.push(HtmlTreeError.create(fullName, startTagToken.sourceSpan, "Only void and foreign elements can be self closed \"" + startTagToken.parts[1] + "\""));
         }
       } else if (this.peek.type === html_lexer_1.HtmlTokenType.TAG_OPEN_END) {
         this._advance();
@@ -23300,9 +23396,9 @@ System.register("angular2/src/compiler/html_parser", ["angular2/src/facade/lang"
     TreeBuilder.prototype._consumeEndTag = function(endTagToken) {
       var fullName = getElementFullName(endTagToken.parts[0], endTagToken.parts[1], this._getParentElement());
       if (html_tags_1.getHtmlTagDefinition(fullName).isVoid) {
-        this.errors.push(HtmlTreeError.create(fullName, endTagToken.sourceSpan.start, "Void elements do not have end tags \"" + endTagToken.parts[1] + "\""));
+        this.errors.push(HtmlTreeError.create(fullName, endTagToken.sourceSpan, "Void elements do not have end tags \"" + endTagToken.parts[1] + "\""));
       } else if (!this._popElement(fullName)) {
-        this.errors.push(HtmlTreeError.create(fullName, endTagToken.sourceSpan.start, "Unexpected closing tag \"" + endTagToken.parts[1] + "\""));
+        this.errors.push(HtmlTreeError.create(fullName, endTagToken.sourceSpan, "Unexpected closing tag \"" + endTagToken.parts[1] + "\""));
       }
     };
     TreeBuilder.prototype._popElement = function(fullName) {
@@ -24016,8 +24112,8 @@ System.register("angular2/src/compiler/template_parser", ["angular2/src/facade/c
   exports.TEMPLATE_TRANSFORMS = lang_2.CONST_EXPR(new core_1.OpaqueToken('TemplateTransforms'));
   var TemplateParseError = (function(_super) {
     __extends(TemplateParseError, _super);
-    function TemplateParseError(message, location) {
-      _super.call(this, location, message);
+    function TemplateParseError(message, span) {
+      _super.call(this, span, message);
     }
     return TemplateParseError;
   })(parse_util_1.ParseError);
@@ -24069,7 +24165,7 @@ System.register("angular2/src/compiler/template_parser", ["angular2/src/facade/c
       });
     }
     TemplateParseVisitor.prototype._reportError = function(message, sourceSpan) {
-      this.errors.push(new TemplateParseError(message, sourceSpan.start));
+      this.errors.push(new TemplateParseError(message, sourceSpan));
     };
     TemplateParseVisitor.prototype._parseInterpolation = function(value, sourceSpan) {
       var sourceInfo = sourceSpan.start.toString();
