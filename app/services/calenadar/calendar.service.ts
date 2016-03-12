@@ -89,7 +89,7 @@ export class CalendarService {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
-                day['food'].push(food);
+                day['food'].unshift(food);
             }
         }
         this.refreshCalendar();
@@ -131,7 +131,7 @@ export class CalendarService {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
-                day['sport'].push(sport);
+                day['sport'].unshift(sport);
             }
         }
         this.refreshCalendar();

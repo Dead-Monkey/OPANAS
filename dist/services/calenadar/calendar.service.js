@@ -103,7 +103,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
-                            day['food'].push(food);
+                            day['food'].unshift(food);
                         }
                     }
                     this.refreshCalendar();
@@ -143,7 +143,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
-                            day['sport'].push(sport);
+                            day['sport'].unshift(sport);
                         }
                     }
                     this.refreshCalendar();
