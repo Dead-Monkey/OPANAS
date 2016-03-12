@@ -57,12 +57,12 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
 <div class="sideBar_toggle" (click)="toggle()"></div>
 
 <div class="sideBarContainer" *ngIf="isOpen" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()">
-  <a [routerLink]="['Food']">
+  <a [routerLink]="['Food']" (click)="toggle()">
      {{"opanas.router.food"}}
   </a>
-  <a [routerLink]="['Sport']">
+  <a [routerLink]="['Sport']" (click)="toggle()">
      {{"opanas.router.sport"}}
-  </a> <a [routerLink]="['Rest']">
+  </a> <a [routerLink]="['Rest']" (click)="toggle()">
      {{"opanas.router.rest"}}
   </a>
   <div class="sideBarShadow" (click)="toggle()"></div>

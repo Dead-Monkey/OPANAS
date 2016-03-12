@@ -138,7 +138,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     `],
     template: `
 <op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar [name]="'weight'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
 <fm-progress-bar [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
@@ -151,9 +151,9 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   <label for="foodWeight"></label>
   <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
 
-  <button type="submit" [ngClass]="{food_inputButton_off: (!foodForm.form.valid || !correctFood || !weight.value), food_inputButton_on: (foodForm.form.valid && correctFood && weight.value )}" [disabled]="!foodForm.form.valid || !correctFood"></button>
+  <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
 
-  <div *ngIf="name.valid" class="food_serchContainer">
+  <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
     <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
       {{item?.name[language]}}
     </div>
@@ -249,7 +249,7 @@ export class FoodComponent implements OnInit {
 
     pickFood(food: Food) {
         this.pickedFood = Object.assign({}, food);
-        this.model['name'] = food.name[this.language];
+        setTimeout(()=>  this.model['name'] = food.name[this.language],0)
         this.correctFood = true;
     }
 

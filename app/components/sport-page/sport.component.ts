@@ -210,7 +210,7 @@ height: 2vh;
 <form class="sport_form" (ngSubmit)="onSubmit(sportForm)" #sportForm="ngForm">
 
   <label for="sportName"></label>
-  <input class="sport_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (blur)="pickSportInput(model.name)" (keyup)="pickSportInput(model.name)">
+  <input class="sport_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
 
   <label for="sportWeight"></label>
   <input type="number" [min]="1" [placeholder]="('sport.weight'|translate) + '...'" class="sport_inputWeight" [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
@@ -221,9 +221,9 @@ height: 2vh;
   <label for="sportTime"></label>
   <input type="number" [min]="1" [placeholder]="('sport.time'|translate) + '...'" class="sport_inputTime" [(ngModel)]="model.time" ngControl="time" #time="ngForm">
 
-  <button type="submit" [ngClass]="{sport_inputButton_off: (!sportForm.form.valid || !correctSport ), sport_inputButton_on: (sportForm.form.valid && correctSport )}" [disabled]="!sportForm.form.valid || !correctSport"></button>
+  <button #subBtn type="submit" [ngClass]="{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}" [disabled]="!sportForm.form.valid || !correctSport"></button>
 
-  <div *ngIf="name.valid" class="sport_serchContainer">
+  <div *ngIf="(name.valid && !correctSport)" class="sport_serchContainer">
     <div class="sport_listItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSport(item);">
 
   {{item?.name[language]}}
@@ -249,7 +249,6 @@ height: 2vh;
 
 })
 export class SportComponent implements OnInit {
-
 
     private model: Object = {};
     private sportContainer: Sport[];
@@ -282,7 +281,6 @@ export class SportComponent implements OnInit {
     }
 
     onSubmit(sport) {
-        console.log(`submit`);
         if (sport.value['weight']) {
             this.pickedSport['weight'] = sport.value['weight'];
 
@@ -318,7 +316,7 @@ export class SportComponent implements OnInit {
 
     pickSport(sport: Sport) {
         this.pickedSport = Object.assign({}, sport);
-        this.model['name'] = sport.name[this.language];
+        setTimeout(() => this.model['name'] = sport.name[this.language], 0)
         this.correctSport = true;
     }
 
@@ -340,11 +338,11 @@ export class SportComponent implements OnInit {
     calculateTotalSport(sport: Sport) {
         if (sport['picked']) {
             this.totalSport['done']++;
-        }else {
+        } else {
             this.totalSport['done']--;
         }
-        if(this.pickedSportContainer.length){
-          this.totalSport['procentDone'] = this.totalSport['done'] / this.pickedSportContainer.length * 100;
+        if (this.pickedSportContainer.length) {
+            this.totalSport['procentDone'] = this.totalSport['done'] / this.pickedSportContainer.length * 100;
         }
     }
     calculateTotalSportInit(sport: Sport) {
@@ -352,8 +350,8 @@ export class SportComponent implements OnInit {
             this.totalSport['done']++;
         }
 
-        if(this.pickedSportContainer.length){
-          this.totalSport['procentDone'] = this.totalSport['done'] / this.pickedSportContainer.length * 100;
+        if (this.pickedSportContainer.length) {
+            this.totalSport['procentDone'] = this.totalSport['done'] / this.pickedSportContainer.length * 100;
         }
     }
     calculateSportRefresh() {
@@ -364,6 +362,6 @@ export class SportComponent implements OnInit {
     }
 
     changeSport(index: number, sport: Sport) {
-      this._calendarService.changeDailySport(index, this.currentDate, sport);
+        this._calendarService.changeDailySport(index, this.currentDate, sport);
     }
 }
