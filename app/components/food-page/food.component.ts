@@ -29,6 +29,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     box-sizing: border-box;
     border: 5px solid #0C1017;
     border-radius: 2vw;
+    font-size: 5vw;
+    color: #D0D9D9;
   }
   .food_inputWeight {
     position: absolute;
@@ -40,6 +42,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     color: #0d0e15;
     border: 5px solid #0C1017;
     border-radius: 2vw;
+    font-size: 5vw;
+    color: #D0D9D9;
   }
   .food_inputButton_off {
     position: absolute;
@@ -68,18 +72,34 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 
   .food_serchContainer {
     position: absolute;
-    background-color: #aaa;
-    width: 60vw;
+    background-color: #0C1017;
+    width: 56vw;
+    max-height: 30vh;
+    padding: 2vw;
     left: 0;
-    right: 10px;
-    height: 200px;
-    top: 27px;
+    right: 2vw;
+    top: 9vw;
+    overflow-y: scroll;
+    border-radius: 2vw;
+  }
+  .food_searchListItem {
+    float:left;
+    margin-bottom: 1vw;
+    height: 12vw;
+    width: 55vw;
+    line-height: 12vw;
+    box-sizing: border-box;
+    background-color: #3f414a;
+    color: #ff9d2d;
+    font-size: 6vw;
+    text-align: center;
+    border-radius: 2vw;
     overflow-y: scroll;
   }
   .food_list {
     margin: 5vw;
     width: 90vw;
-    height: 60vw;
+    height: 80vw;
     overflow-y: scroll;
   }
   .food_listItem {
@@ -154,7 +174,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
 
   <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
-    <div class="food_listItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
+    <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
       {{item?.name[language]}}
     </div>
   </div>

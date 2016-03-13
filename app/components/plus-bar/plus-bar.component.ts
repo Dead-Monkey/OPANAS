@@ -10,25 +10,28 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
+
 .container {
   position: fixed;
   left: 5vw;
   top: 15vw;
+
   background-color: silver;
   width:90vw;
   height: 87vh;
   z-index: 10;
 }
-.plusBar{
+.plusBar {
   position: absolute;
   right: 0;
   top: 0;
-  width: 20vw;
+  width: 15vw;
   height: 15vw;
-  background-color: blue;
+  background: url('./src/img/addfood_simple.png') no-repeat center center;
+  background-size: cover;
   overflow: hidden;
 }
-.closeMe{
+.closeMe {
   position: fixed;
   left: 0;
   top: 0;
@@ -144,7 +147,7 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 }
     `],
     template: `
-<div class="plusBar" (click)="toggle()">PLUS</div>
+<div class="plusBar" (click)="toggle()"></div>
 <div class="container" *ngIf="isOpen && (iAm === 'food')">
 
   <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
