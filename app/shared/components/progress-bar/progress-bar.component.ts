@@ -47,10 +47,11 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
 }
 .numbers {
   position: absolute;
-  color: blue;
+  color: #D0D9D9;
   height: 7vw;
   width: 90vw;
   overflow: hidden;
+  font-weight: bold;
 }
  `],
     template: `
