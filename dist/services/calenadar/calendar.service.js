@@ -25,15 +25,26 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 function CalendarService(_storageService) {
                     this._storageService = _storageService;
                     this.calendar = [];
+                    this.currentYear = new Date().getFullYear();
+                    this.currentMonth = new Date().getMonth();
+                    this.currentDate = new Date();
+                    this.startYear = 2016;
+                    this.lastYear = 2020;
                     this.storageKeys = {
                         'calendar': 'calendar'
                     };
                     this.saveCalendar();
-                    console.log(this.getDay(new Date()));
+                    this.currentDate.setHours(0, 0, 0, 0);
                 }
+                CalendarService.prototype.getFirstYear = function () {
+                    return this.startYear;
+                };
+                CalendarService.prototype.getLastYear = function () {
+                    return this.lastYear;
+                };
                 CalendarService.prototype.createCalendar = function () {
-                    var startYear = 2014;
-                    var lastYear = 2020;
+                    var startYear = this.startYear;
+                    var lastYear = this.lastYear;
                     var days = (lastYear - startYear) * 366;
                     for (var i = 1; i < days; i++) {
                         this.addDay(new Date(startYear, 0, i));
@@ -66,6 +77,12 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 CalendarService.prototype.getCalendar = function () {
                     return this.calendar;
                 };
+                CalendarService.prototype.getCurrentDate = function () {
+                    return this.currentDate;
+                };
+                CalendarService.prototype.setCurrentDate = function (date) {
+                    this.currentDate = date;
+                };
                 CalendarService.prototype.addDay = function (date) {
                     if (date === void 0) { date = new Date(); }
                     var daySample = { 'date': date, 'food': [], 'sport': [], 'rest': [] };
@@ -85,6 +102,48 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         if (day['date'].getTime() === date.getTime()) {
                             return day;
                         }
+                    }
+                };
+                CalendarService.prototype.getYear = function (year) {
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getFullYear() === year) {
+                            console.log(this.calendar.indexOf(day));
+                        }
+                    }
+                };
+                CalendarService.prototype.switchYearPlus = function () {
+                    if (this.currentYear < this.getLastYear() - 1) {
+                        this.currentYear++;
+                    }
+                    console.log("plus", this.currentYear);
+                };
+                CalendarService.prototype.switchYearMinus = function () {
+                    if (this.currentYear > this.getFirstYear()) {
+                        this.currentYear--;
+                    }
+                    console.log("minus");
+                };
+                CalendarService.prototype.getMonth = function (year, month) {
+                    if (year === void 0) { year = this.currentYear; }
+                    if (month === void 0) { month = this.currentMonth; }
+                    var res = [];
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getFullYear() === year && day['date'].getMonth() === month) {
+                            res.push(day);
+                        }
+                    }
+                    return res;
+                };
+                CalendarService.prototype.switchwMonthPlus = function () {
+                    if (this.currentMonth < 11) {
+                        this.currentMonth++;
+                    }
+                };
+                CalendarService.prototype.switchMonthMinus = function () {
+                    if (this.currentMonth > 0) {
+                        this.currentMonth--;
                     }
                 };
                 CalendarService.prototype.getDailyFood = function (date) {

@@ -845,15 +845,26 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 function CalendarService(_storageService) {
                     this._storageService = _storageService;
                     this.calendar = [];
+                    this.currentYear = new Date().getFullYear();
+                    this.currentMonth = new Date().getMonth();
+                    this.currentDate = new Date();
+                    this.startYear = 2016;
+                    this.lastYear = 2020;
                     this.storageKeys = {
                         'calendar': 'calendar'
                     };
                     this.saveCalendar();
-                    console.log(this.getDay(new Date()));
+                    this.currentDate.setHours(0, 0, 0, 0);
                 }
+                CalendarService.prototype.getFirstYear = function () {
+                    return this.startYear;
+                };
+                CalendarService.prototype.getLastYear = function () {
+                    return this.lastYear;
+                };
                 CalendarService.prototype.createCalendar = function () {
-                    var startYear = 2014;
-                    var lastYear = 2020;
+                    var startYear = this.startYear;
+                    var lastYear = this.lastYear;
                     var days = (lastYear - startYear) * 366;
                     for (var i = 1; i < days; i++) {
                         this.addDay(new Date(startYear, 0, i));
@@ -886,6 +897,12 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 CalendarService.prototype.getCalendar = function () {
                     return this.calendar;
                 };
+                CalendarService.prototype.getCurrentDate = function () {
+                    return this.currentDate;
+                };
+                CalendarService.prototype.setCurrentDate = function (date) {
+                    this.currentDate = date;
+                };
                 CalendarService.prototype.addDay = function (date) {
                     if (date === void 0) { date = new Date(); }
                     var daySample = { 'date': date, 'food': [], 'sport': [], 'rest': [] };
@@ -905,6 +922,48 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                         if (day['date'].getTime() === date.getTime()) {
                             return day;
                         }
+                    }
+                };
+                CalendarService.prototype.getYear = function (year) {
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getFullYear() === year) {
+                            console.log(this.calendar.indexOf(day));
+                        }
+                    }
+                };
+                CalendarService.prototype.switchYearPlus = function () {
+                    if (this.currentYear < this.getLastYear() - 1) {
+                        this.currentYear++;
+                    }
+                    console.log("plus", this.currentYear);
+                };
+                CalendarService.prototype.switchYearMinus = function () {
+                    if (this.currentYear > this.getFirstYear()) {
+                        this.currentYear--;
+                    }
+                    console.log("minus");
+                };
+                CalendarService.prototype.getMonth = function (year, month) {
+                    if (year === void 0) { year = this.currentYear; }
+                    if (month === void 0) { month = this.currentMonth; }
+                    var res = [];
+                    for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
+                        var day = _a[_i];
+                        if (day['date'].getFullYear() === year && day['date'].getMonth() === month) {
+                            res.push(day);
+                        }
+                    }
+                    return res;
+                };
+                CalendarService.prototype.switchwMonthPlus = function () {
+                    if (this.currentMonth < 11) {
+                        this.currentMonth++;
+                    }
+                };
+                CalendarService.prototype.switchMonthMinus = function () {
+                    if (this.currentMonth > 0) {
+                        this.currentMonth--;
                     }
                 };
                 CalendarService.prototype.getDailyFood = function (date) {
@@ -1136,7 +1195,6 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     this._calendarService = _calendarService;
                     this._userServe = _userServe;
                     this.model = {};
-                    this.currentDate = new Date();
                     this.language = 'en';
                     this.pickedFood = {};
                     this.pickedFoodContainer = [];
@@ -1162,6 +1220,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
+                    this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
                     this.userSets = this._userServe.getUserFoodSets();
                     this.foodContainer = this._foodServe.getAllFood();
@@ -1341,7 +1400,6 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                     this._calendarService = _calendarService;
                     this._userServe = _userServe;
                     this.model = {};
-                    this.currentDate = new Date();
                     this.language = 'en';
                     this.pickedSport = {};
                     this.pickedSportContainer = [];
@@ -1353,6 +1411,7 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                     };
                 }
                 SportComponent.prototype.ngOnInit = function () {
+                    this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
                     this.userSets = this._userServe.getUserSportSets();
                     this.sportContainer = this._sportServe.getAllSport();
@@ -1507,15 +1566,93 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
         }
     }
 });
-System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_16, context_16) {
+System.register("components/calendar-page/calendar.component", ['angular2/core', "services/calenadar/calendar.service"], function(exports_16, context_16) {
     "use strict";
     var __moduleName = context_16 && context_16.id;
-    var core_15, router_1;
-    var StartComponent;
+    var core_15, calendar_service_3;
+    var CalendarComponent;
     return {
         setters:[
             function (core_15_1) {
                 core_15 = core_15_1;
+            },
+            function (calendar_service_3_1) {
+                calendar_service_3 = calendar_service_3_1;
+            }],
+        execute: function() {
+            CalendarComponent = (function () {
+                function CalendarComponent(_calendarServe) {
+                    this._calendarServe = _calendarServe;
+                    this.clMonth = [];
+                    this.pushDays = [];
+                    this.currentYear = new Date().getFullYear();
+                    this.currentMonth = new Date().getMonth();
+                    this.currentDay = false;
+                }
+                CalendarComponent.prototype.ngOnInit = function () {
+                    this.createView();
+                };
+                CalendarComponent.prototype.createView = function () {
+                    this.clMonth = this._calendarServe.getMonth();
+                    this.pushDays = [];
+                    if (this.clMonth[0].date.getDay()) {
+                        var pusher = this.clMonth[0].date.getDay() - 1;
+                        for (var i = 0; i <= pusher; i++) {
+                            this.pushDays.push(i);
+                        }
+                    }
+                };
+                CalendarComponent.prototype.switchViewYearPlus = function () {
+                    this._calendarServe.switchYearPlus();
+                    this.createView();
+                };
+                CalendarComponent.prototype.switchViewYearMinus = function () {
+                    this._calendarServe.switchYearMinus();
+                    this.createView();
+                };
+                CalendarComponent.prototype.switchViewMonthPlus = function () {
+                    this._calendarServe.switchwMonthPlus();
+                    this.createView();
+                };
+                CalendarComponent.prototype.switchViewMonthMinus = function () {
+                    this._calendarServe.switchMonthMinus();
+                    this.createView();
+                };
+                CalendarComponent.prototype.pickDate = function (item) {
+                    this._calendarServe.setCurrentDate(item['date']);
+                    console.log(item);
+                };
+                CalendarComponent.prototype.marker = function (item) {
+                    if (this._calendarServe.getCurrentDate().getTime() === item['date'].getTime()) {
+                        return true;
+                    }
+                };
+                CalendarComponent = __decorate([
+                    core_15.Component({
+                        selector: 'op-calendar',
+                        directives: [],
+                        providers: [],
+                        pipes: [],
+                        styles: ["\n.calendar{\n  background:silver;\n  width:70vw;\n  height:80vw;\n  position:absolute;\n  top:50vw;\n  left:15vw;\n  overflow:hidden;\n}\n.year{\n  height:10vw;\n  width:100%;\n  overflow:hidden;\n\n}\n.month{\n  height:10vw;\n}\n\n.date{\nfloat:left;\nwidth:10vw;\nheight:10vw;\n}\n\n.currentDate{\n  background-color: blue;\n}\n\n.toggleLeft{\nfloat:left;\nwidth:20vw;\n}\n\n.toggleRight{\n  float:left;\n  width:20vw;\n}\n      "],
+                        template: "\n<div class=\"calendar\">\n<div class=\"year\">\n\n  <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\"><</div>\n      <div class=\"toggleLeft\">\n        {{clMonth[0]['date'].getFullYear()}}\n      </div>\n      <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n  </div>\n\n  <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n  <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\"><</div>\n\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n    <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n  </div>\n\n  <div class=\"date\">Sun</div>\n  <div class=\"date\">Mon</div>\n  <div class=\"date\">Tue</div>\n  <div class=\"date\">Wed</div>\n  <div class=\"date\">Thu</div>\n  <div class=\"date\">Fri</div>\n  <div class=\"date\">Sat</div>\n\n  <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n  <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n</div>\n    "
+                    }), 
+                    __metadata('design:paramtypes', [calendar_service_3.CalendarService])
+                ], CalendarComponent);
+                return CalendarComponent;
+            }());
+            exports_16("CalendarComponent", CalendarComponent);
+        }
+    }
+});
+System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_17, context_17) {
+    "use strict";
+    var __moduleName = context_17 && context_17.id;
+    var core_16, router_1;
+    var StartComponent;
+    return {
+        setters:[
+            function (core_16_1) {
+                core_16 = core_16_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -1525,7 +1662,7 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 function StartComponent() {
                 }
                 StartComponent = __decorate([
-                    core_15.Component({
+                    core_16.Component({
                         selector: 'op-start',
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
@@ -1537,19 +1674,19 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 ], StartComponent);
                 return StartComponent;
             }());
-            exports_16("StartComponent", StartComponent);
+            exports_17("StartComponent", StartComponent);
         }
     }
 });
-System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_17, context_17) {
+System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_18, context_18) {
     "use strict";
-    var __moduleName = context_17 && context_17.id;
-    var core_16, router_2, swipe_holder_directive_3;
+    var __moduleName = context_18 && context_18.id;
+    var core_17, router_2, swipe_holder_directive_3;
     var SideBar;
     return {
         setters:[
-            function (core_16_1) {
-                core_16 = core_16_1;
+            function (core_17_1) {
+                core_17 = core_17_1;
             },
             function (router_2_1) {
                 router_2 = router_2_1;
@@ -1560,45 +1697,45 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
-                    this.isOpenChange = new core_16.EventEmitter();
+                    this.isOpenChange = new core_17.EventEmitter();
                 }
                 SideBar.prototype.toggle = function () {
                     this.isOpen = !this.isOpen;
                     this.isOpenChange.emit(this.isOpen);
                 };
                 __decorate([
-                    core_16.Input(), 
+                    core_17.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
                 __decorate([
-                    core_16.Output(), 
+                    core_17.Output(), 
                     __metadata('design:type', Object)
                 ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
-                    core_16.Component({
+                    core_17.Component({
                         selector: 'fm-side-bar',
                         directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_3.SwipeHoldertDirective],
                         providers: [],
                         pipes: [],
-                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\">\n     {{\"opanas.router.sport\"}}\n  </a> <a [routerLink]=\"['Rest']\" (click)=\"toggle()\">\n     {{\"opanas.router.rest\"}}\n  </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
+                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\">\n     {{\"opanas.router.sport\"}}\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\">\n     {{\"opanas.router.rest\"}}\n  </a>\n   <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\">\n       {{\"calendar\"}}\n    </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);
                 return SideBar;
             }());
-            exports_17("SideBar", SideBar);
+            exports_18("SideBar", SideBar);
         }
     }
 });
-System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_18, context_18) {
+System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_19, context_19) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
-    var core_17;
+    var __moduleName = context_19 && context_19.id;
+    var core_18;
     var RefreshDateService;
     return {
         setters:[
-            function (core_17_1) {
-                core_17 = core_17_1;
+            function (core_18_1) {
+                core_18 = core_18_1;
             }],
         execute: function() {
             RefreshDateService = (function () {
@@ -1621,24 +1758,24 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
                     }, this.timer);
                 };
                 RefreshDateService = __decorate([
-                    core_17.Injectable(), 
+                    core_18.Injectable(), 
                     __metadata('design:paramtypes', [])
                 ], RefreshDateService);
                 return RefreshDateService;
             }());
-            exports_18("RefreshDateService", RefreshDateService);
+            exports_19("RefreshDateService", RefreshDateService);
         }
     }
 });
-System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_19, context_19) {
+System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_20, context_20) {
     "use strict";
-    var __moduleName = context_19 && context_19.id;
-    var core_18, router_3, food_component_1, sport_component_1, rest_component_1, start_component_1, side_bar_component_1, translate_service_6, food_service_3, sport_service_3, calendar_service_3, refresh_date_service_1, storage_service_4, user_service_5;
+    var __moduleName = context_20 && context_20.id;
+    var core_19, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, start_component_1, side_bar_component_1, translate_service_6, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_4, user_service_5;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
-            function (core_18_1) {
-                core_18 = core_18_1;
+            function (core_19_1) {
+                core_19 = core_19_1;
             },
             function (router_3_1) {
                 router_3 = router_3_1;
@@ -1651,6 +1788,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             },
             function (rest_component_1_1) {
                 rest_component_1 = rest_component_1_1;
+            },
+            function (calendar_component_1_1) {
+                calendar_component_1 = calendar_component_1_1;
             },
             function (start_component_1_1) {
                 start_component_1 = start_component_1_1;
@@ -1667,8 +1807,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (sport_service_3_1) {
                 sport_service_3 = sport_service_3_1;
             },
-            function (calendar_service_3_1) {
-                calendar_service_3 = calendar_service_3_1;
+            function (calendar_service_4_1) {
+                calendar_service_4 = calendar_service_4_1;
             },
             function (refresh_date_service_1_1) {
                 refresh_date_service_1 = refresh_date_service_1_1;
@@ -1710,10 +1850,10 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
-                    core_18.Component({
+                    core_19.Component({
                         selector: 'opanas-app',
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_18.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_6.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_4.StorageService, user_service_5.UserService],
+                        providers: [router_3.ROUTER_PROVIDERS, core_19.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_6.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_4.StorageService, user_service_5.UserService],
                         pipes: [translate_service_6.TranslatePipe],
                         styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n      <div (click)=\"goEn()\">english</div>\n      <div (click)=\"goRu()\">russian</div>\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
@@ -1722,13 +1862,14 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
                         { path: '/sport', name: 'Sport', component: sport_component_1.SportComponent },
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
+                        { path: '/calendar', name: 'Calendar', component: calendar_component_1.CalendarComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_6.TranslateService, calendar_service_3.CalendarService, refresh_date_service_1.RefreshDateService])
+                    __metadata('design:paramtypes', [translate_service_6.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
-            exports_19("OpanasComponent", OpanasComponent);
+            exports_20("OpanasComponent", OpanasComponent);
             languages = {
                 'en': 'english',
                 'ru': 'russian'
@@ -1762,9 +1903,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
         }
     }
 });
-System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_20, context_20) {
+System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_21, context_21) {
     "use strict";
-    var __moduleName = context_20 && context_20.id;
+    var __moduleName = context_21 && context_21.id;
     var browser_1, opanas_component_1;
     return {
         setters:[

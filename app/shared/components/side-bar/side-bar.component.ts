@@ -62,9 +62,13 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
   </a>
   <a [routerLink]="['Sport']" (click)="toggle()">
      {{"opanas.router.sport"}}
-  </a> <a [routerLink]="['Rest']" (click)="toggle()">
+  </a>
+  <a [routerLink]="['Rest']" (click)="toggle()">
      {{"opanas.router.rest"}}
   </a>
+   <a [routerLink]="['Calendar']" (click)="toggle()">
+       {{"calendar"}}
+    </a>
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
