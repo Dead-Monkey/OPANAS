@@ -15,6 +15,7 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   position: fixed;
   left: 5vw;
   top: 15vw;
+  overflow: hidden;
 
   background-color: silver;
   width:90vw;
@@ -30,7 +31,15 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   background: url('./src/img/addfood_simple.png') no-repeat center center;
   background-size: cover;
   overflow: hidden;
+  z-index: 10;
 }
+
+.plusBarAnime {
+  transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
 .closeMe {
   position: fixed;
   left: 0;
@@ -40,6 +49,28 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   width: 100vw;
   height: 100vh;
   z-index: 9;
+
+}
+
+.list {
+  margin: 5vw;
+  width: 90vw;
+  height: 80vw;
+  overflow-y: scroll;
+}
+.listItem {
+  float:left;
+  margin-bottom: 2vw;
+  height: 12vw;
+  width: 55vw;
+  line-height: 12vw;
+  box-sizing: border-box;
+  background-color: #3f414a;
+  color: #ff9d2d;
+  font-size: 6vw;
+  text-align: center;
+  border-radius: 2vw;
+  line-height: 12vw;
 
 }
 .food_form {
@@ -131,62 +162,109 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
   border: 1.5vw solid #0C1017;
   border-radius: 2vw;
 }
-.tmp{
-  width: 80vw;
+.foodListMove{
   position: relative;
-  top:50%;
+  top:30vh;
 }
-.tmp2{
-  height: 12vw;
-  width: 80vw;
-  line-height: 12vw;
+.createExercise{
+  width: 100%;
+  height: 100%
+}
+.sport_inputSport{
+  position: absolute;
+  height: 10vw;
+  width: 55vw;
+  left: 11vw;
+  background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  font-size: 6vw;
-  text-align: center;
-  line-height: 12vw;
+  border: 1.5vw solid #0C1017;
+  border-radius: 2vw;
+}
+.sportBtnMove{
+  top:0;
+  right:0;
 }
     `],
     template: `
-<div class="plusBar" (click)="toggle()"></div>
+<div class="plusBar" [ngClass]="{plusBarAnime: isOpen}"(click)="toggle()"></div>
 <div class="container" *ngIf="isOpen && (iAm === 'food')">
 
-  <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
+  <div *ngIf="listOptions">
+    <div (click)="createFoodToggle()">create food</div>
+    <br>
+    <div (click)="createMenuToggle()">create menu</div>
+    <br>
+    <div (click)="pasteMenuToggle()">paste menu</div>
+    <br>
+  </div>
+  <div *ngIf="createFood">
+    <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputFood" for="name">foodName</label>
-    <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
+      <label style="left:0; border:none;" class="food_inputFood" for="name">foodName</label>
+      <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputCalories" for="calories">calories</label>
-    <input type="number" min="0" class="food_inputCalories" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
+      <label style="left:0; border:none;" class="food_inputCalories" for="calories">calories</label>
+      <input type="number" min="0" class="food_inputCalories" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputProtein" for="protein">protein</label>
-    <input type="number" min="0" class="food_inputProtein" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
+      <label style="left:0; border:none;" class="food_inputProtein" for="protein">protein</label>
+      <input type="number" min="0" class="food_inputProtein" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputFat" for="fat">fat</label>
-    <input type="number" min="0" class="food_inputFat" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
+      <label style="left:0; border:none;" class="food_inputFat" for="fat">fat</label>
+      <input type="number" min="0" class="food_inputFat" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputCarbohydrates" for="carbohydrates">carbohydrates</label>
-    <input type="number" min="0" class="food_inputCarbohydrates" required [(ngModel)]="model.carbohydrates" ngControl="carbohydrates" #carbohydrates="ngForm">
+      <label style="left:0; border:none;" class="food_inputCarbohydrates" for="carbohydrates">carbohydrates</label>
+      <input type="number" min="0" class="food_inputCarbohydrates" required [(ngModel)]="model.carbohydrates" ngControl="carbohydrates" #carbohydrates="ngForm">
 
-    <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+      <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
 
-  </form>
-  <div class="tmp" *ngFor="#item of customFood">
-    <div class="tmp2">name: {{item.name.ru}} calories: {{item.calories}}</div>
+    </form>
+    <div class="list foodListMove">
+      <div *ngFor="#item of customFood">
+        <div class="listItem">{{item.name.ru}} </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="createMenu">
+    create menu
+  </div>
+
+  <div *ngIf="pasteMenu">
+    paste meun
   </div>
 </div>
 <div class="container" *ngIf="isOpen && (iAm === 'sport')">
+  <div *ngIf="listOptions">
+    <div (click)="createExerciseToggle()">create exercise</div>
+    <br>
+    <div (click)="createTrainToggle()">create train</div>
+    <br>
+    <div (click)="pasteTrainToggle()">paste train</div>
+    <br>
+  </div>
 
 
-  <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
+  <div *ngIf="createExercise">
+    <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
 
-    <label style="left:0; border:none;" class="food_inputFood" for="name">sportName</label>
-    <input class="food_inputFood" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
+      <label style="left:0; border:none;width:10vw;" class="sport_inputSport" for="name">name</label>
+      <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
 
-    <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+      <button type="submit" class="sportBtnMove" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
 
-  </form>
-  <div class="tmp" *ngFor="#item of customSport">
-    <div class="tmp2">name: {{item.name.ru}} </div>
+    </form>
+    <div class="list">
+      <div *ngFor="#item of customSport">
+        <div class="listItem">{{item.name.ru}} </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="createTrain">
+    create train
+  </div>
+
+  <div *ngIf="pasteTrain">
+    paste train
   </div>
 </div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
@@ -195,9 +273,19 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 
 export class PlusComponent implements OnInit {
 
-    @Input() isOpen: boolean = true;
+    @Input() isOpen: boolean = false;
     @Input() iAm: string;
     @Output() isOpenChange = new EventEmitter();
+
+    private listOptions: boolean = false;
+
+    private createFood: boolean = false;
+    private createMenu: boolean = false;
+    private pasteMenu: boolean = false;
+
+    private createExercise: boolean = false;
+    private createTrain: boolean = false;
+    private pasteTrain: boolean = false;
 
     private customFood;
     private customSport;
@@ -214,8 +302,53 @@ export class PlusComponent implements OnInit {
 
     toggle() {
         this.isOpen = !this.isOpen;
+        this.listOptions = true;
+
+        this.createFood = false;
+        this.createMenu = false;
+        this.pasteMenu = false;
+
+        this.createExercise = false;
+        this.createTrain = false;
+        this.pasteTrain = false;
+
         this.isOpenChange.emit(this.isOpen);
     }
+
+    createFoodToggle() {
+        this.createFood = !this.createFood
+        this.listOptions = !this.listOptions
+
+
+    }
+    createMenuToggle() {
+        this.createMenu = !this.createMenu
+        this.listOptions = !this.listOptions
+
+    }
+    pasteMenuToggle() {
+        this.pasteMenu = !this.pasteMenu
+        this.listOptions = !this.listOptions
+
+    }
+
+    createExerciseToggle() {
+        this.createExercise = !this.createExercise
+        this.listOptions = !this.listOptions
+
+
+    }
+    createTrainToggle() {
+        this.createTrain = !this.createTrain
+        this.listOptions = !this.listOptions
+
+    }
+    pasteTrainToggle() {
+        this.pasteTrain = !this.pasteTrain
+        this.listOptions = !this.listOptions
+
+    }
+
 
     checkForm(value) {
         if (value) {

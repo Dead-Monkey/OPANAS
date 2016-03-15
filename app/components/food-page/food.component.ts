@@ -94,7 +94,6 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     font-size: 6vw;
     text-align: center;
     border-radius: 2vw;
-    overflow-y: scroll;
   }
   .food_list {
     margin: 5vw;
