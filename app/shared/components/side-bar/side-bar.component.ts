@@ -20,7 +20,7 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     left: 0;
     top: 0;
     z-index: 999;
-    background-color: gray;
+    background-color: #3f414a;
   }
   .sideBar_toggle {
     position: absolute;
@@ -53,18 +53,46 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     opacity: 0.5;
     z-index:998;
   }
+  .sidebar_foodButton {
+  background: url('./src/img/food.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 27vw;
+  height: 27vw;
+  margin: auto;
+  text-align: center;
+}
+.sidebar_sportButton {
+  background: url('./src/img/sport.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 27vw;
+  height: 27vw;
+  margin: auto;
+}
+.sidebar_restButton {
+  background: url('./src/img/rest.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 27vw;
+  height: 27vw;
+  margin: auto;
+}
+p {
+  color: #ff9d2d;
+  font-size: 6vw;
+}
+
   `], template: `
 <div class="sideBar_toggle" (click)="toggle()"></div>
 
 <div class="sideBarContainer" *ngIf="isOpen" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()">
-  <a [routerLink]="['Food']" (click)="toggle()">
-     {{"opanas.router.food"}}
-  </a>
-  <a [routerLink]="['Sport']" (click)="toggle()">
-     {{"opanas.router.sport"}}
-  </a> <a [routerLink]="['Rest']" (click)="toggle()">
-     {{"opanas.router.rest"}}
-  </a>
+  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton"></a>
+  <p>Food</p>
+  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton"></a>
+  <p>Sport</p>
+  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton"></a>
+  <p>Rest</p>
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
