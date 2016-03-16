@@ -1832,6 +1832,11 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                 };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
+                    //keepAwake screen
+                    var onDeviceReady = function () {
+                        window.plugins.insomnia.keepAwake();
+                    };
+                    document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date
                     this._refreshDateService.refresher();
                     //translator config

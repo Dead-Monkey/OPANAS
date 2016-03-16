@@ -72,6 +72,12 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                 };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
+                    //cordova plugins setup
+                    var onDeviceReady = function () {
+                        //keepAwake screen
+                        window.plugins.insomnia.keepAwake();
+                    };
+                    document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date
                     this._refreshDateService.refresher();
                     //translator config

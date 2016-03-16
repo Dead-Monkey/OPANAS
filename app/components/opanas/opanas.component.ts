@@ -82,6 +82,13 @@ export class OpanasComponent implements OnInit {
     }
     //config app
     ngOnInit() {
+        //cordova plugins setup
+        let onDeviceReady = function() {
+            //keepAwake screen
+            window.plugins.insomnia.keepAwake()
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+
         //refresh-date
         this._refreshDateService.refresher();
         //translator config
@@ -115,8 +122,8 @@ let keysVendor: Object = {
         'search': 'search',
         'weight': 'weight',
         'sport.weight': 'weight',
-        'sport.numbers':'numbers',
-        'sport.time':'time',
+        'sport.numbers': 'numbers',
+        'sport.time': 'time',
         'calories': 'calories',
         'protein': 'protein',
         'carbohydrates': 'carbohydrates',
@@ -128,8 +135,8 @@ let keysVendor: Object = {
         'search': 'поиск',
         'weight': 'вес',
         'sport.weight': 'какой вес',
-        'sport.numbers':'сколько раз',
-        'sport.time':'время',
+        'sport.numbers': 'сколько раз',
+        'sport.time': 'время',
         'calories': 'калории',
         'protein': 'белки',
         'carbohydrates': 'углеводы',
