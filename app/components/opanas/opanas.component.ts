@@ -4,6 +4,7 @@ import {FoodComponent} from '../food-page/food.component';
 import {SportComponent} from '../sport-page/sport.component';
 import {RestComponent} from '../rest-page/rest.component';
 import {CalendarComponent} from '../calendar-page/calendar.component';
+import {UserComponent} from '../user-page/user.component';
 import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
@@ -70,6 +71,7 @@ import {UserService} from '../../services/user/user.service';
     { path: '/sport', name: 'Sport', component: SportComponent },
     { path: '/rest', name: 'Rest', component: RestComponent },
     { path: '/calendar', name: 'Calendar', component: CalendarComponent },
+    { path: '/user', name: 'User', component: UserComponent },
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {

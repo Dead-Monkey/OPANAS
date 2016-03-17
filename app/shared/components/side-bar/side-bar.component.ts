@@ -69,6 +69,9 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
    <a [routerLink]="['Calendar']" (click)="toggle()">
        {{"calendar"}}
     </a>
+    <a [routerLink]="['User']" (click)="toggle()">
+         user
+      </a>
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
