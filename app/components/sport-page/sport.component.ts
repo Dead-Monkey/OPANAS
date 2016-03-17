@@ -272,7 +272,7 @@ export class SportComponent implements OnInit {
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
-        this.userSets = this._userServe.getUserSportSets();
+        this.userSets = this._userServe.getUserSets()['sport'];
         this.sportContainer = this._sportServe.getAllSport();
         this.pickedSportContainer = this._calendarService.getDailySport(this.currentDate);
 

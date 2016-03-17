@@ -64,10 +64,11 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
             }],
         execute: function() {
             OpanasComponent = (function () {
-                function OpanasComponent(_translator, _calendarService, _refreshDateService) {
+                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe) {
                     this._translator = _translator;
                     this._calendarService = _calendarService;
                     this._refreshDateService = _refreshDateService;
+                    this._userServe = _userServe;
                     this.sideBarIsOpen = false;
                 }
                 OpanasComponent.prototype.bla = function () {
@@ -87,7 +88,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._translator.setSupportLanguages(languages);
                     this._translator.setKeys(keysVendor);
                     //basic language of application
-                    this._translator.setCurrentLanguage('ru');
+                    this._translator.setCurrentLanguage(this._userServe.getLanguage());
                     //default language will be use if current language dont has key. it's an optional.
                     this._translator.setDefaultLanguage('en');
                 };
@@ -105,7 +106,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService],
                         pipes: [translate_service_1.TranslatePipe],
                         styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n  \n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
@@ -115,7 +116,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         { path: '/user', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService])
+                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());

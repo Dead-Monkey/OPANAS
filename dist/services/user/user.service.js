@@ -24,58 +24,64 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
             UserService = (function () {
                 function UserService(_storageService) {
                     this._storageService = _storageService;
-                    this.language = 'ru';
                     this.storageKeys = {
-                        'userSets': {
-                            'foodSets': 'foodSets',
-                            'sportSets': 'sportSets'
-                        }
+                        'userSets': 'userSets'
                     };
-                    this.foodSets = {
-                        "calories": {
-                            "full": 2000
+                    this.sets = {
+                        'foodSets': {
+                            "calories": {
+                                "full": 0
+                            },
+                            "protein": {
+                                "full": 0
+                            },
+                            "fat": {
+                                "full": 0
+                            },
+                            "carbohydrates": {
+                                "full": 0
+                            }
                         },
-                        "protein": {
-                            "full": 150
-                        },
-                        "fat": {
-                            "full": 80
-                        },
-                        "carbohydrates": {
-                            "full": 300
-                        }
+                        'sportSets': {},
+                        'language': 'ru'
                     };
-                    this.sportSets = {};
-                    if (this._storageService.getItem(this.storageKeys['userSets']['foodSets'])) {
-                        this.foodSets = this._storageService.getItem(this.storageKeys['userSets']['foodSets']);
-                    }
-                    if (this._storageService.getItem(this.storageKeys['userSets']['sportSets'])) {
-                        this.sportSets = this._storageService.getItem(this.storageKeys['userSets']['sportSets']);
+                    if (this._storageService.getItem(this.storageKeys['userSets'])) {
+                        this.sets = this._storageService.getItem(this.storageKeys['userSets']);
                     }
                 }
+                UserService.prototype.refreshUser = function () {
+                    for (var key in this.sets['foodSets']) {
+                        if (!this.sets['foodSets'][key]['full']) {
+                            this.sets['foodSets'][key]['full'] = 0;
+                        }
+                    }
+                    this._storageService.setItem(this.storageKeys['userSets'], this.sets);
+                };
                 UserService.prototype.getLanguage = function () {
-                    return this.language;
+                    return this.sets['language'];
                 };
                 UserService.prototype.setLanguage = function (language) {
-                    this.language = language;
+                    this.sets['language'] = language;
+                    this.refreshUser();
                 };
-                UserService.prototype.getUserFoodSets = function () {
-                    return this.foodSets;
+                UserService.prototype.getUserSets = function () {
+                    return this.sets;
                 };
                 UserService.prototype.setUserCalories = function (value) {
-                    this.foodSets['calories']['full'] = value;
+                    this.sets['foodSets']['calories']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserProtein = function (value) {
-                    this.foodSets['protein']['full'] = value;
+                    this.sets['foodSets']['protein']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserFat = function (value) {
-                    this.foodSets['fat']['full'] = value;
+                    this.sets['foodSets']['fat']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserCarbohydrates = function (value) {
-                    this.foodSets['carbohydrates']['full'] = value;
-                };
-                UserService.prototype.getUserSportSets = function () {
-                    return this.sportSets;
+                    this.sets['foodSets']['carbohydrates']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 

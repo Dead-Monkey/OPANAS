@@ -52,7 +52,7 @@ import {UserService} from '../../services/user/user.service';
 
   <div class="header">
     <div class="temporary">
-  
+
       <div (click)="bla()">reload</div>
 
     </div>
@@ -77,7 +77,7 @@ export class OpanasComponent implements OnInit {
 
     private sideBarIsOpen: boolean = false;
 
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService) { }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService) { }
     bla() {
         location.reload();
     }
@@ -96,7 +96,7 @@ export class OpanasComponent implements OnInit {
         this._translator.setSupportLanguages(languages);
         this._translator.setKeys(keysVendor);
         //basic language of application
-        this._translator.setCurrentLanguage('ru');
+        this._translator.setCurrentLanguage(this._userServe.getLanguage());
         //default language will be use if current language dont has key. it's an optional.
         this._translator.setDefaultLanguage('en');
     }

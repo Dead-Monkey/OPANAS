@@ -29,17 +29,15 @@ System.register(['angular2/core', '../../services/user/user.service', '../../sha
                     this._userServe = _userServe;
                     this._translator = _translator;
                 }
-                UserComponent.prototype.bla = function (a) {
-                    console.log(a);
-                };
                 UserComponent.prototype.ngOnInit = function () {
-                    this.foodSets = this._userServe.getUserFoodSets();
+                    this.sets = this._userServe.getUserSets();
                 };
-                UserComponent.prototype.goEn = function () {
-                    this._translator.setCurrentLanguage('en');
+                UserComponent.prototype.changeLang = function (lang) {
+                    this._userServe.setLanguage(lang);
+                    this._translator.setCurrentLanguage(this._userServe.getLanguage());
                 };
-                UserComponent.prototype.goRu = function () {
-                    this._translator.setCurrentLanguage('ru');
+                UserComponent.prototype.changeSets = function () {
+                    this._userServe.refreshUser();
                 };
                 UserComponent = __decorate([
                     core_1.Component({
@@ -48,7 +46,7 @@ System.register(['angular2/core', '../../services/user/user.service', '../../sha
                         providers: [],
                         pipes: [translate_service_1.TranslatePipe],
                         styles: ["\n\n      "],
-                        template: "\n<div >\n{{'calories'|translate}}\n<input #calories class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"foodSets?.calories['full']\" (input)=\"bla(calories.value)\">\n<br>\n<br>\n{{'protein'|translate}}\n<input #protein class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"foodSets?.protein['full']\" (input)=\"bla(protein.value)\">\n\n<br>\n<br>\n{{'fat'|translate}}\n<input #fat class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"foodSets?.fat['full']\" (input)=\"bla(fat.value)\">\n\n<br>\n<br>\n{{'carbohydrates'|translate}}\n<input #carbohydrates class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"foodSets?.carbohydrates['full']\" (input)=\"bla(carbohydrates.value)\">\n\n<br>\n<br>\n{{'language'|translate}}\n<div (click)=\"goEn()\">english</div>\n<div (click)=\"goRu()\">russian</div>\n</div>\n    "
+                        template: "\n    <div style=\"margin-left:10vw\">\n<div>\n{{'calories'|translate}}\n<input #calories class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n<br>\n<br>\n{{'protein'|translate}}\n<input #protein class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'fat'|translate}}\n<input #fat class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'carbohydrates'|translate}}\n<input #carbohydrates class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'language'|translate}}\n<div (click)=\"changeLang('en')\">english</div>\n<div (click)=\"changeLang('ru')\">russian</div>\n</div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [user_service_1.UserService, translate_service_1.TranslateService])
                 ], UserComponent);

@@ -151,6 +151,9 @@ export class CalendarService {
 
     //can be use 4 menu
     setDailyFood(food: Food, date: Date) {
+      if(isNaN(food['weight'])){
+        food['weight']=0
+      }
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {

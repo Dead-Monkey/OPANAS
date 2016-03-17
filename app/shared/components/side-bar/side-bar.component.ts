@@ -99,8 +99,8 @@ p {
   <p>Food</p>
   <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton"></a>
   <p>Sport</p>
-  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton"></a>
-  <p>Rest</p>
+  <!-- <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton"></a>
+  <p>Rest</p> -->
   <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton"></a>
   <p>Calendar</p>
   <a [routerLink]="['User']" (click)="toggle()">

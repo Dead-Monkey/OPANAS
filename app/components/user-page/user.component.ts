@@ -12,47 +12,47 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 
       `],
     template: `
-<div >
+    <div style="margin-left:10vw">
+<div>
 {{'calories'|translate}}
-<input #calories class="" type="number" min="0" [(ngModel)]="foodSets?.calories['full']" (input)="bla(calories.value)">
+<input #calories class="" type="number" min="0" [(ngModel)]="sets?.foodSets?.calories['full']" (blur)="changeSets()">
 <br>
 <br>
 {{'protein'|translate}}
-<input #protein class="" type="number" min="0" [(ngModel)]="foodSets?.protein['full']" (input)="bla(protein.value)">
+<input #protein class="" type="number" min="0" [(ngModel)]="sets?.foodSets?.protein['full']" (blur)="changeSets()">
 
 <br>
 <br>
 {{'fat'|translate}}
-<input #fat class="" type="number" min="0" [(ngModel)]="foodSets?.fat['full']" (input)="bla(fat.value)">
+<input #fat class="" type="number" min="0" [(ngModel)]="sets?.foodSets?.fat['full']" (blur)="changeSets()">
 
 <br>
 <br>
 {{'carbohydrates'|translate}}
-<input #carbohydrates class="" type="number" min="0" [(ngModel)]="foodSets?.carbohydrates['full']" (input)="bla(carbohydrates.value)">
+<input #carbohydrates class="" type="number" min="0" [(ngModel)]="sets?.foodSets?.carbohydrates['full']" (blur)="changeSets()">
 
 <br>
 <br>
 {{'language'|translate}}
-<div (click)="goEn()">english</div>
-<div (click)="goRu()">russian</div>
+<div (click)="changeLang('en')">english</div>
+<div (click)="changeLang('ru')">russian</div>
+</div>
 </div>
     `
 
 })
 export class UserComponent implements OnInit {
-      bla( a) {
-            console.log(a);
-      }
-      private foodSets: Object;
-    constructor(private _userServe:  UserService, private _translator: TranslateService) { }
+    private sets: Object;
+    constructor(private _userServe: UserService, private _translator: TranslateService) { }
     ngOnInit() {
-          this.foodSets = this._userServe.getUserFoodSets();
+        this.sets = this._userServe.getUserSets();
     }
 
-    goEn() {
-        this._translator.setCurrentLanguage('en');
+    changeLang(lang) {
+        this._userServe.setLanguage(lang)
+        this._translator.setCurrentLanguage(this._userServe.getLanguage())
     }
-    goRu() {
-        this._translator.setCurrentLanguage('ru');
+    changeSets() {
+        this._userServe.refreshUser();
     }
 }

@@ -75,7 +75,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 FoodComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
-                    this.userSets = this._userServe.getUserFoodSets();
+                    this.userSets = this._userServe.getUserSets()['foodSets'];
                     this.foodContainer = this._foodServe.getAllFood();
                     this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
                     //4 calculate progress-bar
@@ -131,28 +131,17 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 };
                 FoodComponent.prototype.changeFoodWeight = function (index, food) {
                     var _this = this;
-                    var timer;
-                    if (!isNaN(food['weight'])) {
-                        this._calendarService.changeDailyFood(index, this.currentDate, food);
-                        this.calculateFoodRefresh();
-                        for (var _i = 0, _a = this.pickedFoodContainer; _i < _a.length; _i++) {
-                            var variable = _a[_i];
-                            this.calculateFood(variable);
+                    setTimeout(function () {
+                        if (isNaN(food['weight'])) {
+                            food['weight'] = 0;
                         }
-                    }
-                    else {
-                        timer = setTimeout(function () {
-                            if (isNaN(food['weight'])) {
-                                food['weight'] = 0;
-                                _this._calendarService.changeDailyFood(index, _this.currentDate, food);
-                                _this.calculateFoodRefresh();
-                                for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
-                                    var variable = _a[_i];
-                                    _this.calculateFood(variable);
-                                }
-                            }
-                        }, 1000);
-                    }
+                        _this._calendarService.changeDailyFood(index, _this.currentDate, food);
+                        _this.calculateFoodRefresh();
+                        for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
+                            var variable = _a[_i];
+                            _this.calculateFood(variable);
+                        }
+                    }, 500);
                 };
                 FoodComponent.prototype.calculateFood = function (food) {
                     if (food['picked']) {

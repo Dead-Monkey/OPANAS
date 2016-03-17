@@ -61,7 +61,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                 SportComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
-                    this.userSets = this._userServe.getUserSportSets();
+                    this.userSets = this._userServe.getUserSets()['sport'];
                     this.sportContainer = this._sportServe.getAllSport();
                     this.pickedSportContainer = this._calendarService.getDailySport(this.currentDate);
                     for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {

@@ -4,64 +4,72 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 @Injectable()
 
 export class UserService {
-    private language: string = 'ru';
     private storageKeys = {
-        'userSets': {
-            'foodSets': 'foodSets',
-            'sportSets': 'sportSets'
-        }
+        'userSets': 'userSets'
     }
-    private foodSets: Object = {
-        "calories": {
-            "full": 2000
-        },
-        "protein": {
-            "full": 150
-        },
-        "fat": {
-            "full": 80
-        },
-        "carbohydrates": {
-            "full": 300
-        }
-    }
-    private sportSets: Object = {
-    }
+    private sets:  Object = {
+          'foodSets': {
+               "calories": {
+                   "full": 0
+               },
+               "protein": {
+                   "full": 0
+               },
+               "fat": {
+                   "full": 0
+               },
+               "carbohydrates": {
+                   "full": 0
+               }
+            },
+            'sportSets':{},
+            'language':'ru'
+      }
 
     constructor(private _storageService: StorageService) {
-        if (this._storageService.getItem(this.storageKeys['userSets']['foodSets'])) {
-            this.foodSets = this._storageService.getItem(this.storageKeys['userSets']['foodSets']);
-        }
-        if (this._storageService.getItem(this.storageKeys['userSets']['sportSets'])) {
-            this.sportSets = this._storageService.getItem(this.storageKeys['userSets']['sportSets']);
+        if (this._storageService.getItem(this.storageKeys['userSets'])) {
+            this.sets = this._storageService.getItem(this.storageKeys['userSets']);
         }
     }
+
+    refreshUser(){
+
+      for (let key in this.sets['foodSets']) {
+          if(!this.sets['foodSets'][key]['full']){
+            this.sets['foodSets'][key]['full'] = 0;
+          }
+      }
+      this._storageService.setItem(this.storageKeys['userSets'], this.sets);
+    }
+
     getLanguage(): string {
-        return this.language;
+        return this.sets['language'];
     }
 
     setLanguage(language: string) {
-        this.language = language;
+        this.sets['language'] = language;
+        this.refreshUser();
     }
 
-    getUserFoodSets(): Object {
-        return this.foodSets;
+    getUserSets(): Object {
+        return this.sets;
     }
 
     setUserCalories(value: number) {
-        this.foodSets['calories']['full'] = value;
+        this.sets['foodSets']['calories']['full'] = value;
+        this.refreshUser();
     }
     setUserProtein(value: number) {
-        this.foodSets['protein']['full'] = value;
+        this.sets['foodSets']['protein']['full'] = value;
+        this.refreshUser();
     }
     setUserFat(value: number) {
-        this.foodSets['fat']['full'] = value;
+        this.sets['foodSets']['fat']['full'] = value;
+        this.refreshUser();
     }
     setUserCarbohydrates(value: number) {
-        this.foodSets['carbohydrates']['full'] = value;
+        this.sets['foodSets']['carbohydrates']['full'] = value;
+        this.refreshUser();
     }
 
-    getUserSportSets() {
-        return this.sportSets
-    }
 }

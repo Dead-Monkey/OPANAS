@@ -158,6 +158,9 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
+                    if (isNaN(food['weight'])) {
+                        food['weight'] = 0;
+                    }
                     date.setHours(0, 0, 0, 0);
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];

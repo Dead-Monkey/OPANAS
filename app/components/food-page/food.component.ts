@@ -232,7 +232,7 @@ export class FoodComponent implements OnInit {
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
-        this.userSets = this._userServe.getUserFoodSets();
+        this.userSets = this._userServe.getUserSets()['foodSets'];
         this.foodContainer = this._foodServe.getAllFood();
         this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
 
@@ -290,26 +290,20 @@ export class FoodComponent implements OnInit {
         }
     }
     changeFoodWeight(index: number, food: Food) {
-        let timer;
-        if (!isNaN(food['weight'])) {
+        setTimeout(() => {
+            if (isNaN(food['weight'])) {
+                food['weight'] = 0
+            }
             this._calendarService.changeDailyFood(index, this.currentDate, food);
             this.calculateFoodRefresh();
+
             for (let variable of this.pickedFoodContainer) {
                 this.calculateFood(variable);
             }
-        } else {
-            timer = setTimeout(() => {
-                if (isNaN(food['weight'])) {
-                    food['weight'] = 0
-                    this._calendarService.changeDailyFood(index, this.currentDate, food);
-                    this.calculateFoodRefresh();
-                    for (let variable of this.pickedFoodContainer) {
-                        this.calculateFood(variable);
-                    }
-                }
-            }, 1000);
-        }
+        }, 500)
+
     }
+
 
     calculateFood(food: Food) {
         if (food['picked']) {
