@@ -276,63 +276,85 @@ System.register("shared/services/storage/storage.service", ['angular2/core'], fu
         }
     }
 });
-System.register("services/user/user.service", ['angular2/core'], function(exports_6, context_6) {
+System.register("services/user/user.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_6, context_6) {
     "use strict";
     var __moduleName = context_6 && context_6.id;
-    var core_5;
+    var core_5, storage_service_1;
     var UserService;
     return {
         setters:[
             function (core_5_1) {
                 core_5 = core_5_1;
+            },
+            function (storage_service_1_1) {
+                storage_service_1 = storage_service_1_1;
             }],
         execute: function() {
             UserService = (function () {
-                function UserService() {
-                    this.language = 'ru';
-                    this.foodSets = {
-                        "calories": {
-                            "full": 2000
-                        },
-                        "protein": {
-                            "full": 150
-                        },
-                        "fat": {
-                            "full": 80
-                        },
-                        "carbohydrates": {
-                            "full": 300
-                        }
+                function UserService(_storageService) {
+                    this._storageService = _storageService;
+                    this.storageKeys = {
+                        'userSets': 'userSets'
                     };
-                    this.sportSets = {};
+                    this.sets = {
+                        'foodSets': {
+                            "calories": {
+                                "full": 0
+                            },
+                            "protein": {
+                                "full": 0
+                            },
+                            "fat": {
+                                "full": 0
+                            },
+                            "carbohydrates": {
+                                "full": 0
+                            }
+                        },
+                        'sportSets': {},
+                        'language': 'ru'
+                    };
+                    if (this._storageService.getItem(this.storageKeys['userSets'])) {
+                        this.sets = this._storageService.getItem(this.storageKeys['userSets']);
+                    }
                 }
+                UserService.prototype.refreshUser = function () {
+                    for (var key in this.sets['foodSets']) {
+                        if (!this.sets['foodSets'][key]['full']) {
+                            this.sets['foodSets'][key]['full'] = 0;
+                        }
+                    }
+                    this._storageService.setItem(this.storageKeys['userSets'], this.sets);
+                };
                 UserService.prototype.getLanguage = function () {
-                    return this.language;
+                    return this.sets['language'];
                 };
                 UserService.prototype.setLanguage = function (language) {
-                    this.language = language;
+                    this.sets['language'] = language;
+                    this.refreshUser();
                 };
-                UserService.prototype.getUserFoodSets = function () {
-                    return this.foodSets;
+                UserService.prototype.getUserSets = function () {
+                    return this.sets;
                 };
                 UserService.prototype.setUserCalories = function (value) {
-                    this.foodSets['calories']['full'] = value;
+                    this.sets['foodSets']['calories']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserProtein = function (value) {
-                    this.foodSets['protein']['full'] = value;
+                    this.sets['foodSets']['protein']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserFat = function (value) {
-                    this.foodSets['fat']['full'] = value;
+                    this.sets['foodSets']['fat']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService.prototype.setUserCarbohydrates = function (value) {
-                    this.foodSets['carbohydrates']['full'] = value;
-                };
-                UserService.prototype.getUserSportSets = function () {
-                    return this.sportSets;
+                    this.sets['foodSets']['carbohydrates']['full'] = value;
+                    this.refreshUser();
                 };
                 UserService = __decorate([
                     core_5.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [storage_service_1.StorageService])
                 ], UserService);
                 return UserService;
             }());
@@ -343,15 +365,15 @@ System.register("services/user/user.service", ['angular2/core'], function(export
 System.register("services/food/food.service", ['angular2/core', "shared/services/storage/storage.service", "services/user/user.service"], function(exports_7, context_7) {
     "use strict";
     var __moduleName = context_7 && context_7.id;
-    var core_6, storage_service_1, user_service_1;
+    var core_6, storage_service_2, user_service_1;
     var FoodService, foodVendor;
     return {
         setters:[
             function (core_6_1) {
                 core_6 = core_6_1;
             },
-            function (storage_service_1_1) {
-                storage_service_1 = storage_service_1_1;
+            function (storage_service_2_1) {
+                storage_service_2 = storage_service_2_1;
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
@@ -428,66 +450,983 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 };
                 FoodService = __decorate([
                     core_6.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService])
+                    __metadata('design:paramtypes', [storage_service_2.StorageService, user_service_1.UserService])
                 ], FoodService);
                 return FoodService;
             }());
             exports_7("FoodService", FoodService);
             foodVendor = [
+                //1
                 {
                     "name": {
-                        "en": "pizza",
-                        "ru": "пицца"
+                        "en": "Сhicken egg",
+                        "ru": "Яйцо куриное"
                     },
                     "custom": false,
-                    "calories": 100,
-                    "protein": 75,
-                    "fat": 50,
-                    "carbohydrates": 25
+                    "calories": 157,
+                    "protein": 12.7,
+                    "fat": 10.9,
+                    "carbohydrates": 0.7
                 },
+                // 2
                 {
                     "name": {
-                        "en": "apple",
-                        "ru": "яблоко"
+                        "en": "Apricot",
+                        "ru": "Абрикос"
                     },
                     "custom": false,
-                    "calories": 5,
-                    "protein": 5,
-                    "fat": 5,
-                    "carbohydrates": 5
+                    "calories": 41,
+                    "protein": 0.9,
+                    "fat": 0.1,
+                    "carbohydrates": 10.8
                 },
+                // 3
                 {
                     "name": {
-                        "en": "tomato",
-                        "ru": "помидор"
+                        "en": "Adjika",
+                        "ru": "Аджика"
                     },
                     "custom": false,
-                    "calories": 20,
+                    "calories": 59,
+                    "protein": 1.0,
+                    "fat": 3.7,
+                    "carbohydrates": 5.8
+                },
+                // 4
+                {
+                    "name": {
+                        "en": "Quince",
+                        "ru": "Айва"
+                    },
+                    "custom": false,
+                    "calories": 40,
+                    "protein": 0.6,
+                    "fat": 0.5,
+                    "carbohydrates": 9.8
+                },
+                // 5
+                {
+                    "name": {
+                        "en": "Cherry-plum",
+                        "ru": "Алыча"
+                    },
+                    "custom": false,
+                    "calories": 27,
+                    "protein": 0.2,
+                    "fat": 0.0,
+                    "carbohydrates": 6.9
+                },
+                // 6
+                {
+                    "name": {
+                        "en": "Pineapple",
+                        "ru": "Ананас"
+                    },
+                    "custom": false,
+                    "calories": 49,
+                    "protein": 0.4,
+                    "fat": 0.2,
+                    "carbohydrates": 10.6
+                },
+                // 7
+                {
+                    "name": {
+                        "en": "Curd bold",
+                        "ru": "Творог полужирный"
+                    },
+                    "custom": false,
+                    "calories": 159,
+                    "protein": 16.7,
+                    "fat": 9.0,
+                    "carbohydrates": 2.0
+                },
+                // 8
+                {
+                    "name": {
+                        "en": "Skim cheese",
+                        "ru": "Творог обезжиренный"
+                    },
+                    "custom": false,
+                    "calories": 71,
+                    "protein": 16.5,
+                    "fat": 0.0,
+                    "carbohydrates": 1.3
+                },
+                // 9
+                {
+                    "name": {
+                        "en": "Chicken cutlet",
+                        "ru": "Куриная котлета"
+                    },
+                    "custom": false,
+                    "calories": 108.2,
+                    "protein": 17,
+                    "fat": 3.7,
+                    "carbohydrates": 1.8
+                },
+                // 10
+                {
+                    "name": {
+                        "en": "Chicken cue",
+                        "ru": "Куриный биток"
+                    },
+                    "custom": false,
+                    "calories": 128.7,
+                    "protein": 21.3,
+                    "fat": 3.1,
+                    "carbohydrates": 2.4
+                },
+                // 11
+                {
+                    "name": {
+                        "en": "Fried chicken",
+                        "ru": "Курица жареная"
+                    },
+                    "custom": false,
+                    "calories": 210,
+                    "protein": 26.0,
+                    "fat": 12.0,
+                    "carbohydrates": 0.0
+                },
+                // 12
+                {
+                    "name": {
+                        "en": "Boiled chicken",
+                        "ru": "Курица вареная"
+                    },
+                    "custom": false,
+                    "calories": 170,
+                    "protein": 25.2,
+                    "fat": 7.4,
+                    "carbohydrates": 0.0
+                },
+                // 13
+                {
+                    "name": {
+                        "en": "White rice",
+                        "ru": "Рис белый"
+                    },
+                    "custom": false,
+                    "calories": 116,
+                    "protein": 2.2,
+                    "fat": 0.5,
+                    "carbohydrates": 24.9
+                },
+                // 14
+                {
+                    "name": {
+                        "en": "Oatmeal on the water",
+                        "ru": "Овсяная каша на воде"
+                    },
+                    "custom": false,
+                    "calories": 88,
+                    "protein": 3.0,
+                    "fat": 1.7,
+                    "carbohydrates": 15.0
+                },
+                // 15
+                {
+                    "name": {
+                        "en": "Semolina with milk",
+                        "ru": "Манная каша на молоке"
+                    },
+                    "custom": false,
+                    "calories": 98,
+                    "protein": 3.0,
+                    "fat": 3.2,
+                    "carbohydrates": 15.3
+                },
+                // 16
+                {
+                    "name": {
+                        "en": "Semolina water",
+                        "ru": "Манная каша на воде"
+                    },
+                    "custom": false,
+                    "calories": 80,
+                    "protein": 2.5,
+                    "fat": 0.2,
+                    "carbohydrates": 16.8
+                },
+                // 17
+                {
+                    "name": {
+                        "en": "Buckwheat porridge with milk",
+                        "ru": "Гречневая каша на молоке"
+                    },
+                    "custom": false,
+                    "calories": 118,
+                    "protein": 4.2,
+                    "fat": 2.3,
+                    "carbohydrates": 21.6
+                },
+                // 18
+                {
+                    "name": {
+                        "en": "Buckwheat",
+                        "ru": "Гречневая каша"
+                    },
+                    "custom": false,
+                    "calories": 132,
+                    "protein": 4.5,
+                    "fat": 2.3,
+                    "carbohydrates": 25.0
+                },
+                // 19
+                {
+                    "name": {
+                        "en": "Barley porridge",
+                        "ru": "Перловая каша"
+                    },
+                    "custom": false,
+                    "calories": 106,
+                    "protein": 3.1,
+                    "fat": 0.4,
+                    "carbohydrates": 23.0
+                },
+                // 20
+                {
+                    "name": {
+                        "en": "Millet porridge",
+                        "ru": "Пшенная каша"
+                    },
+                    "custom": false,
+                    "calories": 135,
+                    "protein": 4.7,
+                    "fat": 1.1,
+                    "carbohydrates": 26.1
+                },
+                // 21
+                {
+                    "name": {
+                        "en": "Rice brown",
+                        "ru": "Рис бурый"
+                    },
+                    "custom": false,
+                    "calories": 337,
+                    "protein": 7.4,
+                    "fat": 1.8,
+                    "carbohydrates": 72.9
+                },
+                // 22
+                {
+                    "name": {
+                        "en": "Barley porridge",
+                        "ru": "Ячменная каша"
+                    },
+                    "custom": false,
+                    "calories": 310,
+                    "protein": 11.5,
+                    "fat": 2.0,
+                    "carbohydrates": 65.8
+                },
+                // 23
+                {
+                    "name": {
+                        "en": "Milk",
+                        "ru": "Молоко"
+                    },
+                    "custom": false,
+                    "calories": 64,
+                    "protein": 3.2,
+                    "fat": 3.6,
+                    "carbohydrates": 4.8
+                },
+                // 24
+                {
+                    "name": {
+                        "en": "Borscht",
+                        "ru": "Борщ"
+                    },
+                    "custom": false,
+                    "calories": 49,
+                    "protein": 1.1,
+                    "fat": 2.2,
+                    "carbohydrates": 6.7
+                },
+                // 25
+                {
+                    "name": {
+                        "en": "Chicken broth",
+                        "ru": "Бульон куриный"
+                    },
+                    "custom": false,
+                    "calories": 15,
+                    "protein": 2.0,
+                    "fat": 0.5,
+                    "carbohydrates": 0.3
+                },
+                // 26
+                {
+                    "name": {
+                        "en": "Pickle",
+                        "ru": "Рассольник"
+                    },
+                    "custom": false,
+                    "calories": 42,
+                    "protein": 1.4,
+                    "fat": 2.0,
+                    "carbohydrates": 5.0
+                },
+                // 27
+                {
+                    "name": {
+                        "en": "Meat solyanka",
+                        "ru": "Солянка мясная"
+                    },
+                    "custom": false,
+                    "calories": 69,
+                    "protein": 5.2,
+                    "fat": 4.6,
+                    "carbohydrates": 1.7
+                },
+                // 28
+                {
+                    "name": {
+                        "en": "Mushroom soup",
+                        "ru": "Суп грибной"
+                    },
+                    "custom": false,
+                    "calories": 50,
+                    "protein": 1.9,
+                    "fat": 2.4,
+                    "carbohydrates": 5.7
+                },
+                // 29
+                {
+                    "name": {
+                        "en": "Vegetable soup",
+                        "ru": "Суп овощной"
+                    },
+                    "custom": false,
+                    "calories": 43,
+                    "protein": 1.7,
+                    "fat": 1.8,
+                    "carbohydrates": 6.2
+                },
+                // 30
+                {
+                    "name": {
+                        "en": "Fish soup",
+                        "ru": "Уха"
+                    },
+                    "custom": false,
+                    "calories": 46,
+                    "protein": 3.4,
+                    "fat": 1.0,
+                    "carbohydrates": 5.5
+                },
+                // 31
+                {
+                    "name": {
+                        "en": "Dutch cheese",
+                        "ru": "Сыр Голландский"
+                    },
+                    "custom": false,
+                    "calories": 352,
+                    "protein": 26.0,
+                    "fat": 26.8,
+                    "carbohydrates": 0.0
+                },
+                // 32
+                {
+                    "name": {
+                        "en": "Cheese Russian",
+                        "ru": "Сыр Российский"
+                    },
+                    "custom": false,
+                    "calories": 363,
+                    "protein": 24.1,
+                    "fat": 29.5,
+                    "carbohydrates": 0.3
+                },
+                // 33
+                {
+                    "name": {
+                        "en": "Sulguni cheese",
+                        "ru": "Сыр сулугуни"
+                    },
+                    "custom": false,
+                    "calories": 290,
+                    "protein": 20.0,
+                    "fat": 24.0,
+                    "carbohydrates": 0.0
+                },
+                // 34
+                {
+                    "name": {
+                        "en": "Chees feta",
+                        "ru": "Сыр фета"
+                    },
+                    "custom": false,
+                    "calories": 290,
+                    "protein": 17.0,
+                    "fat": 24.0,
+                    "carbohydrates": 0.0
+                },
+                // 35
+                {
+                    "name": {
+                        "en": "Boiled chicken fillet",
+                        "ru": "Куриное филе вареное"
+                    },
+                    "custom": false,
+                    "calories": 137,
+                    "protein": 29.8,
+                    "fat": 1.8,
+                    "carbohydrates": 0.5
+                },
+                // 36
+                {
+                    "name": {
+                        "en": "Pork chops",
+                        "ru": "Свинные отбивные"
+                    },
+                    "custom": false,
+                    "calories": 470,
+                    "protein": 17.5,
+                    "fat": 40.3,
+                    "carbohydrates": 8.8
+                },
+                // 37
+                {
+                    "name": {
+                        "en": "Beef Cutlets",
+                        "ru": "Котлеты из говядины"
+                    },
+                    "custom": false,
+                    "calories": 260,
+                    "protein": 18.0,
+                    "fat": 20.0,
+                    "carbohydrates": 0.0
+                },
+                // 38
+                {
+                    "name": {
+                        "en": "Cooked turkey",
+                        "ru": "Индейка вареная"
+                    },
+                    "custom": false,
+                    "calories": 195,
+                    "protein": 25.3,
+                    "fat": 10.4,
+                    "carbohydrates": 0.0
+                },
+                // 39
+                {
+                    "name": {
+                        "en": "Roasted turkey",
+                        "ru": "Индейка жареная"
+                    },
+                    "custom": false,
+                    "calories": 165,
+                    "protein": 28.0,
+                    "fat": 6.0,
+                    "carbohydrates": 0
+                },
+                // 40
+                {
+                    "name": {
+                        "en": "Beef liver fried",
+                        "ru": "Говяжья печень жареная"
+                    },
+                    "custom": false,
+                    "calories": 199,
+                    "protein": 22.9,
+                    "fat": 10.2,
+                    "carbohydrates": 3.9
+                },
+                // 41
+                {
+                    "name": {
+                        "en": "Beef stew",
+                        "ru": "Говядина тушеная"
+                    },
+                    "custom": false,
+                    "calories": 232,
+                    "protein": 16.8,
+                    "fat": 18.3,
+                    "carbohydrates": 0.0
+                },
+                // 42
+                {
+                    "name": {
+                        "en": "Boiled beef",
+                        "ru": "Говядина вареная"
+                    },
+                    "custom": false,
+                    "calories": 254,
+                    "protein": 25.8,
+                    "fat": 16.8,
+                    "carbohydrates": 0.0
+                },
+                // 43
+                {
+                    "name": {
+                        "en": "Ham",
+                        "ru": "Ветчина"
+                    },
+                    "custom": false,
+                    "calories": 270,
+                    "protein": 14.0,
+                    "fat": 24.0,
+                    "carbohydrates": 0.0
+                },
+                // 44
+                {
+                    "name": {
+                        "en": "Fat",
+                        "ru": "Cало"
+                    },
+                    "custom": false,
+                    "calories": 797,
+                    "protein": 2.4,
+                    "fat": 89.0,
+                    "carbohydrates": 0.0
+                },
+                // 45
+                {
+                    "name": {
+                        "en": "Canned meat",
+                        "ru": "Паштет мясной"
+                    },
+                    "custom": false,
+                    "calories": 170,
+                    "protein": 15.0,
+                    "fat": 11.0,
+                    "carbohydrates": 0.0
+                },
+                // 46
+                {
+                    "name": {
+                        "en": "Boiled chicken",
+                        "ru": "Курица вареная"
+                    },
+                    "custom": false,
+                    "calories": 170,
+                    "protein": 25.2,
+                    "fat": 7.4,
+                    "carbohydrates": 0.0
+                },
+                // 47
+                {
+                    "name": {
+                        "en": "Fried chicken",
+                        "ru": "Курица жареная"
+                    },
+                    "custom": false,
+                    "calories": 210,
+                    "protein": 26.0,
+                    "fat": 12.0,
+                    "carbohydrates": 0.0
+                },
+                // 48
+                {
+                    "name": {
+                        "en": "French fries",
+                        "ru": "Картофель фри"
+                    },
+                    "custom": false,
+                    "calories": 170.1,
+                    "protein": 1.8,
+                    "fat": 11.4,
+                    "carbohydrates": 16
+                },
+                // 49
+                {
+                    "name": {
+                        "en": "Potatoes baked with herbs",
+                        "ru": "Картофель печеный с травами"
+                    },
+                    "custom": false,
+                    "calories": 87.2,
+                    "protein": 2.1,
+                    "fat": 1.4,
+                    "carbohydrates": 17.7
+                },
+                // 50
+                {
+                    "name": {
+                        "en": "Pumpkin pancakes",
+                        "ru": "Кабачковые оладьи"
+                    },
+                    "custom": false,
+                    "calories": 55.8,
+                    "protein": 1.6,
+                    "fat": 1.7,
+                    "carbohydrates": 8.5
+                },
+                // 51
+                {
+                    "name": {
+                        "en": "Pizza Margarita",
+                        "ru": "Пицца Маргарита"
+                    },
+                    "custom": false,
+                    "calories": 208,
+                    "protein": 10.5,
+                    "fat": 9,
+                    "carbohydrates": 24
+                },
+                // 52
+                {
+                    "name": {
+                        "en": "Coffee",
+                        "ru": "Кофе"
+                    },
+                    "custom": false,
+                    "calories": 20.2,
+                    "protein": 1.3,
+                    "fat": 0.4,
+                    "carbohydrates": 2.9
+                },
+                // 53
+                {
+                    "name": {
+                        "en": "Roast pork with potatoes",
+                        "ru": "Жаркое из свинины с картошкой"
+                    },
+                    "custom": false,
+                    "calories": 76.4,
+                    "protein": 2.1,
+                    "fat": 2.6,
+                    "carbohydrates": 12
+                },
+                // 54
+                {
+                    "name": {
+                        "en": "Pilaf",
+                        "ru": "плов"
+                    },
+                    "custom": false,
+                    "calories": 193.8,
+                    "protein": 8.1,
+                    "fat": 7.6,
+                    "carbohydrates": 24
+                },
+                // 55
+                {
+                    "name": {
+                        "en": "Pelmeni",
+                        "ru": "Пельмени"
+                    },
+                    "custom": false,
+                    "calories": 275,
+                    "protein": 11.9,
+                    "fat": 12.4,
+                    "carbohydrates": 29.0
+                },
+                // 56
+                {
+                    "name": {
+                        "en": "Black tea without sugar",
+                        "ru": "Чай черный без сахара"
+                    },
+                    "custom": false,
+                    "calories": 0,
+                    "protein": 0.1,
+                    "fat": 0.0,
+                    "carbohydrates": 0.0
+                },
+                // 57
+                {
+                    "name": {
+                        "en": "Butter",
+                        "ru": "масло сливочное"
+                    },
+                    "custom": false,
+                    "calories": 748,
+                    "protein": 0.5,
+                    "fat": 82.5,
+                    "carbohydrates": 0.8
+                },
+                // 58
+                {
+                    "name": {
+                        "en": "Bread",
+                        "ru": "Хлеб"
+                    },
+                    "custom": false,
+                    "calories": 198,
+                    "protein": 6.6,
+                    "fat": 1.2,
+                    "carbohydrates": 39.6
+                },
+                // 59
+                {
+                    "name": {
+                        "en": "Spaghetti",
+                        "ru": "Спагетти"
+                    },
+                    "custom": false,
+                    "calories": 344,
+                    "protein": 10.4,
+                    "fat": 1.1,
+                    "carbohydrates": 71.5
+                },
+                // 60
+                {
+                    "name": {
+                        "en": "Pasta carbonara",
+                        "ru": "Паста карбонара"
+                    },
+                    "custom": false,
+                    "calories": 346.5,
+                    "protein": 16.4,
+                    "fat": 18.7,
+                    "carbohydrates": 26.8
+                },
+                // 61
+                {
+                    "name": {
+                        "en": "Сabbage rolls",
+                        "ru": "Голубцы"
+                    },
+                    "custom": false,
+                    "calories": 93.2,
+                    "protein": 4.7,
+                    "fat": 5.2,
+                    "carbohydrates": 8
+                },
+                // 62
+                {
+                    "name": {
+                        "en": "Greek salad",
+                        "ru": "Греческий салат"
+                    },
+                    "custom": false,
+                    "calories": 91,
+                    "protein": 2.8,
+                    "fat": 6.7,
+                    "carbohydrates": 4.1
+                },
+                // 63
+                {
+                    "name": {
+                        "en": "Fish steak",
+                        "ru": "Рыбный стейк"
+                    },
+                    "custom": false,
+                    "calories": 155,
+                    "protein": 12.8,
+                    "fat": 6.0,
+                    "carbohydrates": 12.0
+                },
+                // 64
+                {
+                    "name": {
+                        "en": "Pork steak",
+                        "ru": "Стейк из свинины"
+                    },
+                    "custom": false,
+                    "calories": 343,
+                    "protein": 13.6,
+                    "fat": 31.9,
+                    "carbohydrates": 0
+                },
+                // 65
+                {
+                    "name": {
+                        "en": "Rabbit stewed in cream",
+                        "ru": "Кролик тушеный в сметане"
+                    },
+                    "custom": false,
+                    "calories": 122.2,
+                    "protein": 12.2,
+                    "fat": 7.3,
+                    "carbohydrates": 1.9
+                },
+                // 66
+                {
+                    "name": {
+                        "en": "Potato pancakes",
+                        "ru": "Деруны"
+                    },
+                    "custom": false,
+                    "calories": 105.7,
+                    "protein": 2.8,
+                    "fat": 2.7,
+                    "carbohydrates": 18.5
+                },
+                // 67
+                {
+                    "name": {
+                        "en": "Sausage",
+                        "ru": "Сосиски"
+                    },
+                    "custom": false,
+                    "calories": 304,
+                    "protein": 9.0,
+                    "fat": 29.5,
+                    "carbohydrates": 0.7
+                },
+                // 68
+                {
+                    "name": {
+                        "en": "Omelette",
+                        "ru": "Яичница"
+                    },
+                    "custom": false,
+                    "calories": 170.3,
+                    "protein": 12.5,
+                    "fat": 12.5,
+                    "carbohydrates": 0.7
+                },
+                // 69
+                {
+                    "name": {
+                        "en": "Herring",
+                        "ru": "Сельдь"
+                    },
+                    "custom": false,
+                    "calories": 217,
+                    "protein": 19.8,
+                    "fat": 15.4,
+                    "carbohydrates": 0.0
+                },
+                // 70
+                {
+                    "name": {
+                        "en": "Braised cabbage",
+                        "ru": "Тушеная капуста"
+                    },
+                    "custom": false,
+                    "calories": 68.3,
+                    "protein": 1.8,
+                    "fat": 4.7,
+                    "carbohydrates": 4.6
+                },
+                // 71
+                {
+                    "name": {
+                        "en": "Mashed potatoes",
+                        "ru": "Картофельное пюре"
+                    },
+                    "custom": false,
+                    "calories": 106,
+                    "protein": 2.5,
+                    "fat": 4.2,
+                    "carbohydrates": 14.7
+                },
+                // 72
+                {
+                    "name": {
+                        "en": "Fried potato",
+                        "ru": "Картофель жареный"
+                    },
+                    "custom": false,
+                    "calories": 192,
+                    "protein": 2.8,
+                    "fat": 9.5,
+                    "carbohydrates": 23.4
+                },
+                // 73
+                {
+                    "name": {
+                        "en": "Fishcake",
+                        "ru": "Рыбные котлеты"
+                    },
+                    "custom": false,
+                    "calories": 85.5,
+                    "protein": 12.1,
+                    "fat": 1.1,
+                    "carbohydrates": 6.6
+                },
+                //74
+                {
+                    "name": {
+                        "en": "Pork cutlets",
+                        "ru": "Котлеты свиные"
+                    },
+                    "custom": false,
+                    "calories": 233.3,
+                    "protein": 12.4,
+                    "fat": 18.5,
+                    "carbohydrates": 3.5
+                },
+                // 75
+                {
+                    "name": {
+                        "en": "Chicken liver fried",
+                        "ru": "Куриная печень жареная"
+                    },
+                    "custom": false,
+                    "calories": 120.5,
+                    "protein": 13.1,
+                    "fat": 6.5,
+                    "carbohydrates": 2.6
+                },
+                // 76
+                {
+                    "name": {
+                        "en": "Liver pork roast",
+                        "ru": "Печень свиная жареная"
+                    },
+                    "custom": false,
+                    "calories": 218.5,
+                    "protein": 18.9,
+                    "fat": 12.9,
+                    "carbohydrates": 6.6
+                },
+                // 77
+                {
+                    "name": {
+                        "en": "Julienne with chicken and mushrooms",
+                        "ru": "Жульен с курицей и грибами"
+                    },
+                    "custom": false,
+                    "calories": 150.6,
+                    "protein": 13,
+                    "fat": 9,
+                    "carbohydrates": 3.8
+                },
+                // 78
+                {
+                    "name": {
+                        "en": "Turkey breast",
+                        "ru": "Филе индейки"
+                    },
+                    "custom": false,
+                    "calories": 84,
+                    "protein": 19.2,
+                    "fat": 0.7,
+                    "carbohydrates": 0
+                },
+                // 79
+                {
+                    "name": {
+                        "en": "Turkey stuffing",
+                        "ru": "Фарш индейки"
+                    },
+                    "custom": false,
+                    "calories": 161,
                     "protein": 20,
-                    "fat": 20,
-                    "carbohydrates": 20
+                    "fat": 8,
+                    "carbohydrates": 0.5
                 },
+                // 80
                 {
                     "name": {
-                        "en": "potato",
-                        "ru": "картофан"
+                        "en": " Belarus bread",
+                        "ru": "Хлеб беларусский"
                     },
                     "custom": false,
-                    "calories": 20,
-                    "protein": 20,
-                    "fat": 20,
-                    "carbohydrates": 20
+                    "calories": 226,
+                    "protein": 6.3,
+                    "fat": 1.2,
+                    "carbohydrates": 47.5
                 },
+                // 81
                 {
                     "name": {
-                        "en": "niceThing",
-                        "ru": "ништяк"
+                        "en": "Pasta",
+                        "ru": "Макароны"
                     },
                     "custom": false,
-                    "calories": 12,
-                    "protein": 12,
-                    "fat": 10,
-                    "carbohydrates": 11
+                    "calories": 371,
+                    "protein": 13,
+                    "fat": 1.5,
+                    "carbohydrates": 75
                 }
             ];
         }
@@ -496,15 +1435,15 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
 System.register("services/sport/sport.service", ['angular2/core', "shared/services/storage/storage.service", "services/user/user.service"], function(exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
-    var core_7, storage_service_2, user_service_2;
+    var core_7, storage_service_3, user_service_2;
     var SportService, sportVendor;
     return {
         setters:[
             function (core_7_1) {
                 core_7 = core_7_1;
             },
-            function (storage_service_2_1) {
-                storage_service_2 = storage_service_2_1;
+            function (storage_service_3_1) {
+                storage_service_3 = storage_service_3_1;
             },
             function (user_service_2_1) {
                 user_service_2 = user_service_2_1;
@@ -581,7 +1520,7 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
                 };
                 SportService = __decorate([
                     core_7.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_2.StorageService, user_service_2.UserService])
+                    __metadata('design:paramtypes', [storage_service_3.StorageService, user_service_2.UserService])
                 ], SportService);
                 return SportService;
             }());
@@ -830,15 +1769,15 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
 System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
-    var core_10, storage_service_3;
+    var core_10, storage_service_4;
     var CalendarService;
     return {
         setters:[
             function (core_10_1) {
                 core_10 = core_10_1;
             },
-            function (storage_service_3_1) {
-                storage_service_3 = storage_service_3_1;
+            function (storage_service_4_1) {
+                storage_service_4 = storage_service_4_1;
             }],
         execute: function() {
             CalendarService = (function () {
@@ -978,6 +1917,9 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
+                    if (isNaN(food['weight'])) {
+                        food['weight'] = 0;
+                    }
                     date.setHours(0, 0, 0, 0);
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
@@ -1051,7 +1993,7 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 };
                 CalendarService = __decorate([
                     core_10.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_3.StorageService])
+                    __metadata('design:paramtypes', [storage_service_4.StorageService])
                 ], CalendarService);
                 return CalendarService;
             }());
@@ -1222,7 +2164,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                 FoodComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
-                    this.userSets = this._userServe.getUserFoodSets();
+                    this.userSets = this._userServe.getUserSets()['foodSets'];
                     this.foodContainer = this._foodServe.getAllFood();
                     this.pickedFoodContainer = this._calendarService.getDailyFood(this.currentDate);
                     //4 calculate progress-bar
@@ -1278,28 +2220,17 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                 };
                 FoodComponent.prototype.changeFoodWeight = function (index, food) {
                     var _this = this;
-                    var timer;
-                    if (!isNaN(food['weight'])) {
-                        this._calendarService.changeDailyFood(index, this.currentDate, food);
-                        this.calculateFoodRefresh();
-                        for (var _i = 0, _a = this.pickedFoodContainer; _i < _a.length; _i++) {
-                            var variable = _a[_i];
-                            this.calculateFood(variable);
+                    setTimeout(function () {
+                        if (isNaN(food['weight'])) {
+                            food['weight'] = 0;
                         }
-                    }
-                    else {
-                        timer = setTimeout(function () {
-                            if (isNaN(food['weight'])) {
-                                food['weight'] = 0;
-                                _this._calendarService.changeDailyFood(index, _this.currentDate, food);
-                                _this.calculateFoodRefresh();
-                                for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
-                                    var variable = _a[_i];
-                                    _this.calculateFood(variable);
-                                }
-                            }
-                        }, 1000);
-                    }
+                        _this._calendarService.changeDailyFood(index, _this.currentDate, food);
+                        _this.calculateFoodRefresh();
+                        for (var _i = 0, _a = _this.pickedFoodContainer; _i < _a.length; _i++) {
+                            var variable = _a[_i];
+                            _this.calculateFood(variable);
+                        }
+                    }, 500);
                 };
                 FoodComponent.prototype.calculateFood = function (food) {
                     if (food['picked']) {
@@ -1413,7 +2344,7 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 SportComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
-                    this.userSets = this._userServe.getUserSportSets();
+                    this.userSets = this._userServe.getUserSets()['sport'];
                     this.sportContainer = this._sportServe.getAllSport();
                     this.pickedSportContainer = this._calendarService.getDailySport(this.currentDate);
                     for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {
@@ -1644,15 +2575,64 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
         }
     }
 });
-System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_17, context_17) {
+System.register("components/user-page/user.component", ['angular2/core', "services/user/user.service", "shared/services/translate/translate.service"], function(exports_17, context_17) {
     "use strict";
     var __moduleName = context_17 && context_17.id;
-    var core_16, router_1;
-    var StartComponent;
+    var core_16, user_service_5, translate_service_6;
+    var UserComponent;
     return {
         setters:[
             function (core_16_1) {
                 core_16 = core_16_1;
+            },
+            function (user_service_5_1) {
+                user_service_5 = user_service_5_1;
+            },
+            function (translate_service_6_1) {
+                translate_service_6 = translate_service_6_1;
+            }],
+        execute: function() {
+            UserComponent = (function () {
+                function UserComponent(_userServe, _translator) {
+                    this._userServe = _userServe;
+                    this._translator = _translator;
+                }
+                UserComponent.prototype.ngOnInit = function () {
+                    this.sets = this._userServe.getUserSets();
+                };
+                UserComponent.prototype.changeLang = function (lang) {
+                    this._userServe.setLanguage(lang);
+                    this._translator.setCurrentLanguage(this._userServe.getLanguage());
+                };
+                UserComponent.prototype.changeSets = function () {
+                    this._userServe.refreshUser();
+                };
+                UserComponent = __decorate([
+                    core_16.Component({
+                        selector: 'op-user',
+                        directives: [],
+                        providers: [],
+                        pipes: [translate_service_6.TranslatePipe],
+                        styles: ["\n\n      "],
+                        template: "\n    <div style=\"margin-left:10vw\">\n<div>\n{{'calories'|translate}}\n<input #calories class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n<br>\n<br>\n{{'protein'|translate}}\n<input #protein class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'fat'|translate}}\n<input #fat class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'carbohydrates'|translate}}\n<input #carbohydrates class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'language'|translate}}\n<div (click)=\"changeLang('en')\">english</div>\n<div (click)=\"changeLang('ru')\">russian</div>\n</div>\n</div>\n    "
+                    }), 
+                    __metadata('design:paramtypes', [user_service_5.UserService, translate_service_6.TranslateService])
+                ], UserComponent);
+                return UserComponent;
+            }());
+            exports_17("UserComponent", UserComponent);
+        }
+    }
+});
+System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_18, context_18) {
+    "use strict";
+    var __moduleName = context_18 && context_18.id;
+    var core_17, router_1;
+    var StartComponent;
+    return {
+        setters:[
+            function (core_17_1) {
+                core_17 = core_17_1;
             },
             function (router_1_1) {
                 router_1 = router_1_1;
@@ -1662,7 +2642,7 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 function StartComponent() {
                 }
                 StartComponent = __decorate([
-                    core_16.Component({
+                    core_17.Component({
                         selector: 'op-start',
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
@@ -1674,19 +2654,19 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 ], StartComponent);
                 return StartComponent;
             }());
-            exports_17("StartComponent", StartComponent);
+            exports_18("StartComponent", StartComponent);
         }
     }
 });
-System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_18, context_18) {
+System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_19, context_19) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
-    var core_17, router_2, swipe_holder_directive_3;
+    var __moduleName = context_19 && context_19.id;
+    var core_18, router_2, swipe_holder_directive_3;
     var SideBar;
     return {
         setters:[
-            function (core_17_1) {
-                core_17 = core_17_1;
+            function (core_18_1) {
+                core_18 = core_18_1;
             },
             function (router_2_1) {
                 router_2 = router_2_1;
@@ -1697,45 +2677,45 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
-                    this.isOpenChange = new core_17.EventEmitter();
+                    this.isOpenChange = new core_18.EventEmitter();
                 }
                 SideBar.prototype.toggle = function () {
                     this.isOpen = !this.isOpen;
                     this.isOpenChange.emit(this.isOpen);
                 };
                 __decorate([
-                    core_17.Input(), 
+                    core_18.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
                 __decorate([
-                    core_17.Output(), 
+                    core_18.Output(), 
                     __metadata('design:type', Object)
                 ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
-                    core_17.Component({
+                    core_18.Component({
                         selector: 'fm-side-bar',
                         directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_3.SwipeHoldertDirective],
                         providers: [],
                         pipes: [],
-                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: gray;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\">\n     {{\"opanas.router.food\"}}\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\">\n     {{\"opanas.router.sport\"}}\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\">\n     {{\"opanas.router.rest\"}}\n  </a>\n   <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\">\n       {{\"calendar\"}}\n    </a>\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
+                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: #3f414a;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  .sidebar_foodButton {\n  background: url('./src/img/food.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n  text-align: center;\n}\n.sidebar_sportButton {\n  background: url('./src/img/sport.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\n.sidebar_restButton {\n  background: url('./src/img/rest.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\n.sidebar_calendarButton {\n  background: url('./src/img/Calendar.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\np {\n  color: #ff9d2d;\n  font-size: 6vw;\n}\n\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton\"></a>\n  <p>Food</p>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton\"></a>\n  <p>Sport</p>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton\"></a>\n  <p>Rest</p>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton\"></a>\n  <p>Calendar</p>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_calendarButton\">\n      </a>\n      <p>User</p>\n\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);
                 return SideBar;
             }());
-            exports_18("SideBar", SideBar);
+            exports_19("SideBar", SideBar);
         }
     }
 });
-System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_19, context_19) {
+System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_20, context_20) {
     "use strict";
-    var __moduleName = context_19 && context_19.id;
-    var core_18;
+    var __moduleName = context_20 && context_20.id;
+    var core_19;
     var RefreshDateService;
     return {
         setters:[
-            function (core_18_1) {
-                core_18 = core_18_1;
+            function (core_19_1) {
+                core_19 = core_19_1;
             }],
         execute: function() {
             RefreshDateService = (function () {
@@ -1758,24 +2738,24 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
                     }, this.timer);
                 };
                 RefreshDateService = __decorate([
-                    core_18.Injectable(), 
+                    core_19.Injectable(), 
                     __metadata('design:paramtypes', [])
                 ], RefreshDateService);
                 return RefreshDateService;
             }());
-            exports_19("RefreshDateService", RefreshDateService);
+            exports_20("RefreshDateService", RefreshDateService);
         }
     }
 });
-System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_20, context_20) {
+System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_21, context_21) {
     "use strict";
-    var __moduleName = context_20 && context_20.id;
-    var core_19, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, start_component_1, side_bar_component_1, translate_service_6, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_4, user_service_5;
+    var __moduleName = context_21 && context_21.id;
+    var core_20, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_6;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
-            function (core_19_1) {
-                core_19 = core_19_1;
+            function (core_20_1) {
+                core_20 = core_20_1;
             },
             function (router_3_1) {
                 router_3 = router_3_1;
@@ -1792,14 +2772,17 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (calendar_component_1_1) {
                 calendar_component_1 = calendar_component_1_1;
             },
+            function (user_component_1_1) {
+                user_component_1 = user_component_1_1;
+            },
             function (start_component_1_1) {
                 start_component_1 = start_component_1_1;
             },
             function (side_bar_component_1_1) {
                 side_bar_component_1 = side_bar_component_1_1;
             },
-            function (translate_service_6_1) {
-                translate_service_6 = translate_service_6_1;
+            function (translate_service_7_1) {
+                translate_service_7 = translate_service_7_1;
             },
             function (food_service_3_1) {
                 food_service_3 = food_service_3_1;
@@ -1813,18 +2796,19 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (refresh_date_service_1_1) {
                 refresh_date_service_1 = refresh_date_service_1_1;
             },
-            function (storage_service_4_1) {
-                storage_service_4 = storage_service_4_1;
+            function (storage_service_5_1) {
+                storage_service_5 = storage_service_5_1;
             },
-            function (user_service_5_1) {
-                user_service_5 = user_service_5_1;
+            function (user_service_6_1) {
+                user_service_6 = user_service_6_1;
             }],
         execute: function() {
             OpanasComponent = (function () {
-                function OpanasComponent(_translator, _calendarService, _refreshDateService) {
+                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe) {
                     this._translator = _translator;
                     this._calendarService = _calendarService;
                     this._refreshDateService = _refreshDateService;
+                    this._userServe = _userServe;
                     this.sideBarIsOpen = false;
                 }
                 OpanasComponent.prototype.bla = function () {
@@ -1832,8 +2816,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                 };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
-                    //keepAwake screen
+                    //cordova plugins setup
                     var onDeviceReady = function () {
+                        //keepAwake screen
                         window.plugins.insomnia.keepAwake();
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
@@ -1843,7 +2828,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setSupportLanguages(languages);
                     this._translator.setKeys(keysVendor);
                     //basic language of application
-                    this._translator.setCurrentLanguage('ru');
+                    this._translator.setCurrentLanguage(this._userServe.getLanguage());
                     //default language will be use if current language dont has key. it's an optional.
                     this._translator.setDefaultLanguage('en');
                 };
@@ -1855,26 +2840,27 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
-                    core_19.Component({
+                    core_20.Component({
                         selector: 'opanas-app',
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_19.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_6.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_4.StorageService, user_service_5.UserService],
-                        pipes: [translate_service_6.TranslatePipe],
+                        providers: [router_3.ROUTER_PROVIDERS, core_20.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_6.UserService],
+                        pipes: [translate_service_7.TranslatePipe],
                         styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n      <div (click)=\"goEn()\">english</div>\n      <div (click)=\"goRu()\">russian</div>\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_3.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
                         { path: '/sport', name: 'Sport', component: sport_component_1.SportComponent },
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/calendar', name: 'Calendar', component: calendar_component_1.CalendarComponent },
+                        { path: '/user', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_6.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService])
+                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_6.UserService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
-            exports_20("OpanasComponent", OpanasComponent);
+            exports_21("OpanasComponent", OpanasComponent);
             languages = {
                 'en': 'english',
                 'ru': 'russian'
@@ -1890,7 +2876,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'calories': 'calories',
                     'protein': 'protein',
                     'carbohydrates': 'carbohydrates',
-                    'fat': 'fat'
+                    'fat': 'fat',
+                    'language': 'language'
                 },
                 'ru': {
                     'progress': 'прогресс',
@@ -1902,15 +2889,16 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'calories': 'калории',
                     'protein': 'белки',
                     'carbohydrates': 'углеводы',
-                    'fat': 'жиры'
+                    'fat': 'жиры',
+                    'language': 'язык'
                 }
             };
         }
     }
 });
-System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_21, context_21) {
+System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_22, context_22) {
     "use strict";
-    var __moduleName = context_21 && context_21.id;
+    var __moduleName = context_22 && context_22.id;
     var browser_1, opanas_component_1;
     return {
         setters:[
