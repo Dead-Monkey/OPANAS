@@ -48,7 +48,6 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     this._calendarService = _calendarService;
                     this._userServe = _userServe;
                     this.model = {};
-                    this.currentDate = new Date();
                     this.language = 'en';
                     this.pickedFood = {};
                     this.pickedFoodContainer = [];
@@ -74,6 +73,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
+                    this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
                     this.userSets = this._userServe.getUserFoodSets();
                     this.foodContainer = this._foodServe.getAllFood();

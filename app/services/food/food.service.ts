@@ -1040,7 +1040,7 @@ let foodVendor: Food[] = [
 {
   "name": {
     "en": " Belarus bread",
-    "ru": "хлеб беларусский"
+    "ru": "Хлеб беларусский"
   },
   "custom": false,
   "calories": 226,

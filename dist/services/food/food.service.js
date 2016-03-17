@@ -1053,7 +1053,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 {
                     "name": {
                         "en": " Belarus bread",
-                        "ru": "хлеб беларусский"
+                        "ru": "Хлеб беларусский"
                     },
                     "custom": false,
                     "calories": 226,

@@ -199,7 +199,7 @@ export class FoodComponent implements OnInit {
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;
-    private currentDate: Date = new Date();
+    private currentDate: Date;
     private language: string = 'en';
     private userSets;
 
@@ -230,7 +230,7 @@ export class FoodComponent implements OnInit {
     constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService) { }
 
     ngOnInit() {
-
+        this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
         this.userSets = this._userServe.getUserFoodSets();
         this.foodContainer = this._foodServe.getAllFood();
@@ -268,7 +268,7 @@ export class FoodComponent implements OnInit {
 
     pickFood(food: Food) {
         this.pickedFood = Object.assign({}, food);
-        setTimeout(()=>  this.model['name'] = food.name[this.language],0)
+        setTimeout(() => this.model['name'] = food.name[this.language], 0)
         this.correctFood = true;
     }
 
@@ -327,35 +327,35 @@ export class FoodComponent implements OnInit {
 
     calculateFoodRefresh() {
         for (let prop in this.totalFood) {
-          for (let key in this.totalFood[prop]) {
-            this.totalFood[prop][key] = 0;
-            this.totalFood[prop][key] = 0;
-          }
+            for (let key in this.totalFood[prop]) {
+                this.totalFood[prop][key] = 0;
+                this.totalFood[prop][key] = 0;
+            }
         }
     }
 
     calculateFull(food) {
-      for (let prop in this.totalFood) {
-          this.totalFood[prop]['full'] = this.totalFood[prop]['full'] + Math.round((food[prop] * food['weight'] / 100));
-      }
+        for (let prop in this.totalFood) {
+            this.totalFood[prop]['full'] = this.totalFood[prop]['full'] + Math.round((food[prop] * food['weight'] / 100));
+        }
     }
 
     calculateMayBe(food) {
-      for (let prop in this.totalFood) {
-          this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] + Math.round((food[prop] * food['weight'] / 100));
-      }
+        for (let prop in this.totalFood) {
+            this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] + Math.round((food[prop] * food['weight'] / 100));
+        }
     }
 
     calculateFullMinus(food) {
-      for (let prop in this.totalFood) {
-          this.totalFood[prop]['full'] = this.totalFood[prop]['full'] - Math.round((food[prop] * food['weight'] / 100));
-      }
+        for (let prop in this.totalFood) {
+            this.totalFood[prop]['full'] = this.totalFood[prop]['full'] - Math.round((food[prop] * food['weight'] / 100));
+        }
     }
 
     calculateMayBeMinus(food) {
-      for (let prop in this.totalFood) {
-          this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] - Math.round((food[prop] * food['weight'] / 100));
-      }
+        for (let prop in this.totalFood) {
+            this.totalFood[prop]['maybe'] = this.totalFood[prop]['maybe'] - Math.round((food[prop] * food['weight'] / 100));
+        }
     }
 
 }

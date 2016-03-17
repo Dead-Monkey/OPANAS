@@ -253,7 +253,7 @@ export class SportComponent implements OnInit {
     private model: Object = {};
     private sportContainer: Sport[];
     private calendar: Array<Day>;
-    private currentDate: Date = new Date();
+    private currentDate: Date;
     private language: string = 'en';
     private userSets;
 
@@ -270,6 +270,7 @@ export class SportComponent implements OnInit {
     constructor(private _sportServe: SportService, private _calendarService: CalendarService, private _userServe: UserService) {
     }
     ngOnInit() {
+        this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
         this.userSets = this._userServe.getUserSportSets();
         this.sportContainer = this._sportServe.getAllSport();

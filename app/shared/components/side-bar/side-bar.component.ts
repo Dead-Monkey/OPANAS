@@ -78,6 +78,14 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
   height: 27vw;
   margin: auto;
 }
+.sidebar_calendarButton {
+  background: url('./src/img/Calendar.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 27vw;
+  height: 27vw;
+  margin: auto;
+}
 p {
   color: #ff9d2d;
   font-size: 6vw;
@@ -93,6 +101,8 @@ p {
   <p>Sport</p>
   <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton"></a>
   <p>Rest</p>
+  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton"></a>
+  <p>Calendar</p>
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 

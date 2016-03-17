@@ -8,18 +8,31 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 export class CalendarService {
 
     private calendar: Array<Day> = [];
+    private currentYear = new Date().getFullYear()
+    private currentMonth = new Date().getMonth()
+    private currentDate = new Date();
+    private startYear = 2016;
+    private lastYear = 2020;
     private storageKeys = {
         'calendar': 'calendar'
     }
 
     constructor(private _storageService: StorageService) {
         this.saveCalendar();
-        console.log(this.getDay(new Date()));
+        this.currentDate.setHours(0, 0, 0, 0)
+    }
+
+    getFirstYear() {
+        return this.startYear;
+    }
+    getLastYear() {
+        return this.lastYear;
+
     }
 
     createCalendar() {
-        let startYear = 2014;
-        let lastYear = 2020;
+        let startYear = this.startYear;
+        let lastYear = this.lastYear;
         let days = (lastYear - startYear) * 366;
 
         for (let i = 1; i < days; i++) {
@@ -54,6 +67,14 @@ export class CalendarService {
         return this.calendar;
     }
 
+    getCurrentDate() {
+        return this.currentDate;
+    }
+
+    setCurrentDate(date: Date) {
+        this.currentDate = date;
+    }
+
     addDay(date: Date = new Date()) {
         let daySample: Day = { 'date': date, 'food': [], 'sport': [], 'rest': [] }
         date.setHours(0, 0, 0, 0);
@@ -71,6 +92,50 @@ export class CalendarService {
             if (day['date'].getTime() === date.getTime()) {
                 return day;
             }
+        }
+    }
+
+    getYear(year) {
+        for (let day of this.calendar) {
+            if (day['date'].getFullYear() === year) {
+                console.log(this.calendar.indexOf(day))
+            }
+        }
+    }
+    switchYearPlus() {
+        if (this.currentYear < this.getLastYear() - 1) {
+            this.currentYear++;
+        }
+        console.log(`plus`, this.currentYear);
+    }
+
+    switchYearMinus() {
+        if (this.currentYear > this.getFirstYear()) {
+            this.currentYear--;
+        }
+        console.log(`minus`);
+
+    }
+
+    getMonth(year: number = this.currentYear, month: number = this.currentMonth) {
+        let res = []
+        for (let day of this.calendar) {
+            if (day['date'].getFullYear() === year && day['date'].getMonth() === month) {
+                res.push(day)
+            }
+        }
+        return res;
+    }
+
+    switchwMonthPlus() {
+        if (this.currentMonth < 11) {
+            this.currentMonth++;
+        }
+    }
+
+    switchMonthMinus() {
+        if (this.currentMonth > 0) {
+            this.currentMonth--;
         }
     }
 
@@ -95,7 +160,7 @@ export class CalendarService {
         this.refreshCalendar();
     }
 
-    changeDailyFood(index, date: Date, food:Food) {
+    changeDailyFood(index, date: Date, food: Food) {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {

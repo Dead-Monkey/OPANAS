@@ -3,6 +3,7 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, Hash
 import {FoodComponent} from '../food-page/food.component';
 import {SportComponent} from '../sport-page/sport.component';
 import {RestComponent} from '../rest-page/rest.component';
+import {CalendarComponent} from '../calendar-page/calendar.component';
 import {StartComponent} from '../start-page/start.component';
 import {SideBar} from '../../shared/components/side-bar/side-bar.component';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
@@ -68,6 +69,7 @@ import {UserService} from '../../services/user/user.service';
     { path: '/food', name: 'Food', component: FoodComponent },
     { path: '/sport', name: 'Sport', component: SportComponent },
     { path: '/rest', name: 'Rest', component: RestComponent },
+    { path: '/calendar', name: 'Calendar', component: CalendarComponent },
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {
@@ -80,6 +82,13 @@ export class OpanasComponent implements OnInit {
     }
     //config app
     ngOnInit() {
+        //cordova plugins setup
+        let onDeviceReady = function() {
+            //keepAwake screen
+            window.plugins.insomnia.keepAwake()
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
+
         //refresh-date
         this._refreshDateService.refresher();
         //translator config
@@ -113,8 +122,8 @@ let keysVendor: Object = {
         'search': 'search',
         'weight': 'weight',
         'sport.weight': 'weight',
-        'sport.numbers':'numbers',
-        'sport.time':'time',
+        'sport.numbers': 'numbers',
+        'sport.time': 'time',
         'calories': 'calories',
         'protein': 'protein',
         'carbohydrates': 'carbohydrates',
@@ -126,8 +135,8 @@ let keysVendor: Object = {
         'search': 'поиск',
         'weight': 'вес',
         'sport.weight': 'какой вес',
-        'sport.numbers':'сколько раз',
-        'sport.time':'время',
+        'sport.numbers': 'сколько раз',
+        'sport.time': 'время',
         'calories': 'калории',
         'protein': 'белки',
         'carbohydrates': 'углеводы',
