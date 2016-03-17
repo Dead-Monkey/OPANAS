@@ -103,6 +103,9 @@ p {
   <p>Rest</p>
   <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton"></a>
   <p>Calendar</p>
+  <a [routerLink]="['User']" (click)="toggle()">
+         user
+      </a>
   <div class="sideBarShadow" (click)="toggle()"></div>
 </div>
 
