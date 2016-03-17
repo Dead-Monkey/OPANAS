@@ -5,6 +5,12 @@ import {StorageService} from '../../shared/services/storage/storage.service';
 
 export class UserService {
     private language: string = 'ru';
+    private storageKeys = {
+        'userSets': {
+            'foodSets': 'foodSets',
+            'sportSets': 'sportSets'
+        }
+    }
     private foodSets: Object = {
         "calories": {
             "full": 2000
@@ -22,7 +28,14 @@ export class UserService {
     private sportSets: Object = {
     }
 
-
+    constructor(private _storageService: StorageService) {
+        if (this._storageService.getItem(this.storageKeys['userSets']['foodSets'])) {
+            this.foodSets = this._storageService.getItem(this.storageKeys['userSets']['foodSets']);
+        }
+        if (this._storageService.getItem(this.storageKeys['userSets']['sportSets'])) {
+            this.sportSets = this._storageService.getItem(this.storageKeys['userSets']['sportSets']);
+        }
+    }
     getLanguage(): string {
         return this.language;
     }

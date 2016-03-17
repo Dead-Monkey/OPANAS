@@ -16,28 +16,43 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 {{'calories'|translate}}
 <input #calories class="" type="number" min="0" [(ngModel)]="foodSets?.calories['full']" (input)="bla(calories.value)">
 <br>
+<br>
 {{'protein'|translate}}
-{{foodSets?.protein['full']}}
+<input #protein class="" type="number" min="0" [(ngModel)]="foodSets?.protein['full']" (input)="bla(protein.value)">
+
+<br>
 <br>
 {{'fat'|translate}}
-{{foodSets?.fat['full']}}
+<input #fat class="" type="number" min="0" [(ngModel)]="foodSets?.fat['full']" (input)="bla(fat.value)">
+
+<br>
 <br>
 {{'carbohydrates'|translate}}
-{{foodSets?.carbohydrates['full']}}
+<input #carbohydrates class="" type="number" min="0" [(ngModel)]="foodSets?.carbohydrates['full']" (input)="bla(carbohydrates.value)">
+
 <br>
-{{'carbohydrates'|translate}}
-{{foodSets?.carbohydrates['full']}}
+<br>
+{{'language'|translate}}
+<div (click)="goEn()">english</div>
+<div (click)="goRu()">russian</div>
 </div>
     `
 
 })
 export class UserComponent implements OnInit {
-  bla(a){
-    console.log(a);
-  }
-  private foodSets:Object;
-    constructor(private _userServe:UserService,private _translator: TranslateService) { }
+      bla( a) {
+            console.log(a);
+      }
+      private foodSets: Object;
+    constructor(private _userServe:  UserService, private _translator: TranslateService) { }
     ngOnInit() {
-      this.foodSets = this._userServe.getUserFoodSets();
+          this.foodSets = this._userServe.getUserFoodSets();
+    }
+
+    goEn() {
+        this._translator.setCurrentLanguage('en');
+    }
+    goRu() {
+        this._translator.setCurrentLanguage('ru');
     }
 }

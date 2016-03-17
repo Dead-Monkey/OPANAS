@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../shared/services/storage/storage.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,17 +10,27 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, storage_service_1;
     var UserService;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (storage_service_1_1) {
+                storage_service_1 = storage_service_1_1;
             }],
         execute: function() {
             UserService = (function () {
-                function UserService() {
+                function UserService(_storageService) {
+                    this._storageService = _storageService;
                     this.language = 'ru';
+                    this.storageKeys = {
+                        'userSets': {
+                            'foodSets': 'foodSets',
+                            'sportSets': 'sportSets'
+                        }
+                    };
                     this.foodSets = {
                         "calories": {
                             "full": 2000
@@ -36,6 +46,12 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         }
                     };
                     this.sportSets = {};
+                    if (this._storageService.getItem(this.storageKeys['userSets']['foodSets'])) {
+                        this.foodSets = this._storageService.getItem(this.storageKeys['userSets']['foodSets']);
+                    }
+                    if (this._storageService.getItem(this.storageKeys['userSets']['sportSets'])) {
+                        this.sportSets = this._storageService.getItem(this.storageKeys['userSets']['sportSets']);
+                    }
                 }
                 UserService.prototype.getLanguage = function () {
                     return this.language;
@@ -63,7 +79,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [storage_service_1.StorageService])
                 ], UserService);
                 return UserService;
             }());

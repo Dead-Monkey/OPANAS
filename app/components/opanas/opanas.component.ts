@@ -52,8 +52,7 @@ import {UserService} from '../../services/user/user.service';
 
   <div class="header">
     <div class="temporary">
-      <div (click)="goEn()">english</div>
-      <div (click)="goRu()">russian</div>
+  
       <div (click)="bla()">reload</div>
 
     </div>
@@ -129,7 +128,8 @@ let keysVendor: Object = {
         'calories': 'calories',
         'protein': 'protein',
         'carbohydrates': 'carbohydrates',
-        'fat': 'fat'
+        'fat': 'fat',
+        'language':'language'
     },
 
     'ru': {
@@ -142,6 +142,8 @@ let keysVendor: Object = {
         'calories': 'калории',
         'protein': 'белки',
         'carbohydrates': 'углеводы',
-        'fat': 'жиры'
+        'fat': 'жиры',
+        'language':'язык'
+
     }
 }
