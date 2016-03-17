@@ -79,7 +79,7 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
   margin: auto;
 }
 .sidebar_calendarButton {
-  background: url('./src/img/Calendar.png') no-repeat center center;
+  background: url('./src/img/calendar.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   width: 27vw;
