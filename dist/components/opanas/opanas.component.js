@@ -137,7 +137,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'protein': 'protein',
                     'carbohydrates': 'carbohydrates',
                     'fat': 'fat',
-                    'language': 'language'
+                    'language': 'language',
+                    'menuName': 'menu name'
                 },
                 'ru': {
                     'progress': 'прогресс',
@@ -150,7 +151,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'protein': 'белки',
                     'carbohydrates': 'углеводы',
                     'fat': 'жиры',
-                    'language': 'язык'
+                    'language': 'язык',
+                    'menuName': 'название меню'
                 }
             };
         }

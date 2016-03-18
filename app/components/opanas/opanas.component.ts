@@ -129,7 +129,9 @@ let keysVendor: Object = {
         'protein': 'protein',
         'carbohydrates': 'carbohydrates',
         'fat': 'fat',
-        'language':'language'
+        'language':'language',
+        'menuName':'menu name'
+
     },
 
     'ru': {
@@ -143,7 +145,8 @@ let keysVendor: Object = {
         'protein': 'белки',
         'carbohydrates': 'углеводы',
         'fat': 'жиры',
-        'language':'язык'
+        'language':'язык',
+        'menuName':'название меню'
 
     }
 }

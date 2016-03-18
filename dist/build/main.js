@@ -386,13 +386,19 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     this.food = foodVendor;
                     this.userFood = [];
                     this.allFood = [];
+                    this.userMenu = [];
                     this.storageKeys = {
-                        'userFood': 'userFood'
+                        'userFood': 'userFood',
+                        'userMenu': 'userMenu'
                     };
                     if (this._storageService.getItem(this.storageKeys.userFood)) {
                         this.userFood = this._storageService.getItem(this.storageKeys.userFood);
                     }
+                    if (this._storageService.getItem(this.storageKeys.userMenu)) {
+                        this.userMenu = this._storageService.getItem(this.storageKeys.userMenu);
+                    }
                     this.prepareFood();
+                    console.log(this.userMenu);
                 }
                 FoodService.prototype.getAllFood = function () {
                     this.prepareFood();
@@ -447,6 +453,56 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     }
                     this.refreshUserFood();
                     this.prepareFood();
+                };
+                FoodService.prototype.getUserMenuAll = function () {
+                    return this.userMenu;
+                };
+                FoodService.prototype.getUserMenu = function (name) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            return item;
+                        }
+                    }
+                };
+                FoodService.prototype.setUserMenu = function (name, food) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            var rem = this.userMenu.indexOf(item);
+                            this.userMenu.splice(rem, 1);
+                        }
+                    }
+                    this.userMenu.unshift(this.createUserMenu(name, food));
+                    this.refreshUserMenu();
+                    console.log(this.userMenu);
+                };
+                FoodService.prototype.createUserMenu = function (name, food) {
+                    var res = {};
+                    res['name'] = name;
+                    res['food'] = food;
+                    return res;
+                };
+                FoodService.prototype.removeFoodFromMenu = function (name, index) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            item['food'].splice(index, 1);
+                        }
+                    }
+                    this.refreshUserMenu();
+                };
+                FoodService.prototype.changeFoodInMenu = function (name, index, weight) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            item['food'][index]['weight'] = weight;
+                        }
+                    }
+                    this.refreshUserMenu();
+                };
+                FoodService.prototype.refreshUserMenu = function () {
+                    this._storageService.setItem(this.storageKeys.userMenu, this.userMenu);
                 };
                 FoodService = __decorate([
                     core_6.Injectable(), 
@@ -1608,15 +1664,110 @@ System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core
         }
     }
 });
-System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service"], function(exports_10, context_10) {
+System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angular2/core'], function(exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
-    var core_9, food_service_1, sport_service_1, simple_search_pipe_1, translate_service_3;
-    var PlusComponent;
+    var core_9;
+    var SwipeHoldertDirective;
     return {
         setters:[
             function (core_9_1) {
                 core_9 = core_9_1;
+            }],
+        execute: function() {
+            SwipeHoldertDirective = (function () {
+                function SwipeHoldertDirective(el) {
+                    this.fmSwipe = new core_9.EventEmitter();
+                    this.fmSwipeRight = new core_9.EventEmitter();
+                    this.fmSwipeLeft = new core_9.EventEmitter();
+                    this.fmSwipeDown = new core_9.EventEmitter();
+                    this.fmSwipeUp = new core_9.EventEmitter();
+                }
+                SwipeHoldertDirective.prototype.start = function (evt) {
+                    this.xStart = evt.touches[0].clientX;
+                    this.yStart = evt.touches[0].clientY;
+                };
+                SwipeHoldertDirective.prototype.move = function (evt) {
+                    if (!this.xStart || !this.yStart) {
+                        return;
+                    }
+                    var xNew = evt.touches[0].clientX;
+                    var yNew = evt.touches[0].clientY;
+                    var xDiff = this.xStart - xNew;
+                    var yDiff = this.yStart - yNew;
+                    if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                        if (xDiff > 0) {
+                            this.fmSwipe.emit(['leftSwipe', xNew, yNew, evt]);
+                            this.fmSwipeLeft.emit(['leftSwipe', xNew, evt]);
+                        }
+                        else {
+                            this.fmSwipe.emit(['rightSwipe', xNew, yNew, evt]);
+                            this.fmSwipeRight.emit(['rightSwipe', xNew, evt]);
+                        }
+                    }
+                    else {
+                        if (yDiff > 0) {
+                            this.fmSwipe.emit(['upSwipe', xNew, yNew, evt]);
+                            this.fmSwipeUp.emit(['upSwipe', yNew, evt]);
+                        }
+                        else {
+                            this.fmSwipe.emit(['downSwipe', xNew, yNew, evt]);
+                            this.fmSwipeDown.emit(['downSwipe', yNew, evt]);
+                        }
+                    }
+                    this.xStart = evt.touches[0].clientX;
+                    this.yStart = evt.touches[0].clientY;
+                };
+                SwipeHoldertDirective.prototype.end = function (evt) {
+                    this.xStart = null;
+                    this.yStart = null;
+                };
+                __decorate([
+                    core_9.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipe", void 0);
+                __decorate([
+                    core_9.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeRight", void 0);
+                __decorate([
+                    core_9.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeLeft", void 0);
+                __decorate([
+                    core_9.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeDown", void 0);
+                __decorate([
+                    core_9.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeHoldertDirective.prototype, "fmSwipeUp", void 0);
+                SwipeHoldertDirective = __decorate([
+                    core_9.Directive({
+                        selector: '[fmSwipe]',
+                        host: {
+                            '(touchstart)': 'start($event)',
+                            '(touchmove)': 'move($event)',
+                            '(touchend)': 'end($event)'
+                        }
+                    }), 
+                    __metadata('design:paramtypes', [core_9.ElementRef])
+                ], SwipeHoldertDirective);
+                return SwipeHoldertDirective;
+            }());
+            exports_10("SwipeHoldertDirective", SwipeHoldertDirective);
+        }
+    }
+});
+System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_11, context_11) {
+    "use strict";
+    var __moduleName = context_11 && context_11.id;
+    var core_10, food_service_1, sport_service_1, simple_search_pipe_1, translate_service_3, user_service_3, swipe_holder_directive_1;
+    var PlusComponent;
+    return {
+        setters:[
+            function (core_10_1) {
+                core_10 = core_10_1;
             },
             function (food_service_1_1) {
                 food_service_1 = food_service_1_1;
@@ -1629,15 +1780,23 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
             },
             function (translate_service_3_1) {
                 translate_service_3 = translate_service_3_1;
+            },
+            function (user_service_3_1) {
+                user_service_3 = user_service_3_1;
+            },
+            function (swipe_holder_directive_1_1) {
+                swipe_holder_directive_1 = swipe_holder_directive_1_1;
             }],
         execute: function() {
             PlusComponent = (function () {
-                function PlusComponent(_foodServe, _sportServe, _translateService) {
+                function PlusComponent(_foodServe, _sportServe, _translateService, _userServe) {
                     this._foodServe = _foodServe;
                     this._sportServe = _sportServe;
                     this._translateService = _translateService;
+                    this._userServe = _userServe;
                     this.isOpen = false;
-                    this.isOpenChange = new core_9.EventEmitter();
+                    this.isOpenChange = new core_10.EventEmitter();
+                    this.language = 'en';
                     this.listOptions = false;
                     this.createFood = false;
                     this.createMenu = false;
@@ -1647,54 +1806,73 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                     this.pasteTrain = false;
                     this.model = {};
                     this.modelSport = {};
+                    this.pickedFoodMenu = {};
+                    this.foodMenuContainer = [];
+                    this.modelMenu = {};
+                    this.correctFood = false;
                 }
                 PlusComponent.prototype.ngOnInit = function () {
+                    this.language = this._userServe.getLanguage();
                     this.customFood = this._foodServe.getUserFood();
                     this.refreshModel();
                     this.customSport = this._sportServe.getUserSport();
-                };
-                PlusComponent.prototype.toggle = function () {
-                    this.isOpen = !this.isOpen;
-                    this.listOptions = true;
-                    this.createFood = false;
-                    this.createMenu = false;
-                    this.pasteMenu = false;
-                    this.createExercise = false;
-                    this.createTrain = false;
-                    this.pasteTrain = false;
-                    this.isOpenChange.emit(this.isOpen);
-                };
-                PlusComponent.prototype.createFoodToggle = function () {
-                    this.createFood = !this.createFood;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createMenuToggle = function () {
-                    this.createMenu = !this.createMenu;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.pasteMenuToggle = function () {
-                    this.pasteMenu = !this.pasteMenu;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createExerciseToggle = function () {
-                    this.createExercise = !this.createExercise;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createTrainToggle = function () {
-                    this.createTrain = !this.createTrain;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.pasteTrainToggle = function () {
-                    this.pasteTrain = !this.pasteTrain;
-                    this.listOptions = !this.listOptions;
+                    this.foodContainer = this._foodServe.getAllFood();
                 };
                 PlusComponent.prototype.checkForm = function (value) {
                     if (value) {
-                        if (value.trim()) {
-                            return true;
-                        }
+                        return true;
                     }
                     return false;
+                };
+                //4menu
+                PlusComponent.prototype.searchMenu = function (name) {
+                    if (name) {
+                        this.foodMenuContainer = [];
+                        if (this._foodServe.getUserMenu(name)) {
+                            this.foodMenuContainer = this._foodServe.getUserMenu(name)['food'];
+                            console.log(this.foodMenuContainer);
+                        }
+                    }
+                };
+                PlusComponent.prototype.pickFoodMenuInput = function (name) {
+                    console.log(name);
+                    for (var _i = 0, _a = this.foodContainer; _i < _a.length; _i++) {
+                        var obj = _a[_i];
+                        if (obj['name'][this.language] === name) {
+                            return this.pickFoodMenu(obj);
+                        }
+                        else {
+                            this.correctFood = false;
+                            console.log("unCorrectFood");
+                        }
+                    }
+                };
+                PlusComponent.prototype.pickFoodMenu = function (food) {
+                    var _this = this;
+                    this.pickedFoodMenu = Object.assign({}, food);
+                    setTimeout(function () { return _this.modelMenu['name'] = food.name[_this.language]; }, 0);
+                    this.correctFood = true;
+                };
+                PlusComponent.prototype.onSubmitMenu = function (food) {
+                    this.pickedFoodMenu['weight'] = food.value.weight;
+                    this.pickedFoodMenu['picked'] = false;
+                    this.foodMenuContainer.unshift(this.pickedFoodMenu);
+                    this._foodServe.setUserMenu(food.value.menuName, this.foodMenuContainer);
+                    this.pickedFoodMenu = {};
+                    for (var item in this.modelMenu) {
+                        if (!(item === 'menuName')) {
+                            console.log(item);
+                            this.modelMenu[item] = undefined;
+                        }
+                    }
+                    this.searchMenu(this.modelMenu['menuName']);
+                    this.correctFood = false;
+                };
+                PlusComponent.prototype.changeFoodWeight = function (menuName, item, weight) {
+                    this._foodServe.changeFoodInMenu(menuName, item, weight);
+                };
+                PlusComponent.prototype.removeFoodMenu = function (menuName, item) {
+                    this._foodServe.removeFoodFromMenu(menuName, item);
                 };
                 //4 food
                 PlusComponent.prototype.onSubmit = function (food) {
@@ -1737,44 +1915,79 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                     this._sportServe.setUserSport(sport);
                     this.customSport = this._sportServe.getUserSport();
                 };
+                PlusComponent.prototype.toggle = function () {
+                    this.isOpen = !this.isOpen;
+                    this.listOptions = true;
+                    this.createFood = false;
+                    this.createMenu = false;
+                    this.pasteMenu = false;
+                    this.createExercise = false;
+                    this.createTrain = false;
+                    this.pasteTrain = false;
+                    this.isOpenChange.emit(this.isOpen);
+                };
+                PlusComponent.prototype.createFoodToggle = function () {
+                    this.createFood = !this.createFood;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createMenuToggle = function () {
+                    this.createMenu = !this.createMenu;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.pasteMenuToggle = function () {
+                    this.pasteMenu = !this.pasteMenu;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createExerciseToggle = function () {
+                    this.createExercise = !this.createExercise;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createTrainToggle = function () {
+                    this.createTrain = !this.createTrain;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.pasteTrainToggle = function () {
+                    this.pasteTrain = !this.pasteTrain;
+                    this.listOptions = !this.listOptions;
+                };
                 __decorate([
-                    core_9.Input(), 
+                    core_10.Input(), 
                     __metadata('design:type', Boolean)
                 ], PlusComponent.prototype, "isOpen", void 0);
                 __decorate([
-                    core_9.Input(), 
+                    core_10.Input(), 
                     __metadata('design:type', String)
                 ], PlusComponent.prototype, "iAm", void 0);
                 __decorate([
-                    core_9.Output(), 
+                    core_10.Output(), 
                     __metadata('design:type', Object)
                 ], PlusComponent.prototype, "isOpenChange", void 0);
                 PlusComponent = __decorate([
-                    core_9.Component({
+                    core_10.Component({
                         selector: 'op-plus',
-                        directives: [],
+                        directives: [swipe_holder_directive_1.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_3.TranslatePipe, simple_search_pipe_1.SimpleSearch],
                         styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar {\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/addfood_simple.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n}\n\n.plusBarAnime {\n  transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -webkit-transform: rotate(45deg);\n}\n\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n\n.list {\n  margin: 5vw;\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 55vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  line-height: 12vw;\n\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.foodListMove{\n  position: relative;\n  top:30vh;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\">\n\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createFoodToggle()\">create food</div>\n    <br>\n    <div (click)=\"createMenuToggle()\">create menu</div>\n    <br>\n    <div (click)=\"pasteMenuToggle()\">paste menu</div>\n    <br>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\">\n    create menu\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    paste meun\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
+                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\">\n\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createFoodToggle()\">create food</div>\n    <br>\n    <div (click)=\"createMenuToggle()\">create menu</div>\n    <br>\n    <div (click)=\"pasteMenuToggle()\">paste menu</div>\n    <br>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\" >\n\n  <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n    <label for=\"menuName\"></label>\n    <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n    <label for=\"foodName\"></label>\n    <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n    <label for=\"foodWeight\"></label>\n    <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n    <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n    <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n      <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n        {{item?.name[language]}}\n      </div>\n    </div>\n  </form>\n  <div class=\"list foodListMove\">\n    <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n      <div class=\"listItem\">{{item?.name[language]}} </div>\n      <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n    </div>\n  </div>\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    paste meun\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService])
+                    __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService, user_service_3.UserService])
                 ], PlusComponent);
                 return PlusComponent;
             }());
-            exports_10("PlusComponent", PlusComponent);
+            exports_11("PlusComponent", PlusComponent);
         }
     }
 });
-System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_11, context_11) {
+System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_12, context_12) {
     "use strict";
-    var __moduleName = context_11 && context_11.id;
-    var core_10, storage_service_4;
+    var __moduleName = context_12 && context_12.id;
+    var core_11, storage_service_4;
     var CalendarService;
     return {
         setters:[
-            function (core_10_1) {
-                core_10 = core_10_1;
+            function (core_11_1) {
+                core_11 = core_11_1;
             },
             function (storage_service_4_1) {
                 storage_service_4 = storage_service_4_1;
@@ -1992,114 +2205,19 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 CalendarService.prototype.setDailyRest = function () {
                 };
                 CalendarService = __decorate([
-                    core_10.Injectable(), 
+                    core_11.Injectable(), 
                     __metadata('design:paramtypes', [storage_service_4.StorageService])
                 ], CalendarService);
                 return CalendarService;
             }());
-            exports_11("CalendarService", CalendarService);
-        }
-    }
-});
-System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angular2/core'], function(exports_12, context_12) {
-    "use strict";
-    var __moduleName = context_12 && context_12.id;
-    var core_11;
-    var SwipeHoldertDirective;
-    return {
-        setters:[
-            function (core_11_1) {
-                core_11 = core_11_1;
-            }],
-        execute: function() {
-            SwipeHoldertDirective = (function () {
-                function SwipeHoldertDirective(el) {
-                    this.fmSwipe = new core_11.EventEmitter();
-                    this.fmSwipeRight = new core_11.EventEmitter();
-                    this.fmSwipeLeft = new core_11.EventEmitter();
-                    this.fmSwipeDown = new core_11.EventEmitter();
-                    this.fmSwipeUp = new core_11.EventEmitter();
-                }
-                SwipeHoldertDirective.prototype.start = function (evt) {
-                    this.xStart = evt.touches[0].clientX;
-                    this.yStart = evt.touches[0].clientY;
-                };
-                SwipeHoldertDirective.prototype.move = function (evt) {
-                    if (!this.xStart || !this.yStart) {
-                        return;
-                    }
-                    var xNew = evt.touches[0].clientX;
-                    var yNew = evt.touches[0].clientY;
-                    var xDiff = this.xStart - xNew;
-                    var yDiff = this.yStart - yNew;
-                    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-                        if (xDiff > 0) {
-                            this.fmSwipe.emit(['leftSwipe', xNew, yNew, evt]);
-                            this.fmSwipeLeft.emit(['leftSwipe', xNew, evt]);
-                        }
-                        else {
-                            this.fmSwipe.emit(['rightSwipe', xNew, yNew, evt]);
-                            this.fmSwipeRight.emit(['rightSwipe', xNew, evt]);
-                        }
-                    }
-                    else {
-                        if (yDiff > 0) {
-                            this.fmSwipe.emit(['upSwipe', xNew, yNew, evt]);
-                            this.fmSwipeUp.emit(['upSwipe', yNew, evt]);
-                        }
-                        else {
-                            this.fmSwipe.emit(['downSwipe', xNew, yNew, evt]);
-                            this.fmSwipeDown.emit(['downSwipe', yNew, evt]);
-                        }
-                    }
-                    this.xStart = evt.touches[0].clientX;
-                    this.yStart = evt.touches[0].clientY;
-                };
-                SwipeHoldertDirective.prototype.end = function (evt) {
-                    this.xStart = null;
-                    this.yStart = null;
-                };
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeHoldertDirective.prototype, "fmSwipe", void 0);
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeHoldertDirective.prototype, "fmSwipeRight", void 0);
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeHoldertDirective.prototype, "fmSwipeLeft", void 0);
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeHoldertDirective.prototype, "fmSwipeDown", void 0);
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeHoldertDirective.prototype, "fmSwipeUp", void 0);
-                SwipeHoldertDirective = __decorate([
-                    core_11.Directive({
-                        selector: '[fmSwipe]',
-                        host: {
-                            '(touchstart)': 'start($event)',
-                            '(touchmove)': 'move($event)',
-                            '(touchend)': 'end($event)'
-                        }
-                    }), 
-                    __metadata('design:paramtypes', [core_11.ElementRef])
-                ], SwipeHoldertDirective);
-                return SwipeHoldertDirective;
-            }());
-            exports_12("SwipeHoldertDirective", SwipeHoldertDirective);
+            exports_12("CalendarService", CalendarService);
         }
     }
 });
 System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_13, context_13) {
     "use strict";
     var __moduleName = context_13 && context_13.id;
-    var core_12, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_3, swipe_holder_directive_1;
+    var core_12, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_4, swipe_holder_directive_2;
     var FoodComponent;
     return {
         setters:[
@@ -2124,11 +2242,11 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
             function (calendar_service_1_1) {
                 calendar_service_1 = calendar_service_1_1;
             },
-            function (user_service_3_1) {
-                user_service_3 = user_service_3_1;
+            function (user_service_4_1) {
+                user_service_4 = user_service_4_1;
             },
-            function (swipe_holder_directive_1_1) {
-                swipe_holder_directive_1 = swipe_holder_directive_1_1;
+            function (swipe_holder_directive_2_1) {
+                swipe_holder_directive_2 = swipe_holder_directive_2_1;
             }],
         execute: function() {
             FoodComponent = (function () {
@@ -2276,13 +2394,13 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                 FoodComponent = __decorate([
                     core_12.Component({
                         selector: 'op-food',
-                        directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_1.SwipeHoldertDirective],
+                        directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_2.SimpleSearch],
                         styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    width: 56vw;\n    max-height: 30vh;\n    padding: 2vw;\n    left: 0;\n    right: 2vw;\n    top: 9vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
                         template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFood(i, item)\" (fmSwipeRight)=\"removeFood(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_3.UserService])
+                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService])
                 ], FoodComponent);
                 return FoodComponent;
             }());
@@ -2293,7 +2411,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
 System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive", "services/sport/sport.service"], function(exports_14, context_14) {
     "use strict";
     var __moduleName = context_14 && context_14.id;
-    var core_13, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_2, user_service_4, swipe_holder_directive_2, sport_service_2;
+    var core_13, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_2, user_service_5, swipe_holder_directive_3, sport_service_2;
     var SportComponent;
     return {
         setters:[
@@ -2315,11 +2433,11 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
             function (calendar_service_2_1) {
                 calendar_service_2 = calendar_service_2_1;
             },
-            function (user_service_4_1) {
-                user_service_4 = user_service_4_1;
+            function (user_service_5_1) {
+                user_service_5 = user_service_5_1;
             },
-            function (swipe_holder_directive_2_1) {
-                swipe_holder_directive_2 = swipe_holder_directive_2_1;
+            function (swipe_holder_directive_3_1) {
+                swipe_holder_directive_3 = swipe_holder_directive_3_1;
             },
             function (sport_service_2_1) {
                 sport_service_2 = sport_service_2_1;
@@ -2431,13 +2549,13 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 SportComponent = __decorate([
                     core_13.Component({
                         selector: 'op-sport',
-                        directives: [progress_bar_component_2.ProgressBar, plus_bar_component_2.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective],
+                        directives: [progress_bar_component_2.ProgressBar, plus_bar_component_2.PlusComponent, swipe_holder_directive_3.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_3.SimpleSearch],
                         styles: ["\n      .sport_form {\n        position: relative;\n        margin: 5vw;\n        height: 10vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 10vw;\n        width: 70vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputWeight {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 0;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputCount {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 31vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputTime {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 62vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 10vw;\n        width: 12vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 10vw;\n        width: 12vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #aaa;\n        width: 60vw;\n        left: 0;\n        right: 10px;\n        height: 200px;\n        top: 27px;\n        overflow-y: scroll;\n        z-index: 10;\n      }\n\n      .sport_list {\n        position:relative;\n        top:5vh;\n        margin: 5vw;\n        width: 90vw;\n        height: 55vh;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-bottom: 2vh;\n        margin-right: 5vw;\n        height: 12vw;\n        width: 70vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 12vw;\n\n      }\n      .sport_listWeight {\n        float:left;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n\n        margin-left: 5vw;\n        margin-right: 5vw;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listTime {\n        float:left;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n\n      .sport_listButton_on {\n        float:left;\n        height: 12vw;\n        width: 12vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-color: #3f414a;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border-radius: 2vw;\n      }\n      .sport_listButton_off {\n      float: left;\n      height: 12vw;\n      width: 12vw;\n      background: url('./src/img/check-off.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n    }\n    .repeatLine {\n      float: left;\n      margin: 1.5vw;\n\n      width: 100%;\n      height: 1.5vw;\n      background-color: #0C1017;\n    }\n    .tmp{\nheight: 2vh;\n    }\n      "],
                         template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <label for=\"sportWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.weight'|translate) + '...'\" class=\"sport_inputWeight\" [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <label for=\"sportNumber\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.numbers'|translate) + '...'\" class=\"sport_inputCount\" [(ngModel)]=\"model.numbers\" ngControl=\"numbers\" #numbers=\"ngForm\">\n\n  <label for=\"sportTime\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.time'|translate) + '...'\" class=\"sport_inputTime\" [(ngModel)]=\"model.time\" ngControl=\"time\" #time=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_listItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n  {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div *ngFor=\"#item of pickedSportContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeSport(i, item)\" (fmSwipeRight)=\"removeSport(i, item)\">\n\n      <div class=\"sport_listItem\">\n        {{item?.name[language]}}\n      </div>\n      <div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n      <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item.weight\" (blur)=\"changeSport(i, item)\">\n      <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item.numbers\" (blur)=\"changeSport(i, item)\">\n      <input class=\"sport_listTime\" type=\"number\" min=\"0\" [(ngModel)]=\"item.time\" (blur)=\"changeSport(i, item)\">\n      <div class=\"repeatLine\"></div>\n\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_2.CalendarService, user_service_4.UserService])
+                    __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_2.CalendarService, user_service_5.UserService])
                 ], SportComponent);
                 return SportComponent;
             }());
@@ -2578,15 +2696,15 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
 System.register("components/user-page/user.component", ['angular2/core', "services/user/user.service", "shared/services/translate/translate.service"], function(exports_17, context_17) {
     "use strict";
     var __moduleName = context_17 && context_17.id;
-    var core_16, user_service_5, translate_service_6;
+    var core_16, user_service_6, translate_service_6;
     var UserComponent;
     return {
         setters:[
             function (core_16_1) {
                 core_16 = core_16_1;
             },
-            function (user_service_5_1) {
-                user_service_5 = user_service_5_1;
+            function (user_service_6_1) {
+                user_service_6 = user_service_6_1;
             },
             function (translate_service_6_1) {
                 translate_service_6 = translate_service_6_1;
@@ -2605,7 +2723,10 @@ System.register("components/user-page/user.component", ['angular2/core', "servic
                     this._translator.setCurrentLanguage(this._userServe.getLanguage());
                 };
                 UserComponent.prototype.changeSets = function () {
-                    this._userServe.refreshUser();
+                    var _this = this;
+                    setTimeout(function () {
+                        _this._userServe.refreshUser();
+                    }, 500);
                 };
                 UserComponent = __decorate([
                     core_16.Component({
@@ -2616,7 +2737,7 @@ System.register("components/user-page/user.component", ['angular2/core', "servic
                         styles: ["\n\n      "],
                         template: "\n    <div style=\"margin-left:10vw\">\n<div>\n{{'calories'|translate}}\n<input #calories class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n<br>\n<br>\n{{'protein'|translate}}\n<input #protein class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'fat'|translate}}\n<input #fat class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'carbohydrates'|translate}}\n<input #carbohydrates class=\"\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n<br>\n<br>\n{{'language'|translate}}\n<div (click)=\"changeLang('en')\">english</div>\n<div (click)=\"changeLang('ru')\">russian</div>\n</div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [user_service_5.UserService, translate_service_6.TranslateService])
+                    __metadata('design:paramtypes', [user_service_6.UserService, translate_service_6.TranslateService])
                 ], UserComponent);
                 return UserComponent;
             }());
@@ -2661,7 +2782,7 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
 System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_19, context_19) {
     "use strict";
     var __moduleName = context_19 && context_19.id;
-    var core_18, router_2, swipe_holder_directive_3;
+    var core_18, router_2, swipe_holder_directive_4;
     var SideBar;
     return {
         setters:[
@@ -2671,8 +2792,8 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
             function (router_2_1) {
                 router_2 = router_2_1;
             },
-            function (swipe_holder_directive_3_1) {
-                swipe_holder_directive_3 = swipe_holder_directive_3_1;
+            function (swipe_holder_directive_4_1) {
+                swipe_holder_directive_4 = swipe_holder_directive_4_1;
             }],
         execute: function() {
             SideBar = (function () {
@@ -2694,7 +2815,7 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
                 SideBar = __decorate([
                     core_18.Component({
                         selector: 'fm-side-bar',
-                        directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_3.SwipeHoldertDirective],
+                        directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_4.SwipeHoldertDirective],
                         providers: [],
                         pipes: [],
                         styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: #3f414a;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/menu-icon.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  .sidebar_foodButton {\n  background: url('./src/img/food.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n  text-align: center;\n}\n.sidebar_sportButton {\n  background: url('./src/img/sport.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\n.sidebar_restButton {\n  background: url('./src/img/rest.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\n.sidebar_calendarButton {\n  background: url('./src/img/calendar.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n}\np {\n  color: #ff9d2d;\n  font-size: 6vw;\n}\n\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton\"></a>\n  <p>Food</p>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton\"></a>\n  <p>Sport</p>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton\"></a>\n  <p>Rest</p>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton\"></a>\n  <p>Calendar</p>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_calendarButton\">\n      </a>\n      <p>User</p>\n\n  <div class=\"sideBarShadow\" (click)=\"toggle()\"></div>\n</div>\n\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n    "
@@ -2750,7 +2871,7 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
 System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service"], function(exports_21, context_21) {
     "use strict";
     var __moduleName = context_21 && context_21.id;
-    var core_20, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_6;
+    var core_20, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_7;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
@@ -2799,8 +2920,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (storage_service_5_1) {
                 storage_service_5 = storage_service_5_1;
             },
-            function (user_service_6_1) {
-                user_service_6 = user_service_6_1;
+            function (user_service_7_1) {
+                user_service_7 = user_service_7_1;
             }],
         execute: function() {
             OpanasComponent = (function () {
@@ -2843,7 +2964,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     core_20.Component({
                         selector: 'opanas-app',
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_20.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_6.UserService],
+                        providers: [router_3.ROUTER_PROVIDERS, core_20.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_7.UserService],
                         pipes: [translate_service_7.TranslatePipe],
                         styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
@@ -2856,7 +2977,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/user', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_6.UserService])
+                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_7.UserService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
@@ -2877,7 +2998,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'protein': 'protein',
                     'carbohydrates': 'carbohydrates',
                     'fat': 'fat',
-                    'language': 'language'
+                    'language': 'language',
+                    'menuName': 'menu name'
                 },
                 'ru': {
                     'progress': 'прогресс',
@@ -2890,7 +3012,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'protein': 'белки',
                     'carbohydrates': 'углеводы',
                     'fat': 'жиры',
-                    'language': 'язык'
+                    'language': 'язык',
+                    'menuName': 'название меню'
                 }
             };
         }
