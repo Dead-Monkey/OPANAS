@@ -21,12 +21,14 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     top: 0;
     z-index: 999;
     background-color: #3f414a;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
   .sideBar_toggle {
     position: absolute;
     top:0;
     left:5vw;
-    background: url('./src/img/menu-icon.png') no-repeat center center;
+    background: url('./src/img/newMenu.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
     width: 15vw;
@@ -53,65 +55,89 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     opacity: 0.5;
     z-index:998;
   }
+  p {
+    position: relative;
+    top: 17vw;
+    color: #ff9d2d;
+    font-size: 6vw;
+  }
   .sidebar_foodButton {
   background: url('./src/img/food.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  width: 27vw;
-  height: 27vw;
+  width: 22vw;
+  height: 22vw;
   margin: auto;
   text-align: center;
+  text-decoration: none;
 }
 .sidebar_sportButton {
   background: url('./src/img/sport.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  width: 27vw;
-  height: 27vw;
+  width: 22vw;
+  height: 22vw;
   margin: auto;
+  text-align: center;
+  text-decoration: none;
 }
 .sidebar_restButton {
   background: url('./src/img/rest.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  width: 27vw;
-  height: 27vw;
+  width: 22vw;
+  height: 22vw;
   margin: auto;
+  text-align: center;
+  text-decoration: none;
 }
 .sidebar_calendarButton {
   background: url('./src/img/calendar.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  width: 27vw;
-  height: 27vw;
+  width: 22vw;
+  height: 22vw;
   margin: auto;
+  text-align: center;
+  text-decoration: none;
 }
-p {
-  color: #ff9d2d;
-  font-size: 6vw;
+.sidebar_userButton {
+  background: url('./src/img/user.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  width: 22vw;
+  height: 22vw;
+  margin: auto;
+  text-align: center;
+  text-decoration: none;
 }
+
+
 
   `], template: `
 <div class="sideBar_toggle" (click)="toggle()"></div>
 
 <div class="sideBarContainer" *ngIf="isOpen" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()">
-  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton"></a>
-  <p>Food</p>
-  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton"></a>
-  <p>Sport</p>
-  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton"></a>
-  <p>Rest</p>
-  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton"></a>
-  <p>Calendar</p>
-  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_calendarButton">
-      </a>
-      <p>User</p>
-
-  <div class="sideBarShadow" (click)="toggle()"></div>
-</div>
-
+  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton">
+    <p>Food</p>
+  </a>
+  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton">
+    <p>Sport</p>
+  </a>
+  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton">
+    <p>Rest</p>
+  </a>
+  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton">
+    <p>Calendar</p>
+  </a>
+  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton">
+    <p>User</p>
+  </a>
+  </div>
+  <div class="sideBarShadow"  *ngIf="isOpen" (click)="toggle()"></div>
 <div *ngIf="!isOpen" class="sideBarSwipePlace" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()"></div>
-    `
+
+  `
 }
 ) export class SideBar {
     @Input() isOpen: boolean;

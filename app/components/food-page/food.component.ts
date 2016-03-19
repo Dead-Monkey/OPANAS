@@ -84,7 +84,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   .food_searchListItem {
     float:left;
     margin-bottom: 1vw;
-    height: 12vw;
+    min-height: 12vw;
     width: 55vw;
     line-height: 12vw;
     box-sizing: border-box;

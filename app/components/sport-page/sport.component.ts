@@ -190,6 +190,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       float: left;
       height: 15vw;
       width: 15vw;
+      margin-top: 2vw;
       background: url('./src/img/check-off.png') no-repeat center center;
       background-color: #3f414a;
       background-size: cover;
@@ -218,15 +219,6 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 
   <label for="sportName"></label>
   <input class="sport_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
-
-  <!-- <label for="sportWeight"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.weight'|translate) + '...'" class="sport_inputWeight" [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm"> -->
-
-  <!-- <label for="sportNumber"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.numbers'|translate) + '...'" class="sport_inputCount" [(ngModel)]="model.numbers" ngControl="numbers" #numbers="ngForm">
-
-  <label for="sportTime"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.time'|translate) + '...'" class="sport_inputTime" [(ngModel)]="model.time" ngControl="time" #time="ngForm"> -->
 
   <button #subBtn type="submit" [ngClass]="{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}" [disabled]="!sportForm.form.valid || !correctSport"></button>
 

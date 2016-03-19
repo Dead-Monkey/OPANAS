@@ -18,19 +18,27 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   left: 5vw;
   top: 15vw;
   overflow: hidden;
-  background-color: #3f414a;
   width:90vw;
   height: 87vh;
   z-index: 10;
-
+}
+.closeMe {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #3f414a;
+  opacity: 0.9;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9;
 }
 .plusBar {
   position: absolute;
-  right: 3vw;
+  right: 5vw;
   top: 0;
   width: 15vw;
   height: 15vw;
-  background: url('./src/img/addfood_simple.png') no-repeat center center;
+  background: url('./src/img/newPlus.png') no-repeat center center;
   background-size: cover;
   overflow: hidden;
   z-index: 10;
@@ -42,27 +50,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   -ms-transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
 }
-
-.plusBar_menuButtons {
-  color: #ff9d2d;
-  font-size: 5vw;
-  text-align: center;
-  overflow: hidden;
-}
-.closeMe {
-  position: fixed;
-  left: 0;
-  top: 0;
-  background-color: black;
-  opacity: 0.5;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9;
-
-}
-
 .list {
-  /*margin-left: 5vw;*/
   width: 90vw;
   height: 80vw;
   overflow-y: scroll;
@@ -98,7 +86,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   left: 20vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputCalories {
@@ -109,8 +98,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   top:11vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputProtein {
@@ -121,8 +110,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   top:22vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputFat {
@@ -133,8 +122,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   top:33vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputCarbohydrates {
@@ -145,8 +134,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   top:44vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputButton_off {
@@ -158,8 +147,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .food_inputButton_on {
@@ -171,8 +160,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  color: #0d0e15;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .createExercise{
@@ -186,25 +175,85 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   left: 11vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 1.5vw solid #0C1017;
+  color: red;
+  border: 1.5vw solid red;
   border-radius: 2vw;
 }
 .sportBtnMove{
   top:0;
   right:0;
 }
+.plusBar_menuButtons {
+  position: absolute;
+  height: 65vw;
+  width: 90vw;
+  right: 0;
+  color: #ff9d2d;
+  font-size: 7vw;
+  overflow: hidden;
+}
+.plusBar_createFoodButton {
+  position: absolute;
+  right: 0;
+  width: 15vw;
+  height: 15vw;
+  background: url('./src/img/addfood.png') no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+}
+.plusBar_createMenuButton {
+  position: absolute;
+  right: 0;
+  width: 15vw;
+  height: 15vw;
+  background: url('./src/img/createMenuButton.png') no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+}
+.plusBar_pasteMenuButton {
+  position: absolute;
+  right: 0;
+  width: 15vw;
+  height: 15vw;
+  background: url('./src/img/pasteMenuButton.png') no-repeat center center;
+  background-size: cover;
+  overflow: hidden;
+}
+.plusBar_listName {
+  position: relative;;
+  right: 16vw;
+  margin-right: 15vw;
+  text-align: right;
+  height: 15vw;
+  width: 90vw;
+  line-height: 15vw;
+  margin-bottom: 1vw;
+}
     `],
     template: `
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}"(click)="toggle()"></div>
+<div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
 <div class="container" *ngIf="isOpen && (iAm === 'food')">
 
-  <div *ngIf="listOptions">
-    <div (click)="createFoodToggle()" class="plusBar_menuButtons" >{{'create.food' | translate}}</div>
-    <br>
-    <div (click)="createMenuToggle()" class="plusBar_menuButtons">{{'create.menu' | translate}}</div>
-    <br>
-    <div (click)="pasteMenuToggle()" class="plusBar_menuButtons">{{'paste.menu' | translate}}</div>
-    <br>
+  <div *ngIf="listOptions" class="plusBar_menuButtons">
+    <div (click)="createFoodToggle()">
+      <div class="plusBar_createFoodButton"></div>
+      <div class="plusBar_listName">
+        {{'create.food' | translate}}
+      </div>
+    </div>
+    <div (click)="createMenuToggle()">
+      <div class="plusBar_createMenuButton"></div>
+      <div class="plusBar_listName">
+        {{'create.menu' | translate}}
+      </div>
+    </div>
+    <div (click)="pasteMenuToggle()">
+      <div class="plusBar_pasteMenuButton"></div>
+      <div class="plusBar_listName">
+        {{'paste.menu' | translate}}
+      </div>
+      </div>
   </div>
   <div *ngIf="createFood">
     <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
@@ -260,15 +309,12 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
       <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
     </div>
   </div>
-<<<<<<< HEAD
   <div *ngIf="createMenu">
     {{'create.menu' | translate}}
-=======
->>>>>>> timur/master
   </div>
 
   <div *ngIf="pasteMenu">
-    paste meun
+    {{'paste.menu' | translate}}
   </div>
 </div>
 <div class="container" *ngIf="isOpen && (iAm === 'sport')">
@@ -305,8 +351,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   <div *ngIf="pasteTrain">
     paste train
   </div>
+  <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
 </div>
-<div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
     `
 })
 

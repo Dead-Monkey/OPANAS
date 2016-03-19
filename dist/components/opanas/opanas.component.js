@@ -141,7 +141,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'create.food': 'Create food',
                     'create.menu': 'Create menu',
                     'paste.menu': 'Paste menu',
-                    'menuName': 'menu name'
+                    'menuName': 'menu name',
+                    'set': 'set'
                 },
                 'ru': {
                     'progress': 'прогресс',
@@ -157,8 +158,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'language': 'язык',
                     'create.food': 'Добавить блюдо',
                     'create.menu': 'Создать новое меню',
-                    'paste.menu': 'Добавить созданное ранее меню',
-                    'menuName': 'название меню'
+                    'paste.menu': 'Выбрать готовое меню',
+                    'menuName': 'название меню',
+                    'set': 'подход'
                 }
             };
         }
