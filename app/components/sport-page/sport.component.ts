@@ -162,6 +162,10 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-size: cover;
         box-sizing: border-box;
       }
+
+      .sport_dropdownButonAnime{
+        transform:rotate(180deg)
+      }
       .sport_listButton_on {
       float: left;
       height: 15vw;
@@ -200,9 +204,17 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     .sport_timer {
       position: relative;
       margin-left: 10vw;
-      width: 80vw;
+      top:2vw;
+      width: 90vw;
       height: 6vh;
       text-align: center;
+    }
+    .tmp{
+      float:left;
+      width: 20vw;
+      height:10vw;
+      background-color: gray;
+      border: 3px solid black;
     }
       `],
     template: `
@@ -211,7 +223,10 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 <fm-progress-bar [name]="'progress'|translate" [mainLine]="totalSport.procentDone" [secondLine]="" [minNumber]="totalSport.done" [maxNumber]="pickedSportContainer.length"></fm-progress-bar>
 
 <div class="sport_timer">
-  <p>Тут будет таймер</p>
+<div class="tmp">stopwatch {{stopwatch}}</div>
+<div class="tmp"(click)="stopwatchStart()">START/RESTART</div>
+<div class="tmp" (click)="stopwatchStop()">STOP</div>
+<div class="tmp" (click)="stopwatchReset()">RESET</div>
 </div>
 
 <form class="sport_form" (ngSubmit)="onSubmit(sportForm)" #sportForm="ngForm">
@@ -219,44 +234,36 @@ import {SportService, Sport} from '../../services/sport/sport.service';
   <label for="sportName"></label>
   <input class="sport_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
 
-  <!-- <label for="sportWeight"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.weight'|translate) + '...'" class="sport_inputWeight" [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm"> -->
-
-  <!-- <label for="sportNumber"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.numbers'|translate) + '...'" class="sport_inputCount" [(ngModel)]="model.numbers" ngControl="numbers" #numbers="ngForm">
-
-  <label for="sportTime"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.time'|translate) + '...'" class="sport_inputTime" [(ngModel)]="model.time" ngControl="time" #time="ngForm"> -->
-
   <button #subBtn type="submit" [ngClass]="{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}" [disabled]="!sportForm.form.valid || !correctSport"></button>
 
   <div *ngIf="(name.valid && !correctSport)" class="sport_serchContainer">
     <div class="sport_listItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSport(item);">
 
-  {{item?.name[language]}}
+      {{item?.name[language]}}
     </div>
   </div>
 </form>
 
 <div class="sport_list">
-  <div *ngFor="#item of pickedSportContainer; #i = index" fmSwipe (fmSwipeLeft)="removeSport(i, item)" (fmSwipeRight)="removeSport(i, item)">
+  <div *ngFor="#item of pickedSportContainer; #i = index">
 
-      <div class="sport_listItem">
-        {{item?.name[language]}}
-        <div class="sport_dropdownButton"></div>
+    <div class="sport_listItem" fmSwipe (fmSwipeLeft)="removeSport(i, item)" (fmSwipeRight)="removeSport(i, item)" (click)="openSets(item,i)">
+      {{item?.name[language]}}
+      <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}"></div>
+    </div>
+    <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+
+    <div *ngIf="item['setsToggle']">
+      <div *ngFor="#it of item.sets; #setIndex = index" fmSwipe (fmSwipeLeft)="removeSet(i, item, setIndex)" (fmSwipeRight)="removeSet(i, item, setIndex)">
+        <div class="sport_listSet" >set {{setIndex+1}}</div>
+        <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item['sets'][setIndex].weight" (blur)="changeSport(i, item)" placeholder="kg">
+        <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item['sets'][setIndex].numbers" (blur)="changeSport(i, item)" placeholder="reps">
+        <div [ngClass]="{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}" (click)="pickSet(item, i, setIndex)"></div>
       </div>
-      <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (click)="checkBoxToggle(i, item)"></div>
-      <div class="sport_listSet">set 1</div>
-      <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item.weight" (blur)="changeSport(i, item)" placeholder="kg">
-      <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item.numbers" (blur)="changeSport(i, item)" placeholder="reps">
-      <!-- <input class="sport_listTime" type="number" min="0" [(ngModel)]="item.time" (blur)="changeSport(i, item)"> -->
-      <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
-      <div class="sport_listSet">add set</div>
+      <div class="sport_listSet" (click)="addSet(item, i)">add set</div>
+    </div>
   </div>
 </div>
-
-
-
     `
 
 })
@@ -279,8 +286,11 @@ export class SportComponent implements OnInit {
         'procentDone': 0
     };
 
-    constructor(private _sportServe: SportService, private _calendarService: CalendarService, private _userServe: UserService) {
-    }
+    private stopwatch: number = 0;
+    private stopwatchVendor;
+    private stopwatchBussy = false;
+
+    constructor(private _sportServe: SportService, private _calendarService: CalendarService, private _userServe: UserService) { }
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
@@ -294,26 +304,15 @@ export class SportComponent implements OnInit {
     }
 
     onSubmit(sport) {
-        if (sport.value['weight']) {
-            this.pickedSport['weight'] = sport.value['weight'];
-
-        }
-        if (sport.value['numbers']) {
-            this.pickedSport['numbers'] = sport.value['numbers'];
-
-        }
-        if (sport.value['time']) {
-            this.pickedSport['time'] = sport.value['time'];
-
-        }
-        this.pickedSport['picked'] = true;
+        this.pickedSport['picked'] = false;
+        this.pickedSport['setsToggle'] = true;
+        this.pickedSport['sets'] = [{ 'picked': false }];
         this._calendarService.setDailySport(this.pickedSport, this.currentDate);
         this.calculateTotalSport(this.pickedSport);
 
         this.pickedSport = <Sport>{};
         this.model = {};
         this.correctSport = false;
-
     }
 
     pickSportInput(name) {
@@ -322,7 +321,6 @@ export class SportComponent implements OnInit {
                 return this.pickSport(obj);
             } else {
                 this.correctSport = false;
-                console.log(`unCorrectFood`);
             }
         }
     }
@@ -348,6 +346,40 @@ export class SportComponent implements OnInit {
         this._calendarService.changeDailySport(index, this.currentDate, sport);
     }
 
+    addSet(sport, index) {
+        sport['sets'].push({ 'picked': false })
+        sport['picked'] = false;
+        for (let variable of this.pickedSportContainer) {
+            this.calculateTotalSportInit(variable);
+        }
+        this.calculateSportRefreshAndCalculate()
+        this._calendarService.changeDailySport(index, this.currentDate, sport);
+    }
+
+    removeSet(index, sport, setIndex) {
+        sport['sets'].splice(setIndex, 1)
+        if (sport['sets'].every((el) => el['picked'])) {
+            sport['picked'] = true
+        }
+        this.calculateSportRefreshAndCalculate()
+        this._calendarService.changeDailySport(index, this.currentDate, sport);
+    }
+
+    openSets(sport, index) {
+        sport['setsToggle'] = !sport['setsToggle'];
+        this._calendarService.changeDailySport(index, this.currentDate, sport);
+    }
+    pickSet(sport, index, setIndex) {
+        sport['sets'][setIndex]['picked'] = !sport['sets'][setIndex]['picked'];
+
+        if (sport['sets'].every((el) => el['picked'])) {
+            sport['picked'] = true;
+        } else {
+            sport['picked'] = false;
+        }
+        this.calculateSportRefreshAndCalculate()
+        this._calendarService.changeDailySport(index, this.currentDate, sport);
+    }
     calculateTotalSport(sport: Sport) {
         if (sport['picked']) {
             this.totalSport['done']++;
@@ -370,11 +402,40 @@ export class SportComponent implements OnInit {
     calculateSportRefresh() {
         for (let prop in this.totalSport) {
             this.totalSport[prop] = 0;
-            this.totalSport[prop] = 0;
         }
     }
 
+    calculateSportRefreshAndCalculate() {
+        this.calculateSportRefresh()
+        for (let variable of this.pickedSportContainer) {
+            this.calculateTotalSportInit(variable);
+        }
+    }
+
+
     changeSport(index: number, sport: Sport) {
         this._calendarService.changeDailySport(index, this.currentDate, sport);
+    }
+
+    //timeromer
+    stopwatchStart() {
+        if (!this.stopwatchBussy) {
+            this.stopwatchVendor = setInterval(() => this.stopwatch++, 1000)
+            this.stopwatchBussyToggle()
+        }
+
+    }
+    stopwatchStop() {
+        if (this.stopwatchBussy) {
+            clearInterval(this.stopwatchVendor);
+            this.stopwatchBussyToggle()
+        }
+
+    }
+    stopwatchReset() {
+        this.stopwatch = 0;
+    }
+    stopwatchBussyToggle() {
+        this.stopwatchBussy = !this.stopwatchBussy;
     }
 }
