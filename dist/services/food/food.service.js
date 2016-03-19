@@ -31,13 +31,19 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     this.food = foodVendor;
                     this.userFood = [];
                     this.allFood = [];
+                    this.userMenu = [];
                     this.storageKeys = {
-                        'userFood': 'userFood'
+                        'userFood': 'userFood',
+                        'userMenu': 'userMenu'
                     };
                     if (this._storageService.getItem(this.storageKeys.userFood)) {
                         this.userFood = this._storageService.getItem(this.storageKeys.userFood);
                     }
+                    if (this._storageService.getItem(this.storageKeys.userMenu)) {
+                        this.userMenu = this._storageService.getItem(this.storageKeys.userMenu);
+                    }
                     this.prepareFood();
+                    console.log(this.userMenu);
                 }
                 FoodService.prototype.getAllFood = function () {
                     this.prepareFood();
@@ -92,6 +98,56 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     }
                     this.refreshUserFood();
                     this.prepareFood();
+                };
+                FoodService.prototype.getUserMenuAll = function () {
+                    return this.userMenu;
+                };
+                FoodService.prototype.getUserMenu = function (name) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            return item;
+                        }
+                    }
+                };
+                FoodService.prototype.setUserMenu = function (name, food) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            var rem = this.userMenu.indexOf(item);
+                            this.userMenu.splice(rem, 1);
+                        }
+                    }
+                    this.userMenu.unshift(this.createUserMenu(name, food));
+                    this.refreshUserMenu();
+                    console.log(this.userMenu);
+                };
+                FoodService.prototype.createUserMenu = function (name, food) {
+                    var res = {};
+                    res['name'] = name;
+                    res['food'] = food;
+                    return res;
+                };
+                FoodService.prototype.removeFoodFromMenu = function (name, index) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            item['food'].splice(index, 1);
+                        }
+                    }
+                    this.refreshUserMenu();
+                };
+                FoodService.prototype.changeFoodInMenu = function (name, index, weight) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            item['food'][index]['weight'] = weight;
+                        }
+                    }
+                    this.refreshUserMenu();
+                };
+                FoodService.prototype.refreshUserMenu = function () {
+                    this._storageService.setItem(this.storageKeys.userMenu, this.userMenu);
                 };
                 FoodService = __decorate([
                     core_1.Injectable(), 

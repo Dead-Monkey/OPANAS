@@ -1,12 +1,14 @@
 import {Component, OnInit, Input, Output, EventEmitter} from 'angular2/core';
-import {FoodService, Food} from '../../services/food/food.service';
+import {FoodService, Food, Menu} from '../../services/food/food.service';
 import {SportService, Sport} from '../../services/sport/sport.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
+import {UserService} from '../../services/user/user.service';
+import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
 
 @Component({
     selector: 'op-plus',
-    directives: [],
+    directives: [SwipeHoldertDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -227,12 +229,42 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
     </form>
     <div class="list foodListMove">
       <div *ngFor="#item of customFood">
-        <div class="listItem">{{item.name.ru}} </div>
+        <div class="listItem">{{item.name[language]}} </div>
       </div>
     </div>
   </div>
+  <div *ngIf="createMenu" >
+
+  <form class="food_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
+
+    <label for="menuName"></label>
+    <input class="" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
+
+    <label for="foodName"></label>
+    <input class="" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
+
+    <label for="foodWeight"></label>
+    <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="" required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
+
+    <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
+
+    <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
+      <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
+        {{item?.name[language]}}
+      </div>
+    </div>
+  </form>
+  <div class="list foodListMove">
+    <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+      <div class="listItem">{{item?.name[language]}} </div>
+      <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
+    </div>
+  </div>
+<<<<<<< HEAD
   <div *ngIf="createMenu">
     {{'create.menu' | translate}}
+=======
+>>>>>>> timur/master
   </div>
 
   <div *ngIf="pasteMenu">
@@ -279,10 +311,10 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 })
 
 export class PlusComponent implements OnInit {
-
     @Input() isOpen: boolean = false;
     @Input() iAm: string;
     @Output() isOpenChange = new EventEmitter();
+    private language: string = 'en';
 
     private listOptions: boolean = false;
 
@@ -299,14 +331,131 @@ export class PlusComponent implements OnInit {
     private model: Object = {};
     private modelSport: Object = {};
 
-    constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService) { }
+    private foodContainer: Food[];
+
+    private pickedFoodMenu: Food = <Food>{};
+
+    private foodMenuContainer: Array<Food> = [];
+    private modelMenu: Object = {};
+    private correctFood: boolean = false;
+
+    constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService, private _userServe: UserService) { }
 
     ngOnInit() {
+        this.language = this._userServe.getLanguage();
+
         this.customFood = this._foodServe.getUserFood();
         this.refreshModel();
         this.customSport = this._sportServe.getUserSport();
+        this.foodContainer = this._foodServe.getAllFood();
     }
 
+    checkForm(value) {
+        if (value) {
+                return true
+        }
+        return false;
+    }
+    //4menu
+    searchMenu(name: string) {
+        if (name) {
+            this.foodMenuContainer = [];
+            if (this._foodServe.getUserMenu(name)) {
+                this.foodMenuContainer = this._foodServe.getUserMenu(name)['food'];
+                console.log(this.foodMenuContainer);
+            }
+        }
+    }
+    pickFoodMenuInput(name) {
+        console.log(name);
+        for (let obj of this.foodContainer) {
+            if (obj['name'][this.language] === name) {
+                return this.pickFoodMenu(obj);
+            } else {
+                this.correctFood = false;
+                console.log(`unCorrectFood`);
+            }
+        }
+    }
+
+    pickFoodMenu(food: Food) {
+        this.pickedFoodMenu = Object.assign({}, food);
+        setTimeout(() => this.modelMenu['name'] = food.name[this.language], 0)
+        this.correctFood = true;
+    }
+
+    onSubmitMenu(food) {
+
+        this.pickedFoodMenu['weight'] = food.value.weight;
+        this.pickedFoodMenu['picked'] = false;
+        this.foodMenuContainer.unshift(this.pickedFoodMenu)
+        this._foodServe.setUserMenu(food.value.menuName, this.foodMenuContainer);
+
+        this.pickedFoodMenu = <Food>{};
+
+        for (let item in this.modelMenu) {
+            if (!(item === 'menuName')) {
+                console.log(item);
+                this.modelMenu[item] = undefined;
+            }
+        }
+        this.searchMenu(this.modelMenu['menuName'])
+        this.correctFood = false;
+
+    }
+    changeFoodWeight(menuName, item, weight){
+      this._foodServe.changeFoodInMenu(menuName, item,weight);
+    }
+    removeFoodMenu(menuName, item) {
+        this._foodServe.removeFoodFromMenu(menuName, item);
+    }
+    //4 food
+    onSubmit(food) {
+        if (food.value.name.trim()) {
+            let name = food.value.name.trim();
+            food.value['name'] = {};
+            for (let key in this._translateService.getSupportLanguages()) {
+                food.value['name'][key] = name;
+            }
+            food.value['custom'] = true;
+            this.setFood(food.value);
+            this.refreshModel();
+        }
+    }
+
+    refreshModel() {
+        this.model['name'] = '';
+        this.model['calories'] = 0;
+        this.model['protein'] = 0;
+        this.model['fat'] = 0;
+        this.model['carbohydrates'] = 0;
+    }
+
+    setFood(food: Food) {
+        this._foodServe.setUserFood(food);
+        this.customFood = this._foodServe.getUserFood();
+    }
+
+    //4 sport
+    onSubmitSport(sport) {
+        if (sport.value.name.trim()) {
+            let name = sport.value.name.trim();
+            sport.value['name'] = {};
+            for (let key in this._translateService.getSupportLanguages()) {
+                sport.value['name'][key] = name;
+            }
+            sport.value['custom'] = true;
+
+
+            this.setSport(sport.value);
+            this.modelSport['name'] = '';
+
+        }
+    }
+    setSport(sport: Sport) {
+        this._sportServe.setUserSport(sport);
+        this.customSport = this._sportServe.getUserSport();
+    }
     toggle() {
         this.isOpen = !this.isOpen;
         this.listOptions = true;
@@ -354,64 +503,6 @@ export class PlusComponent implements OnInit {
         this.pasteTrain = !this.pasteTrain
         this.listOptions = !this.listOptions
 
-    }
-
-
-    checkForm(value) {
-        if (value) {
-            if (value.trim()) {
-                return true
-            }
-        }
-        return false;
-    }
-
-    //4 food
-    onSubmit(food) {
-        if (food.value.name.trim()) {
-            let name = food.value.name.trim();
-            food.value['name'] = {};
-            for (let key in this._translateService.getSupportLanguages()) {
-                food.value['name'][key] = name;
-            }
-            food.value['custom'] = true;
-            this.setFood(food.value);
-            this.refreshModel();
-        }
-    }
-
-    refreshModel() {
-        this.model['name'] = '';
-        this.model['calories'] = 0;
-        this.model['protein'] = 0;
-        this.model['fat'] = 0;
-        this.model['carbohydrates'] = 0;
-    }
-
-    setFood(food: Food) {
-        this._foodServe.setUserFood(food);
-        this.customFood = this._foodServe.getUserFood();
-    }
-
-    //4 sport
-    onSubmitSport(sport) {
-        if (sport.value.name.trim()) {
-            let name = sport.value.name.trim();
-            sport.value['name'] = {};
-            for (let key in this._translateService.getSupportLanguages()) {
-                sport.value['name'][key] = name;
-            }
-            sport.value['custom'] = true;
-
-
-            this.setSport(sport.value);
-            this.modelSport['name'] = '';
-
-        }
-    }
-    setSport(sport: Sport) {
-        this._sportServe.setUserSport(sport);
-        this.customSport = this._sportServe.getUserSport();
     }
 
 }

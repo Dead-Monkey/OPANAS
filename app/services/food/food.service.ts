@@ -2,6 +2,7 @@ import {Injectable} from 'angular2/core';
 import {StorageService} from '../../shared/services/storage/storage.service';
 import {UserService} from '../user/user.service';
 
+
 @Injectable()
 
 export class FoodService {
@@ -9,15 +10,22 @@ export class FoodService {
     private food: Array<Food> = foodVendor;
     private userFood: Array<Food> = []
     private allFood: Array<Food> = [];
+    private userMenu:Array<Menu> = [];
     private storageKeys = {
-        'userFood': 'userFood'
+        'userFood': 'userFood',
+        'userMenu': 'userMenu'
     }
 
     constructor(private _storageService: StorageService, private _userServe: UserService) {
         if (this._storageService.getItem(this.storageKeys.userFood)) {
             this.userFood = this._storageService.getItem(this.storageKeys.userFood);
         }
+        if (this._storageService.getItem(this.storageKeys.userMenu)) {
+            this.userMenu= this._storageService.getItem(this.storageKeys.userMenu);
+        }
         this.prepareFood();
+
+        console.log(this.userMenu);
     }
 
     getAllFood(): Food[] {
@@ -74,6 +82,60 @@ export class FoodService {
         this.refreshUserFood();
         this.prepareFood();
     }
+
+    getUserMenuAll(){
+      return this.userMenu;
+    }
+
+    getUserMenu(name){
+      for (let item of this.userMenu) {
+          if (item.name.trim() === name.trim()) {
+              return item;
+        }
+
+      }
+    }
+
+    setUserMenu(name:string, food:Array<Food>){
+      for (let item of this.userMenu) {
+          if (item.name.trim() === name.trim()) {
+              let rem = this.userMenu.indexOf(item);
+              this.userMenu.splice(rem, 1);
+          }
+      }
+      this.userMenu.unshift(this.createUserMenu(name, food))
+        this.refreshUserMenu()
+      console.log(this.userMenu);
+
+    }
+    createUserMenu(name:string, food:Array<Food>){
+      let  res:Menu=<any>{};
+      res['name'] = name;
+      res['food'] = food;
+      return res;
+    }
+    removeFoodFromMenu(name:string, index) {
+      for (let item of this.userMenu) {
+          if (item.name.trim() === name.trim()) {
+          item['food'].splice(index, 1)
+          }
+      }
+        this.refreshUserMenu();
+    }
+    changeFoodInMenu(name:string, index, weight) {
+      for (let item of this.userMenu) {
+          if (item.name.trim() === name.trim()) {
+          item['food'][index]['weight'] = weight
+          }
+      }
+        this.refreshUserMenu();
+    }
+
+
+    refreshUserMenu() {
+        this._storageService.setItem(this.storageKeys.userMenu, this.userMenu);
+    }
+
 }
 
 export interface Food {
@@ -83,6 +145,11 @@ export interface Food {
     protein: number;
     carbohydrates: number;
     fat: number;
+}
+
+export interface Menu {
+    name: string;
+    food: Array<Food>;
 }
 
 

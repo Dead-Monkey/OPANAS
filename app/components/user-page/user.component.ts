@@ -39,7 +39,6 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 </div>
 </div>
     `
-
 })
 export class UserComponent implements OnInit {
     private sets: Object;
@@ -53,6 +52,8 @@ export class UserComponent implements OnInit {
         this._translator.setCurrentLanguage(this._userServe.getLanguage())
     }
     changeSets() {
-        this._userServe.refreshUser();
+        setTimeout(() => {
+          this._userServe.refreshUser();
+        }, 500)
     }
 }

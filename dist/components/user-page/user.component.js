@@ -37,7 +37,10 @@ System.register(['angular2/core', '../../services/user/user.service', '../../sha
                     this._translator.setCurrentLanguage(this._userServe.getLanguage());
                 };
                 UserComponent.prototype.changeSets = function () {
-                    this._userServe.refreshUser();
+                    var _this = this;
+                    setTimeout(function () {
+                        _this._userServe.refreshUser();
+                    }, 500);
                 };
                 UserComponent = __decorate([
                     core_1.Component({
