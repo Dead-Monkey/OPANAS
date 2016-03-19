@@ -105,7 +105,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         directives: [router_1.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
@@ -138,6 +138,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'carbohydrates': 'carbohydrates',
                     'fat': 'fat',
                     'language': 'language',
+                    'create.food': 'Create food',
+                    'create.menu': 'Create menu',
+                    'paste.menu': 'Paste menu',
                     'menuName': 'menu name'
                 },
                 'ru': {
@@ -152,6 +155,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'carbohydrates': 'углеводы',
                     'fat': 'жиры',
                     'language': 'язык',
+                    'create.food': 'Добавить блюдо',
+                    'create.menu': 'Создать новое меню',
+                    'paste.menu': 'Добавить созданное ранее меню',
                     'menuName': 'название меню'
                 }
             };

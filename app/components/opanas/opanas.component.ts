@@ -28,8 +28,8 @@ import {UserService} from '../../services/user/user.service';
     }
 		.container {
       background: url(./src/img/tempBackground.png) no-repeat center center;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
     }
 
@@ -130,7 +130,11 @@ let keysVendor: Object = {
         'carbohydrates': 'carbohydrates',
         'fat': 'fat',
         'language':'language',
+        'create.food':'Create food',
+        'create.menu':'Create menu',
+        'paste.menu':'Paste menu',
         'menuName':'menu name'
+
 
     },
 
@@ -146,6 +150,9 @@ let keysVendor: Object = {
         'carbohydrates': 'углеводы',
         'fat': 'жиры',
         'language':'язык',
+        'create.food':'Добавить блюдо',
+        'create.menu':'Создать новое меню',
+        'paste.menu':'Добавить созданное ранее меню',
         'menuName':'название меню'
 
     }

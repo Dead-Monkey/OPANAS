@@ -17,58 +17,25 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       .sport_form {
         position: relative;
         margin: 5vw;
-        height: 10vw;
+        height: 5vw;
+        width: 90vw;
       }
       .sport_inputSport {
         position: absolute;
-        height: 10vw;
+        height: 12vw;
         width: 70vw;
-        background-color: rgba(49, 51, 61, 0.3);
-        box-sizing: border-box;
-        border: 5px solid #0C1017;
-        border-radius: 2vw;
-      }
-      .sport_inputWeight {
-        position: absolute;
-        height: 10vw;
-        width: 30vw;
-        top: 11vw;
-        left: 0;
-        background-color: rgba(49, 51, 61, 0.3);
-        box-sizing: border-box;
         color: #0d0e15;
-        border: 5px solid #0C1017;
-        border-radius: 2vw;
-      }
-      .sport_inputCount {
-        position: absolute;
-        height: 10vw;
-        width: 30vw;
-        top: 11vw;
-        left: 31vw;
+        font-size: 7vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
-        color: #0d0e15;
         border: 5px solid #0C1017;
         border-radius: 2vw;
       }
-      .sport_inputTime {
+    .sport_inputButton_off {
         position: absolute;
-        height: 10vw;
-        width: 30vw;
-        top: 11vw;
-        left: 62vw;
-        background-color: rgba(49, 51, 61, 0.3);
-        box-sizing: border-box;
-        color: #0d0e15;
-        border: 5px solid #0C1017;
-        border-radius: 2vw;
-      }
-      .sport_inputButton_off {
-        position: absolute;
-        right: 0;
-        height: 10vw;
-        width: 12vw;
+        right: 3vw;
+        height: 12vw;
+        width: 15vw;
         background: url('./src/img/check-off.png') no-repeat center center;
         background-size: cover;
         box-sizing: border-box;
@@ -79,8 +46,8 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       .sport_inputButton_on {
         position: absolute;
         right: 0;
-        height: 10vw;
-        width: 12vw;
+        height: 12vw;
+        width: 15vw;
         background: url('./src/img/check-on.png') no-repeat center center;
         background-size: cover;
         box-sizing: border-box;
@@ -91,45 +58,61 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 
       .sport_serchContainer {
         position: absolute;
-        background-color: #aaa;
-        width: 60vw;
-        left: 0;
-        right: 10px;
-        height: 200px;
-        top: 27px;
-        overflow-y: scroll;
-        z-index: 10;
-      }
-
-      .sport_list {
-        position:relative;
-        top:5vh;
-        margin: 5vw;
-        width: 90vw;
-        height: 55vh;
-        overflow-y: scroll;
-        overflow-x: hidden;
-      }
-      .sport_listItem {
-        float:left;
-        margin-bottom: 2vh;
-        margin-right: 5vw;
-        height: 12vw;
+        background-color: #0C1017;
         width: 70vw;
+        max-height: 30vh;
+        padding: 2vw;
+        left: 0;
+        right: 2vw;
+        top: 9vw;
+        overflow-y: scroll;
+        border-radius: 2vw;
+        z-index: 3
+      }
+      .sport_searchListItem {
+        float:left;
+        margin-bottom: 1vw;
+        height: 15vw;
+        width: 70vw;
+        line-height: 15vw;
         box-sizing: border-box;
         background-color: #3f414a;
         color: #ff9d2d;
         font-size: 6vw;
         text-align: center;
         border-radius: 2vw;
-        line-height: 12vw;
+      }
 
+      .sport_list {
+        position:relative;
+        top:5vh;
+        margin-left: 5vw;
+        margin-right: 5vw;
+        width: 90vw;
+        height: 57vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+      .sport_listItem {
+        float:left;
+        margin-right: 3vw;
+        margin-top: 2vw;
+        height: 15vw;
+        width: 70vw;
+        box-sizing: border-box;
+        background-color: #3f414a;
+        color: #de5200;
+        font-size: 6vw;
+        text-align: center;
+        border-radius: 2vw;
+        line-height: 15vw;
       }
       .sport_listWeight {
         float:left;
-        height: 12vw;
-        width: 25vw;
-        line-height: 12vw;
+        height: 15vw;
+        width: 20vw;
+        line-height: 15vw;
+        margin-top: 1vh;
         background-color: #3f414a;
         box-sizing: border-box;
         color: #ff9d2d;
@@ -140,12 +123,12 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       }
       .sport_listNumbers {
         float:left;
-
-        margin-left: 5vw;
-        margin-right: 5vw;
-        height: 12vw;
-        width: 25vw;
-        line-height: 12vw;
+        margin-left: 2vw;
+        margin-right: 3vw;
+        height: 15vw;
+        width: 20vw;
+        margin-top: 1vh;
+        line-height: 15vw;
         background-color: #3f414a;
         box-sizing: border-box;
         color: #ff9d2d;
@@ -154,11 +137,13 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         border-radius: 2vw;
         border: none;
       }
-      .sport_listTime {
+      .sport_listSet {
         float:left;
-        height: 12vw;
-        width: 25vw;
-        line-height: 12vw;
+        margin-right: 2vw;
+        margin-top: 1vh;
+        height: 15vw;
+        width: 26vw;
+        line-height: 15vw;
         background-color: #3f414a;
         box-sizing: border-box;
         color: #ff9d2d;
@@ -167,22 +152,44 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         border-radius: 2vw;
         border: none;
       }
-
-      .sport_listButton_on {
-        float:left;
-        height: 12vw;
-        width: 12vw;
-        background: url('./src/img/check-on.png') no-repeat center center;
-        background-color: #3f414a;
+      .sport_dropdownButton {
+        float: left;
+        margin-left: 8vw;
+        margin-top: 3vw;
+        width: 10vw;
+        height: 10vw;
+        background: url('./src/img/dropdown.png') no-repeat center center;
         background-size: cover;
         box-sizing: border-box;
-        color: #0d0e15;
-        border-radius: 2vw;
       }
-      .sport_listButton_off {
+      .sport_listButton_on {
       float: left;
-      height: 12vw;
-      width: 12vw;
+      height: 15vw;
+      width: 15vw;
+      background: url('./src/img/check-on.png') no-repeat center center;
+      background-color: #3f414a;
+      background-size: cover;
+      box-sizing: border-box;
+      color: #0d0e15;
+      border-radius: 2vw;
+      margin-top: 1vh;
+    }
+    .sport_listButton_on_exrc {
+    float: left;
+    height: 15vw;
+    width: 15vw;
+    margin-top: 2vw;
+    background: url('./src/img/exrc_check-on.png') no-repeat center center;
+    background-color: #3f414a;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border-radius: 2vw;
+  }
+    .sport_listButton_off {
+      float: left;
+      height: 15vw;
+      width: 15vw;
       background: url('./src/img/check-off.png') no-repeat center center;
       background-color: #3f414a;
       background-size: cover;
@@ -190,16 +197,12 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       color: #0d0e15;
       border-radius: 2vw;
     }
-    .repeatLine {
-      float: left;
-      margin: 1.5vw;
-
-      width: 100%;
-      height: 1.5vw;
-      background-color: #0C1017;
-    }
-    .tmp{
-height: 2vh;
+    .sport_timer {
+      position: relative;
+      margin-left: 10vw;
+      width: 80vw;
+      height: 6vh;
+      text-align: center;
     }
       `],
     template: `
@@ -207,19 +210,23 @@ height: 2vh;
 
 <fm-progress-bar [name]="'progress'|translate" [mainLine]="totalSport.procentDone" [secondLine]="" [minNumber]="totalSport.done" [maxNumber]="pickedSportContainer.length"></fm-progress-bar>
 
+<div class="sport_timer">
+  <p>Тут будет таймер</p>
+</div>
+
 <form class="sport_form" (ngSubmit)="onSubmit(sportForm)" #sportForm="ngForm">
 
   <label for="sportName"></label>
   <input class="sport_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
 
-  <label for="sportWeight"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.weight'|translate) + '...'" class="sport_inputWeight" [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
+  <!-- <label for="sportWeight"></label>
+  <input type="number" [min]="1" [placeholder]="('sport.weight'|translate) + '...'" class="sport_inputWeight" [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm"> -->
 
-  <label for="sportNumber"></label>
+  <!-- <label for="sportNumber"></label>
   <input type="number" [min]="1" [placeholder]="('sport.numbers'|translate) + '...'" class="sport_inputCount" [(ngModel)]="model.numbers" ngControl="numbers" #numbers="ngForm">
 
   <label for="sportTime"></label>
-  <input type="number" [min]="1" [placeholder]="('sport.time'|translate) + '...'" class="sport_inputTime" [(ngModel)]="model.time" ngControl="time" #time="ngForm">
+  <input type="number" [min]="1" [placeholder]="('sport.time'|translate) + '...'" class="sport_inputTime" [(ngModel)]="model.time" ngControl="time" #time="ngForm"> -->
 
   <button #subBtn type="submit" [ngClass]="{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}" [disabled]="!sportForm.form.valid || !correctSport"></button>
 
@@ -236,15 +243,20 @@ height: 2vh;
 
       <div class="sport_listItem">
         {{item?.name[language]}}
+        <div class="sport_dropdownButton"></div>
       </div>
+      <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+      <div class="sport_listSet">set 1</div>
+      <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item.weight" (blur)="changeSport(i, item)" placeholder="kg">
+      <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item.numbers" (blur)="changeSport(i, item)" placeholder="reps">
+      <!-- <input class="sport_listTime" type="number" min="0" [(ngModel)]="item.time" (blur)="changeSport(i, item)"> -->
       <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
-      <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item.weight" (blur)="changeSport(i, item)">
-      <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item.numbers" (blur)="changeSport(i, item)">
-      <input class="sport_listTime" type="number" min="0" [(ngModel)]="item.time" (blur)="changeSport(i, item)">
-      <div class="repeatLine"></div>
-
+      <div class="sport_listSet">add set</div>
   </div>
 </div>
+
+
+
     `
 
 })

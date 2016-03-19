@@ -18,15 +18,15 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   left: 5vw;
   top: 15vw;
   overflow: hidden;
-
-  background-color: silver;
+  background-color: #3f414a;
   width:90vw;
   height: 87vh;
   z-index: 10;
+
 }
 .plusBar {
   position: absolute;
-  right: 0;
+  right: 3vw;
   top: 0;
   width: 15vw;
   height: 15vw;
@@ -34,14 +34,21 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   background-size: cover;
   overflow: hidden;
   z-index: 10;
+  transition: 0.3s;
 }
-
 .plusBarAnime {
-  transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
+  transition: transform 0.5s;
+  transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 
+.plusBar_menuButtons {
+  color: #ff9d2d;
+  font-size: 5vw;
+  text-align: center;
+  overflow: hidden;
+}
 .closeMe {
   position: fixed;
   left: 0;
@@ -55,7 +62,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 }
 
 .list {
-  margin: 5vw;
+  /*margin-left: 5vw;*/
   width: 90vw;
   height: 80vw;
   overflow-y: scroll;
@@ -74,6 +81,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   border-radius: 2vw;
   line-height: 12vw;
 
+}
+.foodListMove{
+  position: relative;
+  top:30vh;
 }
 .food_form {
   position: relative;
@@ -164,10 +175,6 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   border: 1.5vw solid #0C1017;
   border-radius: 2vw;
 }
-.foodListMove{
-  position: relative;
-  top:30vh;
-}
 .createExercise{
   width: 100%;
   height: 100%
@@ -192,11 +199,11 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 <div class="container" *ngIf="isOpen && (iAm === 'food')">
 
   <div *ngIf="listOptions">
-    <div (click)="createFoodToggle()">create food</div>
+    <div (click)="createFoodToggle()" class="plusBar_menuButtons" >{{'create.food' | translate}}</div>
     <br>
-    <div (click)="createMenuToggle()">create menu</div>
+    <div (click)="createMenuToggle()" class="plusBar_menuButtons">{{'create.menu' | translate}}</div>
     <br>
-    <div (click)="pasteMenuToggle()">paste menu</div>
+    <div (click)="pasteMenuToggle()" class="plusBar_menuButtons">{{'paste.menu' | translate}}</div>
     <br>
   </div>
   <div *ngIf="createFood">
@@ -253,6 +260,11 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
       <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
     </div>
   </div>
+<<<<<<< HEAD
+  <div *ngIf="createMenu">
+    {{'create.menu' | translate}}
+=======
+>>>>>>> timur/master
   </div>
 
   <div *ngIf="pasteMenu">

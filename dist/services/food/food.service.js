@@ -232,8 +232,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 // 7
                 {
                     "name": {
-                        "en": "Curd bold",
-                        "ru": "Творог полужирный"
+                        "en": "Curd 9% bold",
+                        "ru": "Творог 9% полужирный"
                     },
                     "custom": false,
                     "calories": 159,
@@ -244,8 +244,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 // 8
                 {
                     "name": {
-                        "en": "Skim cheese",
-                        "ru": "Творог обезжиренный"
+                        "en": "Curd 0% cheese",
+                        "ru": "Творог 0% обезжиренный"
                     },
                     "custom": false,
                     "calories": 71,
@@ -316,7 +316,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 // 14
                 {
                     "name": {
-                        "en": "Oatmeal on the water",
+                        "en": "Oatmeal with water",
                         "ru": "Овсяная каша на воде"
                     },
                     "custom": false,
@@ -376,7 +376,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 // 19
                 {
                     "name": {
-                        "en": "Barley porridge",
+                        "en": "Pearl barley porridge",
                         "ru": "Перловая каша"
                     },
                     "custom": false,
@@ -776,10 +776,10 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         "ru": "Кофе"
                     },
                     "custom": false,
-                    "calories": 20.2,
-                    "protein": 1.3,
-                    "fat": 0.4,
-                    "carbohydrates": 2.9
+                    "calories": 0,
+                    "protein": 0.1,
+                    "fat": 0,
+                    "carbohydrates": 0
                 },
                 // 53
                 {
@@ -820,8 +820,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 // 56
                 {
                     "name": {
-                        "en": "Black tea without sugar",
-                        "ru": "Чай черный без сахара"
+                        "en": "Black tea",
+                        "ru": "Чай черный"
                     },
                     "custom": false,
                     "calories": 0,
@@ -1128,6 +1128,174 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     "protein": 13,
                     "fat": 1.5,
                     "carbohydrates": 75
+                },
+                // 82
+                {
+                    "name": {
+                        "en": "Sour cream 20%",
+                        "ru": "Cметана 20%"
+                    },
+                    "custom": false,
+                    "calories": 206,
+                    "protein": 2.8,
+                    "fat": 20,
+                    "carbohydrates": 3.2
+                },
+                // 83
+                {
+                    "name": {
+                        "en": "Sour cream 15%",
+                        "ru": "Cметана 15%"
+                    },
+                    "custom": false,
+                    "calories": 158,
+                    "protein": 2.6,
+                    "fat": 15,
+                    "carbohydrates": 3.0
+                },
+                // 84
+                {
+                    "name": {
+                        "en": "Sour cream 10%",
+                        "ru": "Cметана 10%"
+                    },
+                    "custom": false,
+                    "calories": 115,
+                    "protein": 3.0,
+                    "fat": 10,
+                    "carbohydrates": 2.9
+                },
+                // 85
+                {
+                    "name": {
+                        "en": "Sugar",
+                        "ru": "Сахар"
+                    },
+                    "custom": false,
+                    "calories": 387,
+                    "protein": 0,
+                    "fat": 0,
+                    "carbohydrates": 100
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Peanut",
+                        "ru": "Арахис"
+                    },
+                    "custom": false,
+                    "calories": 567,
+                    "protein": 26,
+                    "fat": 49,
+                    "carbohydrates": 16
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Сashew",
+                        "ru": "Кешью"
+                    },
+                    "custom": false,
+                    "calories": 553,
+                    "protein": 18,
+                    "fat": 44,
+                    "carbohydrates": 30
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Almond",
+                        "ru": "Миндаль"
+                    },
+                    "custom": false,
+                    "calories": 576,
+                    "protein": 21,
+                    "fat": 49,
+                    "carbohydrates": 22
+                },
+                // 87
+                {
+                    "name": {
+                        "en": "Walnut",
+                        "ru": "Грецкий орех"
+                    },
+                    "custom": false,
+                    "calories": 654,
+                    "protein": 15,
+                    "fat": 65,
+                    "carbohydrates": 14
+                },
+                // 88
+                {
+                    "name": {
+                        "en": "Hazelnut",
+                        "ru": "Фундук"
+                    },
+                    "custom": false,
+                    "calories": 628,
+                    "protein": 15,
+                    "fat": 61,
+                    "carbohydrates": 17
+                },
+                // 89
+                {
+                    "name": {
+                        "en": "Honey",
+                        "ru": "Мед"
+                    },
+                    "custom": false,
+                    "calories": 304,
+                    "protein": 0.3,
+                    "fat": 0,
+                    "carbohydrates": 82
+                },
+                // 90
+                {
+                    "name": {
+                        "en": "Salmon",
+                        "ru": "Семга (Лосось)"
+                    },
+                    "custom": false,
+                    "calories": 304,
+                    "protein": 25,
+                    "fat": 14,
+                    "carbohydrates": 0
+                },
+                // 91
+                {
+                    "name": {
+                        "en": "Tuna",
+                        "ru": "Тунец"
+                    },
+                    "custom": false,
+                    "calories": 101,
+                    "protein": 23,
+                    "fat": 1,
+                    "carbohydrates": 0
+                },
+                //92
+                {
+                    "name": {
+                        "en": "Water",
+                        "ru": "Вода"
+                    },
+                    "custom": false,
+                    "calories": 0,
+                    "protein": 0,
+                    "fat": 0,
+                    "carbohydrates": 0
+                },
+                //93
+                {
+                    "name": {
+                        "en": "Oats",
+                        "ru": "Oвес"
+                    },
+                    "custom": false,
+                    "calories": 342,
+                    "protein": 12.3,
+                    "fat": 6.1,
+                    "carbohydrates": 59.5
                 }
             ];
         }

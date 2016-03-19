@@ -43,7 +43,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     border: 5px solid #0C1017;
     border-radius: 2vw;
     font-size: 5vw;
-    color: #D0D9D9;
+    color: #0d0e15;
   }
   .food_inputButton_off {
     position: absolute;
@@ -69,7 +69,6 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     border: 5px solid #0C1017;
     border-radius: 2vw;
   }
-
   .food_serchContainer {
     position: absolute;
     background-color: #0C1017;
@@ -104,7 +103,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   .food_listItem {
     float:left;
     margin-bottom: 2vw;
-    height: 12vw;
+    min-height: 12vw;
     width: 55vw;
     line-height: 12vw;
     box-sizing: border-box;
