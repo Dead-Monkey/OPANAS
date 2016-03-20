@@ -587,8 +587,8 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 // 7
                 {
                     "name": {
-                        "en": "Curd bold",
-                        "ru": "Творог полужирный"
+                        "en": "Curd 9% bold",
+                        "ru": "Творог 9% полужирный"
                     },
                     "custom": false,
                     "calories": 159,
@@ -599,8 +599,8 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 // 8
                 {
                     "name": {
-                        "en": "Skim cheese",
-                        "ru": "Творог обезжиренный"
+                        "en": "Curd 0% cheese",
+                        "ru": "Творог 0% обезжиренный"
                     },
                     "custom": false,
                     "calories": 71,
@@ -671,7 +671,7 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 // 14
                 {
                     "name": {
-                        "en": "Oatmeal on the water",
+                        "en": "Oatmeal with water",
                         "ru": "Овсяная каша на воде"
                     },
                     "custom": false,
@@ -731,7 +731,7 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 // 19
                 {
                     "name": {
-                        "en": "Barley porridge",
+                        "en": "Pearl barley porridge",
                         "ru": "Перловая каша"
                     },
                     "custom": false,
@@ -1131,10 +1131,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                         "ru": "Кофе"
                     },
                     "custom": false,
-                    "calories": 20.2,
-                    "protein": 1.3,
-                    "fat": 0.4,
-                    "carbohydrates": 2.9
+                    "calories": 0,
+                    "protein": 0.1,
+                    "fat": 0,
+                    "carbohydrates": 0
                 },
                 // 53
                 {
@@ -1175,8 +1175,8 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                 // 56
                 {
                     "name": {
-                        "en": "Black tea without sugar",
-                        "ru": "Чай черный без сахара"
+                        "en": "Black tea",
+                        "ru": "Чай черный"
                     },
                     "custom": false,
                     "calories": 0,
@@ -1483,6 +1483,174 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     "protein": 13,
                     "fat": 1.5,
                     "carbohydrates": 75
+                },
+                // 82
+                {
+                    "name": {
+                        "en": "Sour cream 20%",
+                        "ru": "Cметана 20%"
+                    },
+                    "custom": false,
+                    "calories": 206,
+                    "protein": 2.8,
+                    "fat": 20,
+                    "carbohydrates": 3.2
+                },
+                // 83
+                {
+                    "name": {
+                        "en": "Sour cream 15%",
+                        "ru": "Cметана 15%"
+                    },
+                    "custom": false,
+                    "calories": 158,
+                    "protein": 2.6,
+                    "fat": 15,
+                    "carbohydrates": 3.0
+                },
+                // 84
+                {
+                    "name": {
+                        "en": "Sour cream 10%",
+                        "ru": "Cметана 10%"
+                    },
+                    "custom": false,
+                    "calories": 115,
+                    "protein": 3.0,
+                    "fat": 10,
+                    "carbohydrates": 2.9
+                },
+                // 85
+                {
+                    "name": {
+                        "en": "Sugar",
+                        "ru": "Сахар"
+                    },
+                    "custom": false,
+                    "calories": 387,
+                    "protein": 0,
+                    "fat": 0,
+                    "carbohydrates": 100
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Peanut",
+                        "ru": "Арахис"
+                    },
+                    "custom": false,
+                    "calories": 567,
+                    "protein": 26,
+                    "fat": 49,
+                    "carbohydrates": 16
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Сashew",
+                        "ru": "Кешью"
+                    },
+                    "custom": false,
+                    "calories": 553,
+                    "protein": 18,
+                    "fat": 44,
+                    "carbohydrates": 30
+                },
+                // 86
+                {
+                    "name": {
+                        "en": "Almond",
+                        "ru": "Миндаль"
+                    },
+                    "custom": false,
+                    "calories": 576,
+                    "protein": 21,
+                    "fat": 49,
+                    "carbohydrates": 22
+                },
+                // 87
+                {
+                    "name": {
+                        "en": "Walnut",
+                        "ru": "Грецкий орех"
+                    },
+                    "custom": false,
+                    "calories": 654,
+                    "protein": 15,
+                    "fat": 65,
+                    "carbohydrates": 14
+                },
+                // 88
+                {
+                    "name": {
+                        "en": "Hazelnut",
+                        "ru": "Фундук"
+                    },
+                    "custom": false,
+                    "calories": 628,
+                    "protein": 15,
+                    "fat": 61,
+                    "carbohydrates": 17
+                },
+                // 89
+                {
+                    "name": {
+                        "en": "Honey",
+                        "ru": "Мед"
+                    },
+                    "custom": false,
+                    "calories": 304,
+                    "protein": 0.3,
+                    "fat": 0,
+                    "carbohydrates": 82
+                },
+                // 90
+                {
+                    "name": {
+                        "en": "Salmon",
+                        "ru": "Семга (Лосось)"
+                    },
+                    "custom": false,
+                    "calories": 304,
+                    "protein": 25,
+                    "fat": 14,
+                    "carbohydrates": 0
+                },
+                // 91
+                {
+                    "name": {
+                        "en": "Tuna",
+                        "ru": "Тунец"
+                    },
+                    "custom": false,
+                    "calories": 101,
+                    "protein": 23,
+                    "fat": 1,
+                    "carbohydrates": 0
+                },
+                //92
+                {
+                    "name": {
+                        "en": "Water",
+                        "ru": "Вода"
+                    },
+                    "custom": false,
+                    "calories": 0,
+                    "protein": 0,
+                    "fat": 0,
+                    "carbohydrates": 0
+                },
+                //93
+                {
+                    "name": {
+                        "en": "Oats",
+                        "ru": "Oвес"
+                    },
+                    "custom": false,
+                    "calories": 342,
+                    "protein": 12.3,
+                    "fat": 6.1,
+                    "carbohydrates": 59.5
                 }
             ];
         }
@@ -1968,8 +2136,8 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                         directives: [swipe_holder_directive_1.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_3.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-                        styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n\n  background-color: silver;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n}\n.plusBar {\n  position: absolute;\n  right: 0;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/addfood_simple.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n}\n\n.plusBarAnime {\n  transform: rotate(45deg);\n  -ms-transform: rotate(45deg);\n  -webkit-transform: rotate(45deg);\n}\n\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n\n.list {\n  margin: 5vw;\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 55vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  line-height: 12vw;\n\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.foodListMove{\n  position: relative;\n  top:30vh;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\">\n\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createFoodToggle()\">create food</div>\n    <br>\n    <div (click)=\"createMenuToggle()\">create menu</div>\n    <br>\n    <div (click)=\"pasteMenuToggle()\">paste menu</div>\n    <br>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\" >\n\n  <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n    <label for=\"menuName\"></label>\n    <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n    <label for=\"foodName\"></label>\n    <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n    <label for=\"foodWeight\"></label>\n    <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n    <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n    <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n      <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n        {{item?.name[language]}}\n      </div>\n    </div>\n  </form>\n  <div class=\"list foodListMove\">\n    <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n      <div class=\"listItem\">{{item?.name[language]}} </div>\n      <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n    </div>\n  </div>\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    paste meun\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
+                        styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n  background-color: #3f414a;\n  width:90vw;\n  height: 87vh;\n  z-index: 10;\n\n}\n.plusBar {\n  position: absolute;\n  right: 3vw;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/addfood_simple.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n\n.plusBar_menuButtons {\n  color: #ff9d2d;\n  font-size: 5vw;\n  text-align: center;\n  overflow: hidden;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: black;\n  opacity: 0.5;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n\n}\n\n.list {\n  /*margin-left: 5vw;*/\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 55vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  line-height: 12vw;\n\n}\n.foodListMove{\n  position: relative;\n  top:30vh;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 1.5vw solid #0C1017;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n    "],
+                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\">\n\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createFoodToggle()\" class=\"plusBar_menuButtons\" >{{'create.food' | translate}}</div>\n    <br>\n    <div (click)=\"createMenuToggle()\" class=\"plusBar_menuButtons\">{{'create.menu' | translate}}</div>\n    <br>\n    <div (click)=\"pasteMenuToggle()\" class=\"plusBar_menuButtons\">{{'paste.menu' | translate}}</div>\n    <br>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\" >\n\n  <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n    <label for=\"menuName\"></label>\n    <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n    <label for=\"foodName\"></label>\n    <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n    <label for=\"foodWeight\"></label>\n    <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n    <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n    <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n      <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n        {{item?.name[language]}}\n      </div>\n    </div>\n  </form>\n  <div class=\"list foodListMove\">\n    <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n      <div class=\"listItem\">{{item?.name[language]}} </div>\n      <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n    </div>\n  </div>\n<<<<<<< HEAD\n  <div *ngIf=\"createMenu\">\n    {{'create.menu' | translate}}\n=======\n>>>>>>> timur/master\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    paste meun\n  </div>\n</div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n</div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService, user_service_3.UserService])
                 ], PlusComponent);
@@ -2397,7 +2565,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_2.SimpleSearch],
-                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    width: 56vw;\n    max-height: 30vh;\n    padding: 2vw;\n    left: 0;\n    right: 2vw;\n    top: 9vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
+                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #0d0e15;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    width: 56vw;\n    max-height: 30vh;\n    padding: 2vw;\n    left: 0;\n    right: 2vw;\n    top: 9vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    min-height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
                         template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFood(i, item)\" (fmSwipeRight)=\"removeFood(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService])
@@ -2458,6 +2626,8 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         'done': 0,
                         'procentDone': 0
                     };
+                    this.stopwatch = 0;
+                    this.stopwatchBussy = false;
                 }
                 SportComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
@@ -2471,16 +2641,9 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                     }
                 };
                 SportComponent.prototype.onSubmit = function (sport) {
-                    if (sport.value['weight']) {
-                        this.pickedSport['weight'] = sport.value['weight'];
-                    }
-                    if (sport.value['numbers']) {
-                        this.pickedSport['numbers'] = sport.value['numbers'];
-                    }
-                    if (sport.value['time']) {
-                        this.pickedSport['time'] = sport.value['time'];
-                    }
-                    this.pickedSport['picked'] = true;
+                    this.pickedSport['picked'] = false;
+                    this.pickedSport['setsToggle'] = true;
+                    this.pickedSport['sets'] = [{ 'picked': false }];
                     this._calendarService.setDailySport(this.pickedSport, this.currentDate);
                     this.calculateTotalSport(this.pickedSport);
                     this.pickedSport = {};
@@ -2495,7 +2658,6 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         }
                         else {
                             this.correctSport = false;
-                            console.log("unCorrectFood");
                         }
                     }
                 };
@@ -2516,6 +2678,39 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 SportComponent.prototype.checkBoxToggle = function (index, sport) {
                     sport['picked'] = !sport['picked'];
                     this.calculateTotalSport(sport);
+                    this._calendarService.changeDailySport(index, this.currentDate, sport);
+                };
+                SportComponent.prototype.addSet = function (sport, index) {
+                    sport['sets'].push({ 'picked': false });
+                    sport['picked'] = false;
+                    for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {
+                        var variable = _a[_i];
+                        this.calculateTotalSportInit(variable);
+                    }
+                    this.calculateSportRefreshAndCalculate();
+                    this._calendarService.changeDailySport(index, this.currentDate, sport);
+                };
+                SportComponent.prototype.removeSet = function (index, sport, setIndex) {
+                    sport['sets'].splice(setIndex, 1);
+                    if (sport['sets'].every(function (el) { return el['picked']; })) {
+                        sport['picked'] = true;
+                    }
+                    this.calculateSportRefreshAndCalculate();
+                    this._calendarService.changeDailySport(index, this.currentDate, sport);
+                };
+                SportComponent.prototype.openSets = function (sport, index) {
+                    sport['setsToggle'] = !sport['setsToggle'];
+                    this._calendarService.changeDailySport(index, this.currentDate, sport);
+                };
+                SportComponent.prototype.pickSet = function (sport, index, setIndex) {
+                    sport['sets'][setIndex]['picked'] = !sport['sets'][setIndex]['picked'];
+                    if (sport['sets'].every(function (el) { return el['picked']; })) {
+                        sport['picked'] = true;
+                    }
+                    else {
+                        sport['picked'] = false;
+                    }
+                    this.calculateSportRefreshAndCalculate();
                     this._calendarService.changeDailySport(index, this.currentDate, sport);
                 };
                 SportComponent.prototype.calculateTotalSport = function (sport) {
@@ -2540,11 +2735,37 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 SportComponent.prototype.calculateSportRefresh = function () {
                     for (var prop in this.totalSport) {
                         this.totalSport[prop] = 0;
-                        this.totalSport[prop] = 0;
+                    }
+                };
+                SportComponent.prototype.calculateSportRefreshAndCalculate = function () {
+                    this.calculateSportRefresh();
+                    for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {
+                        var variable = _a[_i];
+                        this.calculateTotalSportInit(variable);
                     }
                 };
                 SportComponent.prototype.changeSport = function (index, sport) {
                     this._calendarService.changeDailySport(index, this.currentDate, sport);
+                };
+                //timeromer
+                SportComponent.prototype.stopwatchStart = function () {
+                    var _this = this;
+                    if (!this.stopwatchBussy) {
+                        this.stopwatchVendor = setInterval(function () { return _this.stopwatch++; }, 1000);
+                        this.stopwatchBussyToggle();
+                    }
+                };
+                SportComponent.prototype.stopwatchStop = function () {
+                    if (this.stopwatchBussy) {
+                        clearInterval(this.stopwatchVendor);
+                        this.stopwatchBussyToggle();
+                    }
+                };
+                SportComponent.prototype.stopwatchReset = function () {
+                    this.stopwatch = 0;
+                };
+                SportComponent.prototype.stopwatchBussyToggle = function () {
+                    this.stopwatchBussy = !this.stopwatchBussy;
                 };
                 SportComponent = __decorate([
                     core_13.Component({
@@ -2552,8 +2773,8 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         directives: [progress_bar_component_2.ProgressBar, plus_bar_component_2.PlusComponent, swipe_holder_directive_3.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_3.SimpleSearch],
-                        styles: ["\n      .sport_form {\n        position: relative;\n        margin: 5vw;\n        height: 10vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 10vw;\n        width: 70vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputWeight {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 0;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputCount {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 31vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputTime {\n        position: absolute;\n        height: 10vw;\n        width: 30vw;\n        top: 11vw;\n        left: 62vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 10vw;\n        width: 12vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 10vw;\n        width: 12vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #aaa;\n        width: 60vw;\n        left: 0;\n        right: 10px;\n        height: 200px;\n        top: 27px;\n        overflow-y: scroll;\n        z-index: 10;\n      }\n\n      .sport_list {\n        position:relative;\n        top:5vh;\n        margin: 5vw;\n        width: 90vw;\n        height: 55vh;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-bottom: 2vh;\n        margin-right: 5vw;\n        height: 12vw;\n        width: 70vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 12vw;\n\n      }\n      .sport_listWeight {\n        float:left;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n\n        margin-left: 5vw;\n        margin-right: 5vw;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listTime {\n        float:left;\n        height: 12vw;\n        width: 25vw;\n        line-height: 12vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n\n      .sport_listButton_on {\n        float:left;\n        height: 12vw;\n        width: 12vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-color: #3f414a;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border-radius: 2vw;\n      }\n      .sport_listButton_off {\n      float: left;\n      height: 12vw;\n      width: 12vw;\n      background: url('./src/img/check-off.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n    }\n    .repeatLine {\n      float: left;\n      margin: 1.5vw;\n\n      width: 100%;\n      height: 1.5vw;\n      background-color: #0C1017;\n    }\n    .tmp{\nheight: 2vh;\n    }\n      "],
-                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <label for=\"sportWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.weight'|translate) + '...'\" class=\"sport_inputWeight\" [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <label for=\"sportNumber\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.numbers'|translate) + '...'\" class=\"sport_inputCount\" [(ngModel)]=\"model.numbers\" ngControl=\"numbers\" #numbers=\"ngForm\">\n\n  <label for=\"sportTime\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('sport.time'|translate) + '...'\" class=\"sport_inputTime\" [(ngModel)]=\"model.time\" ngControl=\"time\" #time=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_listItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n  {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div *ngFor=\"#item of pickedSportContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeSport(i, item)\" (fmSwipeRight)=\"removeSport(i, item)\">\n\n      <div class=\"sport_listItem\">\n        {{item?.name[language]}}\n      </div>\n      <div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n      <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item.weight\" (blur)=\"changeSport(i, item)\">\n      <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item.numbers\" (blur)=\"changeSport(i, item)\">\n      <input class=\"sport_listTime\" type=\"number\" min=\"0\" [(ngModel)]=\"item.time\" (blur)=\"changeSport(i, item)\">\n      <div class=\"repeatLine\"></div>\n\n  </div>\n</div>\n    "
+                        styles: ["\n      .sport_form {\n        position: relative;\n        margin: 5vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 70vw;\n        color: #0d0e15;\n        font-size: 7vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 3vw;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 70vw;\n        max-height: 30vh;\n        padding: 2vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 2vw;\n        z-index: 3\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        height: 15vw;\n        width: 70vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n      }\n\n      .sport_list {\n        position:relative;\n        top:5vh;\n        margin-left: 5vw;\n        margin-right: 5vw;\n        width: 90vw;\n        height: 57vh;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        height: 15vw;\n        width: 70vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 15vw;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 20vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        height: 15vw;\n        width: 26vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-left: 8vw;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n      .sport_dropdownButonAnime{\n        transform:rotate(180deg)\n      }\n      .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n      margin-top: 1vh;\n    }\n    .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    .sport_listButton_off {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-off.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n    }\n    .sport_timer {\n      position: relative;\n      margin-left: 10vw;\n      top:2vw;\n      width: 90vw;\n      height: 6vh;\n      text-align: center;\n    }\n    .tmp{\n      float:left;\n      width: 20vw;\n      height:10vw;\n      background-color: gray;\n      border: 3px solid black;\n    }\n      "],
+                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n<div class=\"tmp\">stopwatch {{stopwatch}}</div>\n<div class=\"tmp\"(click)=\"stopwatchStart()\">START/RESTART</div>\n<div class=\"tmp\" (click)=\"stopwatchStop()\">STOP</div>\n<div class=\"tmp\" (click)=\"stopwatchReset()\">RESET</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_listItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div *ngFor=\"#item of pickedSportContainer; #i = index\">\n\n    <div class=\"sport_listItem\" fmSwipe (fmSwipeLeft)=\"removeSport(i, item)\" (fmSwipeRight)=\"removeSport(i, item)\" (click)=\"openSets(item,i)\">\n      {{item?.name[language]}}\n      <div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\"></div>\n    </div>\n    <div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div *ngFor=\"#it of item.sets; #setIndex = index\" fmSwipe (fmSwipeLeft)=\"removeSet(i, item, setIndex)\" (fmSwipeRight)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >set {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"kg\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"reps\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">add set</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_2.CalendarService, user_service_5.UserService])
                 ], SportComponent);
@@ -2966,7 +3187,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
                         providers: [router_3.ROUTER_PROVIDERS, core_20.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_7.UserService],
                         pipes: [translate_service_7.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100%;\n      height: 100%;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_3.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
@@ -2999,6 +3220,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'carbohydrates': 'carbohydrates',
                     'fat': 'fat',
                     'language': 'language',
+                    'create.food': 'Create food',
+                    'create.menu': 'Create menu',
+                    'paste.menu': 'Paste menu',
                     'menuName': 'menu name'
                 },
                 'ru': {
@@ -3013,6 +3237,9 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'carbohydrates': 'углеводы',
                     'fat': 'жиры',
                     'language': 'язык',
+                    'create.food': 'Добавить блюдо',
+                    'create.menu': 'Создать новое меню',
+                    'paste.menu': 'Добавить созданное ранее меню',
                     'menuName': 'название меню'
                 }
             };
