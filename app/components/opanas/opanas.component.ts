@@ -133,8 +133,11 @@ let keysVendor: Object = {
         'create.food':'Create food',
         'create.menu':'Create menu',
         'paste.menu':'Paste menu',
-        'menuName':'menu name'
-
+        'menuName':'menu name',
+        'set' : 'set',
+        'add set' : '+set',
+        'kg':'kg',
+        'resp':'resp'
 
     },
 
@@ -152,8 +155,12 @@ let keysVendor: Object = {
         'language':'язык',
         'create.food':'Добавить блюдо',
         'create.menu':'Создать новое меню',
-        'paste.menu':'Добавить созданное ранее меню',
-        'menuName':'название меню'
+        'paste.menu':'Выбрать готовое меню',
+        'menuName':'название меню',
+        'set' : 'сет',
+        '+set': '+сет',
+        'kg':'кг',
+        'resp':'повт'
 
     }
 }
