@@ -1294,5 +1294,545 @@ let foodVendor: Food[] = [
   "protein": 12.3,
   "fat": 6.1,
   "carbohydrates": 59.5
+},
+//94
+{
+  "name": {
+    "en": "Avocado",
+    "ru": "Авокадо"
+  },
+  "custom": false,
+  "calories": 160,
+  "protein": 2,
+  "fat": 15,
+  "carbohydrates": 9
+},
+//95
+{
+  "name": {
+    "en": "Orange",
+    "ru": "Апельсин"
+  },
+  "custom": false,
+  "calories": 47,
+  "protein": 0.9,
+  "fat": 0.1,
+  "carbohydrates": 12
+},
+//96
+{
+  "name": {
+    "en": "Watermelon",
+    "ru": "Арбуз"
+  },
+  "custom": false,
+  "calories": 30,
+  "protein": 0.6,
+  "fat": 0.2,
+  "carbohydrates": 8
+},
+//97
+{
+  "name": {
+    "en": "Banana",
+    "ru": "Банан"
+  },
+  "custom": false,
+  "calories": 89,
+  "protein": 1.1,
+  "fat": 0.3,
+  "carbohydrates": 23
+},
+//98
+{
+  "name": {
+    "en": "Cherry",
+    "ru": "Вишня"
+  },
+  "custom": false,
+  "calories": 50,
+  "protein": 1,
+  "fat": 0.3,
+  "carbohydrates": 12
+},
+//99
+{
+  "name": {
+    "en": "Garnet",
+    "ru": "Гранат"
+  },
+  "custom": false,
+  "calories": 83,
+  "protein": 1.7,
+  "fat": 1.2,
+  "carbohydrates": 19
+},
+//100
+{
+  "name": {
+    "en": "Grapefruit",
+    "ru": "Грейпфрут"
+  },
+  "custom": false,
+  "calories": 42,
+  "protein": 0.8,
+  "fat": 0.1,
+  "carbohydrates": 11
+},
+//101
+{
+  "name": {
+    "en": "Pear",
+    "ru": "Груша"
+  },
+  "custom": false,
+  "calories": 57,
+  "protein": 0.4,
+  "fat": 0.1,
+  "carbohydrates": 15
+},
+//102
+{
+  "name": {
+    "en": "Melon",
+    "ru": "Дыня"
+  },
+  "custom": false,
+  "calories": 34,
+  "protein": 0.8,
+  "fat": 0.2,
+  "carbohydrates": 8
+},
+//103
+{
+  "name": {
+    "en": "Kiwi",
+    "ru": "Киви"
+  },
+  "custom": false,
+  "calories": 61,
+  "protein": 1.1,
+  "fat": 0.5,
+  "carbohydrates": 15
+},
+//104
+{
+  "name": {
+    "en": "Lime",
+    "ru": "Лайм"
+  },
+  "custom": false,
+  "calories": 30,
+  "protein": 0.7,
+  "fat": 0.2,
+  "carbohydrates": 11
+},
+//105
+{
+  "name": {
+    "en": "Lemon",
+    "ru": "Лимон"
+  },
+  "custom": false,
+  "calories": 29,
+  "protein": 1.1,
+  "fat": 0.3,
+  "carbohydrates": 9
+},
+//106
+{
+  "name": {
+    "en": "Mango",
+    "ru": "Манго"
+  },
+  "custom": false,
+  "calories": 60,
+  "protein": 0.8,
+  "fat": 0.4,
+  "carbohydrates": 15
+},
+//107
+{
+  "name": {
+    "en": "Mandarin",
+    "ru": "Мандарин"
+  },
+  "custom": false,
+  "calories": 53,
+  "protein": 0.8,
+  "fat": 0.3,
+  "carbohydrates": 13.3
+},
+//108
+{
+  "name": {
+    "en": "Nectarine",
+    "ru": "Нектарин"
+  },
+  "custom": false,
+  "calories": 44,
+  "protein": 1.1,
+  "fat": 0.3,
+  "carbohydrates": 11
+},
+//109
+{
+  "name": {
+    "en": "Peach",
+    "ru": "Персик"
+  },
+  "custom": false,
+  "calories": 39,
+  "protein": 0.9,
+  "fat": 0.3,
+  "carbohydrates": 10
+},
+//110
+{
+  "name": {
+    "en": "Sweetie",
+    "ru": "Свити"
+  },
+  "custom": false,
+  "calories": 58,
+  "protein": 0.7,
+  "fat": 0.2,
+  "carbohydrates": 9
+},
+//111
+{
+  "name": {
+    "en": "Plum",
+    "ru": "Слива"
+  },
+  "custom": false,
+  "calories": 46,
+  "protein": 0.7,
+  "fat": 0.3,
+  "carbohydrates": 11
+},
+//112
+{
+  "name": {
+    "en": "Persimmon",
+    "ru": "Хурма"
+  },
+  "custom": false,
+  "calories": 127,
+  "protein": 0.8,
+  "fat": 0.4,
+  "carbohydrates": 34
+},
+//113
+{
+  "name": {
+    "en": "Cherries",
+    "ru": "Черешня"
+  },
+  "custom": false,
+  "calories": 52,
+  "protein": 1.1,
+  "fat": 0.4,
+  "carbohydrates": 10.6
+},
+//114
+{
+  "name": {
+    "en": "Mulberry",
+    "ru": "Шелковица"
+  },
+  "custom": false,
+  "calories": 43,
+  "protein": 1.4,
+  "fat": 0.4,
+  "carbohydrates": 10
+},
+//115
+{
+  "name": {
+    "en": "Apple",
+    "ru": "Яблоко"
+  },
+  "custom": false,
+  "calories": 52,
+  "protein": 0.3,
+  "fat": 0.2,
+  "carbohydrates": 14
+},
+//116
+{
+  "name": {
+    "en": "Eggplant",
+    "ru": "Баклажан"
+  },
+  "custom": false,
+  "calories": 25,
+  "protein": 1,
+  "fat": 0.2,
+  "carbohydrates": 6
+},
+//117
+{
+  "name": {
+    "en": "Squash",
+    "ru": "Кабачок"
+  },
+  "custom": false,
+  "calories": 17,
+  "protein": 1.2,
+  "fat": 0.3,
+  "carbohydrates": 3.1
+},
+//118
+{
+  "name": {
+    "en": "White cabbage",
+    "ru": "Капуста белокочанная"
+  },
+  "custom": false,
+  "calories": 25,
+  "protein": 1.3,
+  "fat": 0.1,
+  "carbohydrates": 6
+},
+//119
+{
+  "name": {
+    "en": "Broccoli",
+    "ru": "Капуста брокколи"
+  },
+  "custom": false,
+  "calories": 34,
+  "protein": 2.8,
+  "fat": 0.4,
+  "carbohydrates": 7
+},
+//120
+{
+  "name": {
+    "en": "Cabbage",
+    "ru": "Капуста пекинская"
+  },
+  "custom": false,
+  "calories": 12,
+  "protein": 1.1,
+  "fat": 0.2,
+  "carbohydrates": 2.2
+},
+//121
+{
+  "name": {
+    "en": "Cauliflower",
+    "ru": "Капуста цветная"
+  },
+  "custom": false,
+  "calories": 25,
+  "protein": 1.9,
+  "fat": 0.3,
+  "carbohydrates": 5
+},
+//122
+{
+  "name": {
+    "en": "Potatoes",
+    "ru": "Картофель"
+  },
+  "custom": false,
+  "calories": 77,
+  "protein": 2,
+  "fat": 0.1,
+  "carbohydrates": 17
+},
+//123
+{
+  "name": {
+    "en": "Corn boiled",
+    "ru": "Кукуруза варёная"
+  },
+  "custom": false,
+  "calories": 123,
+  "protein": 4.1,
+  "fat": 2.3,
+  "carbohydrates": 22.5
+},
+//124
+{
+  "name": {
+    "en": "Green onion",
+    "ru": "Лук зелёный"
+  },
+  "custom": false,
+  "calories": 19,
+  "protein": 1.3,
+  "fat": 0.0,
+  "carbohydrates": 4.6
+},
+//125
+{
+  "name": {
+    "en": "Bulb onions",
+    "ru": "Лук репчатый"
+  },
+  "custom": false,
+  "calories": 40,
+  "protein": 1.1,
+  "fat": 0.1,
+  "carbohydrates": 9
+},
+//126
+{
+  "name": {
+    "en": "Olives",
+    "ru": "Маслины"
+  },
+  "custom": false,
+  "calories": 166,
+  "protein": 2.2,
+  "fat": 10.5,
+  "carbohydrates": 5.1
+},
+//127
+{
+  "name": {
+    "en": "Carrot",
+    "ru": "Морковь"
+  },
+  "custom": false,
+  "calories": 41,
+  "protein": 0.9,
+  "fat": 0.2,
+  "carbohydrates": 10
+},
+//128
+{
+  "name": {
+    "en": "Cucumber",
+    "ru": "Огурец"
+  },
+  "custom": false,
+  "calories": 16,
+  "protein": 0.7,
+  "fat": 0.1,
+  "carbohydrates": 3.6
+},
+//129
+{
+  "name": {
+    "en": "Olives",
+    "ru": "Оливки"
+  },
+  "custom": false,
+  "calories": 115,
+  "protein": 0.8,
+  "fat": 11,
+  "carbohydrates": 6
+},
+//130
+{
+  "name": {
+    "en": "Bulgarian pepper",
+    "ru": "Болгарский перец"
+  },
+  "custom": false,
+  "calories": 20,
+  "protein": 0.9,
+  "fat": 0.2,
+  "carbohydrates": 4.6
+},
+//131
+{
+  "name": {
+    "en": "Radish",
+    "ru": "Редис"
+  },
+  "custom": false,
+  "calories": 19,
+  "protein": 1.2,
+  "fat": 0.1,
+  "carbohydrates": 3.4
+},
+//132
+{
+  "name": {
+    "en": "Arugula",
+    "ru": "Руккола"
+  },
+  "custom": false,
+  "calories": 25,
+  "protein": 2.6,
+  "fat": 0.7,
+  "carbohydrates": 3.7
+},
+//133
+{
+  "name": {
+    "en": "Salad",
+    "ru": "Салат"
+  },
+  "custom": false,
+  "calories": 15,
+  "protein": 1.4,
+  "fat": 0.2,
+  "carbohydrates": 2.9
+},
+//134
+{
+  "name": {
+    "en": "Beet",
+    "ru": "Свекла"
+  },
+  "custom": false,
+  "calories": 43,
+  "protein": 1.6,
+  "fat": 0.2,
+  "carbohydrates": 10
+},
+//135
+{
+  "name": {
+    "en": "Asparagus",
+    "ru": "Спаржа"
+  },
+  "custom": false,
+  "calories": 20,
+  "protein": 1.9,
+  "fat": 0.1,
+  "carbohydrates": 3.1
+},
+//136
+{
+  "name": {
+    "en": "Tomato",
+    "ru": "Помидор"
+  },
+  "custom": false,
+  "calories": 18,
+  "protein": 0.9,
+  "fat": 0.2,
+  "carbohydrates": 3.9
+},
+//137
+{
+  "name": {
+    "en": "Pumpkin",
+    "ru": "Тыква"
+  },
+  "custom": false,
+  "calories": 28,
+  "protein": 1.3,
+  "fat": 0.3,
+  "carbohydrates": 7.7
+},
+//138
+{
+  "name": {
+    "en": "Spinach",
+    "ru": "Шпинат"
+  },
+  "custom": false,
+  "calories": 23,
+  "protein": 2.9,
+  "fat": 0.4,
+  "carbohydrates": 3.6
 }
 ]

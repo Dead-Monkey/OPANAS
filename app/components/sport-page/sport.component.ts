@@ -141,7 +141,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         float:left;
         margin-right: 2vw;
         margin-top: 1vh;
-        height: 15vw;
+        min-height: 15vw;
         width: 26vw;
         line-height: 15vw;
         background-color: #3f414a;
@@ -256,12 +256,12 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 
     <div *ngIf="item['setsToggle']">
       <div *ngFor="#it of item.sets; #setIndex = index" fmSwipe (fmSwipeLeft)="removeSet(i, item, setIndex)" (fmSwipeRight)="removeSet(i, item, setIndex)">
-        <div class="sport_listSet" >set {{setIndex+1}}</div>
-        <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item['sets'][setIndex].weight" (blur)="changeSport(i, item)" placeholder="kg">
-        <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item['sets'][setIndex].numbers" (blur)="changeSport(i, item)" placeholder="reps">
+        <div class="sport_listSet" >{{'set'| translate}} {{setIndex+1}}</div>
+        <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item['sets'][setIndex].weight" (blur)="changeSport(i, item)" placeholder="{{'kg'| translate}}">
+        <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item['sets'][setIndex].numbers" (blur)="changeSport(i, item)" placeholder="{{'resp'| translate}}">
         <div [ngClass]="{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}" (click)="pickSet(item, i, setIndex)"></div>
       </div>
-      <div class="sport_listSet" (click)="addSet(item, i)">add set</div>
+      <div class="sport_listSet" (click)="addSet(item, i)">{{'+set'| translate}}</div>
     </div>
   </div>
 </div>

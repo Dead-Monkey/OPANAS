@@ -19,7 +19,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   top: 15vw;
   overflow: hidden;
   width:90vw;
-  height: 87vh;
+  height: 50vw;
   z-index: 10;
 }
 .closeMe {
@@ -185,7 +185,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 }
 .plusBar_menuButtons {
   position: absolute;
-  height: 65vw;
+  height: 50vw;
   width: 90vw;
   right: 0;
   color: #ff9d2d;
@@ -317,6 +317,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     {{'paste.menu' | translate}}
   </div>
 </div>
+</div>
+
+<!-- тут начинается спорт -->
+
 <div class="container" *ngIf="isOpen && (iAm === 'sport')">
   <div *ngIf="listOptions">
     <div (click)="createExerciseToggle()">create exercise</div>
