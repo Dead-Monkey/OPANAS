@@ -229,11 +229,14 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   line-height: 15vw;
   margin-bottom: 1vw;
 }
+.containerFull {
+  height: 100vw;
+}
     `],
     template: `
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}"(click)="toggle()"></div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
-<div class="container" *ngIf="isOpen && (iAm === 'food')">
+<div class="container" *ngIf="isOpen && (iAm === 'food')" [ngClass]="{containerFull: createFood || createMenu}">
 
   <div *ngIf="listOptions" class="plusBar_menuButtons">
     <div (click)="createFoodToggle()">
