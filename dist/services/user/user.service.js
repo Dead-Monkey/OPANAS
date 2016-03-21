@@ -43,7 +43,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             }
                         },
                         'sportSets': {},
-                        'language': 'ru'
+                        'language': 'en'
                     };
                     if (this._storageService.getItem(this.storageKeys['userSets'])) {
                         this.sets = this._storageService.getItem(this.storageKeys['userSets']);

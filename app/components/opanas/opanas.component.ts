@@ -14,12 +14,13 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {RefreshDateService} from '../../services/refresh-date/refresh-date.service';
 import {StorageService} from '../../shared/services/storage/storage.service';
 import {UserService} from '../../services/user/user.service';
+import {AdMobService} from '../../services/admob/admob.service';
 
 @Component({
     selector: 'opanas-app',
     directives: [ROUTER_DIRECTIVES, SideBar],
     providers: [ROUTER_PROVIDERS, provide(LocationStrategy,
-        { useClass: HashLocationStrategy }), TranslateService, FoodService, SportService, CalendarService, RefreshDateService, StorageService, UserService],
+        { useClass: HashLocationStrategy }), TranslateService, FoodService, SportService, CalendarService, RefreshDateService, StorageService, UserService, AdMobService],
     pipes: [TranslatePipe],
     styles: [`
     .header{
@@ -77,16 +78,20 @@ export class OpanasComponent implements OnInit {
 
     private sideBarIsOpen: boolean = false;
 
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService) { }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService, private _AdMobServe: AdMobService) { }
     bla() {
         location.reload();
     }
     //config app
     ngOnInit() {
         //cordova plugins setup
-        let onDeviceReady = function() {
+        let onDeviceReady =()=> {
             //keepAwake screen
             window.plugins.insomnia.keepAwake()
+
+            //AdMob
+            this._AdMobServe.createBottomBanerFirst();
+            this._AdMobServe.addBottomBanerFirst();
         }
         document.addEventListener("deviceready", onDeviceReady, false);
 

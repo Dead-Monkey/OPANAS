@@ -8,7 +8,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
 import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
 
-
 @Component({
     selector: 'op-food',
     directives: [ProgressBar, PlusComponent, SwipeHoldertDirective],

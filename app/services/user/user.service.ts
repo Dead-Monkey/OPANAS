@@ -23,7 +23,7 @@ export class UserService {
                }
             },
             'sportSets':{},
-            'language':'ru'
+            'language':'en'
       }
 
     constructor(private _storageService: StorageService) {
