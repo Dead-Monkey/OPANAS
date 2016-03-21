@@ -220,9 +220,8 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   overflow: hidden;
 }
 .plusBar_listName {
-  position: relative;
-  right: 1vw;
-  margin-right: 15vw;
+  position: absolute;
+  right: 16vw;
   text-align: right;
   height: 15vw;
   width: 90vw;
