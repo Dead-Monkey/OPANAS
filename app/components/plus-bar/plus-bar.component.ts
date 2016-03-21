@@ -220,14 +220,39 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   overflow: hidden;
 }
 .plusBar_listName {
-  position: relative;;
-  right: 16vw;
+  position: relative;
+  right: 1vw;
   margin-right: 15vw;
   text-align: right;
   height: 15vw;
   width: 90vw;
   line-height: 15vw;
   margin-bottom: 1vw;
+
+}
+.plusBar_list1Btn{
+  position: absolute;
+  right:0;
+}
+.plusBar_list2Btn{
+  position: absolute;
+  right:0;
+  top: 30%;
+  animation:  mainList2Btn 300ms linear;
+}
+.plusBar_list3Btn{
+  position: absolute;
+  top: 60%;
+  right:0;
+  animation:  mainList3Btn 300ms linear;
+}
+@keyframes mainList2Btn {
+    0%   {top:0px;}
+    100% {top:30%;}
+}
+@keyframes mainList3Btn {
+    0%   {top:0;}
+    100% {top:60%;}
 }
     `],
     template: `
@@ -236,19 +261,19 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 <div class="container" *ngIf="isOpen && (iAm === 'food')">
 
   <div *ngIf="listOptions" class="plusBar_menuButtons">
-    <div (click)="createFoodToggle()">
+    <div class="plusBar_list1Btn" (click)="createFoodToggle()">
       <div class="plusBar_createFoodButton"></div>
       <div class="plusBar_listName">
         {{'create.food' | translate}}
       </div>
     </div>
-    <div (click)="createMenuToggle()">
+    <div class="plusBar_list2Btn" (click)="createMenuToggle()">
       <div class="plusBar_createMenuButton"></div>
       <div class="plusBar_listName">
         {{'create.menu' | translate}}
       </div>
     </div>
-    <div (click)="pasteMenuToggle()">
+    <div class="plusBar_list3Btn" (click)="pasteMenuToggle()">
       <div class="plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
         {{'paste.menu' | translate}}
