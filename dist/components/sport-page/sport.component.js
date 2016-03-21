@@ -76,7 +76,11 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     this.pickedSport['setsToggle'] = true;
                     this.pickedSport['sets'] = [{ 'picked': false }];
                     this._calendarService.setDailySport(this.pickedSport, this.currentDate);
-                    this.calculateTotalSport(this.pickedSport);
+                    this.calculateSportRefresh();
+                    for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {
+                        var variable = _a[_i];
+                        this.calculateTotalSportInit(variable);
+                    }
                     this.pickedSport = {};
                     this.model = {};
                     this.correctSport = false;

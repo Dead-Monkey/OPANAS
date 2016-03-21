@@ -309,7 +309,10 @@ export class SportComponent implements OnInit {
         this.pickedSport['setsToggle'] = true;
         this.pickedSport['sets'] = [{ 'picked': false }];
         this._calendarService.setDailySport(this.pickedSport, this.currentDate);
-        this.calculateTotalSport(this.pickedSport);
+        this.calculateSportRefresh();
+        for (let variable of this.pickedSportContainer) {
+            this.calculateTotalSportInit(variable);
+        }
 
         this.pickedSport = <Sport>{};
         this.model = {};
