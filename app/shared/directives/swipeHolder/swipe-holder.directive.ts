@@ -4,7 +4,7 @@ import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core'
     host: {
         '(touchstart)': 'start($event)',
         '(touchmove)': 'move($event)',
-        '(touchend)': 'end($event)'
+        '(touchend)': 'move($event);end($event)'
     }
 })
 export class SwipeHoldertDirective {
@@ -17,6 +17,9 @@ export class SwipeHoldertDirective {
 
     private xStart;
     private yStart;
+    private xNew;
+    private yNew;
+    private last;
 
     constructor(el: ElementRef) { }
 
@@ -26,35 +29,40 @@ export class SwipeHoldertDirective {
     }
 
     move(evt) {
+        if (evt.type === 'touchend') {
+            return this.fmSwipe.emit(['swipeEnd', this.xNew, this.yNew, evt]);
+
+        }
         if (!this.xStart || !this.yStart) {
             return;
         }
-        let xNew = evt.touches[0].clientX;
-        let yNew = evt.touches[0].clientY;
-        let xDiff = this.xStart - xNew;
-        let yDiff = this.yStart - yNew;
+        this.xNew = evt.touches[0].clientX;
+        this.yNew = evt.touches[0].clientY;
+        let xDiff = this.xStart - this.xNew;
+        let yDiff = this.yStart - this.yNew;
         if (Math.abs(xDiff) > Math.abs(yDiff)) {
             if (xDiff > 0) {
-                this.fmSwipe.emit(['leftSwipe', xNew, yNew, evt]);
-                this.fmSwipeLeft.emit(['leftSwipe', xNew, evt]);
+                this.fmSwipe.emit(['leftSwipe', this.xNew, this.yNew, evt]);
+                this.fmSwipeLeft.emit(['leftSwipe', this.xNew, evt]);
             }
             else {
-                this.fmSwipe.emit(['rightSwipe', xNew, yNew, evt]);
-                this.fmSwipeRight.emit(['rightSwipe', xNew, evt]);
+                this.fmSwipe.emit(['rightSwipe', this.xNew, this.yNew, evt]);
+                this.fmSwipeRight.emit(['rightSwipe', this.xNew, evt]);
             }
         }
         else {
             if (yDiff > 0) {
-                this.fmSwipe.emit(['upSwipe', xNew, yNew, evt]);
-                this.fmSwipeUp.emit(['upSwipe', yNew, evt]);
+                this.fmSwipe.emit(['upSwipe', this.xNew, this.yNew, evt]);
+                this.fmSwipeUp.emit(['upSwipe', this.yNew, evt]);
             }
             else {
-                this.fmSwipe.emit(['downSwipe', xNew, yNew, evt]);
-                this.fmSwipeDown.emit(['downSwipe', yNew, evt]);
+                this.fmSwipe.emit(['downSwipe', this.xNew, this.yNew, evt]);
+                this.fmSwipeDown.emit(['downSwipe', this.yNew, evt]);
             }
         }
         this.xStart = evt.touches[0].clientX;
         this.yStart = evt.touches[0].clientY;
+
     }
     end(evt) {
         this.xStart = null;
