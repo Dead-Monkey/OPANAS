@@ -59,56 +59,35 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     color: #ff9d2d;
     font-size: 6vw;
   }
+
+  .sidebar_button {
+    background-size: cover;
+    box-sizing: border-box;
+    width: 22vw;
+    height: 22vw;
+    text-align: center;
+    text-decoration: none;
+  }
   .sidebar_foodButton {
-  background: url('./src/img/food.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  width: 22vw;
-  height: 22vw;
-  margin: auto;
-  text-align: center;
-  text-decoration: none;
-}
-.sidebar_sportButton {
-  background: url('./src/img/sport.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  width: 22vw;
-  height: 22vw;
-  margin: auto;
-  text-align: center;
-  text-decoration: none;
-}
-.sidebar_restButton {
-  background: url('./src/img/rest.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  width: 22vw;
-  height: 22vw;
-  margin: auto;
-  text-align: center;
-  text-decoration: none;
-}
-.sidebar_calendarButton {
-  background: url('./src/img/calendar.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  width: 22vw;
-  height: 22vw;
-  margin: auto;
-  text-align: center;
-  text-decoration: none;
-}
-.sidebar_userButton {
-  background: url('./src/img/user.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  width: 22vw;
-  height: 22vw;
-  margin: auto;
-  text-align: center;
-  text-decoration: none;
-}
+    background: url('./src/img/food.png') no-repeat center center;
+    background-size: cover;
+  }
+  .sidebar_sportButton {
+    background: url('./src/img/sport.png') no-repeat center center;
+    background-size: cover;
+  }
+  .sidebar_restButton {
+    background: url('./src/img/rest.png') no-repeat center center;
+    background-size: cover;
+  }
+  .sidebar_calendarButton {
+    background: url('./src/img/calendar.png') no-repeat center center;
+    background-size: cover;
+  }
+  .sidebar_userButton {
+    background: url('./src/img/user.png') no-repeat center center;
+    background-size: cover;
+  }
 .sidebar_locked{
   left:-70vw;
 }
@@ -120,19 +99,19 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
 <div *ngIf="!isOpen" class="sideBar_toggle" (click)="toggle()"></div>
 
 <div class="sideBarContainer" [style.left.vw]="pusher" [ngClass]="{sideBarContainer:true, sidebar_locked:!isOpen}" *ngIf="isOpen" (fmSwipe)="swipe($event)">
-  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton">
+  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
     <p>Food</p>
   </a>
-  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton">
+  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton sidebar_button">
     <p>Sport</p>
   </a>
-  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton">
+  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton sidebar_button">
     <p>Rest</p>
   </a>
-  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton">
+  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton sidebar_button">
     <p>Calendar</p>
   </a>
-  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton">
+  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton sidebar_button">
     <p>User</p>
   </a>
   </div>

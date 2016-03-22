@@ -126,15 +126,16 @@ let keysVendor: Object = {
     'en': {
         'progress': 'progress',
         'search': 'search',
-        'weight': 'weight',
+        'weight': 'g',
         'sport.weight': 'weight',
         'sport.numbers': 'numbers',
         'sport.time': 'time',
-        'calories': 'calories',
-        'protein': 'protein',
-        'carbohydrates': 'carbohydrates',
-        'fat': 'fat',
-        'language':'language',
+        'calories': 'Calories',
+        'protein': 'Protein',
+        'carbohydrates': 'Carbohydrates',
+        'fat': 'Fat',
+        'done':'Done',
+        'language':'Language',
         'create.food':'Create food',
         'create.menu':'Create menu',
         'paste.menu':'Paste menu',
@@ -142,22 +143,25 @@ let keysVendor: Object = {
         'set' : 'set',
         'add set' : '+set',
         'kg':'kg',
-        'resp':'resp'
-
+        'resp':'resp',
+        'daily.rate':'Daily rate',
+        'determine.daily.rate':'Determine my daily rate',
+        'meals.name':'Meals name'
     },
 
     'ru': {
-        'progress': 'прогресс',
+        'progress': 'Прогресс',
         'search': 'поиск',
-        'weight': 'вес',
+        'weight': 'г',
         'sport.weight': 'какой вес',
         'sport.numbers': 'сколько раз',
         'sport.time': 'время',
-        'calories': 'калории',
-        'protein': 'белки',
-        'carbohydrates': 'углеводы',
-        'fat': 'жиры',
-        'language':'язык',
+        'calories': 'Калории',
+        'protein': 'Белки',
+        'carbohydrates': 'Углеводы',
+        'fat': 'Жиры',
+        'language':'Язык',
+        'done':'Готово',
         'create.food':'Добавить блюдо',
         'create.menu':'Создать новое меню',
         'paste.menu':'Выбрать готовое меню',
@@ -165,7 +169,10 @@ let keysVendor: Object = {
         'set' : 'сет',
         '+set': '+сет',
         'kg':'кг',
-        'resp':'повт'
+        'resp':'повт',
+        'daily.rate':'Cуточная норма',
+        'determine.daily.rate':'Определить мою суточную норму',
+        'meals.name':'Название'
 
     }
 }

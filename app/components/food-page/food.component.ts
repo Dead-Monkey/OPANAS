@@ -20,6 +20,9 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     margin: 5vw;
     height: 10vw;
   }
+  input {
+    padding-left: 1vw;
+  }
   .food_inputFood {
     position: absolute;
     height: 10vw;
@@ -166,7 +169,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   <input class="food_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
 
   <label for="foodWeight"></label>
-  <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
+  <input type="number" [min]="1" [placeholder]="'0 ' +('weight'|translate) " class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">
 
   <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
 

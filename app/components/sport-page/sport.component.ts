@@ -97,7 +97,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         float:left;
         margin-right: 3vw;
         margin-top: 2vw;
-        height: 15vw;
+        min-height: 15vw;
         width: 70vw;
         box-sizing: border-box;
         background-color: #3f414a;
