@@ -97,7 +97,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         float:left;
         margin-right: 3vw;
         margin-top: 2vw;
-        height: 15vw;
+        min-height: 15vw;
         width: 70vw;
         box-sizing: border-box;
         background-color: #3f414a;
@@ -309,7 +309,10 @@ export class SportComponent implements OnInit {
         this.pickedSport['setsToggle'] = true;
         this.pickedSport['sets'] = [{ 'picked': false }];
         this._calendarService.setDailySport(this.pickedSport, this.currentDate);
-        this.calculateTotalSport(this.pickedSport);
+        this.calculateSportRefresh();
+        for (let variable of this.pickedSportContainer) {
+            this.calculateTotalSportInit(variable);
+        }
 
         this.pickedSport = <Sport>{};
         this.model = {};

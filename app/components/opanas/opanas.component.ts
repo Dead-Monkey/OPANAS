@@ -134,6 +134,7 @@ let keysVendor: Object = {
         'protein': 'Protein',
         'carbohydrates': 'Carbohydrates',
         'fat': 'Fat',
+        'done':'Done',
         'language':'Language',
         'create.food':'Create food',
         'create.menu':'Create menu',
@@ -144,7 +145,8 @@ let keysVendor: Object = {
         'kg':'kg',
         'resp':'resp',
         'daily.rate':'Daily rate',
-        'determine.daily.rate':'Determine my daily rate'
+        'determine.daily.rate':'Determine my daily rate',
+        'meals.name':'Meals name'
     },
 
     'ru': {
@@ -159,6 +161,7 @@ let keysVendor: Object = {
         'carbohydrates': 'Углеводы',
         'fat': 'Жиры',
         'language':'Язык',
+        'done':'Готово',
         'create.food':'Добавить блюдо',
         'create.menu':'Создать новое меню',
         'paste.menu':'Выбрать готовое меню',
@@ -168,7 +171,8 @@ let keysVendor: Object = {
         'kg':'кг',
         'resp':'повт',
         'daily.rate':'Cуточная норма',
-        'determine.daily.rate':'Определить мою суточную норму'
+        'determine.daily.rate':'Определить мою суточную норму',
+        'meals.name':'Название'
 
     }
 }

@@ -25,20 +25,17 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 AdMobService.prototype.createBottomBanerFirst = function () {
                     if (/(android)/i.test(navigator.userAgent)) {
                         this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857',
-                            interstitial: 'ca-app-pub-xxx/yyy'
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
                         };
                     }
                     else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
                         this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857',
-                            interstitial: 'ca-app-pub-xxx/kkk'
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
                         };
                     }
                     else {
                         this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857',
-                            interstitial: 'ca-app-pub-xxx/kkk'
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
                         };
                     }
                 };
@@ -46,7 +43,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     if (AdMob)
                         AdMob.createBanner({
                             adId: this.admobidFirst.banner,
-                            position: AdMob.AD_POSITION.TOP_CENTER,
+                            position: AdMob.AD_POSITION.BOTTOM_CENTER,
                             autoShow: true
                         });
                 };
@@ -60,4 +57,4 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         }
     }
 });
-//# sourceMappingURL=AdMob.service.js.map
+//# sourceMappingURL=admob.service.js.map

@@ -67,11 +67,12 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
             }],
         execute: function() {
             OpanasComponent = (function () {
-                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe) {
+                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe, _AdMobServe) {
                     this._translator = _translator;
                     this._calendarService = _calendarService;
                     this._refreshDateService = _refreshDateService;
                     this._userServe = _userServe;
+                    this._AdMobServe = _AdMobServe;
                     this.sideBarIsOpen = false;
                 }
                 OpanasComponent.prototype.bla = function () {
@@ -79,10 +80,14 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                 };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
+                    var _this = this;
                     //cordova plugins setup
                     var onDeviceReady = function () {
                         //keepAwake screen
                         window.plugins.insomnia.keepAwake();
+                        //AdMob
+                        _this._AdMobServe.createBottomBanerFirst();
+                        _this._AdMobServe.addBottomBanerFirst();
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date
@@ -119,7 +124,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         { path: '/user', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService])
+                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService, admob_service_1.AdMobService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
@@ -140,6 +145,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'protein': 'Protein',
                     'carbohydrates': 'Carbohydrates',
                     'fat': 'Fat',
+                    'done': 'Done',
                     'language': 'Language',
                     'create.food': 'Create food',
                     'create.menu': 'Create menu',
@@ -150,7 +156,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'kg': 'kg',
                     'resp': 'resp',
                     'daily.rate': 'Daily rate',
-                    'determine.daily.rate': 'Determine my daily rate'
+                    'determine.daily.rate': 'Determine my daily rate',
+                    'meals.name': 'Meals name'
                 },
                 'ru': {
                     'progress': 'Прогресс',
@@ -164,6 +171,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'carbohydrates': 'Углеводы',
                     'fat': 'Жиры',
                     'language': 'Язык',
+                    'done': 'Готово',
                     'create.food': 'Добавить блюдо',
                     'create.menu': 'Создать новое меню',
                     'paste.menu': 'Выбрать готовое меню',
@@ -173,7 +181,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'kg': 'кг',
                     'resp': 'повт',
                     'daily.rate': 'Cуточная норма',
-                    'determine.daily.rate': 'Определить мою суточную норму'
+                    'determine.daily.rate': 'Определить мою суточную норму',
+                    'meals.name': 'Название'
                 }
             };
         }
