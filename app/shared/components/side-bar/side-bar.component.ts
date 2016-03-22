@@ -9,20 +9,20 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     providers: [],
     pipes: [],
     styles: [`
-    .sideBarContainer {
-    position: absolute;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-    align-items: center;
-    height: 100vh;
-    width: 70vw;
-    left: 0;
-    top: 0;
-    z-index: 999;
-    background-color: #3f414a;
-    overflow-x: hidden;
-    overflow-y: scroll;
+        .sideBarContainer {
+      position: absolute;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: space-around;
+      align-items: center;
+      height: 100vh;
+      width: 70vw;
+      left: 0;
+      top: 0;
+      z-index: 999;
+      background-color: #3f414a;
+      overflow-x: hidden;
+      overflow-y: scroll;
   }
   .sideBar_toggle {
     position: absolute;
@@ -41,17 +41,17 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     left:0;
     height:100vh;
     width:10vw;
-    z-index: 997;
+    z-index: 998;
   }
   .sideBarShadow {
     position: absolute;
     height: 100vh;
-    width: 30vw;
-    left: 70vw;
+    width: 100vw;
+    left: 0;
     top: 0;
     background-color: black;
     opacity: 0.5;
-    z-index:998;
+    z-index:997;
   }
   p {
     position: relative;
@@ -88,13 +88,17 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     background: url('./src/img/user.png') no-repeat center center;
     background-size: cover;
   }
+.sidebar_locked{
+  left:-70vw;
+}
+.sideBarSwipePlaceBig{
+  width:100vw;
+}
+  `],
+    template: `
+<div *ngIf="!isOpen" class="sideBar_toggle" (click)="toggle()"></div>
 
-
-
-  `], template: `
-<div class="sideBar_toggle" (click)="toggle()"></div>
-
-<div class="sideBarContainer" *ngIf="isOpen" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()">
+<div class="sideBarContainer" [style.left.vw]="pusher" [ngClass]="{sideBarContainer:true, sidebar_locked:!isOpen}" *ngIf="isOpen" (fmSwipe)="swipe($event)">
   <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
     <p>Food</p>
   </a>
@@ -112,16 +116,68 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
   </a>
   </div>
   <div class="sideBarShadow"  *ngIf="isOpen" (click)="toggle()"></div>
-<div *ngIf="!isOpen" class="sideBarSwipePlace" fmSwipe (fmSwipeLeft)="toggle()" (fmSwipeRight)="toggle()"></div>
+<div class="sideBarSwipePlace" [ngClass]="{sideBarSwipePlaceBig:pusherTime}" (fmSwipe)="swipe($event)"></div>
 
   `
 }
-) export class SideBar {
+)
+export class SideBar {
     @Input() isOpen: boolean;
     @Output() isOpenChange = new EventEmitter();
+    private pusherStart: number = -70
+    private pusher: number = this.pusherStart;
+    private middle: number = this.pusherStart / 2;
+    private pusherTime: boolean = false;
+    private interval1;
+    private interval2;
 
     toggle() {
-        this.isOpen = !this.isOpen;
+        console.log(`tg`, this.isOpen);
+        if (!this.isOpen) {
+            this.pusher = this.middle;
+        } else {
+            this.pusher = this.middle - 1;
+        }
+        this.swipe(['swipeEnd'])
         this.isOpenChange.emit(this.isOpen);
+    }
+    swipe(evt) {
+        this.pusherTime = true;
+        if (this.interval1 || this.interval2) {
+            clearInterval(this.interval1)
+            clearInterval(this.interval2)
+        }
+        if (evt[0] === 'swipeEnd') {
+            this.isOpen = true;
+            if (this.pusher >= this.middle) {
+                  this.interval1 = setInterval(() => {
+                      if (this.pusher < 0) {
+                          this.pusher++
+                      } else {
+                          clearInterval(this.interval1);
+                      }
+                  }, 0)
+            } else {
+                this.interval2 = setInterval(() => {
+                    if (this.pusher > this.pusherStart) {
+                        this.pusher--
+                    } else {
+                        clearInterval(this.interval2);
+                        this.isOpen = false;
+                    }
+                }, 0)
+              }
+            this.pusherTime = false;
+        } else if (evt[0] === 'rightSwipe') {
+            this.isOpen = true;
+            if (this.pusher < 0) {
+                this.pusher++;
+            }
+        } else if (evt[0] === 'leftSwipe') {
+            this.isOpen = true;
+            if (this.pusher > -70) {
+                this.pusher--;
+            }
+        }
     }
 }
