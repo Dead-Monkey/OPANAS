@@ -56,10 +56,11 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   overflow-y: scroll;
 }
 .listItem {
+  position: relative;
   float:left;
   margin-bottom: 2vw;
   height: 12vw;
-  width: 55vw;
+  width: 50vw;
   line-height: 12vw;
   box-sizing: border-box;
   background-color: #3f414a;
@@ -68,100 +69,107 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   text-align: center;
   border-radius: 2vw;
   line-height: 12vw;
-
+}
+.listItemEditing {
+  position: relative;
+  margin-bottom: 2vw;
+  left: 58vw;
+  width: 12vw;
+  height: 12vw;
+  background: url('./src/img/wrench.png') no-repeat center center;
+  background-size: cover;
+}
+.listItemDelete {
+  position: absolute;
+  margin-bottom: 2vw;
+  left: 71vw;
+  width: 12vw;
+  height: 12vw;
+  background: url('./src/img/delete.png') no-repeat center center;
+  background-size: cover;
 }
 .foodListMove{
-  position: relative;
-  top:30vh;
+  position: absolute;;
+  width: 90vw;
+  top: 80vw;
 }
 .food_form {
   position: relative;
   margin: 5vw;
   height: 10vw;
 }
+.food_inputFoodName {
+  position: relative;
+  font-size: 7vw;
+  width: 40vw;
+  height: 10vw;
+  float: left;
+  margin-bottom: 2vw;
+  color: #ff9d2d;
+  line-height: 10vw;
+  font-weight: bold;
+}
 .food_inputFood {
-  position: absolute;
+  position: relative;
+  float: left;
   height: 10vw;
-  width: 60vw;
-  left: 20vw;
+  width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
+  font-size: 7vw;
+  color: #ff9d2d;
+  margin-bottom: 2vw;
 }
-.food_inputCalories {
-  position: absolute;
-  height: 10vw;
-  width: 16vw;
-  left: 50vw;
-  top:11vw;
-  background-color: rgba(49, 51, 61, 0.3);
-  box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
-  border-radius: 2vw;
+.food_inputFoodNameNutritions {
+  position: relative;
+  font-size: 6vw;
+  width: 40vw;
+  height: 9vw;
+  float: left;
+  margin-bottom: 2vw;
+  color: #ff9d2d;
+  line-height: 8vw;
 }
-.food_inputProtein {
-  position: absolute;
-  height: 10vw;
-  width: 16vw;
-  left: 50vw;
-  top:22vw;
+.food_inputFoodNutritions {
+  position: relative;
+  float: left;
+  height: 9vw;
+  width: 20vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
+  font-size: 6vw;
+  color: #ff9d2d;
+  margin-bottom: 2vw;
+  line-height: 8vw;
 }
-.food_inputFat {
-  position: absolute;
-  height: 10vw;
-  width: 16vw;
-  left: 50vw;
-  top:33vw;
-  background-color: rgba(49, 51, 61, 0.3);
-  box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
-  border-radius: 2vw;
-}
-.food_inputCarbohydrates {
-  position: absolute;
-  height: 10vw;
-  width: 16vw;
-  left: 50vw;
-  top:44vw;
-  background-color: rgba(49, 51, 61, 0.3);
-  box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
-  border-radius: 2vw;
+.food_inputButtonName {
+  margin-top: 2vw;
+  font-size: 7vw;
 }
 .food_inputButton_off {
-  position: absolute;
-  top: 28vh;
-  right: 0;
-  height: 10vw;
+  position: relative;
+  float: left;
+  height: 12vw;
   width: 12vw;
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
 }
 .food_inputButton_on {
-  position: absolute;
-  top:28vh;
-  right: 0;
-  height: 10vw;
+  position: relative;
+  float: left;
+  height: 12vw;
   width: 12vw;
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
 }
 .createExercise{
@@ -192,32 +200,32 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   font-size: 7vw;
   overflow: hidden;
 }
-.plusBar_createFoodButton {
-  position: absolute;
-  right: 0;
+.plusBar_listItem {
   width: 15vw;
   height: 15vw;
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+}
+.plusBar_createFoodButton {
   background: url('./src/img/addfood.png') no-repeat center center;
   background-size: cover;
-  overflow: hidden;
 }
 .plusBar_createMenuButton {
-  position: absolute;
-  right: 0;
-  width: 15vw;
-  height: 15vw;
   background: url('./src/img/createMenuButton.png') no-repeat center center;
   background-size: cover;
-  overflow: hidden;
 }
 .plusBar_pasteMenuButton {
-  position: absolute;
-  right: 0;
-  width: 15vw;
-  height: 15vw;
   background: url('./src/img/pasteMenuButton.png') no-repeat center center;
   background-size: cover;
-  overflow: hidden;
+}
+.plusBar_createExercise {
+  background: url('./src/img/exercise.png') no-repeat center center;
+  background-size: cover;
+}
+.plusBar_createTraining{
+  background: url('./src/img/trainingPlan.png') no-repeat center center;
+  background-size: cover;
 }
 .plusBar_listName {
   position: absolute;
@@ -253,59 +261,73 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     0%   {top:0;}
     100% {top:60%;}
 }
+.containerFull {
+  height: 150vw;
+  width: 90vw;
+}
     `],
     template: `
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}"(click)="toggle()"></div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
-<div class="container" *ngIf="isOpen && (iAm === 'food')">
 
+<div class="container" *ngIf="isOpen && (iAm === 'food')" [ngClass]="{containerFull: createFood || createMenu}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
+
     <div class="plusBar_list1Btn" (click)="createFoodToggle()">
-      <div class="plusBar_createFoodButton"></div>
+      <div class="plusBar_listItem plusBar_createFoodButton"></div>
       <div class="plusBar_listName">
         {{'create.food' | translate}}
       </div>
     </div>
+
     <div class="plusBar_list2Btn" (click)="createMenuToggle()">
-      <div class="plusBar_createMenuButton"></div>
+      <div class="plusBar_listItem plusBar_createMenuButton"></div>
       <div class="plusBar_listName">
         {{'create.menu' | translate}}
       </div>
     </div>
-    <div class="plusBar_list3Btn" (click)="pasteMenuToggle()">
-      <div class="plusBar_pasteMenuButton"></div>
+
+    <!-- <div class="plusBar_list3Btn" (click)="pasteMenuToggle()">
+      <div class=" plusBar_listItem plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
         {{'paste.menu' | translate}}
       </div>
-      </div>
+    </div> -->
   </div>
+
+<!-- Добавить блюдо -->
   <div *ngIf="createFood">
     <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
-      <label style="left:0; border:none;" class="food_inputFood" for="name">foodName</label>
+      <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
       <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
 
-      <label style="left:0; border:none;" class="food_inputCalories" for="calories">calories</label>
-      <input type="number" min="0" step="0.1" class="food_inputCalories" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
+      <div class="food_inputFoodNameNutritions">{{'calories' | translate}}</div>
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
 
-      <label style="left:0; border:none;" class="food_inputProtein" for="protein">protein</label>
-      <input type="number" min="0"  class="food_inputProtein" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
+      <div class="food_inputFoodNameNutritions">{{'protein' | translate}}</div>
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
 
-      <label style="left:0; border:none;" class="food_inputFat" for="fat">fat</label>
-      <input type="number" min="0" class="food_inputFat" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
+      <div class="food_inputFoodNameNutritions">{{'fat' | translate}}</div>
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
 
-      <label style="left:0; border:none;" class="food_inputCarbohydrates" for="carbohydrates">carbohydrates</label>
-      <input type="number" min="0" class="food_inputCarbohydrates" required [(ngModel)]="model.carbohydrates" ngControl="carbohydrates" #carbohydrates="ngForm">
+      <div class="food_inputFoodNameNutritions">{{'carbohydrates' | translate}}</div>
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.carbohydrates" ngControl="carbohydrates" #carbohydrates="ngForm">
 
+      <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
 
     </form>
     <div class="list foodListMove">
       <div *ngFor="#item of customFood">
         <div class="listItem">{{item.name[language]}} </div>
+        <div class="listItemEditing"></div>
+        <div class="listItemDelete"></div>
       </div>
     </div>
   </div>
+
+  <!-- Добавить новое меню -->
   <div *ngIf="createMenu" >
 
   <form class="food_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
@@ -337,22 +359,37 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     {{'create.menu' | translate}}
   </div>
 
-  <div *ngIf="pasteMenu">
+  <!-- <div *ngIf="pasteMenu">
     {{'paste.menu' | translate}}
   </div>
 </div>
-</div>
+</div> -->
 
 <!-- тут начинается спорт -->
 
-<div class="container" *ngIf="isOpen && (iAm === 'sport')">
-  <div *ngIf="listOptions">
-    <div (click)="createExerciseToggle()">create exercise</div>
-    <br>
-    <div (click)="createTrainToggle()">create train</div>
-    <br>
-    <div (click)="pasteTrainToggle()">paste train</div>
-    <br>
+<div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
+  <div *ngIf="listOptions" class="plusBar_menuButtons">
+
+    <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
+      <div class="plusBar_listItem plusBar_createExercise "></div>
+      <div class="plusBar_listName">
+        Create exercise
+      </div>
+    </div>
+
+    <div class="plusBar_list2Btn" (click)="createTrainToggle()">
+      <div class="plusBar_listItem plusBar_createTraining"></div>
+      <div class="plusBar_listName">
+        Create training plan
+      </div>
+    </div>
+
+    <!-- <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
+      <div class="plusBar_listItem plusBar_pasteMenuButton"></div>
+      <div class="plusBar_listName">
+        paste train
+      </div>
+    </div> -->
   </div>
 
 
@@ -379,7 +416,6 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   <div *ngIf="pasteTrain">
     paste train
   </div>
-  <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
 </div>
     `
 })
