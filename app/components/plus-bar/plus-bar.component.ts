@@ -286,10 +286,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
       <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
 
       <label style="left:0; border:none;" class="food_inputCalories" for="calories">calories</label>
-      <input type="number" min="0" class="food_inputCalories" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
+      <input type="number" min="0" step="0.1" class="food_inputCalories" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
 
       <label style="left:0; border:none;" class="food_inputProtein" for="protein">protein</label>
-      <input type="number" min="0" class="food_inputProtein" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
+      <input type="number" min="0"  class="food_inputProtein" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
 
       <label style="left:0; border:none;" class="food_inputFat" for="fat">fat</label>
       <input type="number" min="0" class="food_inputFat" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
