@@ -135,6 +135,11 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
             };
             keysVendor = {
                 'en': {
+                    'food': 'Food',
+                    'sport': 'Sport',
+                    'rest': 'Rest',
+                    'calendar': 'Calendar',
+                    'settings': 'Settings',
                     'progress': 'progress',
                     'search': 'search',
                     'weight': 'g',
@@ -152,7 +157,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'paste.menu': 'Paste menu',
                     'menuName': 'menu name',
                     'set': 'set',
-                    'add set': '+set',
+                    '+set': '+set',
                     'kg': 'kg',
                     'resp': 'resp',
                     'daily.rate': 'Daily rate',
@@ -167,6 +172,11 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'start': 'START'
                 },
                 'ru': {
+                    'food': 'Питание',
+                    'sport': 'Тренировки',
+                    'rest': 'Отдых',
+                    'calendar': 'Календарь',
+                    'settings': 'Настройки',
                     'progress': 'Прогресс',
                     'search': 'поиск',
                     'weight': 'г',

@@ -124,6 +124,11 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
+        'food':'Food',
+        'sport':'Sport',
+        'rest':'Rest',
+        'calendar':'Calendar',
+        'settings':'Settings',
         'progress': 'progress',
         'search': 'search',
         'weight': 'g',
@@ -140,8 +145,8 @@ let keysVendor: Object = {
         'create.menu':'Create menu',
         'paste.menu':'Paste menu',
         'menuName':'menu name',
-        'set' : 'set',
-        'add set' : '+set',
+        'set':'set',
+        '+set':'+set',
         'kg':'kg',
         'resp':'resp',
         'daily.rate':'Daily rate',
@@ -158,9 +163,14 @@ let keysVendor: Object = {
     },
 
     'ru': {
+        'food':'Питание',
+        'sport':'Тренировки',
+        'rest':'Отдых',
+        'calendar':'Календарь',
+        'settings':'Настройки',
         'progress': 'Прогресс',
-        'search': 'поиск',
-        'weight': 'г',
+        'search':'поиск',
+        'weight':'г',
         'sport.weight': 'какой вес',
         'sport.numbers': 'сколько раз',
         'sport.time': 'время',

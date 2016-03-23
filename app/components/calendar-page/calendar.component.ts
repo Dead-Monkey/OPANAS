@@ -53,50 +53,79 @@ width:25vw;
   float:left;
   width:20vw;
 }
+.today {
+  position: absolute;
+top: 110vw;
+width: 40vw;
+height: 13vw;
+background-color: grey;
+left: 13vw;
+}
+.todayIcon {
+  position: relative;
+  height: 12vw;
+  width: 12vw;
+  float: left;
+  background: url('./src/img/today.png') no-repeat center center;
+  background-size: cover;
+}
+.todayText {
+  position: relative;
+  font-size: 4vw;
+  width: 20vw;
+  float: left;
+}
       `],
     template: `
-<div class="calendar">
-<div class="year">
+  <div class="container">
+  <div class="calendar">
+    <div class="year">
 
-  <div class="toggleLeft" (click)="switchViewYearMinus()"><</div>
-      <div class="toggleLeft">
-        {{clMonth[0]['date'].getFullYear()}}
+      <div class="toggleLeft" (click)="switchViewYearMinus()">
+        <</div>
+          <div class="toggleLeft">
+            {{clMonth[0]['date'].getFullYear()}}
+          </div>
+          <div class="toggleRight" (click)="switchViewYearPlus()">></div>
       </div>
-      <div class="toggleRight" (click)="switchViewYearPlus()">></div>
-  </div>
 
-  <div class="month" [ngSwitch]="clMonth[0]['date'].getMonth()">
-  <div class="toggleLeft" (click)="switchViewMonthMinus()"><</div>
+      <div class="month" [ngSwitch]="clMonth[0]['date'].getMonth()">
+        <div class="toggleLeft" (click)="switchViewMonthMinus()">
+          <</div>
 
-    <div class="toggleLeft" *ngSwitchWhen="0"> January </div>
-    <div class="toggleLeft" *ngSwitchWhen="1"> February </div>
-    <div class="toggleLeft" *ngSwitchWhen="2"> March </div>
-    <div class="toggleLeft" *ngSwitchWhen="3"> April </div>
-    <div class="toggleLeft" *ngSwitchWhen="4"> May </div>
-    <div class="toggleLeft" *ngSwitchWhen="5"> June </div>
-    <div class="toggleLeft" *ngSwitchWhen="6"> July </div>
-    <div class="toggleLeft" *ngSwitchWhen="7"> August </div>
-    <div class="toggleLeft" *ngSwitchWhen="8"> September </div>
-    <div class="toggleLeft" *ngSwitchWhen="9"> October </div>
-    <div class="toggleLeft" *ngSwitchWhen="10"> November </div>
-    <div class="toggleLeft" *ngSwitchWhen="11"> December </div>
+            <div class="toggleLeft" *ngSwitchWhen="0"> January </div>
+            <div class="toggleLeft" *ngSwitchWhen="1"> February </div>
+            <div class="toggleLeft" *ngSwitchWhen="2"> March </div>
+            <div class="toggleLeft" *ngSwitchWhen="3"> April </div>
+            <div class="toggleLeft" *ngSwitchWhen="4"> May </div>
+            <div class="toggleLeft" *ngSwitchWhen="5"> June </div>
+            <div class="toggleLeft" *ngSwitchWhen="6"> July </div>
+            <div class="toggleLeft" *ngSwitchWhen="7"> August </div>
+            <div class="toggleLeft" *ngSwitchWhen="8"> September </div>
+            <div class="toggleLeft" *ngSwitchWhen="9"> October </div>
+            <div class="toggleLeft" *ngSwitchWhen="10"> November </div>
+            <div class="toggleLeft" *ngSwitchWhen="11"> December </div>
 
-    <div class="toggleRight" (click)="switchViewMonthPlus()">></div>
+            <div class="toggleRight" (click)="switchViewMonthPlus()">></div>
 
-  </div>
+        </div>
 
-  <div class="date">Sun</div>
-  <div class="date">Mon</div>
-  <div class="date">Tue</div>
-  <div class="date">Wed</div>
-  <div class="date">Thu</div>
-  <div class="date">Fri</div>
-  <div class="date">Sat</div>
+        <div class="date">Sun</div>
+        <div class="date">Mon</div>
+        <div class="date">Tue</div>
+        <div class="date">Wed</div>
+        <div class="date">Thu</div>
+        <div class="date">Fri</div>
+        <div class="date">Sat</div>
 
-  <div class="date" *ngFor="#item of pushDays"></div>
-  <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
-</div>
-
+        <div class="date" *ngFor="#item of pushDays"></div>
+        <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
+      </div>
+      <div class="today">
+        <div class="todayText">Today</div>
+        <div class="todayIcon"></div>
+      </div>
+    </div>
 
 
 `

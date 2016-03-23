@@ -1,23 +1,22 @@
 import {Component, Input, Output, EventEmitter}from 'angular2/core';
 import {ROUTER_DIRECTIVES}from 'angular2/router';
 import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.directive';
-
+import {TranslatePipe} from '../../services/translate/translate.service';
 
 @Component({
     selector: 'fm-side-bar',
     directives: [ROUTER_DIRECTIVES, SwipeHoldertDirective],
     providers: [],
-    pipes: [],
+    pipes: [TranslatePipe],
     styles: [`
-        .sideBarContainer {
+    .sideBarContainer {
       position: absolute;
       display: flex;
       flex-flow: column nowrap;
-      justify-content: space-around;
+      justify-content: flex-start;
       align-items: center;
       height: 100vh;
       width: 70vw;
-      left: 0;
       top: 0;
       z-index: 999;
       background-color: #3f414a;
@@ -54,10 +53,13 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     z-index:997;
   }
   p {
-    position: relative;
-    top: 17vw;
+    position: absolute;;
+    margin-top: 23vw;
+    left: 10vw;
     color: #ff9d2d;
     font-size: 6vw;
+    width: 50vw;
+    overflow: hidden;
   }
 
   .sidebar_button {
@@ -67,6 +69,9 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
     height: 22vw;
     text-align: center;
     text-decoration: none;
+    margin-top: 5vw;
+    margin-bottom: 7vw;
+
   }
   .sidebar_foodButton {
     background: url('./src/img/food.png') no-repeat center center;
@@ -100,19 +105,19 @@ import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.d
 
 <div class="sideBarContainer" [style.left.vw]="pusher" [ngClass]="{sideBarContainer:true, sidebar_locked:!isOpen}" *ngIf="isOpen" (fmSwipe)="swipe($event)">
   <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
-    <p>Food</p>
+    <p>{{'food' | translate}}</p>
   </a>
   <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton sidebar_button">
-    <p>Sport</p>
+    <p>{{'sport' | translate}}</p>
   </a>
   <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton sidebar_button">
-    <p>Rest</p>
+    <p>{{'rest' | translate}}</p>
   </a>
   <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton sidebar_button">
-    <p>Calendar</p>
+    <p>{{'calendar' | translate}}</p>
   </a>
   <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton sidebar_button">
-    <p>User</p>
+    <p>{{'settings' | translate}}</p>
   </a>
   </div>
   <div class="sideBarShadow"  *ngIf="isOpen" (click)="toggle()"></div>
