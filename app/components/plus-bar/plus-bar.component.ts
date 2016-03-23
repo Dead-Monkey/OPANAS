@@ -277,7 +277,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 }
     `],
     template: `
-<div class="plusBar" [ngClass]="{plusBarAnime: isOpen}"(click)="toggle()"></div>
+<div class="plusBar" [ngClass]="{plusBarAnime: isOpen}" (click)="toggle()"></div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
 
 <div class="container" *ngIf="isOpen && (iAm === 'food')" [ngClass]="{containerFull: createFood || createMenu}">
@@ -305,7 +305,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     </div> -->
   </div>
 
-<!-- Добавить блюдо -->
+  <!-- Добавить блюдо -->
   <div *ngIf="createFood">
     <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
@@ -339,47 +339,46 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   </div>
 
   <!-- Добавить новое меню -->
-  <div *ngIf="createMenu" >
+  <div *ngIf="createMenu">
 
-  <form class="food_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
+    <form class="food_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
 
-    <label for="menuName"></label>
-    <input class="" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
+      <label for="menuName"></label>
+      <input class="" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
 
-    <label for="foodName"></label>
-    <input class="" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
+      <label for="foodName"></label>
+      <input class="" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
 
-    <label for="foodWeight"></label>
-    <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="" required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
+      <label for="foodWeight"></label>
+      <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="" required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
 
-    <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
+      <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}" [disabled]="!foodForm.form.valid || !correctFood"></button>
 
-    <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
-      <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
-        {{item?.name[language]}}
+      <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
+        <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
+          {{item?.name[language]}}
+        </div>
+      </div>
+    </form>
+    <div class="list foodListMove">
+      <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+        <div class="listItem">{{item?.name[language]}} </div>
+        <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
     </div>
-  </form>
-  <div class="list foodListMove">
-    <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
-      <div class="listItem">{{item?.name[language]}} </div>
-      <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
+    <div *ngIf="createMenu">
+      {{'create.menu' | translate}}
     </div>
-  </div>
-  <div *ngIf="createMenu">
-    {{'create.menu' | translate}}
-  </div>
 
-  <!-- <div *ngIf="pasteMenu">
+    <div *ngIf="pasteMenu">
     {{'paste.menu' | translate}}
-  </div> -->
+  </div>
 </div>
 </div>
+    <!-- тут начинается спорт -->
 
-<!-- тут начинается спорт -->
-
-<div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
-  <div *ngIf="listOptions" class="plusBar_menuButtons">
+    <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
+      <div *ngIf="listOptions" class="plusBar_menuButtons">
 
     <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
       <div class="plusBar_listItem plusBar_createExercise "></div>
@@ -395,39 +394,39 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
       </div>
     </div>
 
-    <!-- <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
+        <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
       <div class="plusBar_listItem plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
         paste train
       </div>
-    </div> -->
-  </div>
+    </div>
+      </div>
 
 
-  <div *ngIf="createExercise">
-    <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
+      <div *ngIf="createExercise">
+        <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
 
-      <label style="left:0; border:none;width:10vw;" class="sport_inputSport" for="name">name</label>
-      <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
+          <label style="left:0; border:none;width:10vw;" class="sport_inputSport" for="name">name</label>
+          <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
 
-      <button type="submit" class="sportBtnMove" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+          <button type="submit" class="sportBtnMove" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
 
-    </form>
-    <div class="list">
-      <div *ngFor="#item of customSport">
-        <div class="listItem">{{item.name.ru}} </div>
+        </form>
+        <div class="list">
+          <div *ngFor="#item of customSport">
+            <div class="listItem">{{item.name.ru}} </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="createTrain">
+        create train
+      </div>
+
+      <div *ngIf="pasteTrain">
+        paste train
       </div>
     </div>
-  </div>
-
-  <div *ngIf="createTrain">
-    create train
-  </div>
-
-  <div *ngIf="pasteTrain">
-    paste train
-  </div>
-</div>
     `
 })
 

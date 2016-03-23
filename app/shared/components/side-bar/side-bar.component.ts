@@ -137,7 +137,6 @@ export class SideBar {
     private interval2;
 
     toggle() {
-        console.log(`tg`, this.isOpen);
         if (!this.isOpen) {
             this.pusher = this.middle;
         } else {

@@ -264,7 +264,6 @@ export class FoodComponent implements OnInit {
                 return this.pickFood(obj);
             } else {
                 this.correctFood = false;
-                console.log(`unCorrectFood`);
             }
         }
     }

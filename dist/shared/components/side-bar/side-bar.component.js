@@ -36,7 +36,6 @@ System.register(['angular2/core', 'angular2/router', '../../directives/swipeHold
                     this.pusherTime = false;
                 }
                 SideBar.prototype.toggle = function () {
-                    console.log("tg", this.isOpen);
                     if (!this.isOpen) {
                         this.pusher = this.middle;
                     }

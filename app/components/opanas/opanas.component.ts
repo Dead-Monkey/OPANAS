@@ -71,7 +71,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     { path: '/sport', name: 'Sport', component: SportComponent },
     { path: '/rest', name: 'Rest', component: RestComponent },
     { path: '/calendar', name: 'Calendar', component: CalendarComponent },
-    { path: '/user', name: 'User', component: UserComponent },
+    { path: '/user/...', name: 'User', component: UserComponent },
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {

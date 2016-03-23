@@ -121,7 +121,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         { path: '/sport', name: 'Sport', component: sport_component_1.SportComponent },
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/calendar', name: 'Calendar', component: calendar_component_1.CalendarComponent },
-                        { path: '/user', name: 'User', component: user_component_1.UserComponent },
+                        { path: '/user/...', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
                     __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService, admob_service_1.AdMobService])
