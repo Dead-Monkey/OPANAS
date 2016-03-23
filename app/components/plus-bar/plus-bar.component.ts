@@ -27,7 +27,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   left: 0;
   top: 0;
   background-color: #3f414a;
-  opacity: 0.9;
+  opacity: 0.95;
   width: 100vw;
   height: 100vh;
   z-index: 9;
@@ -56,33 +56,32 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   overflow-y: scroll;
 }
 .listItem {
-  position: relative;
   float:left;
   margin-bottom: 2vw;
   height: 12vw;
   width: 50vw;
-  line-height: 12vw;
+  line-height: 11vw;
   box-sizing: border-box;
   background-color: #3f414a;
   color: #ff9d2d;
   font-size: 6vw;
   text-align: center;
   border-radius: 2vw;
-  line-height: 12vw;
+  border: 2px solid #ff9d2d;
 }
 .listItemEditing {
-  position: relative;
   margin-bottom: 2vw;
-  left: 58vw;
+  margin-left: 3vw;
+  float: left;
   width: 12vw;
   height: 12vw;
   background: url('./src/img/wrench.png') no-repeat center center;
   background-size: cover;
 }
 .listItemDelete {
-  position: absolute;
   margin-bottom: 2vw;
-  left: 71vw;
+  margin-left: 3vw;
+  float: left;
   width: 12vw;
   height: 12vw;
   background: url('./src/img/delete.png') no-repeat center center;
@@ -92,6 +91,18 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   position: absolute;;
   width: 90vw;
   top: 80vw;
+  left: 4vw;
+  overflow-y: scroll;
+}
+.listItemName {
+  width: 90vw;
+  float:left;
+  height: 10vw;
+  text-align: center;
+  font-size: 6vw;
+  color: #ff9d2d;
+  font-weight: bold;
+  margin-bottom: 2vw;
 }
 .food_form {
   position: relative;
@@ -99,8 +110,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   height: 10vw;
 }
 .food_inputFoodName {
-  position: relative;
-  font-size: 7vw;
+  font-size: 6.5vw;
   width: 40vw;
   height: 10vw;
   float: left;
@@ -148,7 +158,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 }
 .food_inputButtonName {
   margin-top: 2vw;
-  font-size: 7vw;
+  font-size: 6.5vw;
 }
 .food_inputButton_off {
   position: relative;
@@ -197,7 +207,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   width: 90vw;
   right: 0;
   color: #ff9d2d;
-  font-size: 7vw;
+  font-size: 5.5vw;
   overflow: hidden;
 }
 .plusBar_listItem {
@@ -262,7 +272,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     100% {top:60%;}
 }
 .containerFull {
-  height: 150vw;
+  height: 165vw;
   width: 90vw;
 }
     `],
@@ -319,6 +329,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 
     </form>
     <div class="list foodListMove">
+      <div class="listItemName">{{'added.meals' | translate}}</div>
       <div *ngFor="#item of customFood">
         <div class="listItem">{{item.name[language]}} </div>
         <div class="listItemEditing"></div>
@@ -364,25 +375,24 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   </div>
 </div>
 </div>
-
     <!-- тут начинается спорт -->
 
     <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
       <div *ngIf="listOptions" class="plusBar_menuButtons">
 
-        <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
-          <div class="plusBar_listItem plusBar_createExercise "></div>
-          <div class="plusBar_listName">
-            Create exercise
-          </div>
-        </div>
+    <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
+      <div class="plusBar_listItem plusBar_createExercise "></div>
+      <div class="plusBar_listName">
+        {{'create.exercise' | translate}}
+      </div>
+    </div>
 
-        <div class="plusBar_list2Btn" (click)="createTrainToggle()">
-          <div class="plusBar_listItem plusBar_createTraining"></div>
-          <div class="plusBar_listName">
-            Create training plan
-          </div>
-        </div>
+    <div class="plusBar_list2Btn" (click)="createTrainToggle()">
+      <div class="plusBar_listItem plusBar_createTraining"></div>
+      <div class="plusBar_listName ">
+        {{'create.training.plan' | translate}}
+      </div>
+    </div>
 
         <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
       <div class="plusBar_listItem plusBar_pasteMenuButton"></div>

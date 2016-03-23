@@ -15,17 +15,18 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
       .sport_form {
-        position: relative;
-        margin: 5vw;
+        position: absolute;;
+        left: 5vw;
+        top: 46vw;
         height: 5vw;
         width: 90vw;
       }
       .sport_inputSport {
         position: absolute;
         height: 12vw;
-        width: 70vw;
+        width: 72vw;
         color: #0d0e15;
-        font-size: 7vw;
+        font-size: 6vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
         border: 5px solid #0C1017;
@@ -33,7 +34,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       }
     .sport_inputButton_off {
         position: absolute;
-        right: 3vw;
+        right: 0;
         height: 12vw;
         width: 15vw;
         background: url('./src/img/check-off.png') no-repeat center center;
@@ -59,7 +60,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       .sport_serchContainer {
         position: absolute;
         background-color: #0C1017;
-        width: 70vw;
+        width: 68vw;
         max-height: 30vh;
         padding: 2vw;
         left: 0;
@@ -73,7 +74,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         float:left;
         margin-bottom: 1vw;
         height: 15vw;
-        width: 70vw;
+        width: 68vw;
         line-height: 15vw;
         box-sizing: border-box;
         background-color: #3f414a;
@@ -84,12 +85,11 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       }
 
       .sport_list {
-        position:relative;
-        top:5vh;
+        position: absolute;;
+        top:60vw;
         margin-left: 5vw;
-        margin-right: 5vw;
         width: 90vw;
-        height: 57vh;
+        height: 67vh;
         overflow-y: scroll;
         overflow-x: hidden;
       }
@@ -98,7 +98,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         margin-right: 3vw;
         margin-top: 2vw;
         min-height: 15vw;
-        width: 70vw;
+        width: 72vw;
         box-sizing: border-box;
         background-color: #3f414a;
         color: #de5200;
@@ -107,10 +107,25 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         border-radius: 2vw;
         line-height: 15vw;
       }
+      .sport_listSet {
+        float:left;
+        margin-right: 2vw;
+        margin-top: 1vh;
+        min-height: 15vw;
+        width: 27vw;
+        line-height: 15vw;
+        background-color: #3f414a;
+        box-sizing: border-box;
+        color: #ff9d2d;
+        font-size: 6vw;
+        text-align: center;
+        border-radius: 2vw;
+        border: none;
+      }
       .sport_listWeight {
         float:left;
         height: 15vw;
-        width: 20vw;
+        width: 21vw;
         line-height: 15vw;
         margin-top: 1vh;
         background-color: #3f414a;
@@ -137,21 +152,6 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         border-radius: 2vw;
         border: none;
       }
-      .sport_listSet {
-        float:left;
-        margin-right: 2vw;
-        margin-top: 1vh;
-        min-height: 15vw;
-        width: 26vw;
-        line-height: 15vw;
-        background-color: #3f414a;
-        box-sizing: border-box;
-        color: #ff9d2d;
-        font-size: 6vw;
-        text-align: center;
-        border-radius: 2vw;
-        border: none;
-      }
       .sport_dropdownButton {
         float: left;
         margin-left: 8vw;
@@ -163,10 +163,10 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         box-sizing: border-box;
       }
 
-      .sport_dropdownButonAnime{
-        transform:rotate(180deg)
-      }
-      .sport_listButton_on {
+    .sport_dropdownButonAnime{
+      transform:rotate(180deg)
+    }
+    .sport_listButton_on {
       float: left;
       height: 15vw;
       width: 15vw;
@@ -178,7 +178,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       border-radius: 2vw;
       margin-top: 1vh;
     }
-    .sport_listButton_on_exrc {
+  .sport_listButton_on_exrc {
     float: left;
     height: 15vw;
     width: 15vw;
@@ -190,33 +190,58 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     color: #0d0e15;
     border-radius: 2vw;
   }
-    .sport_listButton_off {
-      float: left;
-      height: 15vw;
-      width: 15vw;
-      margin-top: 2vw;
-      background: url('./src/img/check-off.png') no-repeat center center;
-      background-color: #3f414a;
-      background-size: cover;
-      box-sizing: border-box;
-      color: #0d0e15;
-      border-radius: 2vw;
-    }
-    .sport_timer {
-      position: relative;
-      margin-left: 10vw;
-      top:2vw;
-      width: 90vw;
-      height: 6vh;
-      text-align: center;
-    }
-    .tmp{
-      float:left;
-      width: 20vw;
-      height:10vw;
-      background-color: gray;
-      border: 3px solid black;
-    }
+  .sport_listButton_off {
+    float: left;
+    height: 15vw;
+    width: 15vw;
+    margin-top: 2vw;
+    background: url('./src/img/check-off.png') no-repeat center center;
+    background-color: #3f414a;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border-radius: 2vw;
+  }
+  .sport_timer {
+    position: absolute;;
+    margin-left: 5vw;
+    top: 30vw;
+    width: 90vw;
+    height: 12vw;
+    text-align: center;
+    background-color: #3f414a;
+    border: 5px solid #0d0e15;
+    box-sizing: border-box;
+    border-radius: 3vw;
+    line-height: 10vw;
+
+  }
+  .sport_timerButtons {
+    float: left;
+    width: 23vw;
+    height: 10vw;
+    border-radius: 3vw;
+    color: #ff9d2d;
+    /*font-weight: bold;*/
+  }
+  .clockFace {
+    float: left;
+    width: 39vw;
+    height: 10vw;
+    font-size: 6vw;
+    color: #de5200;
+    border-right: 3px solid #0d0e15;
+    border-left: 3px solid #0d0e15;
+  }
+  .clockFace_numbers {
+    float: left;
+    width: 8vw;
+  }
+  .clockFace_hours {
+    /*margin-left: 8vw;*/
+    width: 16vw;
+    text-align: right;
+  }
       `],
     template: `
 <op-plus [iAm]="'sport'" [(isOpen)]="plusIsOpen"></op-plus>
@@ -224,10 +249,15 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 <fm-progress-bar [name]="'progress'|translate" [mainLine]="totalSport.procentDone" [secondLine]="" [minNumber]="totalSport.done" [maxNumber]="pickedSportContainer.length"></fm-progress-bar>
 
 <div class="sport_timer">
-<div class="tmp">stopwatch {{stopwatch}}</div>
-<div class="tmp"(click)="stopwatchStart()">START/RESTART</div>
-<div class="tmp" (click)="stopwatchStop()">STOP</div>
-<div class="tmp" (click)="stopwatchReset()">RESET</div>
+  <div class="sport_timerButtons" (click)="stopwatchReset()">{{'reset'| translate}}</div>
+  <div class="clockFace">
+      <div class="clockFace_numbers clockFace_hours">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>
+      <div class="clockFace_numbers">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>
+      <div class="clockFace_numbers">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}</div>
+  </div>
+  <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'start'| translate}}</div>
+  <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle()">{{'stop'| translate}}</div>
+  <div *ngIf="(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'resume'| translate}}</div>
 </div>
 
 <form class="sport_form" (ngSubmit)="onSubmit(sportForm)" #sportForm="ngForm">
@@ -238,7 +268,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
   <button #subBtn type="submit" [ngClass]="{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}" [disabled]="!sportForm.form.valid || !correctSport"></button>
 
   <div *ngIf="(name.valid && !correctSport)" class="sport_serchContainer">
-    <div class="sport_listItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSport(item);">
+    <div class="sport_searchListItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSport(item);">
 
       {{item?.name[language]}}
     </div>
@@ -287,7 +317,11 @@ export class SportComponent implements OnInit {
         'procentDone': 0
     };
 
-    private stopwatch: number = 0;
+    private stopwatch: Object = {
+      'hours':0,
+      'minutes':0,
+      'seconds': 0
+        };
     private stopwatchVendor;
     private stopwatchBussy = false;
 
@@ -422,22 +456,32 @@ export class SportComponent implements OnInit {
     }
 
     //timeromer
-    stopwatchStart() {
+    stopwatchToggle() {
         if (!this.stopwatchBussy) {
-            this.stopwatchVendor = setInterval(() => this.stopwatch++, 1000)
-            this.stopwatchBussyToggle()
-        }
+            this.stopwatchVendor = setInterval(() => {
+              this.stopwatch['seconds']++
+          if (this.stopwatch['seconds'] === 60) {
+              this.stopwatch['minutes']++;
+              this.stopwatch['seconds'] = 0;
+          }
+          if (this.stopwatch['minutes'] === 60) {
+              this.stopwatch['hours']++;
+              this.stopwatch['minutes'] = 0;
+          }
+            }
+              , 1000);
 
-    }
-    stopwatchStop() {
-        if (this.stopwatchBussy) {
+        } else {
             clearInterval(this.stopwatchVendor);
-            this.stopwatchBussyToggle()
         }
+        this.stopwatchBussyToggle();
 
     }
+
     stopwatchReset() {
-        this.stopwatch = 0;
+        for (let key in this.stopwatch) {
+          this.stopwatch[key] = 0;
+        }
     }
     stopwatchBussyToggle() {
         this.stopwatchBussy = !this.stopwatchBussy;

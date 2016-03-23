@@ -7,54 +7,53 @@ import {ROUTER_DIRECTIVES}from 'angular2/router';
     providers: [],
     pipes:[],
     styles: [`
-      .startPage_navigator {
-        display: flex;
-        flex-flow: column nowrap;
-        position: absolute;
-        justify-content: space-around;
-        width: 30vw;
-        height: 100vh;
-        bottom: 0;
-        left: 35vw;
-        overflow: hidden;
-      }
-      .startPage_foodButton {
-      background: url('./src/img/food.png') no-repeat center center;
-      background-size: cover;
-      box-sizing: border-box;
-      width: 27vw;
-      height: 27vw;
-      margin: auto;
-    }
-    .startPage_sportButton {
-      background: url('./src/img/sport.png') no-repeat center center;
-      background-size: cover;
-      box-sizing: border-box;
-      width: 27vw;
-      height: 27vw;
-      margin: auto;
+  .startPage_navigator {
+    position: absolute;
+    width: 30vw;
+    height: 100vh;
+    left: 35vw;
+    overflow: hidden;
+  }
+  .startPage_Buttons {
+    position: relative;
+    width: 27vw;
+    height: 27vw;
+    margin-bottom: 9vw;
+    margin-left: 1vw;
+    float: left;
+    top: 8vw;
 
-    }
-    .startPage_restButton {
-      background: url('./src/img/rest.png') no-repeat center center;
-      background-size: cover;
-      box-sizing: border-box;
-      width: 27vw;
-      height: 27vw;
-      margin: auto;
-
-    }
+  }
+  .startPage_food {
+    background: url('./src/img/food.png') no-repeat center center;
+    background-size: cover;
+  }
+  .startPage_sport {
+    background: url('./src/img/sport.png') no-repeat center center;
+    background-size: cover;
+  }
+  .startPage_rest {
+    background: url('./src/img/rest.png') no-repeat center center;
+    background-size: cover;
+  }
+  .startPage_user {
+    background: url('./src/img/user.png') no-repeat center center;
+    background-size: cover;
+  }
       `],
     template: `
     <nav class="startPage_navigator">
       <a [routerLink]="['Food']">
-        <div class="startPage_foodButton"></div>
+        <div class="startPage_food startPage_Buttons"></div>
       </a>
       <a [routerLink]="['Sport']">
-        <div class="startPage_sportButton"></div>
+        <div class="startPage_Buttons startPage_sport"></div>
       </a>
       <a [routerLink]="['Rest']">
-        <div class="startPage_restButton"></div>
+        <div class="startPage_Buttons startPage_rest"></div>
+      </a>
+      <a [routerLink]="['User']">
+        <div class="startPage_Buttons startPage_user"></div>
       </a>
     </nav>
     `

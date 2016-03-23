@@ -124,6 +124,11 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
+        'food':'Food',
+        'sport':'Sport',
+        'rest':'Rest',
+        'calendar':'Calendar',
+        'settings':'Settings',
         'progress': 'progress',
         'search': 'search',
         'weight': 'g',
@@ -140,19 +145,32 @@ let keysVendor: Object = {
         'create.menu':'Create menu',
         'paste.menu':'Paste menu',
         'menuName':'menu name',
-        'set' : 'set',
-        'add set' : '+set',
+        'set':'set',
+        '+set':'+set',
         'kg':'kg',
         'resp':'resp',
         'daily.rate':'Daily rate',
         'determine.daily.rate':'Determine my daily rate',
-        'meals.name':'Meals name'
+        'added.meals':'Added meals',
+        'meals.name':'Meals name',
+        'create.exercise':'Add exercise',
+        'create.training.plan':'Create training plan',
+        'reset':'RESET',
+        'stop':'STOP',
+        'resume':'RESUME',
+        'start':'START'
+
     },
 
     'ru': {
+        'food':'Питание',
+        'sport':'Тренировки',
+        'rest':'Отдых',
+        'calendar':'Календарь',
+        'settings':'Настройки',
         'progress': 'Прогресс',
-        'search': 'поиск',
-        'weight': 'г',
+        'search':'поиск',
+        'weight':'г',
         'sport.weight': 'какой вес',
         'sport.numbers': 'сколько раз',
         'sport.time': 'время',
@@ -172,7 +190,14 @@ let keysVendor: Object = {
         'resp':'повт',
         'daily.rate':'Cуточная норма',
         'determine.daily.rate':'Определить мою суточную норму',
-        'meals.name':'Название'
+        'added.meals':'Добавленные блюда',
+        'meals.name':'Название',
+        'create.exercise':'Добавить упражнение',
+        'create.training.plan':'Создать программу',
+        'reset':'СБРОС',
+        'stop':'СТОП',
+        'resume':'ПУСК',
+        'start':'ПУСК'
 
     }
 }

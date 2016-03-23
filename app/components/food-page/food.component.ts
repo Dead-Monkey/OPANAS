@@ -74,12 +74,14 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
   .food_serchContainer {
     position: absolute;
     background-color: #0C1017;
-    width: 56vw;
+    border-bottom: 6px solid #0C1017;
+    box-sizing: border-box;
+    width: 60vw;
     max-height: 30vh;
-    padding: 2vw;
+    padding-left: 2vw;
+    padding-top: 2vw;
     left: 0;
-    right: 2vw;
-    top: 9vw;
+    top: 10vw;
     overflow-y: scroll;
     border-radius: 2vw;
   }
@@ -87,7 +89,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     float:left;
     margin-bottom: 1vw;
     min-height: 12vw;
-    width: 55vw;
+    width: 56vw;
     line-height: 12vw;
     box-sizing: border-box;
     background-color: #3f414a;
@@ -166,7 +168,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
   <label for="foodName"></label>
-  <input class="food_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
+  <input class="food_inputFood" required [placeholder]="('search'|translate)" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickFoodInput(model.name)">
 
   <label for="foodWeight"></label>
   <input type="number" [min]="1" [placeholder]="'0 ' +('weight'|translate) " class="food_inputWeight" required [(ngModel)]="model.weight" ngControl="weight" #weight="ngForm">

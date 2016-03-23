@@ -135,6 +135,11 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
             };
             keysVendor = {
                 'en': {
+                    'food': 'Food',
+                    'sport': 'Sport',
+                    'rest': 'Rest',
+                    'calendar': 'Calendar',
+                    'settings': 'Settings',
                     'progress': 'progress',
                     'search': 'search',
                     'weight': 'g',
@@ -152,14 +157,26 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'paste.menu': 'Paste menu',
                     'menuName': 'menu name',
                     'set': 'set',
-                    'add set': '+set',
+                    '+set': '+set',
                     'kg': 'kg',
                     'resp': 'resp',
                     'daily.rate': 'Daily rate',
                     'determine.daily.rate': 'Determine my daily rate',
-                    'meals.name': 'Meals name'
+                    'added.meals': 'Added meals',
+                    'meals.name': 'Meals name',
+                    'create.exercise': 'Add exercise',
+                    'create.training.plan': 'Create training plan',
+                    'reset': 'RESET',
+                    'stop': 'STOP',
+                    'resume': 'RESUME',
+                    'start': 'START'
                 },
                 'ru': {
+                    'food': 'Питание',
+                    'sport': 'Тренировки',
+                    'rest': 'Отдых',
+                    'calendar': 'Календарь',
+                    'settings': 'Настройки',
                     'progress': 'Прогресс',
                     'search': 'поиск',
                     'weight': 'г',
@@ -182,7 +199,14 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'resp': 'повт',
                     'daily.rate': 'Cуточная норма',
                     'determine.daily.rate': 'Определить мою суточную норму',
-                    'meals.name': 'Название'
+                    'added.meals': 'Добавленные блюда',
+                    'meals.name': 'Название',
+                    'create.exercise': 'Добавить упражнение',
+                    'create.training.plan': 'Создать программу',
+                    'reset': 'СБРОС',
+                    'stop': 'СТОП',
+                    'resume': 'ПУСК',
+                    'start': 'ПУСК'
                 }
             };
         }
