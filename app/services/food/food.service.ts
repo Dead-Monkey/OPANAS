@@ -67,7 +67,7 @@ export class FoodService {
                 this.userFood.splice(rem, 1);
             }
         }
-        this.userFood.push(food);
+        this.userFood.unshift(food);
         this.refreshUserFood();
         this.prepareFood();
     }

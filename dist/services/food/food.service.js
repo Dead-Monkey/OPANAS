@@ -84,7 +84,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             this.userFood.splice(rem, 1);
                         }
                     }
-                    this.userFood.push(food);
+                    this.userFood.unshift(food);
                     this.refreshUserFood();
                     this.prepareFood();
                 };

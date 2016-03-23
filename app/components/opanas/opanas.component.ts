@@ -146,7 +146,15 @@ let keysVendor: Object = {
         'resp':'resp',
         'daily.rate':'Daily rate',
         'determine.daily.rate':'Determine my daily rate',
-        'meals.name':'Meals name'
+        'added.meals':'Added meals',
+        'meals.name':'Meals name',
+        'create.exercise':'Add exercise',
+        'create.training.plan':'Create training plan',
+        'reset':'RESET',
+        'stop':'STOP',
+        'resume':'RESUME',
+        'start':'START'
+
     },
 
     'ru': {
@@ -172,7 +180,14 @@ let keysVendor: Object = {
         'resp':'повт',
         'daily.rate':'Cуточная норма',
         'determine.daily.rate':'Определить мою суточную норму',
-        'meals.name':'Название'
+        'added.meals':'Добавленные блюда',
+        'meals.name':'Название',
+        'create.exercise':'Добавить упражнение',
+        'create.training.plan':'Создать программу',
+        'reset':'СБРОС',
+        'stop':'СТОП',
+        'resume':'ПУСК',
+        'start':'ПУСК'
 
     }
 }

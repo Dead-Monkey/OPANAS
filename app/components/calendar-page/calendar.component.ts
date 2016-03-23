@@ -8,16 +8,16 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
     pipes: [],
     styles: [`
 .calendar{
-  background:#3f414a;
-  width:75vw;
-  height: 85vw;
   position:absolute;
-  top:50vw;
-  left:15vw;
-  overflow:hidden;
+  top:20vw;
+  left:13vw;
+  width:74vw;
+  /*height: 85vw;*/
+  background:#3f414a;
   text-align: center;
-  line-height: 10vw;
   color: #ff9d2d;
+  overflow:hidden;
+  line-height: 10vw;
 }
 .year{
   height:10vw;
@@ -96,6 +96,7 @@ width:25vw;
   <div class="date" *ngFor="#item of pushDays"></div>
   <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
 </div>
+
 
 
 `
