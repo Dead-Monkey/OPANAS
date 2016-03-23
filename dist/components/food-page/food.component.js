@@ -101,7 +101,6 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                         }
                         else {
                             this.correctFood = false;
-                            console.log("unCorrectFood");
                         }
                     }
                 };

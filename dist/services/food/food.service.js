@@ -43,7 +43,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         this.userMenu = this._storageService.getItem(this.storageKeys.userMenu);
                     }
                     this.prepareFood();
-                    console.log(this.userMenu);
                 }
                 FoodService.prototype.getAllFood = function () {
                     this.prepareFood();

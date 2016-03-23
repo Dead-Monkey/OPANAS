@@ -24,8 +24,6 @@ export class FoodService {
             this.userMenu= this._storageService.getItem(this.storageKeys.userMenu);
         }
         this.prepareFood();
-
-        console.log(this.userMenu);
     }
 
     getAllFood(): Food[] {

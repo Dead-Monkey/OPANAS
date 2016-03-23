@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core';
+import {Directive, Input, Output, EventEmitter} from 'angular2/core';
 @Directive({
     selector: '[fmSwipe]',
     host: {
@@ -21,7 +21,7 @@ export class SwipeHoldertDirective {
     private yNew;
     private last;
 
-    constructor(el: ElementRef) { }
+    constructor() { }
 
     start(evt) {
         this.xStart = evt.touches[0].clientX;
