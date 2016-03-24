@@ -111,7 +111,7 @@ import {AdMobService} from '../../services/admob/admob.service';
   }
   .food_listItem {
     float:left;
-    margin-right: 1vw;
+      margin-right: 1vw;
     margin-top: 2vw;
     min-height: 12vw;
     width: 60vw;
@@ -165,6 +165,13 @@ import {AdMobService} from '../../services/admob/admob.service';
     color: #0d0e15;
     border-radius: 2vw;
   }
+  .food_listItemContainer{
+    position:relative;
+    height: 16vw;
+    width:90vw;
+  background-color:black;
+
+  }
     `],
     template: `
 <op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
@@ -184,17 +191,16 @@ import {AdMobService} from '../../services/admob/admob.service';
   <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}"  [disabled]="!foodForm.form.valid || !correctFood"></button>
 
   <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
-    <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
+    <div class="food_searchListItem"*ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFood(item);">
       {{item?.name[language]}}
     </div>
   </div>
 </form>
 
 <div class="food_list">
-<!-- <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFood(i, item)" (fmSwipeRight)="removeFood(i, item)" fmSwipeDeleteSide> -->
-  <div  *ngFor="#item of pickedFoodContainer; #i = index" fmSwipeDeleteSide >
+<div [style.left.vw]="0" class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (touchmove)="removeFood(i, item)">
 
-    <div class="food_listItem" >
+    <div   class="food_listItem" >
       {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)">
@@ -252,13 +258,6 @@ export class FoodComponent implements OnInit {
         for (let food of this.pickedFoodContainer) {
             this.calculateFood(food);
         }
-
-        //AdMob
-        let onDeviceReady = () => {
-            //AdMob
-            this._AdMobServe.addBottomBanerFirst();
-        }
-        document.addEventListener("deviceready", onDeviceReady, false);
     }
 
     onSubmit(food) {

@@ -127,7 +127,6 @@ let keysVendor: Object = {
         'set':'set',
         '+set':'+set',
         'kg':'kg',
-        'cm':'cm',
         'resp':'resp',
         'daily.rate':'Daily rate',
         'determine.daily.rate':'Determine my daily rate',
@@ -138,15 +137,7 @@ let keysVendor: Object = {
         'reset':'RESET',
         'stop':'STOP',
         'resume':'RESUME',
-        'start':'START',
-        'sex':'Sex',
-        'age':'Age',
-        'height':'Height',
-        'mass':'Weight',
-        'years':'years',
-        'activity.level':'Activity level',
-        'point':'Point',
-        'ccal':'ccal'
+        'start':'START'
 
     },
 
@@ -175,7 +166,6 @@ let keysVendor: Object = {
         'set' : 'сет',
         '+set': '+сет',
         'kg':'кг',
-        'cm':'см',
         'resp':'повт',
         'daily.rate':'Cуточная норма',
         'determine.daily.rate':'Определить мою суточную норму',
@@ -186,15 +176,7 @@ let keysVendor: Object = {
         'reset':'СБРОС',
         'stop':'СТОП',
         'resume':'ПУСК',
-        'start':'ПУСК',
-        'sex':'Пол',
-        'age':'Возраст',
-        'height':'Рост',
-        'mass':'Вес',
-        'years':'лет',
-        'activity.level':'Уровень активности',
-        'point':'Цель',
-        'ccal':'ккал'
+        'start':'ПУСК'
 
     }
 }
