@@ -38,6 +38,7 @@ System.register(['angular2/core', '../../services/user/user.service', '../../sha
                 UserDetailsComponent.prototype.changeLang = function (lang) {
                     this._userServe.setLanguage(lang);
                     this._translator.setCurrentLanguage(this._userServe.getLanguage());
+                    location.reload();
                 };
                 UserDetailsComponent.prototype.changeSets = function () {
                     var _this = this;

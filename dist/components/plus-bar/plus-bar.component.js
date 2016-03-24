@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../services/food/food.service', '../../services/sport/sport.service', '../../shared/pipes/simple-search/simple-search.pipe', '../../shared/services/translate/translate.service', '../../services/user/user.service', '../../shared/directives/swipeHolder/swipe-holder.directive'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../services/food/food.service', '../../services/sport/sport.service', '../../shared/pipes/simple-search/simple-search.pipe', '../../shared/services/translate/translate.service', '../../services/user/user.service', '../../shared/directives/swipe-holder/swipe-holder.directive'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {

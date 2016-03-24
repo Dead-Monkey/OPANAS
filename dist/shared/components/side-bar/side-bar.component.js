@@ -1,4 +1,4 @@
-System.register(['angular2/core', 'angular2/router', '../../directives/swipeHolder/swipe-holder.directive', '../../services/translate/translate.service'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router', '../../services/translate/translate.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', 'angular2/router', '../../directives/swipeHold
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, swipe_holder_directive_1, translate_service_1;
+    var core_1, router_1, translate_service_1;
     var SideBar;
     return {
         setters:[
@@ -20,9 +20,6 @@ System.register(['angular2/core', 'angular2/router', '../../directives/swipeHold
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (swipe_holder_directive_1_1) {
-                swipe_holder_directive_1 = swipe_holder_directive_1_1;
-            },
             function (translate_service_1_1) {
                 translate_service_1 = translate_service_1_1;
             }],
@@ -30,63 +27,54 @@ System.register(['angular2/core', 'angular2/router', '../../directives/swipeHold
             SideBar = (function () {
                 function SideBar() {
                     this.isOpenChange = new core_1.EventEmitter();
-                    this.pusherStart = -70;
-                    this.pusher = this.pusherStart;
-                    this.middle = this.pusherStart / 2;
-                    this.pusherTime = false;
+                    this.pusherTarget = 250;
+                    this.middle = this.pusherTarget / 2;
+                    this.shadowOpacity = 0;
+                    this.shadowOpacityTarget = 0.5;
+                    this.lastTouch = 0;
+                    this.pushClass = false;
+                    this.pullClass = true;
                 }
-                SideBar.prototype.toggle = function () {
-                    if (!this.isOpen) {
-                        this.pusher = this.middle;
-                    }
-                    else {
-                        this.pusher = this.middle - 1;
-                    }
-                    this.swipe(['swipeEnd']);
-                    this.isOpenChange.emit(this.isOpen);
-                };
-                SideBar.prototype.swipe = function (evt) {
-                    var _this = this;
-                    this.pusherTime = true;
-                    if (this.interval1 || this.interval2) {
-                        clearInterval(this.interval1);
-                        clearInterval(this.interval2);
-                    }
-                    if (evt[0] === 'swipeEnd') {
-                        this.isOpen = true;
-                        if (this.pusher >= this.middle) {
-                            this.interval1 = setInterval(function () {
-                                if (_this.pusher < 0) {
-                                    _this.pusher++;
-                                }
-                                else {
-                                    clearInterval(_this.interval1);
-                                }
-                            }, 0);
+                SideBar.prototype.toggle = function (arg) {
+                    if (!(arg && arg.className === 'sideBarSwipePlace')) {
+                        this.pushClass = !this.pushClass;
+                        this.pullClass = !this.pullClass;
+                        this.isOpen = !this.isOpen;
+                        this.lastTouch = 0;
+                        if (this.isOpen) {
+                            this.shadowOpacity = this.shadowOpacityTarget;
                         }
                         else {
-                            this.interval2 = setInterval(function () {
-                                if (_this.pusher > _this.pusherStart) {
-                                    _this.pusher--;
-                                }
-                                else {
-                                    clearInterval(_this.interval2);
-                                    _this.isOpen = false;
-                                }
-                            }, 0);
-                        }
-                        this.pusherTime = false;
-                    }
-                    else if (evt[0] === 'rightSwipe') {
-                        this.isOpen = true;
-                        if (this.pusher < 0) {
-                            this.pusher++;
+                            this.shadowOpacity = 0;
                         }
                     }
-                    else if (evt[0] === 'leftSwipe') {
-                        this.isOpen = true;
-                        if (this.pusher > -70) {
-                            this.pusher--;
+                };
+                SideBar.prototype.swipe = function (evt) {
+                    this.isOpen = true;
+                    this.pushClass = false;
+                    this.pullClass = false;
+                    if (evt.type === 'touchmove' && evt.touches[0].clientX < this.pusherTarget) {
+                        if (this.lastTouch < evt.touches[0].clientX && this.shadowOpacity < this.shadowOpacityTarget) {
+                            this.shadowOpacity = this.shadowOpacity + 0.01;
+                        }
+                        else if (this.shadowOpacity > 0) {
+                            this.shadowOpacity = this.shadowOpacity - 0.01;
+                        }
+                        this.lastTouch = evt.touches[0].clientX;
+                    }
+                    if (evt.type === 'touchend') {
+                        if (this.lastTouch > this.middle) {
+                            this.pullClass = false;
+                            this.pushClass = true;
+                            this.shadowOpacity = this.shadowOpacityTarget;
+                            this.isOpen = true;
+                        }
+                        if (this.lastTouch < this.middle) {
+                            this.pushClass = false;
+                            this.pullClass = true;
+                            this.shadowOpacity = 0;
+                            this.lastTouch = 0;
+                            this.isOpen = false;
                         }
                     }
                 };
@@ -101,11 +89,11 @@ System.register(['angular2/core', 'angular2/router', '../../directives/swipeHold
                 SideBar = __decorate([
                     core_1.Component({
                         selector: 'fm-side-bar',
-                        directives: [router_1.ROUTER_DIRECTIVES, swipe_holder_directive_1.SwipeHoldertDirective],
+                        directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: flex-start;\n      align-items: center;\n      height: 100vh;\n      width: 70vw;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    height:100vh;\n    width:10vw;\n    z-index: 998;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 100vw;\n    left: 0;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:997;\n  }\n  p {\n    position: absolute;;\n    margin-top: 23vw;\n    left: 10vw;\n    color: #ff9d2d;\n    font-size: 6vw;\n    width: 50vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 5vw;\n    margin-bottom: 7vw;\n\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sidebar_locked{\n  left:-70vw;\n}\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n  "],
-                        template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [style.left.vw]=\"pusher\" [ngClass]=\"{sideBarContainer:true, sidebar_locked:!isOpen}\" *ngIf=\"isOpen\" (fmSwipe)=\"swipe($event)\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton sidebar_button\">\n    <p>{{'food' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton sidebar_button\">\n    <p>{{'sport' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton sidebar_button\">\n    <p>{{'rest' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton sidebar_button\">\n    <p>{{'calendar' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_userButton sidebar_button\">\n    <p>{{'settings' | translate}}</p>\n  </a>\n  </div>\n  <div class=\"sideBarShadow\"  *ngIf=\"isOpen\" (click)=\"toggle()\"></div>\n<div class=\"sideBarSwipePlace\" [ngClass]=\"{sideBarSwipePlaceBig:pusherTime}\" (fmSwipe)=\"swipe($event)\"></div>\n\n  "
+                        styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: flex-start;\n      align-items: center;\n      height: 100vh;\n      width: 250px;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n      left:-250px;\n\n  }\n  .sideBarAnime{\n    transition: transform 1s, opacity 1s;\n    opacity:0.9;\n    transform: translate3d(250px,0,0)\n  }\n  .sideBarAnimeBack{\n    transition: transform 1s;\n    transform: translate3d(-250px,0,0)\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 999;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: black;\n    height:100vh;\n    width:10vw;\n    z-index: 998;\n\n  }\n\n  p {\n    position: absolute;;\n    margin-top: 23vw;\n    left: 10vw;\n    color: #ff9d2d;\n    font-size: 6vw;\n    width: 50vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 5vw;\n    margin-bottom: 7vw;\n\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n  "],
+                        template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [ngClass]=\"{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}\" [style.transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton sidebar_button\">\n    <p>{{'food' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton sidebar_button\">\n    <p>{{'sport' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton sidebar_button\">\n    <p>{{'rest' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton sidebar_button\">\n    <p>{{'calendar' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_userButton sidebar_button\">\n    <p>{{'settings' | translate}}</p>\n  </a>\n  </div>\n<div class=\"sideBarSwipePlace\" #swipePlace [style.opacity]=\"shadowOpacity\" [ngClass]=\"{sideBarSwipePlaceBig: isOpen}\"  (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\" (click)=\"toggle(swipePlace)\"></div>\n  "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);

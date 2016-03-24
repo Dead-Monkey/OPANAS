@@ -128,8 +128,7 @@ System.register("shared/services/translate/src/pipes/translate.pipe", ['angular2
                 };
                 TranslatePipe = __decorate([
                     core_2.Pipe({
-                        name: 'translate',
-                        pure: false
+                        name: 'translate'
                     }), 
                     __metadata('design:paramtypes', [translate_service_1.TranslateService])
                 ], TranslatePipe);
@@ -398,7 +397,6 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                         this.userMenu = this._storageService.getItem(this.storageKeys.userMenu);
                     }
                     this.prepareFood();
-                    console.log(this.userMenu);
                 }
                 FoodService.prototype.getAllFood = function () {
                     this.prepareFood();
@@ -439,7 +437,7 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                             this.userFood.splice(rem, 1);
                         }
                     }
-                    this.userFood.push(food);
+                    this.userFood.unshift(food);
                     this.refreshUserFood();
                     this.prepareFood();
                 };
@@ -2372,7 +2370,7 @@ System.register("shared/pipes/simple-search/simple-search.pipe", ['angular2/core
         }
     }
 });
-System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angular2/core'], function(exports_10, context_10) {
+System.register("shared/directives/swipe-holder/swipe-holder.directive", ['angular2/core'], function(exports_10, context_10) {
     "use strict";
     var __moduleName = context_10 && context_10.id;
     var core_9;
@@ -2384,7 +2382,7 @@ System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angula
             }],
         execute: function() {
             SwipeHoldertDirective = (function () {
-                function SwipeHoldertDirective(el) {
+                function SwipeHoldertDirective() {
                     this.fmSwipe = new core_9.EventEmitter();
                     this.fmSwipeRight = new core_9.EventEmitter();
                     this.fmSwipeLeft = new core_9.EventEmitter();
@@ -2396,31 +2394,34 @@ System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angula
                     this.yStart = evt.touches[0].clientY;
                 };
                 SwipeHoldertDirective.prototype.move = function (evt) {
+                    if (evt.type === 'touchend') {
+                        return this.fmSwipe.emit(['swipeEnd', this.xNew, this.yNew, evt]);
+                    }
                     if (!this.xStart || !this.yStart) {
                         return;
                     }
-                    var xNew = evt.touches[0].clientX;
-                    var yNew = evt.touches[0].clientY;
-                    var xDiff = this.xStart - xNew;
-                    var yDiff = this.yStart - yNew;
+                    this.xNew = evt.touches[0].clientX;
+                    this.yNew = evt.touches[0].clientY;
+                    var xDiff = this.xStart - this.xNew;
+                    var yDiff = this.yStart - this.yNew;
                     if (Math.abs(xDiff) > Math.abs(yDiff)) {
                         if (xDiff > 0) {
-                            this.fmSwipe.emit(['leftSwipe', xNew, yNew, evt]);
-                            this.fmSwipeLeft.emit(['leftSwipe', xNew, evt]);
+                            this.fmSwipe.emit(['leftSwipe', this.xNew, this.yNew, evt]);
+                            this.fmSwipeLeft.emit(['leftSwipe', this.xNew, evt]);
                         }
                         else {
-                            this.fmSwipe.emit(['rightSwipe', xNew, yNew, evt]);
-                            this.fmSwipeRight.emit(['rightSwipe', xNew, evt]);
+                            this.fmSwipe.emit(['rightSwipe', this.xNew, this.yNew, evt]);
+                            this.fmSwipeRight.emit(['rightSwipe', this.xNew, evt]);
                         }
                     }
                     else {
                         if (yDiff > 0) {
-                            this.fmSwipe.emit(['upSwipe', xNew, yNew, evt]);
-                            this.fmSwipeUp.emit(['upSwipe', yNew, evt]);
+                            this.fmSwipe.emit(['upSwipe', this.xNew, this.yNew, evt]);
+                            this.fmSwipeUp.emit(['upSwipe', this.yNew, evt]);
                         }
                         else {
-                            this.fmSwipe.emit(['downSwipe', xNew, yNew, evt]);
-                            this.fmSwipeDown.emit(['downSwipe', yNew, evt]);
+                            this.fmSwipe.emit(['downSwipe', this.xNew, this.yNew, evt]);
+                            this.fmSwipeDown.emit(['downSwipe', this.yNew, evt]);
                         }
                     }
                     this.xStart = evt.touches[0].clientX;
@@ -2456,10 +2457,10 @@ System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angula
                         host: {
                             '(touchstart)': 'start($event)',
                             '(touchmove)': 'move($event)',
-                            '(touchend)': 'end($event)'
+                            '(touchend)': 'move($event);end($event)'
                         }
                     }), 
-                    __metadata('design:paramtypes', [core_9.ElementRef])
+                    __metadata('design:paramtypes', [])
                 ], SwipeHoldertDirective);
                 return SwipeHoldertDirective;
             }());
@@ -2467,7 +2468,7 @@ System.register("shared/directives/swipeHolder/swipe-holder.directive", ['angula
         }
     }
 });
-System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_11, context_11) {
+System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service", "services/user/user.service", "shared/directives/swipe-holder/swipe-holder.directive"], function(exports_11, context_11) {
     "use strict";
     var __moduleName = context_11 && context_11.id;
     var core_10, food_service_1, sport_service_1, simple_search_pipe_1, translate_service_3, user_service_3, swipe_holder_directive_1;
@@ -2676,13 +2677,8 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                         directives: [swipe_holder_directive_1.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_3.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-<<<<<<< HEAD
-                        styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n  width:90vw;\n  height: 50vw;\n  z-index: 10;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #3f414a;\n  opacity: 0.9;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n}\n.plusBar {\n  position: absolute;\n  right: 5vw;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/newPlus.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n.list {\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 55vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  line-height: 12vw;\n\n}\n.foodListMove{\n  position: relative;\n  top:30vh;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n.plusBar_menuButtons {\n  position: absolute;\n  height: 50vw;\n  width: 90vw;\n  right: 0;\n  color: #ff9d2d;\n  font-size: 7vw;\n  overflow: hidden;\n}\n.plusBar_createFoodButton {\n  position: absolute;\n  right: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/addfood.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_createMenuButton {\n  position: absolute;\n  right: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/createMenuButton.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_pasteMenuButton {\n  position: absolute;\n  right: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/pasteMenuButton.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_listName {\n  position: relative;;\n  right: 16vw;\n  margin-right: 15vw;\n  text-align: right;\n  height: 15vw;\n  width: 90vw;\n  line-height: 15vw;\n  margin-bottom: 1vw;\n}\n.containerFull {\n  height: 100vw;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\" [ngClass]=\"{containerFull: createFood || createMenu}\">\n\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n    <div (click)=\"createFoodToggle()\">\n      <div class=\"plusBar_createFoodButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.food' | translate}}\n      </div>\n    </div>\n    <div (click)=\"createMenuToggle()\">\n      <div class=\"plusBar_createMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.menu' | translate}}\n      </div>\n    </div>\n    <div (click)=\"pasteMenuToggle()\">\n      <div class=\"plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'paste.menu' | translate}}\n      </div>\n      </div>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\" >\n\n  <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n    <label for=\"menuName\"></label>\n    <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n    <label for=\"foodName\"></label>\n    <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n    <label for=\"foodWeight\"></label>\n    <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n    <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n    <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n      <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n        {{item?.name[language]}}\n      </div>\n    </div>\n  </form>\n  <div class=\"list foodListMove\">\n    <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n      <div class=\"listItem\">{{item?.name[language]}} </div>\n      <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\">\n    {{'create.menu' | translate}}\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    {{'paste.menu' | translate}}\n  </div>\n</div>\n</div>\n\n<!-- \u0442\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0440\u0442 -->\n\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n  <div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n</div>\n    "
-=======
-                        styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n  width:90vw;\n  height: 50vw;\n  z-index: 10;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #3f414a;\n  opacity: 0.9;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n}\n.plusBar {\n  position: absolute;\n  right: 5vw;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/newPlus.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n.list {\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 55vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  line-height: 12vw;\n\n}\n.foodListMove{\n  position: relative;\n  top:30vh;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 60vw;\n  left: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputCalories {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputProtein {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:22vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputFat {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:33vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputCarbohydrates {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 50vw;\n  top:44vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputButton_off {\n  position: absolute;\n  top: 28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: absolute;\n  top:28vh;\n  right: 0;\n  height: 10vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n.plusBar_menuButtons {\n  position: absolute;\n  height: 50vw;\n  width: 90vw;\n  right: 0;\n  color: #ff9d2d;\n  font-size: 7vw;\n  overflow: hidden;\n}\n.plusBar_createFoodButton {\n  position: absolute;\n  right: 0;\n  width: 15vw;\n  height: 15vw;\n  top:0;\n  background: url('./src/img/addfood.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_createMenuButton {\n  position: absolute;\n  right: 0;\n  top:0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/createMenuButton.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_pasteMenuButton {\n  position: absolute;\n  right: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/pasteMenuButton.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n}\n.plusBar_listName {\n  position: relative;;\n  right: 16vw;\n  margin-right: 15vw;\n  text-align: right;\n  height: 15vw;\n  width: 90vw;\n  line-height: 15vw;\n  margin-bottom: 1vw;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\"(click)=\"toggle()\"></div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\">\n\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n    <div (click)=\"createFoodToggle()\">\n      <div class=\"plusBar_createFoodButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.food' | translate}}\n      </div>\n    </div>\n    <div (click)=\"createMenuToggle()\">\n      <div class=\"plusBar_createMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.menu' | translate}}\n      </div>\n    </div>\n    <div (click)=\"pasteMenuToggle()\">\n      <div class=\"plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'paste.menu' | translate}}\n      </div>\n      </div>\n  </div>\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFood\" for=\"name\">foodName</label>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCalories\" for=\"calories\">calories</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCalories\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputProtein\" for=\"protein\">protein</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputProtein\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputFat\" for=\"fat\">fat</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputFat\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <label style=\"left:0; border:none;\" class=\"food_inputCarbohydrates\" for=\"carbohydrates\">carbohydrates</label>\n      <input type=\"number\" min=\"0\" class=\"food_inputCarbohydrates\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\" >\n\n  <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n    <label for=\"menuName\"></label>\n    <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n    <label for=\"foodName\"></label>\n    <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n    <label for=\"foodWeight\"></label>\n    <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n    <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n    <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n      <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n        {{item?.name[language]}}\n      </div>\n    </div>\n  </form>\n  <div class=\"list foodListMove\">\n    <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n      <div class=\"listItem\">{{item?.name[language]}} </div>\n      <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n    </div>\n  </div>\n  <div *ngIf=\"createMenu\">\n    {{'create.menu' | translate}}\n  </div>\n\n  <div *ngIf=\"pasteMenu\">\n    {{'paste.menu' | translate}}\n  </div>\n</div>\n</div>\n\n<!-- \u0442\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0440\u0442 -->\n\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\">\n  <div *ngIf=\"listOptions\">\n    <div (click)=\"createExerciseToggle()\">create exercise</div>\n    <br>\n    <div (click)=\"createTrainToggle()\">create train</div>\n    <br>\n    <div (click)=\"pasteTrainToggle()\">paste train</div>\n    <br>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n      <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list\">\n      <div *ngFor=\"#item of customSport\">\n        <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n  <div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n</div>\n    "
->>>>>>> timur/master
+                        styles: ["\n\n.container {\n  position: fixed;\n  left: 5vw;\n  top: 15vw;\n  overflow: hidden;\n  width:90vw;\n  height: 50vw;\n  z-index: 10;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #3f414a;\n  opacity: 0.95;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n}\n.plusBar {\n  position: absolute;\n  right: 5vw;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/newPlus.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n.list {\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 50vw;\n  line-height: 11vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  border: 2px solid #ff9d2d;\n}\n.listItemEditing {\n  margin-bottom: 2vw;\n  margin-left: 3vw;\n  float: left;\n  width: 12vw;\n  height: 12vw;\n  background: url('./src/img/wrench.png') no-repeat center center;\n  background-size: cover;\n}\n.listItemDelete {\n  margin-bottom: 2vw;\n  margin-left: 3vw;\n  float: left;\n  width: 12vw;\n  height: 12vw;\n  background: url('./src/img/delete.png') no-repeat center center;\n  background-size: cover;\n}\n.foodListMove{\n  position: absolute;;\n  width: 90vw;\n  top: 80vw;\n  left: 4vw;\n  overflow-y: scroll;\n}\n.listItemName {\n  width: 90vw;\n  float:left;\n  height: 10vw;\n  text-align: center;\n  font-size: 6vw;\n  color: #ff9d2d;\n  font-weight: bold;\n  margin-bottom: 2vw;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFoodName {\n  font-size: 6.5vw;\n  width: 40vw;\n  height: 10vw;\n  float: left;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 10vw;\n  font-weight: bold;\n}\n.food_inputFood {\n  position: relative;\n  float: left;\n  height: 10vw;\n  width: 40vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 7vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n}\n.food_inputFoodNameNutritions {\n  position: relative;\n  font-size: 6vw;\n  width: 40vw;\n  height: 9vw;\n  float: left;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 8vw;\n}\n.food_inputFoodNutritions {\n  position: relative;\n  float: left;\n  height: 9vw;\n  width: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 6vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n  line-height: 8vw;\n}\n.food_inputButtonName {\n  margin-top: 2vw;\n  font-size: 6.5vw;\n}\n.food_inputButton_off {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n}\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sport_inputSport{\n  position: absolute;\n  height: 10vw;\n  width: 55vw;\n  left: 11vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  color: red;\n  border: 1.5vw solid red;\n  border-radius: 2vw;\n}\n.sportBtnMove{\n  top:0;\n  right:0;\n}\n.plusBar_menuButtons {\n  position: absolute;\n  height: 50vw;\n  width: 90vw;\n  right: 0;\n  color: #ff9d2d;\n  font-size: 5.5vw;\n  overflow: hidden;\n}\n.plusBar_listItem {\n  width: 15vw;\n  height: 15vw;\n  position: absolute;\n  right: 0;\n  overflow: hidden;\n}\n.plusBar_createFoodButton {\n  background: url('./src/img/addfood.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createMenuButton {\n  background: url('./src/img/createMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_pasteMenuButton {\n  background: url('./src/img/pasteMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createExercise {\n  background: url('./src/img/exercise.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createTraining{\n  background: url('./src/img/trainingPlan.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_listName {\n  position: absolute;\n  right: 16vw;\n  text-align: right;\n  height: 15vw;\n  width: 90vw;\n  line-height: 15vw;\n  margin-bottom: 1vw;\n\n}\n.plusBar_list1Btn{\n  position: absolute;\n  right:0;\n}\n.plusBar_list2Btn{\n  position: absolute;\n  right:0;\n  top: 30%;\n  animation:  mainList2Btn 300ms linear;\n}\n.plusBar_list3Btn{\n  position: absolute;\n  top: 60%;\n  right:0;\n  animation:  mainList3Btn 300ms linear;\n}\n@keyframes mainList2Btn {\n    0%   {top:0px;}\n    100% {top:30%;}\n}\n@keyframes mainList3Btn {\n    0%   {top:0;}\n    100% {top:60%;}\n}\n.containerFull {\n  height: 165vw;\n  width: 90vw;\n}\n    "],
+                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\" (click)=\"toggle()\"></div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\" [ngClass]=\"{containerFull: createFood || createMenu}\">\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createFoodToggle()\">\n      <div class=\"plusBar_listItem plusBar_createFoodButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.food' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createMenuToggle()\">\n      <div class=\"plusBar_listItem plusBar_createMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.menu' | translate}}\n      </div>\n    </div>\n\n    <!-- <div class=\"plusBar_list3Btn\" (click)=\"pasteMenuToggle()\">\n      <div class=\" plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'paste.menu' | translate}}\n      </div>\n    </div> -->\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0431\u043B\u044E\u0434\u043E -->\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n      <div class=\"food_inputFoodName\">{{'meals.name' | translate}}</div>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'calories' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.calories\" ngControl=\"calories\" #calories=\"ngForm\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'protein' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.protein\" ngControl=\"protein\" #protein=\"ngForm\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'fat' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.fat\" ngControl=\"fat\" #fat=\"ngForm\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'carbohydrates' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.carbohydrates\" ngControl=\"carbohydrates\" #carbohydrates=\"ngForm\">\n\n      <div class=\"food_inputFoodNameNutritions food_inputButtonName \">{{'done' | translate}}</div>\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n    </form>\n    <div class=\"list foodListMove\">\n      <div class=\"listItemName\">{{'added.meals' | translate}}</div>\n      <div *ngFor=\"#item of customFood\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n        <div class=\"listItemEditing\"></div>\n        <div class=\"listItemDelete\"></div>\n      </div>\n    </div>\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043D\u043E\u0432\u043E\u0435 \u043C\u0435\u043D\u044E -->\n  <div *ngIf=\"createMenu\">\n\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n      <label for=\"menuName\"></label>\n      <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n      <label for=\"foodName\"></label>\n      <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n      <label for=\"foodWeight\"></label>\n      <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n      <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n      <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n        <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n          {{item?.name[language]}}\n        </div>\n      </div>\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n        <div class=\"listItem\">{{item?.name[language]}} </div>\n        <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n      </div>\n    </div>\n    <div *ngIf=\"createMenu\">\n      {{'create.menu' | translate}}\n    </div>\n\n    <div *ngIf=\"pasteMenu\">\n    {{'paste.menu' | translate}}\n  </div>\n</div>\n</div>\n    <!-- \u0442\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0440\u0442 -->\n\n    <div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\" [ngClass]=\"{containerFull: createExercise || createTrain}\">\n      <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createExerciseToggle()\">\n      <div class=\"plusBar_listItem plusBar_createExercise \"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.exercise' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_createTraining\"></div>\n      <div class=\"plusBar_listName \">\n        {{'create.training.plan' | translate}}\n      </div>\n    </div>\n\n        <div class=\"plusBar_list3Btn\" (click)=\"pasteTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        paste train\n      </div>\n    </div>\n      </div>\n\n\n      <div *ngIf=\"createExercise\">\n        <form class=\"food_form\" (ngSubmit)=\"onSubmitSport(sportForm)\" #sportForm=\"ngForm\">\n\n          <label style=\"left:0; border:none;width:10vw;\" class=\"sport_inputSport\" for=\"name\">name</label>\n          <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" ngControl=\"name\" #name=\"ngForm\">\n\n          <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\"></button>\n\n        </form>\n        <div class=\"list\">\n          <div *ngFor=\"#item of customSport\">\n            <div class=\"listItem\">{{item.name.ru}} </div>\n          </div>\n        </div>\n      </div>\n\n      <div *ngIf=\"createTrain\">\n        create train\n      </div>\n\n      <div *ngIf=\"pasteTrain\">\n        paste train\n      </div>\n    </div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService, user_service_3.UserService])
                 ], PlusComponent);
@@ -2927,15 +2923,132 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
         }
     }
 });
-System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_13, context_13) {
+System.register("shared/directives/swipe-delete-side/swipe-delete-side.directive", ['angular2/core'], function(exports_13, context_13) {
     "use strict";
     var __moduleName = context_13 && context_13.id;
-    var core_12, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_4, swipe_holder_directive_2;
-    var FoodComponent;
+    var core_12;
+    var SwipeDeleteSideDirective;
     return {
         setters:[
             function (core_12_1) {
                 core_12 = core_12_1;
+            }],
+        execute: function() {
+            SwipeDeleteSideDirective = (function () {
+                function SwipeDeleteSideDirective(_el) {
+                    this._el = _el;
+                    this.fmSwipeDeleteSide = new core_12.EventEmitter();
+                    this.fmSwipeRight = new core_12.EventEmitter();
+                    this.fmSwipeLeft = new core_12.EventEmitter();
+                    this.fmSwipeDown = new core_12.EventEmitter();
+                    this.fmSwipeUp = new core_12.EventEmitter();
+                }
+                SwipeDeleteSideDirective.prototype.start = function (evt) {
+                };
+                SwipeDeleteSideDirective.prototype.move = function (evt) {
+                    this.fmSwipeDeleteSide.emit('opa');
+                    this._el.nativeElement.style.left = '30vw';
+                    console.log(this._el.nativeElement);
+                };
+                SwipeDeleteSideDirective.prototype.end = function (evt) {
+                };
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeDeleteSide", void 0);
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeRight", void 0);
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeLeft", void 0);
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeDown", void 0);
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeUp", void 0);
+                SwipeDeleteSideDirective = __decorate([
+                    core_12.Directive({
+                        selector: '[fmSwipeDeleteSide]',
+                        host: {
+                            '(touchstart)': 'move($event)',
+                            '(touchmove)': 'move($event)',
+                            '(touchend)': 'end($event)',
+                            '(click)': 'move($event)'
+                        }
+                    }), 
+                    __metadata('design:paramtypes', [core_12.ElementRef])
+                ], SwipeDeleteSideDirective);
+                return SwipeDeleteSideDirective;
+            }());
+            exports_13("SwipeDeleteSideDirective", SwipeDeleteSideDirective);
+        }
+    }
+});
+System.register("services/admob/admob.service", ['angular2/core'], function(exports_14, context_14) {
+    "use strict";
+    var __moduleName = context_14 && context_14.id;
+    var core_13;
+    var AdMobService;
+    return {
+        setters:[
+            function (core_13_1) {
+                core_13 = core_13_1;
+            }],
+        execute: function() {
+            AdMobService = (function () {
+                function AdMobService() {
+                    this.admobidFirst = {};
+                }
+                AdMobService.prototype.createBottomBanerFirst = function () {
+                    if (/(android)/i.test(navigator.userAgent)) {
+                        this.admobidFirst = {
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
+                        };
+                    }
+                    else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+                        this.admobidFirst = {
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
+                        };
+                    }
+                    else {
+                        this.admobidFirst = {
+                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
+                        };
+                    }
+                };
+                AdMobService.prototype.addBottomBanerFirst = function () {
+                    if (AdMob)
+                        AdMob.createBanner({
+                            adId: this.admobidFirst.banner,
+                            position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                            autoShow: true
+                        });
+                };
+                AdMobService = __decorate([
+                    core_13.Injectable(), 
+                    __metadata('design:paramtypes', [])
+                ], AdMobService);
+                return AdMobService;
+            }());
+            exports_14("AdMobService", AdMobService);
+        }
+    }
+});
+System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipe-holder/swipe-holder.directive", "shared/directives/swipe-delete-side/swipe-delete-side.directive", "services/admob/admob.service"], function(exports_15, context_15) {
+    "use strict";
+    var __moduleName = context_15 && context_15.id;
+    var core_14, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_4, swipe_holder_directive_2, swipe_delete_side_directive_1, admob_service_1;
+    var FoodComponent;
+    return {
+        setters:[
+            function (core_14_1) {
+                core_14 = core_14_1;
             },
             function (translate_service_4_1) {
                 translate_service_4 = translate_service_4_1;
@@ -2960,13 +3073,20 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
             },
             function (swipe_holder_directive_2_1) {
                 swipe_holder_directive_2 = swipe_holder_directive_2_1;
+            },
+            function (swipe_delete_side_directive_1_1) {
+                swipe_delete_side_directive_1 = swipe_delete_side_directive_1_1;
+            },
+            function (admob_service_1_1) {
+                admob_service_1 = admob_service_1_1;
             }],
         execute: function() {
             FoodComponent = (function () {
-                function FoodComponent(_foodServe, _calendarService, _userServe) {
+                function FoodComponent(_foodServe, _calendarService, _userServe, _AdMobServe) {
                     this._foodServe = _foodServe;
                     this._calendarService = _calendarService;
                     this._userServe = _userServe;
+                    this._AdMobServe = _AdMobServe;
                     this.model = {};
                     this.language = 'en';
                     this.pickedFood = {};
@@ -2993,6 +3113,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     };
                 }
                 FoodComponent.prototype.ngOnInit = function () {
+                    var _this = this;
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
                     this.userSets = this._userServe.getUserSets()['foodSets'];
@@ -3003,6 +3124,12 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         var food = _a[_i];
                         this.calculateFood(food);
                     }
+                    //AdMob
+                    var onDeviceReady = function () {
+                        //AdMob
+                        _this._AdMobServe.addBottomBanerFirst();
+                    };
+                    document.addEventListener("deviceready", onDeviceReady, false);
                 };
                 FoodComponent.prototype.onSubmit = function (food) {
                     this.pickedFood['weight'] = food.value.weight;
@@ -3021,7 +3148,6 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         }
                         else {
                             this.correctFood = false;
-                            console.log("unCorrectFood");
                         }
                     }
                 };
@@ -3105,31 +3231,31 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                     }
                 };
                 FoodComponent = __decorate([
-                    core_12.Component({
+                    core_14.Component({
                         selector: 'op-food',
-                        directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective],
+                        directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective, swipe_delete_side_directive_1.SwipeDeleteSideDirective],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_2.SimpleSearch],
-                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #0d0e15;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    width: 56vw;\n    max-height: 30vh;\n    padding: 2vw;\n    left: 0;\n    right: 2vw;\n    top: 9vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    min-height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
-                        template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '.'\" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n  <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFood(i, item)\" (fmSwipeRight)=\"removeFood(i, item)\">\n\n    <div class=\"food_listItem\">\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n  </div>\n</div>\n    "
+                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  input {\n    padding-left: 1vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 10vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 10vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 5vw;\n    color: #0d0e15;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 10vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    border-bottom: 6px solid #0C1017;\n    box-sizing: border-box;\n    width: 60vw;\n    max-height: 30vh;\n    padding-left: 2vw;\n    padding-top: 2vw;\n    left: 0;\n    top: 10vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 56vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    margin: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n    overflow-x:hidden;\n  }\n  .food_listItemContainer{\n    position:relative;\n  }\n  .food_listItem {\n    float:left;\n    margin-bottom: 2vw;\n    min-height: 12vw;\n    width: 55vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-left: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n  }\n\n  .food_listButton_on {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    "],
+                        template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate)\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"'0 ' +('weight'|translate) \" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n<!-- <div *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFood(i, item)\" (fmSwipeRight)=\"removeFood(i, item)\" fmSwipeDeleteSide> -->\n  <div  *ngFor=\"#item of pickedFoodContainer; #i = index\" fmSwipeDeleteSide >\n\n    <div class=\"food_listItem\" >\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n  </div>\n\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService])
+                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService, admob_service_1.AdMobService])
                 ], FoodComponent);
                 return FoodComponent;
             }());
-            exports_13("FoodComponent", FoodComponent);
+            exports_15("FoodComponent", FoodComponent);
         }
     }
 });
-System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipeHolder/swipe-holder.directive", "services/sport/sport.service"], function(exports_14, context_14) {
+System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipe-holder/swipe-holder.directive", "services/sport/sport.service"], function(exports_16, context_16) {
     "use strict";
-    var __moduleName = context_14 && context_14.id;
-    var core_13, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_2, user_service_5, swipe_holder_directive_3, sport_service_2;
+    var __moduleName = context_16 && context_16.id;
+    var core_15, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_2, user_service_5, swipe_holder_directive_3, sport_service_2;
     var SportComponent;
     return {
         setters:[
-            function (core_13_1) {
-                core_13 = core_13_1;
+            function (core_15_1) {
+                core_15 = core_15_1;
             },
             function (translate_service_5_1) {
                 translate_service_5 = translate_service_5_1;
@@ -3171,7 +3297,11 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         'done': 0,
                         'procentDone': 0
                     };
-                    this.stopwatch = 0;
+                    this.stopwatch = {
+                        'hours': 0,
+                        'minutes': 0,
+                        'seconds': 0
+                    };
                     this.stopwatchBussy = false;
                 }
                 SportComponent.prototype.ngOnInit = function () {
@@ -3190,7 +3320,11 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                     this.pickedSport['setsToggle'] = true;
                     this.pickedSport['sets'] = [{ 'picked': false }];
                     this._calendarService.setDailySport(this.pickedSport, this.currentDate);
-                    this.calculateTotalSport(this.pickedSport);
+                    this.calculateSportRefresh();
+                    for (var _i = 0, _a = this.pickedSportContainer; _i < _a.length; _i++) {
+                        var variable = _a[_i];
+                        this.calculateTotalSportInit(variable);
+                    }
                     this.pickedSport = {};
                     this.model = {};
                     this.correctSport = false;
@@ -3293,51 +3427,60 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                     this._calendarService.changeDailySport(index, this.currentDate, sport);
                 };
                 //timeromer
-                SportComponent.prototype.stopwatchStart = function () {
+                SportComponent.prototype.stopwatchToggle = function () {
                     var _this = this;
                     if (!this.stopwatchBussy) {
-                        this.stopwatchVendor = setInterval(function () { return _this.stopwatch++; }, 1000);
-                        this.stopwatchBussyToggle();
+                        this.stopwatchVendor = setInterval(function () {
+                            _this.stopwatch['seconds']++;
+                            if (_this.stopwatch['seconds'] === 60) {
+                                _this.stopwatch['minutes']++;
+                                _this.stopwatch['seconds'] = 0;
+                            }
+                            if (_this.stopwatch['minutes'] === 60) {
+                                _this.stopwatch['hours']++;
+                                _this.stopwatch['minutes'] = 0;
+                            }
+                        }, 1000);
                     }
-                };
-                SportComponent.prototype.stopwatchStop = function () {
-                    if (this.stopwatchBussy) {
+                    else {
                         clearInterval(this.stopwatchVendor);
-                        this.stopwatchBussyToggle();
                     }
+                    this.stopwatchBussyToggle();
                 };
                 SportComponent.prototype.stopwatchReset = function () {
-                    this.stopwatch = 0;
+                    for (var key in this.stopwatch) {
+                        this.stopwatch[key] = 0;
+                    }
                 };
                 SportComponent.prototype.stopwatchBussyToggle = function () {
                     this.stopwatchBussy = !this.stopwatchBussy;
                 };
                 SportComponent = __decorate([
-                    core_13.Component({
+                    core_15.Component({
                         selector: 'op-sport',
                         directives: [progress_bar_component_2.ProgressBar, plus_bar_component_2.PlusComponent, swipe_holder_directive_3.SwipeHoldertDirective],
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_3.SimpleSearch],
-                        styles: ["\n      .sport_form {\n        position: relative;\n        margin: 5vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 70vw;\n        color: #0d0e15;\n        font-size: 7vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 3vw;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 70vw;\n        max-height: 30vh;\n        padding: 2vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 2vw;\n        z-index: 3\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        height: 15vw;\n        width: 70vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n      }\n\n      .sport_list {\n        position:relative;\n        top:5vh;\n        margin-left: 5vw;\n        margin-right: 5vw;\n        width: 90vw;\n        height: 57vh;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        height: 15vw;\n        width: 70vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 15vw;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 20vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        min-height: 15vw;\n        width: 26vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-left: 8vw;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n      .sport_dropdownButonAnime{\n        transform:rotate(180deg)\n      }\n      .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n      margin-top: 1vh;\n    }\n    .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n    .sport_listButton_off {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      margin-top: 2vw;\n      background: url('./src/img/check-off.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n    }\n    .sport_timer {\n      position: relative;\n      margin-left: 10vw;\n      top:2vw;\n      width: 90vw;\n      height: 6vh;\n      text-align: center;\n    }\n    .tmp{\n      float:left;\n      width: 20vw;\n      height:10vw;\n      background-color: gray;\n      border: 3px solid black;\n    }\n      "],
-                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n<div class=\"tmp\">stopwatch {{stopwatch}}</div>\n<div class=\"tmp\"(click)=\"stopwatchStart()\">START/RESTART</div>\n<div class=\"tmp\" (click)=\"stopwatchStop()\">STOP</div>\n<div class=\"tmp\" (click)=\"stopwatchReset()\">RESET</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_listItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div *ngFor=\"#item of pickedSportContainer; #i = index\">\n\n    <div class=\"sport_listItem\" fmSwipe (fmSwipeLeft)=\"removeSport(i, item)\" (fmSwipeRight)=\"removeSport(i, item)\" (click)=\"openSets(item,i)\">\n      {{item?.name[language]}}\n      <div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\"></div>\n    </div>\n    <div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div *ngFor=\"#it of item.sets; #setIndex = index\" fmSwipe (fmSwipeLeft)=\"removeSet(i, item, setIndex)\" (fmSwipeRight)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >{{'set'| translate}} {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'kg'| translate}}\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'resp'| translate}}\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">{{'+set'| translate}}</div>\n    </div>\n  </div>\n</div>\n    "
+                        styles: ["\n      .sport_form {\n        position: absolute;;\n        left: 5vw;\n        top: 46vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 72vw;\n        color: #0d0e15;\n        font-size: 6vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 5px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 68vw;\n        max-height: 30vh;\n        padding: 2vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 2vw;\n        z-index: 3\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        height: 15vw;\n        width: 68vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n      }\n\n      .sport_list {\n        position: absolute;;\n        top:60vw;\n        margin-left: 5vw;\n        width: 90vw;\n        height: 67vh;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        min-height: 15vw;\n        width: 72vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 15vw;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        min-height: 15vw;\n        width: 27vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 21vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-left: 8vw;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n    .sport_dropdownButonAnime{\n      transform:rotate(180deg)\n    }\n    .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n      margin-top: 1vh;\n    }\n  .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .sport_listButton_off {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .sport_timer {\n    position: absolute;;\n    margin-left: 5vw;\n    top: 30vw;\n    width: 90vw;\n    height: 12vw;\n    text-align: center;\n    background-color: #3f414a;\n    border: 5px solid #0d0e15;\n    box-sizing: border-box;\n    border-radius: 3vw;\n    line-height: 10vw;\n\n  }\n  .sport_timerButtons {\n    float: left;\n    width: 23vw;\n    height: 10vw;\n    border-radius: 3vw;\n    color: #ff9d2d;\n    /*font-weight: bold;*/\n  }\n  .clockFace {\n    float: left;\n    width: 39vw;\n    height: 10vw;\n    font-size: 6vw;\n    color: #de5200;\n    border-right: 3px solid #0d0e15;\n    border-left: 3px solid #0d0e15;\n  }\n  .clockFace_numbers {\n    float: left;\n    width: 8vw;\n  }\n  .clockFace_hours {\n    /*margin-left: 8vw;*/\n    width: 16vw;\n    text-align: right;\n  }\n      "],
+                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n  <div class=\"sport_timerButtons\" (click)=\"stopwatchReset()\">{{'reset'| translate}}</div>\n  <div class=\"clockFace\">\n      <div class=\"clockFace_numbers clockFace_hours\">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}</div>\n  </div>\n  <div *ngIf=\"(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'start'| translate}}</div>\n  <div *ngIf=\"stopwatchBussy\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'stop'| translate}}</div>\n  <div *ngIf=\"(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'resume'| translate}}</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_searchListItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div *ngFor=\"#item of pickedSportContainer; #i = index\">\n\n    <div class=\"sport_listItem\" fmSwipe (fmSwipeLeft)=\"removeSport(i, item)\" (fmSwipeRight)=\"removeSport(i, item)\" (click)=\"openSets(item,i)\">\n      {{item?.name[language]}}\n      <div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\"></div>\n    </div>\n    <div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div *ngFor=\"#it of item.sets; #setIndex = index\" fmSwipe (fmSwipeLeft)=\"removeSet(i, item, setIndex)\" (fmSwipeRight)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >{{'set'| translate}} {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'kg'| translate}}\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'resp'| translate}}\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">{{'+set'| translate}}</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_2.CalendarService, user_service_5.UserService])
                 ], SportComponent);
                 return SportComponent;
             }());
-            exports_14("SportComponent", SportComponent);
+            exports_16("SportComponent", SportComponent);
         }
     }
 });
-System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_15, context_15) {
+System.register("components/rest-page/rest.component", ['angular2/core'], function(exports_17, context_17) {
     "use strict";
-    var __moduleName = context_15 && context_15.id;
-    var core_14;
+    var __moduleName = context_17 && context_17.id;
+    var core_16;
     var RestComponent;
     return {
         setters:[
-            function (core_14_1) {
-                core_14 = core_14_1;
+            function (core_16_1) {
+                core_16 = core_16_1;
             }],
         execute: function() {
             RestComponent = (function () {
@@ -3365,7 +3508,7 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
                     this.timer = (this.tomorrow.getTime() - this.today.getTime()) / 1000 / 60 / 60;
                 };
                 RestComponent = __decorate([
-                    core_14.Component({
+                    core_16.Component({
                         selector: 'op-rest',
                         directives: [],
                         providers: [],
@@ -3377,19 +3520,19 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
                 ], RestComponent);
                 return RestComponent;
             }());
-            exports_15("RestComponent", RestComponent);
+            exports_17("RestComponent", RestComponent);
         }
     }
 });
-System.register("components/calendar-page/calendar.component", ['angular2/core', "services/calenadar/calendar.service"], function(exports_16, context_16) {
+System.register("components/calendar-page/calendar.component", ['angular2/core', "services/calenadar/calendar.service"], function(exports_18, context_18) {
     "use strict";
-    var __moduleName = context_16 && context_16.id;
-    var core_15, calendar_service_3;
+    var __moduleName = context_18 && context_18.id;
+    var core_17, calendar_service_3;
     var CalendarComponent;
     return {
         setters:[
-            function (core_15_1) {
-                core_15 = core_15_1;
+            function (core_17_1) {
+                core_17 = core_17_1;
             },
             function (calendar_service_3_1) {
                 calendar_service_3 = calendar_service_3_1;
@@ -3443,166 +3586,302 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
                     }
                 };
                 CalendarComponent = __decorate([
-                    core_15.Component({
+                    core_17.Component({
                         selector: 'op-calendar',
                         directives: [],
                         providers: [],
                         pipes: [],
-                        styles: ["\n.calendar{\n  background:#3f414a;\n  width:75vw;\n  height: 85vw;\n  position:absolute;\n  top:50vw;\n  left:15vw;\n  overflow:hidden;\n  text-align: center;\n  line-height: 10vw;\n  color: #ff9d2d;\n}\n.year{\n  height:10vw;\n  width:100%;\n  overflow:hidden;\n  font-size: 7vw;\n\n}\n.month{\n  height:10vw;\n  width: 100%;\n  font-size: 6vw;\n}\n\n.date{\nfloat: left;\nwidth:10vw;\nheight:10vw;\nborder: 0.5vw solid #ff9d2d;\n}\n\n.currentDate{\n  background-color: #0d0e15;\n  color: #de5200;\n}\n\n.toggleLeft{\nfloat:left;\nwidth:25vw;\n}\n\n.toggleRight{\n  float:left;\n  width:20vw;\n}\n      "],
-                        template: "\n<div class=\"calendar\">\n<div class=\"year\">\n\n  <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\"><</div>\n      <div class=\"toggleLeft\">\n        {{clMonth[0]['date'].getFullYear()}}\n      </div>\n      <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n  </div>\n\n  <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n  <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\"><</div>\n\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n    <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n    <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n  </div>\n\n  <div class=\"date\">Sun</div>\n  <div class=\"date\">Mon</div>\n  <div class=\"date\">Tue</div>\n  <div class=\"date\">Wed</div>\n  <div class=\"date\">Thu</div>\n  <div class=\"date\">Fri</div>\n  <div class=\"date\">Sat</div>\n\n  <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n  <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n</div>\n\n\n"
+                        styles: ["\n.calendar{\n  position:absolute;\n  top:20vw;\n  left:13vw;\n  width:74vw;\n  /*height: 85vw;*/\n  background:#3f414a;\n  text-align: center;\n  color: #ff9d2d;\n  overflow:hidden;\n  line-height: 10vw;\n}\n.year{\n  height:10vw;\n  width:100%;\n  overflow:hidden;\n  font-size: 7vw;\n\n}\n.month{\n  height:10vw;\n  width: 100%;\n  font-size: 6vw;\n}\n\n.date{\nfloat: left;\nwidth:10vw;\nheight:10vw;\nborder: 0.5vw solid #ff9d2d;\n}\n\n.currentDate{\n  background-color: #0d0e15;\n  color: #de5200;\n}\n\n.toggleLeft{\nfloat:left;\nwidth:25vw;\n}\n\n.toggleRight{\n  float:left;\n  width:20vw;\n}\n.today {\n  position: absolute;\ntop: 110vw;\nwidth: 40vw;\nheight: 13vw;\nbackground-color: grey;\nleft: 13vw;\n}\n.todayIcon {\n  position: relative;\n  height: 12vw;\n  width: 12vw;\n  float: left;\n  background: url('./src/img/today.png') no-repeat center center;\n  background-size: cover;\n}\n.todayText {\n  position: relative;\n  font-size: 4vw;\n  width: 20vw;\n  float: left;\n}\n      "],
+                        template: "\n  <div class=\"container\">\n  <div class=\"calendar\">\n    <div class=\"year\">\n\n      <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\">\n        <</div>\n          <div class=\"toggleLeft\">\n            {{clMonth[0]['date'].getFullYear()}}\n          </div>\n          <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n      </div>\n\n      <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n        <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\">\n          <</div>\n\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n            <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n        </div>\n\n        <div class=\"date\">Sun</div>\n        <div class=\"date\">Mon</div>\n        <div class=\"date\">Tue</div>\n        <div class=\"date\">Wed</div>\n        <div class=\"date\">Thu</div>\n        <div class=\"date\">Fri</div>\n        <div class=\"date\">Sat</div>\n\n        <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n        <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n      </div>\n      <div class=\"today\">\n        <div class=\"todayText\">Today</div>\n        <div class=\"todayIcon\"></div>\n      </div>\n    </div>\n\n\n"
                     }), 
                     __metadata('design:paramtypes', [calendar_service_3.CalendarService])
                 ], CalendarComponent);
                 return CalendarComponent;
             }());
-            exports_16("CalendarComponent", CalendarComponent);
+            exports_18("CalendarComponent", CalendarComponent);
         }
     }
 });
-System.register("components/user-page/user.component", ['angular2/core', "services/user/user.service", "shared/services/translate/translate.service"], function(exports_17, context_17) {
+System.register("components/user-calculator/user-calculator.component", ['angular2/core', "shared/services/translate/translate.service"], function(exports_19, context_19) {
     "use strict";
-    var __moduleName = context_17 && context_17.id;
-    var core_16, user_service_6, translate_service_6;
-    var UserComponent;
+    var __moduleName = context_19 && context_19.id;
+    var core_18, translate_service_6;
+    var UserCalculatorComponent;
     return {
         setters:[
-            function (core_16_1) {
-                core_16 = core_16_1;
-            },
-            function (user_service_6_1) {
-                user_service_6 = user_service_6_1;
+            function (core_18_1) {
+                core_18 = core_18_1;
             },
             function (translate_service_6_1) {
                 translate_service_6 = translate_service_6_1;
             }],
         execute: function() {
-            UserComponent = (function () {
-                function UserComponent(_userServe, _translator) {
+            UserCalculatorComponent = (function () {
+                function UserCalculatorComponent() {
+                }
+                UserCalculatorComponent.prototype.ngOnInit = function () {
+                };
+                UserCalculatorComponent = __decorate([
+                    core_18.Component({
+                        selector: 'op-user-calculator',
+                        directives: [],
+                        providers: [],
+                        pipes: [translate_service_6.TranslatePipe],
+                        styles: ["\n\n    "],
+                        template: "\naaaaaaaaaaaaaaaaaaaaaaaaa\n    "
+                    }), 
+                    __metadata('design:paramtypes', [])
+                ], UserCalculatorComponent);
+                return UserCalculatorComponent;
+            }());
+            exports_19("UserCalculatorComponent", UserCalculatorComponent);
+        }
+    }
+});
+System.register("components/user-details/user-details.component", ['angular2/core', "services/user/user.service", "shared/services/translate/translate.service", 'angular2/router'], function(exports_20, context_20) {
+    "use strict";
+    var __moduleName = context_20 && context_20.id;
+    var core_19, user_service_6, translate_service_7, router_1;
+    var UserDetailsComponent;
+    return {
+        setters:[
+            function (core_19_1) {
+                core_19 = core_19_1;
+            },
+            function (user_service_6_1) {
+                user_service_6 = user_service_6_1;
+            },
+            function (translate_service_7_1) {
+                translate_service_7 = translate_service_7_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
+            }],
+        execute: function() {
+            UserDetailsComponent = (function () {
+                function UserDetailsComponent(_userServe, _translator) {
                     this._userServe = _userServe;
                     this._translator = _translator;
                 }
-                UserComponent.prototype.ngOnInit = function () {
+                UserDetailsComponent.prototype.ngOnInit = function () {
                     this.sets = this._userServe.getUserSets();
                 };
-                UserComponent.prototype.changeLang = function (lang) {
+                UserDetailsComponent.prototype.changeLang = function (lang) {
                     this._userServe.setLanguage(lang);
                     this._translator.setCurrentLanguage(this._userServe.getLanguage());
+                    location.reload();
                 };
-                UserComponent.prototype.changeSets = function () {
+                UserDetailsComponent.prototype.changeSets = function () {
                     var _this = this;
                     setTimeout(function () {
                         _this._userServe.refreshUser();
                     }, 500);
                 };
-                UserComponent = __decorate([
-                    core_16.Component({
-                        selector: 'op-user',
-                        directives: [],
+                UserDetailsComponent = __decorate([
+                    core_19.Component({
+                        selector: 'op-user-details',
+                        directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
-                        pipes: [translate_service_6.TranslatePipe],
+                        pipes: [translate_service_7.TranslatePipe],
                         styles: ["\n\n    .container {\n      position: relative;;\n      margin: 5vw;\n      margin-left: 10vw;\n      height: 100vw;\n      width: 80vw;\n    }\n\n    .user_firstHeader {\n      font-size: 6vw;\n      width: 80vw;\n      text-align: center;\n      margin-bottom: 5vw;\n      font-weight: bolder;\n      color: #ff9d2d;\n    }\n    .user_nameInput {\n      position: relative;\n      font-size: 6vw;\n      width: 52vw;\n      float: left;\n      left: 8vw;\n      margin-bottom: 2vw;\n      color: #ff9d2d;\n    }\n    .user_input {\n      position: relative;\n      float: left;\n      height: 8vw;\n      width: 20vw;\n      background-color: rgba(49, 51, 61, 0.3);\n      box-sizing: border-box;\n      border: 3px solid #0C1017;\n      border-radius: 2vw;\n      font-size: 6vw;\n      color: #ff9d2d;\n      margin-bottom: 2vw;\n    }\n    .user_secondHeader {\n      position: absolute;\n      top: 57vw;\n      font-size: 5vw;\n      min-height: 8vw;\n      line-height: 8vw;\n      width: 80vw;\n      text-align: center;\n      font-weight: bolder;\n      color: #ff9d2d;\n      border: 4px solid #ff9d2d;\n      border-radius: 3vw;\n    }\n    .user_lang {\n      position: absolute;\n      top: 83vw;\n      width: 60vw;\n      font-size: 5vw;\n      color: #ff9d2d;\n      float: left;\n    }\n    .user_langName {\n      position: relative;\n      float: left;\n      height: 10vw;\n      width: 50vw;\n      margin: 2vw;\n    }\n    .user_langEnIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/en.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langRuIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/ru.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langText {\n      position: relative;\n      width: 20vw;\n      float: left;\n      line-height: 10vw;\n      left: 6vw;\n    }\n\n    "],
-                        template: "\n  <div class=\"container\">\n  <div class=\"user_firstHeader\">\n      {{'daily.rate'|translate}}\n  </div>\n  <div class=\"user_nameInput\">\n    {{'calories'|translate}}\n  </div>\n  <input #calories class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'protein'|translate}}\n  </div>\n  <input #protein class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'fat'|translate}}\n  </div>\n  <input #fat class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'carbohydrates'|translate}}\n  </div>\n  <input #carbohydrates class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n  <div class=\"user_secondHeader\">\n      {{'determine.daily.rate'|translate}}\n  </div>\n\n  <div class=\"user_lang\">\n    <div class=\"user_nameInput\">\n      {{'language'|translate}}\n    </div>\n    <div (click)=\"changeLang('en')\" class=\"user_langName\">\n      <div class=\"user_langEnIcon\"></div>\n      <div class=\"user_langText\">English</div>\n    </div>\n    <div (click)=\"changeLang('ru')\" class=\"user_langName\">\n      <div class=\"user_langRuIcon\"></div>\n      <div class=\"user_langText\">Russian</div>\n    </div>\n  </div>\n</div>\n    "
+                        template: "\n  <div class=\"container\">\n  <div class=\"user_firstHeader\">\n      {{'daily.rate'|translate}}\n  </div>\n  <div class=\"user_nameInput\">\n    {{'calories'|translate}}\n  </div>\n  <input #calories class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'protein'|translate}}\n  </div>\n  <input #protein class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'fat'|translate}}\n  </div>\n  <input #fat class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'carbohydrates'|translate}}\n  </div>\n  <input #carbohydrates class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n\n  <a [routerLink]=\"['UserCalculator']\">\n  <div class=\"user_secondHeader\">\n      {{'determine.daily.rate'|translate}}\n  </div>\n</a>\n\n  <div class=\"user_lang\">\n    <div class=\"user_nameInput\">\n      {{'language'|translate}}\n    </div>\n    <div (click)=\"changeLang('en')\" class=\"user_langName\">\n      <div class=\"user_langEnIcon\"></div>\n      <div class=\"user_langText\">English</div>\n    </div>\n    <div (click)=\"changeLang('ru')\" class=\"user_langName\">\n      <div class=\"user_langRuIcon\"></div>\n      <div class=\"user_langText\">Russian</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [user_service_6.UserService, translate_service_6.TranslateService])
-                ], UserComponent);
-                return UserComponent;
+                    __metadata('design:paramtypes', [user_service_6.UserService, translate_service_7.TranslateService])
+                ], UserDetailsComponent);
+                return UserDetailsComponent;
             }());
-            exports_17("UserComponent", UserComponent);
+            exports_20("UserDetailsComponent", UserDetailsComponent);
         }
     }
 });
-System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_18, context_18) {
+System.register("components/user-page/user.component", ['angular2/core', "components/user-calculator/user-calculator.component", "components/user-details/user-details.component", "shared/services/translate/translate.service", 'angular2/router'], function(exports_21, context_21) {
     "use strict";
-    var __moduleName = context_18 && context_18.id;
-    var core_17, router_1;
+    var __moduleName = context_21 && context_21.id;
+    var core_20, user_calculator_component_1, user_details_component_1, translate_service_8, router_2;
+    var UserComponent;
+    return {
+        setters:[
+            function (core_20_1) {
+                core_20 = core_20_1;
+            },
+            function (user_calculator_component_1_1) {
+                user_calculator_component_1 = user_calculator_component_1_1;
+            },
+            function (user_details_component_1_1) {
+                user_details_component_1 = user_details_component_1_1;
+            },
+            function (translate_service_8_1) {
+                translate_service_8 = translate_service_8_1;
+            },
+            function (router_2_1) {
+                router_2 = router_2_1;
+            }],
+        execute: function() {
+            UserComponent = (function () {
+                function UserComponent() {
+                }
+                UserComponent.prototype.ngOnInit = function () {
+                };
+                UserComponent = __decorate([
+                    core_20.Component({
+                        selector: 'op-user',
+                        directives: [router_2.ROUTER_DIRECTIVES],
+                        providers: [],
+                        pipes: [translate_service_8.TranslatePipe],
+                        styles: ["\n    "],
+                        template: "\n<router-outlet></router-outlet>\n    "
+                    }),
+                    router_2.RouteConfig([
+                        { path: '/details', name: 'UserDetailsComponent', component: user_details_component_1.UserDetailsComponent, useAsDefault: true },
+                        { path: '/calculator', name: 'UserCalculator', component: user_calculator_component_1.UserCalculatorComponent },
+                    ]), 
+                    __metadata('design:paramtypes', [])
+                ], UserComponent);
+                return UserComponent;
+            }());
+            exports_21("UserComponent", UserComponent);
+        }
+    }
+});
+System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_22, context_22) {
+    "use strict";
+    var __moduleName = context_22 && context_22.id;
+    var core_21, router_3;
     var StartComponent;
     return {
         setters:[
-            function (core_17_1) {
-                core_17 = core_17_1;
+            function (core_21_1) {
+                core_21 = core_21_1;
             },
-            function (router_1_1) {
-                router_1 = router_1_1;
+            function (router_3_1) {
+                router_3 = router_3_1;
             }],
         execute: function() {
             StartComponent = (function () {
                 function StartComponent() {
                 }
                 StartComponent = __decorate([
-                    core_17.Component({
+                    core_21.Component({
                         selector: 'op-start',
-                        directives: [router_1.ROUTER_DIRECTIVES],
+                        directives: [router_3.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [],
-                        styles: ["\n      .startPage_navigator {\n        display: flex;\n        flex-flow: column nowrap;\n        position: absolute;\n        justify-content: space-around;\n        width: 30vw;\n        height: 100vh;\n        bottom: 0;\n        left: 35vw;\n        overflow: hidden;\n      }\n      .startPage_foodButton {\n      background: url('./src/img/food.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n    }\n    .startPage_sportButton {\n      background: url('./src/img/sport.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n    .startPage_restButton {\n      background: url('./src/img/rest.png') no-repeat center center;\n      background-size: cover;\n      box-sizing: border-box;\n      width: 27vw;\n      height: 27vw;\n      margin: auto;\n\n    }\n      "],
-                        template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_foodButton\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_sportButton\"></div>\n      </a>\n      <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_restButton\"></div>\n      </a>\n    </nav>\n    "
+                        styles: ["\n  .startPage_navigator {\n    position: absolute;\n    width: 30vw;\n    height: 100vh;\n    left: 35vw;\n    overflow: hidden;\n  }\n  .startPage_Buttons {\n    position: relative;\n    width: 27vw;\n    height: 27vw;\n    margin-bottom: 9vw;\n    margin-left: 1vw;\n    float: left;\n    top: 8vw;\n\n  }\n  .startPage_food {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_sport {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_rest {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_user {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n      "],
+                        template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </a>\n      <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </a>\n      <a [routerLink]=\"['User']\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </a>\n    </nav>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StartComponent);
                 return StartComponent;
             }());
-            exports_18("StartComponent", StartComponent);
+            exports_22("StartComponent", StartComponent);
         }
     }
 });
-System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/directives/swipeHolder/swipe-holder.directive"], function(exports_19, context_19) {
+System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/services/translate/translate.service"], function(exports_23, context_23) {
     "use strict";
-    var __moduleName = context_19 && context_19.id;
-    var core_18, router_2, swipe_holder_directive_4;
+    var __moduleName = context_23 && context_23.id;
+    var core_22, router_4, translate_service_9;
     var SideBar;
     return {
         setters:[
-            function (core_18_1) {
-                core_18 = core_18_1;
+            function (core_22_1) {
+                core_22 = core_22_1;
             },
-            function (router_2_1) {
-                router_2 = router_2_1;
+            function (router_4_1) {
+                router_4 = router_4_1;
             },
-            function (swipe_holder_directive_4_1) {
-                swipe_holder_directive_4 = swipe_holder_directive_4_1;
+            function (translate_service_9_1) {
+                translate_service_9 = translate_service_9_1;
             }],
         execute: function() {
             SideBar = (function () {
                 function SideBar() {
-                    this.isOpenChange = new core_18.EventEmitter();
+                    this.isOpenChange = new core_22.EventEmitter();
+                    this.pusherTarget = 250;
+                    this.middle = this.pusherTarget / 2;
+                    this.shadowOpacity = 0;
+                    this.shadowOpacityTarget = 0.5;
+                    this.lastTouch = 0;
+                    this.pushClass = false;
+                    this.pullClass = true;
                 }
-                SideBar.prototype.toggle = function () {
-                    this.isOpen = !this.isOpen;
-                    this.isOpenChange.emit(this.isOpen);
+                SideBar.prototype.toggle = function (arg) {
+                    if (!(arg && arg.className === 'sideBarSwipePlace')) {
+                        this.pushClass = !this.pushClass;
+                        this.pullClass = !this.pullClass;
+                        this.isOpen = !this.isOpen;
+                        this.lastTouch = 0;
+                        if (this.isOpen) {
+                            this.shadowOpacity = this.shadowOpacityTarget;
+                        }
+                        else {
+                            this.shadowOpacity = 0;
+                        }
+                    }
+                };
+                SideBar.prototype.swipe = function (evt) {
+                    this.isOpen = true;
+                    this.pushClass = false;
+                    this.pullClass = false;
+                    if (evt.type === 'touchmove' && evt.touches[0].clientX < this.pusherTarget) {
+                        if (this.lastTouch < evt.touches[0].clientX && this.shadowOpacity < this.shadowOpacityTarget) {
+                            this.shadowOpacity = this.shadowOpacity + 0.01;
+                        }
+                        else if (this.shadowOpacity > 0) {
+                            this.shadowOpacity = this.shadowOpacity - 0.01;
+                        }
+                        this.lastTouch = evt.touches[0].clientX;
+                    }
+                    if (evt.type === 'touchend') {
+                        if (this.lastTouch > this.middle) {
+                            this.pullClass = false;
+                            this.pushClass = true;
+                            this.shadowOpacity = this.shadowOpacityTarget;
+                            this.isOpen = true;
+                        }
+                        if (this.lastTouch < this.middle) {
+                            this.pushClass = false;
+                            this.pullClass = true;
+                            this.shadowOpacity = 0;
+                            this.lastTouch = 0;
+                            this.isOpen = false;
+                        }
+                    }
                 };
                 __decorate([
-                    core_18.Input(), 
+                    core_22.Input(), 
                     __metadata('design:type', Boolean)
                 ], SideBar.prototype, "isOpen", void 0);
                 __decorate([
-                    core_18.Output(), 
+                    core_22.Output(), 
                     __metadata('design:type', Object)
                 ], SideBar.prototype, "isOpenChange", void 0);
                 SideBar = __decorate([
-                    core_18.Component({
+                    core_22.Component({
                         selector: 'fm-side-bar',
-                        directives: [router_2.ROUTER_DIRECTIVES, swipe_holder_directive_4.SwipeHoldertDirective],
+                        directives: [router_4.ROUTER_DIRECTIVES],
                         providers: [],
-                        pipes: [],
-                        styles: ["\n    .sideBarContainer {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: space-around;\n    align-items: center;\n    height: 100vh;\n    width: 70vw;\n    left: 0;\n    top: 0;\n    z-index: 999;\n    background-color: #3f414a;\n    overflow-x: hidden;\n    overflow-y: scroll;\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 998;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    // background-color: silver;\n    // opacity:0.5;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n  }\n  .sideBarShadow {\n    position: absolute;\n    height: 100vh;\n    width: 30vw;\n    left: 70vw;\n    top: 0;\n    background-color: black;\n    opacity: 0.5;\n    z-index:998;\n  }\n  p {\n    position: relative;\n    top: 17vw;\n    color: #ff9d2d;\n    font-size: 6vw;\n  }\n  .sidebar_foodButton {\n  background: url('./src/img/food.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 22vw;\n  height: 22vw;\n  margin: auto;\n  text-align: center;\n  text-decoration: none;\n}\n.sidebar_sportButton {\n  background: url('./src/img/sport.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 22vw;\n  height: 22vw;\n  margin: auto;\n  text-align: center;\n  text-decoration: none;\n}\n.sidebar_restButton {\n  background: url('./src/img/rest.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 22vw;\n  height: 22vw;\n  margin: auto;\n  text-align: center;\n  text-decoration: none;\n}\n.sidebar_calendarButton {\n  background: url('./src/img/calendar.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 22vw;\n  height: 22vw;\n  margin: auto;\n  text-align: center;\n  text-decoration: none;\n}\n.sidebar_userButton {\n  background: url('./src/img/user.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  width: 22vw;\n  height: 22vw;\n  margin: auto;\n  text-align: center;\n  text-decoration: none;\n}\n\n\n\n  "], template: "\n<div class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" *ngIf=\"isOpen\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton\">\n    <p>Food</p>\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton\">\n    <p>Sport</p>\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton\">\n    <p>Rest</p>\n  </a>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton\">\n    <p>Calendar</p>\n  </a>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_userButton\">\n    <p>User</p>\n  </a>\n  </div>\n  <div class=\"sideBarShadow\"  *ngIf=\"isOpen\" (click)=\"toggle()\"></div>\n<div *ngIf=\"!isOpen\" class=\"sideBarSwipePlace\" fmSwipe (fmSwipeLeft)=\"toggle()\" (fmSwipeRight)=\"toggle()\"></div>\n\n  "
+                        pipes: [translate_service_9.TranslatePipe],
+                        styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: flex-start;\n      align-items: center;\n      height: 100vh;\n      width: 250px;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n      left:-250px;\n\n  }\n  .sideBarAnime{\n    transition: transform 1s, opacity 1s;\n    opacity:0.9;\n    transform: translate3d(250px,0,0)\n  }\n  .sideBarAnimeBack{\n    transition: transform 1s;\n    transform: translate3d(-250px,0,0)\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 999;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: black;\n    height:100vh;\n    width:10vw;\n    z-index: 998;\n\n  }\n\n  p {\n    position: absolute;;\n    margin-top: 23vw;\n    left: 10vw;\n    color: #ff9d2d;\n    font-size: 6vw;\n    width: 50vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 5vw;\n    margin-bottom: 7vw;\n\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n  "],
+                        template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [ngClass]=\"{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}\" [style.transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\">\n  <a [routerLink]=\"['Food']\" (click)=\"toggle()\" class=\"sidebar_foodButton sidebar_button\">\n    <p>{{'food' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Sport']\" (click)=\"toggle()\" class=\"sidebar_sportButton sidebar_button\">\n    <p>{{'sport' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Rest']\" (click)=\"toggle()\" class=\"sidebar_restButton sidebar_button\">\n    <p>{{'rest' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['Calendar']\" (click)=\"toggle()\" class=\"sidebar_calendarButton sidebar_button\">\n    <p>{{'calendar' | translate}}</p>\n  </a>\n  <a [routerLink]=\"['User']\" (click)=\"toggle()\" class=\"sidebar_userButton sidebar_button\">\n    <p>{{'settings' | translate}}</p>\n  </a>\n  </div>\n<div class=\"sideBarSwipePlace\" #swipePlace [style.opacity]=\"shadowOpacity\" [ngClass]=\"{sideBarSwipePlaceBig: isOpen}\"  (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\" (click)=\"toggle(swipePlace)\"></div>\n  "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], SideBar);
                 return SideBar;
             }());
-            exports_19("SideBar", SideBar);
+            exports_23("SideBar", SideBar);
         }
     }
 });
-System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_20, context_20) {
+System.register("services/refresh-date/refresh-date.service", ['angular2/core'], function(exports_24, context_24) {
     "use strict";
-    var __moduleName = context_20 && context_20.id;
-    var core_19;
+    var __moduleName = context_24 && context_24.id;
+    var core_23;
     var RefreshDateService;
     return {
         setters:[
-            function (core_19_1) {
-                core_19 = core_19_1;
+            function (core_23_1) {
+                core_23 = core_23_1;
             }],
         execute: function() {
             RefreshDateService = (function () {
@@ -3625,77 +3904,27 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
                     }, this.timer);
                 };
                 RefreshDateService = __decorate([
-                    core_19.Injectable(), 
+                    core_23.Injectable(), 
                     __metadata('design:paramtypes', [])
                 ], RefreshDateService);
                 return RefreshDateService;
             }());
-            exports_20("RefreshDateService", RefreshDateService);
+            exports_24("RefreshDateService", RefreshDateService);
         }
     }
 });
-System.register("services/admob/admob.service", ['angular2/core'], function(exports_21, context_21) {
+System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service", "services/admob/admob.service"], function(exports_25, context_25) {
     "use strict";
-    var __moduleName = context_21 && context_21.id;
-    var core_20;
-    var AdMobService;
-    return {
-        setters:[
-            function (core_20_1) {
-                core_20 = core_20_1;
-            }],
-        execute: function() {
-            AdMobService = (function () {
-                function AdMobService() {
-                    this.admobidFirst = {};
-                }
-                AdMobService.prototype.createBottomBanerFirst = function () {
-                    if (/(android)/i.test(navigator.userAgent)) {
-                        this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
-                        };
-                    }
-                    else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-                        this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
-                        };
-                    }
-                    else {
-                        this.admobidFirst = {
-                            banner: 'ca-app-pub-1213024579337881/6216360857' // or DFP format "/6253334/dfp_example_ad"
-                        };
-                    }
-                };
-                AdMobService.prototype.addBottomBanerFirst = function () {
-                    if (AdMob)
-                        AdMob.createBanner({
-                            adId: this.admobidFirst.banner,
-                            position: AdMob.AD_POSITION.BOTTOM_CENTER,
-                            autoShow: true
-                        });
-                };
-                AdMobService = __decorate([
-                    core_20.Injectable(), 
-                    __metadata('design:paramtypes', [])
-                ], AdMobService);
-                return AdMobService;
-            }());
-            exports_21("AdMobService", AdMobService);
-        }
-    }
-});
-System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service", "services/admob/admob.service"], function(exports_22, context_22) {
-    "use strict";
-    var __moduleName = context_22 && context_22.id;
-    var core_21, router_3, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_7, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_7, admob_service_1;
+    var __moduleName = context_25 && context_25.id;
+    var core_24, router_5, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_10, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_7, admob_service_2;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
-            function (core_21_1) {
-                core_21 = core_21_1;
+            function (core_24_1) {
+                core_24 = core_24_1;
             },
-            function (router_3_1) {
-                router_3 = router_3_1;
+            function (router_5_1) {
+                router_5 = router_5_1;
             },
             function (food_component_1_1) {
                 food_component_1 = food_component_1_1;
@@ -3718,8 +3947,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (side_bar_component_1_1) {
                 side_bar_component_1 = side_bar_component_1_1;
             },
-            function (translate_service_7_1) {
-                translate_service_7 = translate_service_7_1;
+            function (translate_service_10_1) {
+                translate_service_10 = translate_service_10_1;
             },
             function (food_service_3_1) {
                 food_service_3 = food_service_3_1;
@@ -3739,8 +3968,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (user_service_7_1) {
                 user_service_7 = user_service_7_1;
             },
-            function (admob_service_1_1) {
-                admob_service_1 = admob_service_1_1;
+            function (admob_service_2_1) {
+                admob_service_2 = admob_service_2_1;
             }],
         execute: function() {
             OpanasComponent = (function () {
@@ -3764,7 +3993,6 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         window.plugins.insomnia.keepAwake();
                         //AdMob
                         _this._AdMobServe.createBottomBanerFirst();
-                        _this._AdMobServe.addBottomBanerFirst();
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date
@@ -3785,33 +4013,38 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     this._translator.setCurrentLanguage('ru');
                 };
                 OpanasComponent = __decorate([
-                    core_21.Component({
+                    core_24.Component({
                         selector: 'opanas-app',
-                        directives: [router_3.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_3.ROUTER_PROVIDERS, core_21.provide(router_3.LocationStrategy, { useClass: router_3.HashLocationStrategy }), translate_service_7.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_7.UserService, admob_service_1.AdMobService],
-                        pipes: [translate_service_7.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n\n  .temporary {\n    position: absolute;\n    display: flex;\n    flex-flow: column nowrap;\n    justify-content: center;\n    align-items: center;\n    background-color: green;\n    right: 40vw;\n    top: 40;\n    height: 50px;\n    width: 100px;\n    opacity: 0.3;\n  }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n    <div class=\"temporary\">\n\n      <div (click)=\"bla()\">reload</div>\n\n    </div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
-                    router_3.RouteConfig([
+                        directives: [router_5.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
+                        providers: [router_5.ROUTER_PROVIDERS, core_24.provide(router_5.LocationStrategy, { useClass: router_5.HashLocationStrategy }), translate_service_10.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_7.UserService, admob_service_2.AdMobService],
+                        pipes: [translate_service_10.TranslatePipe],
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                    router_5.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
                         { path: '/sport', name: 'Sport', component: sport_component_1.SportComponent },
                         { path: '/rest', name: 'Rest', component: rest_component_1.RestComponent },
                         { path: '/calendar', name: 'Calendar', component: calendar_component_1.CalendarComponent },
-                        { path: '/user', name: 'User', component: user_component_1.UserComponent },
+                        { path: '/user/...', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_7.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_7.UserService, admob_service_1.AdMobService])
+                    __metadata('design:paramtypes', [translate_service_10.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_7.UserService, admob_service_2.AdMobService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
-            exports_22("OpanasComponent", OpanasComponent);
+            exports_25("OpanasComponent", OpanasComponent);
             languages = {
                 'en': 'english',
                 'ru': 'russian'
             };
             keysVendor = {
                 'en': {
+                    'food': 'Food',
+                    'sport': 'Sport',
+                    'rest': 'Rest',
+                    'calendar': 'Calendar',
+                    'settings': 'Settings',
                     'progress': 'progress',
                     'search': 'search',
                     'weight': 'g',
@@ -3822,19 +4055,33 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'protein': 'Protein',
                     'carbohydrates': 'Carbohydrates',
                     'fat': 'Fat',
+                    'done': 'Done',
                     'language': 'Language',
                     'create.food': 'Create food',
                     'create.menu': 'Create menu',
                     'paste.menu': 'Paste menu',
                     'menuName': 'menu name',
                     'set': 'set',
-                    'add set': '+set',
+                    '+set': '+set',
                     'kg': 'kg',
                     'resp': 'resp',
                     'daily.rate': 'Daily rate',
-                    'determine.daily.rate': 'Determine my daily rate'
+                    'determine.daily.rate': 'Determine my daily rate',
+                    'added.meals': 'Added meals',
+                    'meals.name': 'Meals name',
+                    'create.exercise': 'Add exercise',
+                    'create.training.plan': 'Create training plan',
+                    'reset': 'RESET',
+                    'stop': 'STOP',
+                    'resume': 'RESUME',
+                    'start': 'START'
                 },
                 'ru': {
+                    'food': 'Питание',
+                    'sport': 'Тренировки',
+                    'rest': 'Отдых',
+                    'calendar': 'Календарь',
+                    'settings': 'Настройки',
                     'progress': 'Прогресс',
                     'search': 'поиск',
                     'weight': 'г',
@@ -3846,6 +4093,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'carbohydrates': 'Углеводы',
                     'fat': 'Жиры',
                     'language': 'Язык',
+                    'done': 'Готово',
                     'create.food': 'Добавить блюдо',
                     'create.menu': 'Создать новое меню',
                     'paste.menu': 'Выбрать готовое меню',
@@ -3855,15 +4103,23 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'kg': 'кг',
                     'resp': 'повт',
                     'daily.rate': 'Cуточная норма',
-                    'determine.daily.rate': 'Определить мою суточную норму'
+                    'determine.daily.rate': 'Определить мою суточную норму',
+                    'added.meals': 'Добавленные блюда',
+                    'meals.name': 'Название',
+                    'create.exercise': 'Добавить упражнение',
+                    'create.training.plan': 'Создать программу',
+                    'reset': 'СБРОС',
+                    'stop': 'СТОП',
+                    'resume': 'ПУСК',
+                    'start': 'ПУСК'
                 }
             };
         }
     }
 });
-System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_23, context_23) {
+System.register("main", ['angular2/platform/browser', "components/opanas/opanas.component"], function(exports_26, context_26) {
     "use strict";
-    var __moduleName = context_23 && context_23.id;
+    var __moduleName = context_26 && context_26.id;
     var browser_1, opanas_component_1;
     return {
         setters:[

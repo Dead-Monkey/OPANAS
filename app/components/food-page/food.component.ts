@@ -6,11 +6,13 @@ import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
+import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
+import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
+import {AdMobService} from '../../services/admob/admob.service';
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective],
+    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -103,6 +105,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
     width: 90vw;
     height: 80vw;
     overflow-y: scroll;
+    overflow-x:hidden;
+  }
+  .food_listItemContainer{
+    position:relative;
   }
   .food_listItem {
     float:left;
@@ -183,16 +189,17 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-h
 </form>
 
 <div class="food_list">
-  <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFood(i, item)" (fmSwipeRight)="removeFood(i, item)">
+<!-- <div *ngFor="#item of pickedFoodContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFood(i, item)" (fmSwipeRight)="removeFood(i, item)" fmSwipeDeleteSide> -->
+  <div  *ngFor="#item of pickedFoodContainer; #i = index" fmSwipeDeleteSide >
 
-    <div class="food_listItem">
+    <div class="food_listItem" >
       {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)">
 
     <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
-
   </div>
+
 </div>
     `
 })
@@ -230,7 +237,7 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService) { }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService, private _AdMobServe: AdMobService) { }
 
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();
@@ -243,6 +250,13 @@ export class FoodComponent implements OnInit {
         for (let food of this.pickedFoodContainer) {
             this.calculateFood(food);
         }
+
+        //AdMob
+        let onDeviceReady = () => {
+            //AdMob
+            this._AdMobServe.addBottomBanerFirst();
+        }
+        document.addEventListener("deviceready", onDeviceReady, false);
     }
 
     onSubmit(food) {

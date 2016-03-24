@@ -1,11 +1,10 @@
 import {Component, Input, Output, EventEmitter}from 'angular2/core';
 import {ROUTER_DIRECTIVES}from 'angular2/router';
-import {SwipeHoldertDirective} from '../../directives/swipeHolder/swipe-holder.directive';
 import {TranslatePipe} from '../../services/translate/translate.service';
 
 @Component({
     selector: 'fm-side-bar',
-    directives: [ROUTER_DIRECTIVES, SwipeHoldertDirective],
+    directives: [ROUTER_DIRECTIVES],
     providers: [],
     pipes: [TranslatePipe],
     styles: [`
@@ -16,12 +15,23 @@ import {TranslatePipe} from '../../services/translate/translate.service';
       justify-content: flex-start;
       align-items: center;
       height: 100vh;
-      width: 70vw;
+      width: 250px;
       top: 0;
       z-index: 999;
       background-color: #3f414a;
       overflow-x: hidden;
       overflow-y: scroll;
+      left:-250px;
+
+  }
+  .sideBarAnime{
+    transition: transform 1s, opacity 1s;
+    opacity:0.9;
+    transform: translate3d(250px,0,0)
+  }
+  .sideBarAnimeBack{
+    transition: transform 1s;
+    transform: translate3d(-250px,0,0)
   }
   .sideBar_toggle {
     position: absolute;
@@ -32,26 +42,19 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     box-sizing: border-box;
     width: 15vw;
     height: 15vw;
-    z-index: 998;
+    z-index: 999;
   }
   .sideBarSwipePlace {
     position: fixed;
     top:0;
     left:0;
+    background-color: black;
     height:100vh;
     width:10vw;
     z-index: 998;
+
   }
-  .sideBarShadow {
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    left: 0;
-    top: 0;
-    background-color: black;
-    opacity: 0.5;
-    z-index:997;
-  }
+
   p {
     position: absolute;;
     margin-top: 23vw;
@@ -93,9 +96,6 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     background: url('./src/img/user.png') no-repeat center center;
     background-size: cover;
   }
-.sidebar_locked{
-  left:-70vw;
-}
 .sideBarSwipePlaceBig{
   width:100vw;
 }
@@ -103,7 +103,7 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     template: `
 <div *ngIf="!isOpen" class="sideBar_toggle" (click)="toggle()"></div>
 
-<div class="sideBarContainer" [style.left.vw]="pusher" [ngClass]="{sideBarContainer:true, sidebar_locked:!isOpen}" *ngIf="isOpen" (fmSwipe)="swipe($event)">
+<div class="sideBarContainer" [ngClass]="{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}" [style.transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" (touchmove)="swipe($event)" (touchend)="swipe($event)">
   <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
     <p>{{'food' | translate}}</p>
   </a>
@@ -120,67 +120,61 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     <p>{{'settings' | translate}}</p>
   </a>
   </div>
-  <div class="sideBarShadow"  *ngIf="isOpen" (click)="toggle()"></div>
-<div class="sideBarSwipePlace" [ngClass]="{sideBarSwipePlaceBig:pusherTime}" (fmSwipe)="swipe($event)"></div>
-
+<div class="sideBarSwipePlace" #swipePlace [style.opacity]="shadowOpacity" [ngClass]="{sideBarSwipePlaceBig: isOpen}"  (touchmove)="swipe($event)" (touchend)="swipe($event)" (click)="toggle(swipePlace)"></div>
   `
 }
 )
 export class SideBar {
     @Input() isOpen: boolean;
     @Output() isOpenChange = new EventEmitter();
-    private pusherStart: number = -70
-    private pusher: number = this.pusherStart;
-    private middle: number = this.pusherStart / 2;
-    private pusherTime: boolean = false;
-    private interval1;
-    private interval2;
+    private pusherTarget: number = 250
+    private middle: number = this.pusherTarget / 2;
+    private shadowOpacity: number = 0;
+    private shadowOpacityTarget: number = 0.5;
+    private lastTouch: number = 0;
+    private pushClass: boolean = false
+    private pullClass: boolean = true;
+    constructor() { }
+    toggle(arg) {
+        if (!(arg && arg.className === 'sideBarSwipePlace')) {
+            this.pushClass = !this.pushClass
+            this.pullClass = !this.pullClass
+            this.isOpen = !this.isOpen
+            this.lastTouch = 0;
 
-    toggle() {
-        if (!this.isOpen) {
-            this.pusher = this.middle;
-        } else {
-            this.pusher = this.middle - 1;
-        }
-        this.swipe(['swipeEnd'])
-        this.isOpenChange.emit(this.isOpen);
-    }
-    swipe(evt) {
-        this.pusherTime = true;
-        if (this.interval1 || this.interval2) {
-            clearInterval(this.interval1)
-            clearInterval(this.interval2)
-        }
-        if (evt[0] === 'swipeEnd') {
-            this.isOpen = true;
-            if (this.pusher >= this.middle) {
-                  this.interval1 = setInterval(() => {
-                      if (this.pusher < 0) {
-                          this.pusher++
-                      } else {
-                          clearInterval(this.interval1);
-                      }
-                  }, 0)
+            if (this.isOpen) {
+                this.shadowOpacity = this.shadowOpacityTarget
             } else {
-                this.interval2 = setInterval(() => {
-                    if (this.pusher > this.pusherStart) {
-                        this.pusher--
-                    } else {
-                        clearInterval(this.interval2);
-                        this.isOpen = false;
-                    }
-                }, 0)
-              }
-            this.pusherTime = false;
-        } else if (evt[0] === 'rightSwipe') {
-            this.isOpen = true;
-            if (this.pusher < 0) {
-                this.pusher++;
+                this.shadowOpacity = 0
             }
-        } else if (evt[0] === 'leftSwipe') {
-            this.isOpen = true;
-            if (this.pusher > -70) {
-                this.pusher--;
+        }
+    }
+
+    swipe(evt) {
+        this.isOpen = true;
+        this.pushClass = false
+        this.pullClass = false
+        if (evt.type === 'touchmove' && evt.touches[0].clientX < this.pusherTarget) {
+            if (this.lastTouch < evt.touches[0].clientX && this.shadowOpacity < this.shadowOpacityTarget) {
+                this.shadowOpacity = this.shadowOpacity + 0.01
+            } else if (this.shadowOpacity > 0) {
+                this.shadowOpacity = this.shadowOpacity - 0.01
+            }
+            this.lastTouch = evt.touches[0].clientX
+        }
+        if (evt.type === 'touchend') {
+            if (this.lastTouch > this.middle) {
+              this.pullClass = false
+                this.pushClass = true
+                this.shadowOpacity = this.shadowOpacityTarget;
+                this.isOpen = true;
+            }
+            if (this.lastTouch < this.middle) {
+              this.pushClass = false
+                this.pullClass = true
+                this.shadowOpacity = 0;
+                this.lastTouch = 0;
+                this.isOpen = false;
             }
         }
     }

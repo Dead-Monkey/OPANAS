@@ -21,7 +21,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             SwipeDeleteSideDirective = (function () {
                 function SwipeDeleteSideDirective(_el) {
                     this._el = _el;
-                    this.fmSwipe = new core_1.EventEmitter();
+                    this.fmSwipeDeleteSide = new core_1.EventEmitter();
                     this.fmSwipeRight = new core_1.EventEmitter();
                     this.fmSwipeLeft = new core_1.EventEmitter();
                     this.fmSwipeDown = new core_1.EventEmitter();
@@ -30,14 +30,16 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 SwipeDeleteSideDirective.prototype.start = function (evt) {
                 };
                 SwipeDeleteSideDirective.prototype.move = function (evt) {
-                    console.log(this._el);
+                    this.fmSwipeDeleteSide.emit('opa');
+                    this._el.nativeElement.style.left = '30vw';
+                    console.log(this._el.nativeElement);
                 };
                 SwipeDeleteSideDirective.prototype.end = function (evt) {
                 };
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipe", void 0);
+                ], SwipeDeleteSideDirective.prototype, "fmSwipeDeleteSide", void 0);
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
@@ -58,9 +60,10 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     core_1.Directive({
                         selector: '[fmSwipeDeleteSide]',
                         host: {
-                            '(touchstart)': 'start($event)',
+                            '(touchstart)': 'move($event)',
                             '(touchmove)': 'move($event)',
-                            '(touchend)': 'end($event)'
+                            '(touchend)': 'end($event)',
+                            '(click)': 'move($event)'
                         }
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])
@@ -71,4 +74,4 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         }
     }
 });
-//# sourceMappingURL=swipe-delete-side.js.map
+//# sourceMappingURL=swipe-delete-side.directive.js.map

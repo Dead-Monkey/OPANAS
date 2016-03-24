@@ -5,7 +5,7 @@ import {PlusComponent} from '../plus-bar/plus-bar.component';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
+import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SportService, Sport} from '../../services/sport/sport.service';
 
 @Component({

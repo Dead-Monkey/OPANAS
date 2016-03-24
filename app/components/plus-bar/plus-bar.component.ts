@@ -4,7 +4,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipeHolder/swipe-holder.directive';
+import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 
 @Component({
     selector: 'op-plus',

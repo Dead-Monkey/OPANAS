@@ -33,30 +33,11 @@ import {AdMobService} from '../../services/admob/admob.service';
       height: 100vh;
       overflow: hidden;
     }
-
-  .temporary {
-    position: absolute;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-    background-color: green;
-    right: 40vw;
-    top: 40;
-    height: 50px;
-    width: 100px;
-    opacity: 0.3;
-  }
   `],
     template: `
 <div class="container">
 
   <div class="header">
-    <div class="temporary">
-
-      <div (click)="bla()">reload</div>
-
-    </div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
@@ -75,7 +56,6 @@ import {AdMobService} from '../../services/admob/admob.service';
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {
-
     private sideBarIsOpen: boolean = false;
 
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService, private _AdMobServe: AdMobService) { }
@@ -91,7 +71,6 @@ export class OpanasComponent implements OnInit {
 
             //AdMob
             this._AdMobServe.createBottomBanerFirst();
-            this._AdMobServe.addBottomBanerFirst();
         }
         document.addEventListener("deviceready", onDeviceReady, false);
 

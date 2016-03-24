@@ -2,14 +2,16 @@ import {Directive, ElementRef, Input, Output, EventEmitter} from 'angular2/core'
 @Directive({
     selector: '[fmSwipeDeleteSide]',
     host: {
-        '(touchstart)': 'start($event)',
+        '(touchstart)': 'move($event)',
         '(touchmove)': 'move($event)',
-        '(touchend)': 'end($event)'
+        '(touchend)': 'end($event)',
+          '(click)':'move($event)'
     }
 })
-export class SwipeHoldertDirective {
+export class SwipeDeleteSideDirective {
 
-    @Output() fmSwipe = new EventEmitter();
+    @Output() fmSwipeDeleteSide = new EventEmitter();
+
     @Output() fmSwipeRight = new EventEmitter();
     @Output() fmSwipeLeft = new EventEmitter();
     @Output() fmSwipeDown = new EventEmitter();
@@ -27,7 +29,9 @@ export class SwipeHoldertDirective {
     }
 
     move(evt) {
-        console.log(this._el);
+      this.fmSwipeDeleteSide.emit('opa')
+      this._el.nativeElement.style.left = '30vw'
+        console.log(this._el.nativeElement);
     }
     end(evt) {
     }

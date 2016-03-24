@@ -160,6 +160,7 @@ export class UserDetailsComponent implements OnInit {
     changeLang(lang) {
         this._userServe.setLanguage(lang)
         this._translator.setCurrentLanguage(this._userServe.getLanguage())
+        location.reload();
     }
     changeSets() {
         setTimeout(() => {

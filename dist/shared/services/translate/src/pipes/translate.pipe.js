@@ -30,8 +30,7 @@ System.register(['angular2/core', '../services/translate.service'], function(exp
                 };
                 TranslatePipe = __decorate([
                     core_1.Pipe({
-                        name: 'translate',
-                        pure: false
+                        name: 'translate'
                     }), 
                     __metadata('design:paramtypes', [translate_service_1.TranslateService])
                 ], TranslatePipe);
