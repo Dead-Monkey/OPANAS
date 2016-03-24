@@ -36,23 +36,26 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       left: 8vw;
       margin-bottom: 2vw;
       color: #ff9d2d;
+      line-height: 10vw;
     }
     .user_input {
       position: relative;
       float: left;
-      height: 8vw;
+      height: 11vw;
       width: 20vw;
       background-color: rgba(49, 51, 61, 0.3);
       box-sizing: border-box;
-      border: 3px solid #0C1017;
+      border: 5px solid #0C1017;
       border-radius: 2vw;
+      line-height: 8vw;
       font-size: 6vw;
-      color: #ff9d2d;
+      color: #D0D9D9;
       margin-bottom: 2vw;
+      text-align: center;
     }
     .user_secondHeader {
       position: absolute;
-      top: 57vw;
+      top: 64vw;
       font-size: 5vw;
       min-height: 8vw;
       line-height: 8vw;
