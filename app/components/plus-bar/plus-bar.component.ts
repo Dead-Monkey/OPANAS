@@ -182,20 +182,55 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   border: 3px solid #0C1017;
   border-radius: 2vw;
 }
+.sport_inputButton_off {
+  position: relative;
+  float: right;
+  height: 12vw;
+  width: 12vw;
+  background: url('./src/img/check-off.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  border: 3px solid #0C1017;
+  border-radius: 2vw;
+}
+
+.sport_inputButton_on {
+  position: relative;
+  float: right;
+  height: 12vw;
+  width: 12vw;
+  background: url('./src/img/check-on.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  border: 3px solid #0C1017;
+  border-radius: 2vw;
+}
+.sport_inputSportName {
+  font-size: 6.5vw;
+  width: 40vw;
+  height: 12vw;
+  float: left;
+  margin-bottom: 2vw;
+  color: #ff9d2d;
+  line-height: 10vw;
+  font-weight: bold;
+}
+.sport_inputSport{
+  position: relative;
+  float: left;
+  height: 12vw;
+  width: 40vw;
+  background-color: rgba(49, 51, 61, 0.3);
+  box-sizing: border-box;
+  border: 3px solid #0C1017;
+  border-radius: 2vw;
+  font-size: 7vw;
+  color: #ff9d2d;
+  margin-bottom: 2vw;
+}
 .createExercise{
   width: 100%;
   height: 100%
-}
-.sport_inputSport{
-  position: absolute;
-  height: 10vw;
-  width: 55vw;
-  left: 11vw;
-  background-color: rgba(49, 51, 61, 0.3);
-  box-sizing: border-box;
-  color: red;
-  border: 1.5vw solid red;
-  border-radius: 2vw;
 }
 .sportBtnMove{
   top:0;
@@ -404,20 +439,20 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 
 
       <div *ngIf="createExercise">
+
         <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
-
-          <label style="left:0; border:none;width:10vw;" class="sport_inputSport" for="name">name</label>
+          <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
           <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
-
-          <button type="submit" class="sportBtnMove" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
-
+          <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
         </form>
-        <div class="list">
-          <div *ngFor="#item of customSport">
-            <div class="listItem">{{item.name.ru}} </div>
+
+        <div class="list foodListMove">
+          <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+            <div class="listItem">{{item?.name[language]}} </div>
+            <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
           </div>
         </div>
-      </div>
+
 
       <div *ngIf="createTrain">
         create train
