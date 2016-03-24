@@ -27,32 +27,31 @@ import {AdMobService} from '../../services/admob/admob.service';
   }
   .food_inputFood {
     position: absolute;
-    height: 10vw;
+    height: 12vw;
     width: 60vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
     border: 5px solid #0C1017;
     border-radius: 2vw;
-    font-size: 5vw;
+    font-size: 6vw;
     color: #D0D9D9;
   }
   .food_inputWeight {
     position: absolute;
-    height: 10vw;
+    height: 12vw;
     width: 16vw;
     left: 61vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    color: #0d0e15;
     border: 5px solid #0C1017;
     border-radius: 2vw;
-    font-size: 5vw;
-    color: #0d0e15;
+    font-size: 6vw;
+    color: #D0D9D9;
   }
   .food_inputButton_off {
     position: absolute;
     right: 0;
-    height: 10vw;
+    height: 12vw;
     width: 12vw;
     background: url('./src/img/check-off.png') no-repeat center center;
     background-size: cover;
@@ -64,7 +63,7 @@ import {AdMobService} from '../../services/admob/admob.service';
   .food_inputButton_on {
     position: absolute;
     right: 0;
-    height: 10vw;
+    height: 11vw;
     width: 12vw;
     background: url('./src/img/check-on.png') no-repeat center center;
     background-size: cover;
@@ -86,6 +85,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     top: 10vw;
     overflow-y: scroll;
     border-radius: 2vw;
+    z-index: 3;
   }
   .food_searchListItem {
     float:left;
@@ -101,21 +101,20 @@ import {AdMobService} from '../../services/admob/admob.service';
     border-radius: 2vw;
   }
   .food_list {
-    margin: 5vw;
+    position: absolute;;
+    top:87vw;
+    margin-left: 5vw;
     width: 90vw;
-    height: 80vw;
+    height: 90vw;
     overflow-y: scroll;
-    overflow-x:hidden;
-  }
-  .food_listItemContainer{
-    position:relative;
+    overflow-x: hidden;
   }
   .food_listItem {
     float:left;
-    margin-bottom: 2vw;
+    margin-right: 1vw;
+    margin-top: 2vw;
     min-height: 12vw;
-    width: 55vw;
-    line-height: 12vw;
+    width: 60vw;
     box-sizing: border-box;
     background-color: #3f414a;
     color: #ff9d2d;
@@ -127,7 +126,7 @@ import {AdMobService} from '../../services/admob/admob.service';
   }
   .food_listWeight {
     float:left;
-    margin-left: 2vw;
+    margin-top: 2vw;
     margin-right: 2vw;
     height: 12vw;
     width: 15vw;
@@ -139,10 +138,12 @@ import {AdMobService} from '../../services/admob/admob.service';
     text-align: center;
     border-radius: 2vw;
     border: none;
+    text-align: center;
   }
 
   .food_listButton_on {
     float:left;
+    margin-top: 2vw;
     height: 12vw;
     width: 12vw;
     background: url('./src/img/check-on.png') no-repeat center center;
@@ -154,6 +155,7 @@ import {AdMobService} from '../../services/admob/admob.service';
   }
   .food_listButton_off {
     float:left;
+    margin-top: 2vw;
     height: 12vw;
     width: 12vw;
     background: url('./src/img/check-off.png') no-repeat center center;

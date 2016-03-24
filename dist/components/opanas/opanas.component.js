@@ -158,6 +158,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'set': 'set',
                     '+set': '+set',
                     'kg': 'kg',
+                    'cm': 'cm',
                     'resp': 'resp',
                     'daily.rate': 'Daily rate',
                     'determine.daily.rate': 'Determine my daily rate',
@@ -168,7 +169,15 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'reset': 'RESET',
                     'stop': 'STOP',
                     'resume': 'RESUME',
-                    'start': 'START'
+                    'start': 'START',
+                    'sex': 'Sex',
+                    'age': 'Age',
+                    'height': 'Height',
+                    'mass': 'Weight',
+                    'years': 'years',
+                    'activity.level': 'Activity level',
+                    'point': 'Point',
+                    'ccal': 'ccal'
                 },
                 'ru': {
                     'food': 'Питание',
@@ -195,6 +204,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'set': 'сет',
                     '+set': '+сет',
                     'kg': 'кг',
+                    'cm': 'см',
                     'resp': 'повт',
                     'daily.rate': 'Cуточная норма',
                     'determine.daily.rate': 'Определить мою суточную норму',
@@ -205,7 +215,15 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'reset': 'СБРОС',
                     'stop': 'СТОП',
                     'resume': 'ПУСК',
-                    'start': 'ПУСК'
+                    'start': 'ПУСК',
+                    'sex': 'Пол',
+                    'age': 'Возраст',
+                    'height': 'Рост',
+                    'mass': 'Вес',
+                    'years': 'лет',
+                    'activity.level': 'Уровень активности',
+                    'point': 'Цель',
+                    'ccal': 'ккал'
                 }
             };
         }
