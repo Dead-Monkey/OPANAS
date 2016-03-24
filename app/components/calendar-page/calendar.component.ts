@@ -12,7 +12,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   top:20vw;
   left:13vw;
   width:74vw;
-  /*height: 85vw;*/
   background:#3f414a;
   text-align: center;
   color: #ff9d2d;
@@ -32,48 +31,57 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   font-size: 6vw;
 }
 
-.date{
-float: left;
-width:10vw;
-height:10vw;
-border: 0.5vw solid #ff9d2d;
+.date {
+  float: left;
+  width: 10vw;
+  height: 10vw;
+  border: 0.5vw solid #ff9d2d;
 }
-
-.currentDate{
+.currentDate {
   background-color: #0d0e15;
   color: #de5200;
 }
-
-.toggleLeft{
-float:left;
-width:25vw;
+.toggleLeft {
+  float: left;
+  width: 25vw;
 }
-
-.toggleRight{
-  float:left;
-  width:20vw;
+.toggleRight {
+  float: left;
+  width: 20vw;
 }
-.today {
+.calendar_buttons {
   position: absolute;
-top: 110vw;
-width: 40vw;
-height: 13vw;
-background-color: grey;
-left: 13vw;
+  top: 110vw;
+  left: 13vw;
+  width: 74vw;
+  height: 50vw;
+  font-size: 5vw;
+  color: #ff9d2d;
+  float: left;
 }
-.todayIcon {
+.calendar_todayButton {
+  position: relative;
+  float: left;
+  height: 12vw;
+  width: 50vw;
+  margin-bottom: 3vw;
+}
+.calendar_todayIcon {
   position: relative;
   height: 12vw;
   width: 12vw;
   float: left;
   background: url('./src/img/today.png') no-repeat center center;
   background-size: cover;
+  box-sizing: border-box;
 }
-.todayText {
+.calendar_todayText {
   position: relative;
-  font-size: 4vw;
   width: 20vw;
   float: left;
+  line-height: 12vw;
+  height: 12vw;
+  left: 3vw;
 }
       `],
     template: `
@@ -121,12 +129,15 @@ left: 13vw;
         <div class="date" *ngFor="#item of pushDays"></div>
         <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
       </div>
-      <div class="today">
-        <div class="todayText">Today</div>
-        <div class="todayIcon"></div>
-      </div>
-    </div>
 
+      <div class="calendar_buttons">
+        <div class="calendar_todayButton">
+          <div class="calendar_todayIcon"></div>
+          <div class="calendar_todayText">Today</div>
+        </div>
+      </div>
+
+    </div>
 
 `
 })

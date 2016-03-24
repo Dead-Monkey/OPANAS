@@ -25,7 +25,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         position: absolute;
         height: 12vw;
         width: 72vw;
-        color: #0d0e15;
+        color: #D0D9D9;
         font-size: 6vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
