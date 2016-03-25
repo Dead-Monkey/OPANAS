@@ -35,7 +35,7 @@ System.register(['angular2/core', 'angular2/router', '../../services/translate/t
                     this.lastTouch = 0;
                     this.pushClass = false;
                     this.pullClass = true;
-                    this.device = { 'version': '4.9' };
+                    this.device = { 'version': '5' };
                     var onDeviceReady = function () {
                         _this.device = device;
                     };

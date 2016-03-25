@@ -61,7 +61,6 @@ interface Document {
 
 interface Window {
   cordova:Cordova;
-  plugins: any;
 }
 
 // cordova/argscheck module
@@ -78,7 +77,6 @@ interface UrlUtil {
 
 /** Apache Cordova instance */
 declare var cordova: Cordova;
-declare var device: any;
 
 declare module 'cordova' {
     export = cordova;

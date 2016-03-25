@@ -1,6 +1,6 @@
 import {Component, OnInit} from 'angular2/core';
 import {TranslatePipe} from '../../shared/services/translate/translate.service';
-
+import {UserService} from '../../services/user/user.service';
 
 @Component({
     selector: 'op-user-calculator',
@@ -159,18 +159,18 @@ import {TranslatePipe} from '../../shared/services/translate/translate.service';
   <div class="calculator_buttons">
 
     <div class="calculator_nameInput calculator_sex ">{{'sex'|translate}}:</div>
-    <div class="calculator_sexIcon calculator_sexMale_on"></div>
-    <div class="calculator_sexIcon calculator_sexFemale_off"></div>
+    <div class="calculator_sexIcon" [ngClass]="{calculator_sexMale_on: model.sex === 'male', calculator_sexMale_off: model.sex === 'female'}" (click)="changeSex()"></div>
+    <div class="calculator_sexIcon"  [ngClass]="{calculator_sexFemale_on: model.sex === 'female', calculator_sexFemale_off: model.sex === 'male'}" (click)="changeSex()"></div>
 
     <div class="calculator_nameInput">{{'age'|translate}}:</div>
-    <input class="calculator_input" type="number" min="0" placeholder="{{'years'|translate}}">
+    <input class="calculator_input" type="number" min="0" placeholder="{{'years'|translate}}" [(ngModel)]="model.age">
 
 
     <div class="calculator_nameInput">{{'height'|translate}}:</div>
-    <input class="calculator_input" type="number" min="0" placeholder="{{'cm'|translate}}">
+    <input class="calculator_input" type="number" min="0" placeholder="{{'cm'|translate}}" [(ngModel)]="model.height">
 
     <div class="calculator_nameInput">{{'mass'|translate}}:</div>
-    <input class="calculator_input" type="number" min="0" placeholder="{{'kg'|translate}}">
+    <input class="calculator_input" type="number" min="0" placeholder="{{'kg'|translate}}" [(ngModel)]="model.weight">
 
     </div>
 
@@ -204,14 +204,37 @@ import {TranslatePipe} from '../../shared/services/translate/translate.service';
       <div class="pointToggle pointToggle_on"></div>
     </div>
 
-  <div class="calculator_result">1488 {{'ccal'|translate}}</div>
+  <div (click)="calculate()" class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
 
   </div>
 
 
 `})
 export class UserCalculatorComponent implements OnInit {
-    constructor() { }
+
+    private model = {
+        'sex': 'male',
+        'age': '',
+        'weight': '',
+        'height': '',
+        'activity': '1',
+        'goal': '1'
+    }
+    constructor(private _userServe: UserService) { }
     ngOnInit() {
+        Object.assign(this.model, this._userServe.getUserSets())
+    }
+    changeSex() {
+        if (this.model.sex === 'male') {
+            this._userServe.setUserSex('female');
+            this.model.sex = 'female'
+        } else {
+            this._userServe.setUserSex('male');
+            this.model.sex = 'male'
+        }
+    }
+    calculate() {
+        this._userServe.calculateUserDailyRate(this.model.sex, <any>this.model.age, <any>this.model.weight, <any>this.model.height, <any>this.model.activity, <any>this.model.goal)
+        Object.assign(this.model, this._userServe.getUserSets())
     }
 }

@@ -43,6 +43,12 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             }
                         },
                         'sportSets': {},
+                        'age': '',
+                        'weight': '',
+                        'height': '',
+                        'sex': 'male',
+                        'activity': '',
+                        'goal': '',
                         'language': 'en'
                     };
                     if (this._storageService.getItem(this.storageKeys['userSets'])) {
@@ -67,21 +73,95 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 UserService.prototype.getUserSets = function () {
                     return this.sets;
                 };
+                UserService.prototype.setUserAge = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
+                    this.sets['age'] = value;
+                    this.refreshUser();
+                };
+                UserService.prototype.setUserSex = function (value) {
+                    if (!(value === 'male' || value === 'female')) {
+                        value = 'male';
+                    }
+                    this.sets['sex'] = value;
+                    this.refreshUser();
+                };
+                UserService.prototype.setUserWeight = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
+                    this.sets['weight'] = value;
+                    this.refreshUser();
+                };
+                UserService.prototype.setUserHeight = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
+                    this.sets['height'] = value;
+                    this.refreshUser();
+                };
+                UserService.prototype.setUserActivity = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
+                    this.sets['activity'] = value;
+                    this.refreshUser();
+                };
+                UserService.prototype.setUserGoal = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
+                    this.sets['goal'] = value;
+                    this.refreshUser();
+                };
                 UserService.prototype.setUserCalories = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
                     this.sets['foodSets']['calories']['full'] = value;
                     this.refreshUser();
                 };
                 UserService.prototype.setUserProtein = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
                     this.sets['foodSets']['protein']['full'] = value;
                     this.refreshUser();
                 };
                 UserService.prototype.setUserFat = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
                     this.sets['foodSets']['fat']['full'] = value;
                     this.refreshUser();
                 };
                 UserService.prototype.setUserCarbohydrates = function (value) {
+                    if (!value) {
+                        value = 0;
+                    }
                     this.sets['foodSets']['carbohydrates']['full'] = value;
                     this.refreshUser();
+                };
+                UserService.prototype.calculateUserDailyRate = function (sex, age, weight, height, activity, goal) {
+                    var kcal;
+                    this.setUserSex(sex);
+                    this.setUserAge(age);
+                    this.setUserWeight(weight);
+                    this.setUserHeight(height);
+                    this.setUserActivity(activity);
+                    this.setUserGoal(goal);
+                    if (sex === 'male') {
+                        kcal = 10 * this.sets['weight'] + 6.25 * this.sets['height'] - 5 * this.sets['age'] + 5;
+                    }
+                    else if (sex === 'female') {
+                        kcal = 10 * this.sets['weight'] + 6.25 * this.sets['height'] - 5 * this.sets['age'] - 161;
+                    }
+                    kcal = kcal * activity * goal;
+                    this.setUserCalories(kcal);
+                    this.setUserProtein(weight * 1.8);
+                    this.setUserFat(weight);
+                    this.setUserCarbohydrates((kcal - this.sets['foodSets']['protein']['full'] * 4 - this.sets['foodSets']['fat']['full'] * 9) / 4);
                 };
                 UserService = __decorate([
                     core_1.Injectable(), 
