@@ -111,7 +111,7 @@ import {AdMobService} from '../../services/admob/admob.service';
   }
   .food_listItem {
     float:left;
-      margin-right: 1vw;
+    margin-right: 1vw;
     margin-top: 2vw;
     min-height: 12vw;
     width: 60vw;
@@ -169,8 +169,6 @@ import {AdMobService} from '../../services/admob/admob.service';
     position:relative;
     height: 16vw;
     width:90vw;
-  background-color:black;
-
   }
     `],
     template: `

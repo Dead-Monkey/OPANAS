@@ -137,7 +137,16 @@ let keysVendor: Object = {
         'reset':'RESET',
         'stop':'STOP',
         'resume':'RESUME',
-        'start':'START'
+        'start':'START',
+        'sex':'Sex',
+        'age':'Age',
+        'height':'Height',
+        'mass':'Weight',
+        'years':'years',
+        'activity.level':'Activity level',
+        'point':'Point',
+        'ccal':'ccal',
+        'name':'Name'
 
     },
 
@@ -176,7 +185,18 @@ let keysVendor: Object = {
         'reset':'СБРОС',
         'stop':'СТОП',
         'resume':'ПУСК',
-        'start':'ПУСК'
+        'start':'ПУСК',
+        'start':'ПУСК',
+        'sex':'Пол',
+        'age':'Возраст',
+        'height':'Рост',
+        'mass':'Вес',
+        'years':'лет',
+        'activity.level':'Уровень активности',
+        'point':'Цель',
+        'ccal':'ккал',
+        'name':'Название'
+
 
     }
 }
