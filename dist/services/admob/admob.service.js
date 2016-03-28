@@ -42,7 +42,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 AdMobService.prototype.addBottomBanerFirst = function () {
                     if (AdMob)
                         AdMob.createBanner({
-                            adId: this.admobidFirst.banner,
+                            adId: this.admobidFirst['banner'],
                             position: AdMob.AD_POSITION.BOTTOM_CENTER,
                             autoShow: true
                         });

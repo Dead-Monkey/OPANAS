@@ -33,8 +33,28 @@ import {AdMobService} from '../../services/admob/admob.service';
       height: 100vh;
       overflow: hidden;
     }
+    .tmp{
+      position:absolute;
+      top:0;
+      left:30vw;
+      z-index:2000;
+      width:20vw;
+      height:20vw;
+      background-color:black;
+    }
+    .tmp2{
+      position:absolute;
+      top:0;
+      right:30vw;
+      z-index:2000;
+      width:20vw;
+      height:20vw;
+      background-color:blue;
+    }
   `],
     template: `
+    <div class="tmp" (click)="tmp()"></div>
+    <div class="tmp2" (mousemove)="tmp2()"></div>
 <div class="container">
 
   <div class="header">
@@ -56,6 +76,12 @@ import {AdMobService} from '../../services/admob/admob.service';
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {
+  tmp(){
+    console.log(`tmp`);
+  }
+  tmp2(){
+    console.log(`tmp2`);
+  }
     private sideBarIsOpen: boolean = false;
 
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService, private _AdMobServe: AdMobService) { }
@@ -187,7 +213,6 @@ let keysVendor: Object = {
         'reset':'СБРОС',
         'stop':'СТОП',
         'resume':'ПУСК',
-        'start':'ПУСК',
         'start':'ПУСК',
         'sex':'Пол',
         'age':'Возраст',

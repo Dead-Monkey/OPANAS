@@ -61,8 +61,9 @@ interface Document {
 
 interface Window {
   cordova:Cordova;
+  plugins:any
 }
-
+declare var AdMob:any
 // cordova/argscheck module
 interface ArgsCheck {
     checkArgs(argsSpec: string, functionName: string, args: any[], callee?: any): void;

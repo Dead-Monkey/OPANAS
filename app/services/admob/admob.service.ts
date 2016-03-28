@@ -25,7 +25,7 @@ export class AdMobService {
     }
     addBottomBanerFirst() {
         if (AdMob) AdMob.createBanner({
-            adId: this.admobidFirst.banner,
+            adId: this.admobidFirst['banner'],
             position: AdMob.AD_POSITION.BOTTOM_CENTER,
             autoShow: true
         });
