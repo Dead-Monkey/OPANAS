@@ -160,6 +160,7 @@ let keysVendor: Object = {
         'added.meals':'Added meals',
         'meals.name':'Meals name',
         'create.exercise':'Add exercise',
+        'added.exercise':'Added exercise',
         'create.training.plan':'Create training plan',
         'reset':'RESET',
         'stop':'STOP',
@@ -174,6 +175,7 @@ let keysVendor: Object = {
         'point':'Point',
         'ccal':'ccal',
         'name':'Name'
+
 
     },
 
@@ -209,6 +211,7 @@ let keysVendor: Object = {
         'added.meals':'Добавленные блюда',
         'meals.name':'Название',
         'create.exercise':'Добавить упражнение',
+        'added.exercise':'Добавленные упражнения',
         'create.training.plan':'Создать программу',
         'reset':'СБРОС',
         'stop':'СТОП',
