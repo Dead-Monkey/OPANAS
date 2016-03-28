@@ -266,7 +266,9 @@ export class FoodComponent implements OnInit {
         this.calculateFood(this.pickedFood);
 
         this.pickedFood = <Food>{};
-        this.model = {};
+        setTimeout(()=>{
+          this.model = {};
+        },0)
         this.correctFood = false;
 
     }
