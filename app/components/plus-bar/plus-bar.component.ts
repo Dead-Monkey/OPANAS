@@ -89,13 +89,13 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 }
 .foodListMove{
   position: absolute;;
-  width: 90vw;
+  width: 80vw;
   top: 80vw;
   left: 4vw;
   overflow-y: scroll;
 }
 .listItemName {
-  width: 90vw;
+  width: 80vw;
   float:left;
   height: 10vw;
   text-align: center;
@@ -228,6 +228,14 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   color: #ff9d2d;
   margin-bottom: 2vw;
 }
+.sportListMove {
+  position: absolute;;
+  width: 80vw;
+  top: 40vw;
+  left: 4vw;
+  overflow-y: scroll;
+}
+
 .createExercise{
   width: 100%;
   height: 100%
@@ -413,7 +421,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
     <!-- тут начинается спорт -->
 
     <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
-      <div *ngIf="listOptions" class="plusBar_menuButtons">
+  <div *ngIf="listOptions" class="plusBar_menuButtons">
 
     <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
       <div class="plusBar_listItem plusBar_createExercise "></div>
@@ -429,39 +437,42 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
       </div>
     </div>
 
-        <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
+    <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
       <div class="plusBar_listItem plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
         paste train
       </div>
     </div>
-      </div>
+  </div>
 
 
-      <div *ngIf="createExercise">
+  <div *ngIf="createExercise">
 
-        <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
-          <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
-          <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
-          <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
-        </form>
+    <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
+      <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
+      <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
+      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+    </form>
 
-        <div class="list foodListMove">
-          <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
-            <div class="listItem">{{item?.name[language]}} </div>
-            <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
-          </div>
-        </div>
-
-
-      <div *ngIf="createTrain">
-        create train
-      </div>
-
-      <div *ngIf="pasteTrain">
-        paste train
+    <div class="sportListMove">
+      <div *ngFor="#item of customSport">
+        <div class="listItemName">{{'added.exercise' | translate}}</div>
+        <div class="listItem">{{item.name.ru}} </div>
+        <div class="listItemEditing"></div>
+        <div class="listItemDelete"></div>
       </div>
     </div>
+  </div>
+
+
+  <div *ngIf="createTrain">
+    create train
+  </div>
+
+  <div *ngIf="pasteTrain">
+    paste train
+  </div>
+</div>
     `
 })
 
