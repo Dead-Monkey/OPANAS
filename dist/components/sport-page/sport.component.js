@@ -76,6 +76,7 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     }
                 };
                 SportComponent.prototype.onSubmit = function (sport) {
+                    var _this = this;
                     this.pickedSport['picked'] = false;
                     this.pickedSport['setsToggle'] = true;
                     this.pickedSport['sets'] = [{ 'picked': false }];
@@ -86,7 +87,9 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                         this.calculateTotalSportInit(variable);
                     }
                     this.pickedSport = {};
-                    this.model = {};
+                    setTimeout(function () {
+                        _this.model = {};
+                    }, 0);
                     this.correctSport = false;
                 };
                 SportComponent.prototype.pickSportInput = function (name) {

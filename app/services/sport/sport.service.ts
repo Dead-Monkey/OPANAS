@@ -57,7 +57,7 @@ export class SportService {
               this.userSport.splice(rem, 1);
           }
       }
-      this.userSport.push(sport);
+      this.userSport.unshift(sport);
       this.refreshUserSport();
       this.prepareSport();
   }

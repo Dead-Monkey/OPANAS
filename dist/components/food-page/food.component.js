@@ -92,12 +92,15 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     }
                 };
                 FoodComponent.prototype.onSubmit = function (food) {
+                    var _this = this;
                     this.pickedFood['weight'] = food.value.weight;
                     this.pickedFood['picked'] = true;
                     this._calendarService.setDailyFood(this.pickedFood, this.currentDate);
                     this.calculateFood(this.pickedFood);
                     this.pickedFood = {};
-                    this.model = {};
+                    setTimeout(function () {
+                        _this.model = {};
+                    }, 0);
                     this.correctFood = false;
                 };
                 FoodComponent.prototype.pickFoodInput = function (name) {

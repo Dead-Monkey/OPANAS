@@ -349,7 +349,9 @@ export class SportComponent implements OnInit {
         }
 
         this.pickedSport = <Sport>{};
-        this.model = {};
+        setTimeout(()=>{
+          this.model = {};
+        },0)
         this.correctSport = false;
     }
 

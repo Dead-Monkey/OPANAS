@@ -350,26 +350,24 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 
   <!-- Добавить блюдо -->
   <div *ngIf="createFood">
-    <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
-
+    <form class="food_form" >
       <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [(ngModel)]="model.name" ngControl="name" #name="ngForm">
+      <input class="food_inputFood" required [(ngModel)]="model.name"  #name>
 
       <div class="food_inputFoodNameNutritions">{{'calories' | translate}}</div>
-      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.calories" ngControl="calories" #calories="ngForm">
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.calories">
 
       <div class="food_inputFoodNameNutritions">{{'protein' | translate}}</div>
-      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.protein" ngControl="protein" #protein="ngForm">
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.protein">
 
       <div class="food_inputFoodNameNutritions">{{'fat' | translate}}</div>
-      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.fat" ngControl="fat" #fat="ngForm">
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.fat">
 
       <div class="food_inputFoodNameNutritions">{{'carbohydrates' | translate}}</div>
-      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.carbohydrates" ngControl="carbohydrates" #carbohydrates="ngForm">
+      <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.carbohydrates">
 
       <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
-      <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
-
+      <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmit(name)"></button>
     </form>
     <div class="list foodListMove">
       <div class="listItemName">{{'added.meals' | translate}}</div>
@@ -448,10 +446,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 
   <div *ngIf="createExercise">
 
-    <form class="food_form" (ngSubmit)="onSubmitSport(sportForm)" #sportForm="ngForm">
+    <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
-      <input class="sport_inputSport" required [(ngModel)]="modelSport.name" ngControl="name" #name="ngForm">
-      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)"></button>
+      <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
+      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmitSport(name)"></button>
     </form>
 
     <div class="sportListMove">
@@ -518,7 +516,7 @@ export class PlusComponent implements OnInit {
 
     checkForm(value) {
         if (value) {
-                return true
+            return true
         }
         return false;
     }
@@ -569,21 +567,26 @@ export class PlusComponent implements OnInit {
         this.correctFood = false;
 
     }
-    changeFoodWeight(menuName, item, weight){
-      this._foodServe.changeFoodInMenu(menuName, item,weight);
+    changeFoodWeight(menuName, item, weight) {
+        this._foodServe.changeFoodInMenu(menuName, item, weight);
     }
     removeFoodMenu(menuName, item) {
         this._foodServe.removeFoodFromMenu(menuName, item);
     }
     //4 food
     onSubmit(food) {
-        if (food.value.name.trim()) {
-            let name = food.value.name.trim();
+        if (food.value.trim()) {
+            let name = food.value.trim();
+            food = { 'value': {} }
             food.value['name'] = {};
             for (let key in this._translateService.getSupportLanguages()) {
                 food.value['name'][key] = name;
             }
             food.value['custom'] = true;
+            food.value['calories'] = this.model['calories'];
+            food.value['protein'] = this.model['protein'];
+            food.value['fat'] = this.model['fat'];
+            food.value['carbohydrates'] = this.model['carbohydrates'];
             this.setFood(food.value);
             this.refreshModel();
         }
@@ -604,18 +607,16 @@ export class PlusComponent implements OnInit {
 
     //4 sport
     onSubmitSport(sport) {
-        if (sport.value.name.trim()) {
-            let name = sport.value.name.trim();
+        if (sport.value.trim()) {
+            let name = sport.value.trim();
+            sport = { 'value': {} }
             sport.value['name'] = {};
             for (let key in this._translateService.getSupportLanguages()) {
                 sport.value['name'][key] = name;
             }
             sport.value['custom'] = true;
-
-
             this.setSport(sport.value);
             this.modelSport['name'] = '';
-
         }
     }
     setSport(sport: Sport) {
