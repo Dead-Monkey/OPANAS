@@ -167,7 +167,7 @@ export class SideBar {
     private lastTouch: number = 0;
     private pushClass: boolean = false
     private pullClass: boolean = true;
-    private device={'version':'4.9'};
+    private device={'version':'5'};
     constructor() {
         let onDeviceReady = () => {
             this.device = device;
