@@ -75,12 +75,6 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._AdMobServe = _AdMobServe;
                     this.sideBarIsOpen = false;
                 }
-                OpanasComponent.prototype.tmp = function () {
-                    console.log("tmp");
-                };
-                OpanasComponent.prototype.tmp2 = function () {
-                    console.log("tmp2");
-                };
                 OpanasComponent.prototype.bla = function () {
                     location.reload();
                 };
@@ -118,8 +112,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         directives: [router_1.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .tmp{\n      position:absolute;\n      top:0;\n      left:30vw;\n      z-index:2000;\n      width:20vw;\n      height:20vw;\n      background-color:black;\n    }\n    .tmp2{\n      position:absolute;\n      top:0;\n      right:30vw;\n      z-index:2000;\n      width:20vw;\n      height:20vw;\n      background-color:blue;\n    }\n  "],
-                        template: "\n    <div class=\"tmp\" (click)=\"tmp()\"></div>\n    <div class=\"tmp2\" (mousemove)=\"tmp2()\"></div>\n<div class=\"container\">\n\n  <div class=\"header\">\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },

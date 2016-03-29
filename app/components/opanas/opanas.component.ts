@@ -33,28 +33,8 @@ import {AdMobService} from '../../services/admob/admob.service';
       height: 100vh;
       overflow: hidden;
     }
-    .tmp{
-      position:absolute;
-      top:0;
-      left:30vw;
-      z-index:2000;
-      width:20vw;
-      height:20vw;
-      background-color:black;
-    }
-    .tmp2{
-      position:absolute;
-      top:0;
-      right:30vw;
-      z-index:2000;
-      width:20vw;
-      height:20vw;
-      background-color:blue;
-    }
   `],
     template: `
-    <div class="tmp" (click)="tmp()"></div>
-    <div class="tmp2" (mousemove)="tmp2()"></div>
 <div class="container">
 
   <div class="header">
@@ -76,22 +56,16 @@ import {AdMobService} from '../../services/admob/admob.service';
     { path: '/*path', redirectTo: ['Start'] }
 ])
 export class OpanasComponent implements OnInit {
-  tmp(){
-    console.log(`tmp`);
-  }
-  tmp2(){
-    console.log(`tmp2`);
-  }
     private sideBarIsOpen: boolean = false;
 
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe:UserService, private _AdMobServe: AdMobService) { }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService) { }
     bla() {
         location.reload();
     }
     //config app
     ngOnInit() {
         //cordova plugins setup
-        let onDeviceReady =()=> {
+        let onDeviceReady = () => {
             //keepAwake screen
             window.plugins.insomnia.keepAwake()
 
@@ -129,11 +103,11 @@ let languages: Object = {
 let keysVendor: Object = {
 
     'en': {
-        'food':'Food',
-        'sport':'Sport',
-        'rest':'Rest',
-        'calendar':'Calendar',
-        'settings':'Settings',
+        'food': 'Food',
+        'sport': 'Sport',
+        'rest': 'Rest',
+        'calendar': 'Calendar',
+        'settings': 'Settings',
         'progress': 'progress',
         'search': 'search',
         'weight': 'g',
@@ -144,50 +118,50 @@ let keysVendor: Object = {
         'protein': 'Protein',
         'carbohydrates': 'Carbohydrates',
         'fat': 'Fat',
-        'done':'Done',
-        'language':'Language',
-        'create.food':'Create food',
-        'create.menu':'Create menu',
-        'paste.menu':'Paste menu',
-        'menuName':'menu name',
-        'set':'set',
-        '+set':'+set',
-        'kg':'kg',
-        'cm':'cm',
-        'resp':'resp',
-        'daily.rate':'Daily rate',
-        'determine.daily.rate':'Determine my daily rate',
-        'added.meals':'Added meals',
-        'meals.name':'Meals name',
-        'create.exercise':'Add exercise',
-        'added.exercise':'Added exercise',
-        'create.training.plan':'Create training plan',
-        'reset':'RESET',
-        'stop':'STOP',
-        'resume':'RESUME',
-        'start':'START',
-        'sex':'Sex',
-        'age':'Age',
-        'height':'Height',
-        'mass':'Weight',
-        'years':'years',
-        'activity.level':'Activity level',
-        'point':'Point',
-        'ccal':'ccal',
-        'name':'Name'
+        'done': 'Done',
+        'language': 'Language',
+        'create.food': 'Create food',
+        'create.menu': 'Create menu',
+        'paste.menu': 'Paste menu',
+        'menuName': 'menu name',
+        'set': 'set',
+        '+set': '+set',
+        'kg': 'kg',
+        'cm': 'cm',
+        'resp': 'resp',
+        'daily.rate': 'Daily rate',
+        'determine.daily.rate': 'Determine my daily rate',
+        'added.meals': 'Added meals',
+        'meals.name': 'Meals name',
+        'create.exercise': 'Add exercise',
+        'added.exercise': 'Added exercise',
+        'create.training.plan': 'Create training plan',
+        'reset': 'RESET',
+        'stop': 'STOP',
+        'resume': 'RESUME',
+        'start': 'START',
+        'sex': 'Sex',
+        'age': 'Age',
+        'height': 'Height',
+        'mass': 'Weight',
+        'years': 'years',
+        'activity.level': 'Activity level',
+        'point': 'Point',
+        'ccal': 'ccal',
+        'name': 'Name'
 
 
     },
 
     'ru': {
-        'food':'Питание',
-        'sport':'Тренировки',
-        'rest':'Отдых',
-        'calendar':'Календарь',
-        'settings':'Настройки',
+        'food': 'Питание',
+        'sport': 'Тренировки',
+        'rest': 'Отдых',
+        'calendar': 'Календарь',
+        'settings': 'Настройки',
         'progress': 'Прогресс',
-        'search':'поиск',
-        'weight':'г',
+        'search': 'поиск',
+        'weight': 'г',
         'sport.weight': 'какой вес',
         'sport.numbers': 'сколько раз',
         'sport.time': 'время',
@@ -195,37 +169,37 @@ let keysVendor: Object = {
         'protein': 'Белки',
         'carbohydrates': 'Углеводы',
         'fat': 'Жиры',
-        'language':'Язык',
-        'done':'Готово',
-        'create.food':'Добавить блюдо',
-        'create.menu':'Создать новое меню',
-        'paste.menu':'Выбрать готовое меню',
-        'menuName':'название меню',
-        'set' : 'сет',
+        'language': 'Язык',
+        'done': 'Готово',
+        'create.food': 'Добавить блюдо',
+        'create.menu': 'Создать новое меню',
+        'paste.menu': 'Выбрать готовое меню',
+        'menuName': 'название меню',
+        'set': 'сет',
         '+set': '+сет',
-        'kg':'кг',
-        'cm':'см',
-        'resp':'повт',
-        'daily.rate':'Cуточная норма',
-        'determine.daily.rate':'Определить мою суточную норму',
-        'added.meals':'Добавленные блюда',
-        'meals.name':'Название',
-        'create.exercise':'Добавить упражнение',
-        'added.exercise':'Добавленные упражнения',
-        'create.training.plan':'Создать программу',
-        'reset':'СБРОС',
-        'stop':'СТОП',
-        'resume':'ПУСК',
-        'start':'ПУСК',
-        'sex':'Пол',
-        'age':'Возраст',
-        'height':'Рост',
-        'mass':'Вес',
-        'years':'лет',
-        'activity.level':'Уровень активности',
-        'point':'Цель',
-        'ccal':'ккал',
-        'name':'Название'
+        'kg': 'кг',
+        'cm': 'см',
+        'resp': 'повт',
+        'daily.rate': 'Cуточная норма',
+        'determine.daily.rate': 'Определить мою суточную норму',
+        'added.meals': 'Добавленные блюда',
+        'meals.name': 'Название',
+        'create.exercise': 'Добавить упражнение',
+        'added.exercise': 'Добавленные упражнения',
+        'create.training.plan': 'Создать программу',
+        'reset': 'СБРОС',
+        'stop': 'СТОП',
+        'resume': 'ПУСК',
+        'start': 'ПУСК',
+        'sex': 'Пол',
+        'age': 'Возраст',
+        'height': 'Рост',
+        'mass': 'Вес',
+        'years': 'лет',
+        'activity.level': 'Уровень активности',
+        'point': 'Цель',
+        'ccal': 'ккал',
+        'name': 'Название'
 
 
     }

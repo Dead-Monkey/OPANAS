@@ -131,9 +131,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
       </div>
 
       <div class="calendar_buttons">
-        <div class="calendar_todayButton">
+        <div class="calendar_todayButton" (touchend)="goToday()">
           <div class="calendar_todayIcon"></div>
-          <div class="calendar_todayText">Today</div>
+          <div class="calendar_todayText" >Today</div>
         </div>
       </div>
 
@@ -189,13 +189,17 @@ export class CalendarComponent implements OnInit {
 
     pickDate(item) {
         this._calendarServe.setCurrentDate(item['date']);
-        console.log(item);
     }
 
     marker(item) {
         if (this._calendarServe.getCurrentDate().getTime() === item['date'].getTime()) {
             return true
         }
+    }
+
+    goToday(){
+      this._calendarServe.swithToToday()
+      this.createView();
     }
 
 }

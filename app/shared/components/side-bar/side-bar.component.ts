@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter}from 'angular2/core';
-import {ROUTER_DIRECTIVES}from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router}from 'angular2/router';
 import {TranslatePipe} from '../../services/translate/translate.service';
 
 @Component({
@@ -25,13 +25,15 @@ import {TranslatePipe} from '../../services/translate/translate.service';
 
   }
   .sideBarAnime{
-    transition: transform 1s;
-    -webkit-transition: transform 1s;
+    transition-duration: 500ms;
+    -webkit-transition-duration: 500ms;
+    transform: translate3d(250px,0,0);
     -webkit-transform: translate3d(250px,0,0);
   }
   .sideBarAnimeBack{
-    transition: transform 1s;
-    -webkit-transition: transform 1s;
+    transition-duration: 500ms;
+    -webkit-transition-duration: 500ms;
+    transform: translate3d(-250px,0,0);
     -webkit-transform: translate3d(-250px,0,0);
   }
   .sideBar_toggle {
@@ -113,45 +115,24 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     template: `
 <div *ngIf="!isOpen" class="sideBar_toggle" (click)="toggle()"></div>
 
-<!-- 4 android <5 -->
-<div *ngIf="(device && device.version[0] < 5)" class="sideBarContainer" [ngClass]="{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}" [style.-webkit-transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'"  >
-  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
+<div class="sideBarContainer" [ngClass]="{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}" [style.transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" [style.-webkit-transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" (touchmove)="swipe($event)" (touchend)="swipe($event)">
+  <a class="sidebar_foodButton sidebar_button" (touchend)="toggle('Food')">
     <p>{{'food' | translate}}</p>
   </a>
-  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton sidebar_button">
+  <a class="sidebar_sportButton sidebar_button" (touchend)="toggle('Sport')">
     <p>{{'sport' | translate}}</p>
   </a>
-  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton sidebar_button">
+  <a class="sidebar_restButton sidebar_button" (touchend)="toggle('Rest')">
     <p>{{'rest' | translate}}</p>
   </a>
-  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton sidebar_button">
+  <a class="sidebar_calendarButton sidebar_button" (touchend)="toggle('Calendar')">
     <p>{{'calendar' | translate}}</p>
   </a>
-  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton sidebar_button">
+  <a class="sidebar_userButton sidebar_button" (touchend)="toggle('User')">
     <p>{{'settings' | translate}}</p>
   </a>
 </div>
-<div *ngIf="(device && device.version[0] < 5)" class="sideBarSwipePlace" #swipePlace [style.opacity]="shadowOpacity" [ngClass]="{sideBarSwipePlaceBig: isOpen}" (touchcancel)="toggle()"></div>
-
-<!-- 4 android 5> -->
-<div *ngIf="!(device && device.version[0] < 5)"  class="sideBarContainer" [ngClass]="{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}" [style.-webkit-transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" (touchmove)="swipe($event)" (touchend)="swipe($event)">
-  <a [routerLink]="['Food']" (click)="toggle()" class="sidebar_foodButton sidebar_button">
-    <p>{{'food' | translate}}</p>
-  </a>
-  <a [routerLink]="['Sport']" (click)="toggle()" class="sidebar_sportButton sidebar_button">
-    <p>{{'sport' | translate}}</p>
-  </a>
-  <a [routerLink]="['Rest']" (click)="toggle()" class="sidebar_restButton sidebar_button">
-    <p>{{'rest' | translate}}</p>
-  </a>
-  <a [routerLink]="['Calendar']" (click)="toggle()" class="sidebar_calendarButton sidebar_button">
-    <p>{{'calendar' | translate}}</p>
-  </a>
-  <a [routerLink]="['User']" (click)="toggle()" class="sidebar_userButton sidebar_button">
-    <p>{{'settings' | translate}}</p>
-  </a>
-</div>
-<div *ngIf="!(device && device.version[0] < 5)" class="sideBarSwipePlace" #swipePlace [style.opacity]="shadowOpacity" [ngClass]="{sideBarSwipePlaceBig: isOpen}" (touchmove)="swipe($event)" (touchend)="swipe($event)"></div>
+<div class="sideBarSwipePlace" #swipePlace [style.opacity]="shadowOpacity" [ngClass]="{sideBarSwipePlaceBig: isOpen}" (touchmove)="swipe($event)" (touchend)="swipe($event)"></div>
 
 <div *ngIf="isOpen" class="sideBar_close" (click)="toggle()"></div>
   `
@@ -167,26 +148,27 @@ export class SideBar {
     private lastTouch: number = 0;
     private pushClass: boolean = false
     private pullClass: boolean = true;
-    private device={'version':'5'};
-    constructor() {
-        let onDeviceReady = () => {
-            this.device = device;
-        }
-        document.addEventListener("deviceready", onDeviceReady, false);
-    }
-    toggle(arg) {
-        let evt = { 'type': 'touchend' }
-        if (!(arg && arg.className === 'sideBarSwipePlace')) {
-            if (this.isOpen) {
-                this.lastTouch = 0
-            } else {
-                this.lastTouch = this.pusherTarget
-            }
-            this.swipe({ 'type': 'touchend' })
-        }
+
+    constructor(private _router: Router) {
     }
 
-    swipe(evt) {
+    toggle(route, toggle = true) {
+        if (route) {
+            this._router.navigate([route])
+        }
+        let evt = { 'type': 'touchend' }
+        if (this.isOpen) {
+            this.lastTouch = 0
+        } else {
+            this.lastTouch = this.pusherTarget
+        }
+        this.swipe({ 'type': 'touchend' }, toggle)
+    }
+
+    swipe(evt, toggle = false) {
+        if (!toggle) {
+            evt.preventDefault();
+        }
         this.isOpen = true;
         this.pushClass = false
         this.pullClass = false

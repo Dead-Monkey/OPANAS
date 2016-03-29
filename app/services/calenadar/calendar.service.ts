@@ -98,22 +98,27 @@ export class CalendarService {
     getYear(year) {
         for (let day of this.calendar) {
             if (day['date'].getFullYear() === year) {
-                console.log(this.calendar.indexOf(day))
             }
         }
     }
+
+    swithToToday() {
+        this.currentYear = new Date().getFullYear()
+        this.currentMonth = new Date().getMonth()
+        this.currentDate = new Date();
+        this.currentDate.setHours(0, 0, 0, 0)
+    }
+
     switchYearPlus() {
         if (this.currentYear < this.getLastYear() - 1) {
             this.currentYear++;
         }
-        console.log(`plus`, this.currentYear);
     }
 
     switchYearMinus() {
         if (this.currentYear > this.getFirstYear()) {
             this.currentYear--;
         }
-        console.log(`minus`);
 
     }
 
@@ -151,9 +156,9 @@ export class CalendarService {
 
     //can be use 4 menu
     setDailyFood(food: Food, date: Date) {
-      if(isNaN(food['weight'])){
-        food['weight']=0
-      }
+        if (isNaN(food['weight'])) {
+            food['weight'] = 0
+        }
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {

@@ -108,21 +108,24 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getFullYear() === year) {
-                            console.log(this.calendar.indexOf(day));
                         }
                     }
+                };
+                CalendarService.prototype.swithToToday = function () {
+                    this.currentYear = new Date().getFullYear();
+                    this.currentMonth = new Date().getMonth();
+                    this.currentDate = new Date();
+                    this.currentDate.setHours(0, 0, 0, 0);
                 };
                 CalendarService.prototype.switchYearPlus = function () {
                     if (this.currentYear < this.getLastYear() - 1) {
                         this.currentYear++;
                     }
-                    console.log("plus", this.currentYear);
                 };
                 CalendarService.prototype.switchYearMinus = function () {
                     if (this.currentYear > this.getFirstYear()) {
                         this.currentYear--;
                     }
-                    console.log("minus");
                 };
                 CalendarService.prototype.getMonth = function (year, month) {
                     if (year === void 0) { year = this.currentYear; }
