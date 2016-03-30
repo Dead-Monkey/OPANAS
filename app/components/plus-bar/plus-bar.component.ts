@@ -5,20 +5,20 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {UserService} from '../../services/user/user.service';
 import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
+import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
 
 @Component({
     selector: 'op-plus',
-    directives: [SwipeHoldertDirective],
+    directives: [SwipeHoldertDirective, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
 
 .container {
   position: fixed;
-  left: 5vw;
   top: 15vw;
   overflow: hidden;
-  width:90vw;
+  width:100vw;
   height: 50vw;
   z-index: 10;
 }
@@ -59,7 +59,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   float:left;
   margin-bottom: 2vw;
   height: 12vw;
-  width: 50vw;
+  width: 80vw;
   line-height: 11vw;
   box-sizing: border-box;
   background-color: #3f414a;
@@ -69,30 +69,13 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   border-radius: 2vw;
   border: 2px solid #ff9d2d;
 }
-.listItemEditing {
-  margin-bottom: 2vw;
-  margin-left: 3vw;
-  float: left;
-  width: 12vw;
-  height: 12vw;
-  background: url('./src/img/wrench.png') no-repeat center center;
-  background-size: cover;
-}
-.listItemDelete {
-  margin-bottom: 2vw;
-  margin-left: 3vw;
-  float: left;
-  width: 12vw;
-  height: 12vw;
-  background: url('./src/img/delete.png') no-repeat center center;
-  background-size: cover;
-}
 .foodListMove{
   position: absolute;;
-  width: 80vw;
+  width: 100vw;
+  padding-left: 10vw;
   top: 80vw;
-  left: 4vw;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .listItemName {
   width: 80vw;
@@ -114,6 +97,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 40vw;
   height: 10vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 10vw;
@@ -126,7 +110,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 7vw;
   color: #ff9d2d;
@@ -138,6 +122,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 40vw;
   height: 9vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 8vw;
@@ -149,7 +134,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 20vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 6vw;
   color: #ff9d2d;
@@ -168,7 +153,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .food_inputButton_on {
@@ -179,7 +164,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .sport_inputButton_off {
@@ -190,7 +175,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 
@@ -202,7 +187,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .sport_inputSportName {
@@ -210,6 +195,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 40vw;
   height: 12vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 10vw;
@@ -222,7 +208,7 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 7vw;
   color: #ff9d2d;
@@ -230,10 +216,11 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 }
 .sportListMove {
   position: absolute;;
-  width: 80vw;
+  width: 100vw;
   top: 40vw;
-  left: 4vw;
+  padding-left: 10vw;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .createExercise{
@@ -242,13 +229,13 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 }
 .sportBtnMove{
   top:0;
-  right:0;
+  right:33vw;
 }
 .plusBar_menuButtons {
   position: absolute;
   height: 50vw;
   width: 90vw;
-  right: 0;
+  right: 5vw;
   color: #ff9d2d;
   font-size: 5.5vw;
   overflow: hidden;
@@ -316,7 +303,13 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
 }
 .containerFull {
   height: 165vw;
-  width: 90vw;
+  width: 100vw;
+}
+.listItemContainer{
+  position:relative;
+  min-height: 16vw;
+  width:90vw;
+  overflow:hidden;
 }
     `],
     template: `
@@ -369,12 +362,10 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
       <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmit(name)"></button>
     </form>
-    <div class="list foodListMove">
+    <div class="list foodListMove" >
       <div class="listItemName">{{'added.meals' | translate}}</div>
-      <div *ngFor="#item of customFood">
+      <div *ngFor="#item of customFood"  class="listItemContainer"  (fmSwipeDeleteSide)="removeFood(item)">
         <div class="listItem">{{item.name[language]}} </div>
-        <div class="listItemEditing"></div>
-        <div class="listItemDelete"></div>
       </div>
     </div>
   </div>
@@ -449,15 +440,14 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
     <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
       <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
-      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmitSport(name)"></button>
+      <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
+      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
     <div class="sportListMove">
-      <div *ngFor="#item of customSport">
-        <div class="listItemName">{{'added.exercise' | translate}}</div>
-        <div class="listItem">{{item.name.ru}} </div>
-        <div class="listItemEditing"></div>
-        <div class="listItemDelete"></div>
+      <div class="listItemName">{{'added.exercise' | translate}}</div>
+      <div  *ngFor="#item of customSport" class="listItemContainer"  (fmSwipeDeleteSide)="removeSport(item)">
+          <div class="listItem">{{item.name.ru}} </div>
       </div>
     </div>
   </div>
@@ -605,6 +595,10 @@ export class PlusComponent implements OnInit {
         this.customFood = this._foodServe.getUserFood();
     }
 
+    removeFood(food){
+      this._foodServe.removeUserFood(food)
+    }
+
     //4 sport
     onSubmitSport(sport) {
         if (sport.value.trim()) {
@@ -622,6 +616,9 @@ export class PlusComponent implements OnInit {
     setSport(sport: Sport) {
         this._sportServe.setUserSport(sport);
         this.customSport = this._sportServe.getUserSport();
+    }
+    removeSport(sport){
+      this._sportServe.removeUserSport(sport)
     }
     toggle() {
         this.isOpen = !this.isOpen;

@@ -22,48 +22,58 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 function SwipeDeleteSideDirective(_el) {
                     this._el = _el;
                     this.fmSwipeDeleteSide = new core_1.EventEmitter();
-                    this.fmSwipeRight = new core_1.EventEmitter();
-                    this.fmSwipeLeft = new core_1.EventEmitter();
-                    this.fmSwipeDown = new core_1.EventEmitter();
-                    this.fmSwipeUp = new core_1.EventEmitter();
+                    this.shadowOpacityTarget = 0.3;
+                    this.lastTouch = { x: 0, y: 0 };
+                    this.pusher = 0;
+                    this.pusherTarget = 100;
+                    this._el.nativeElement.style.opacity = 1;
                 }
-                SwipeDeleteSideDirective.prototype.start = function (evt) {
-                };
                 SwipeDeleteSideDirective.prototype.move = function (evt) {
-                    this.fmSwipeDeleteSide.emit('opa');
-                    this._el.nativeElement.style.left = '30vw';
-                    console.log(this._el.nativeElement);
-                };
-                SwipeDeleteSideDirective.prototype.end = function (evt) {
+                    if (evt.type === 'touchmove') {
+                        if (evt.touches[0].clientX - 2 > this.lastTouch.x) {
+                            evt.preventDefault();
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                            }
+                            this.pusher = this.pusher + 4;
+                        }
+                        else if (evt.touches[0].clientX + 2 < this.lastTouch.x) {
+                            evt.preventDefault();
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                            }
+                            this.pusher = this.pusher - 4;
+                        }
+                        this.lastTouch.x = evt.touches[0].clientX;
+                    }
+                    if (evt.type === 'touchend') {
+                        if (this.pusher > this.pusherTarget || this.pusher < -this.pusherTarget) {
+                            this.fmSwipeDeleteSide.emit('close');
+                            console.log("end");
+                        }
+                        else {
+                            this.pusher = 0;
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style.opacity = 1;
+                        }
+                        this.lastTouch.x = 0;
+                    }
                 };
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
                 ], SwipeDeleteSideDirective.prototype, "fmSwipeDeleteSide", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeRight", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeLeft", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeDown", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeUp", void 0);
                 SwipeDeleteSideDirective = __decorate([
                     core_1.Directive({
                         selector: '[fmSwipeDeleteSide]',
                         host: {
-                            '(touchstart)': 'move($event)',
                             '(touchmove)': 'move($event)',
-                            '(touchend)': 'end($event)',
-                            '(click)': 'move($event)'
+                            '(touchend)': 'move($event)'
                         }
                     }), 
                     __metadata('design:paramtypes', [core_1.ElementRef])

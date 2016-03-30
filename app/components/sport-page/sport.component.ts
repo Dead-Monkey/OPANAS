@@ -5,12 +5,13 @@ import {PlusComponent} from '../plus-bar/plus-bar.component';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SportService, Sport} from '../../services/sport/sport.service';
+import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
+
 
 @Component({
     selector: 'op-sport',
-    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective],
+    directives: [ProgressBar, PlusComponent,SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -29,7 +30,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         font-size: 6vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
     .sport_inputButton_off {
@@ -41,7 +42,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputButton_on {
@@ -53,28 +54,29 @@ import {SportService, Sport} from '../../services/sport/sport.service';
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
 
       .sport_serchContainer {
         position: absolute;
         background-color: #0C1017;
-        width: 68vw;
+        width: 70vw;
         max-height: 30vh;
-        padding: 2vw;
+        padding: 1vw;
         left: 0;
         right: 2vw;
         top: 9vw;
         overflow-y: scroll;
         border-radius: 2vw;
-        z-index: 3
+        z-index: 3;
+        border-bottom: 2px solid #0C1017;
       }
       .sport_searchListItem {
         float:left;
         margin-bottom: 1vw;
         height: 15vw;
-        width: 68vw;
+        width: 70vw;
         line-height: 15vw;
         box-sizing: border-box;
         background-color: #3f414a;
@@ -87,9 +89,9 @@ import {SportService, Sport} from '../../services/sport/sport.service';
       .sport_list {
         position: absolute;;
         top:60vw;
-        margin-left: 5vw;
-        width: 90vw;
-        height: 67vh;
+        padding-left: 5vw;
+        width: 95vw;
+        bottom:1px;
         overflow-y: scroll;
         overflow-x: hidden;
       }
@@ -210,7 +212,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     height: 12vw;
     text-align: center;
     background-color: #3f414a;
-    border: 5px solid #0d0e15;
+    border: 3px solid #0d0e15;
     box-sizing: border-box;
     border-radius: 3vw;
     line-height: 10vw;
@@ -227,7 +229,7 @@ import {SportService, Sport} from '../../services/sport/sport.service';
   .clockFace {
     float: left;
     width: 39vw;
-    height: 10vw;
+    height: 11vw;
     font-size: 6vw;
     color: #de5200;
     border-right: 3px solid #0d0e15;
@@ -241,6 +243,12 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     /*margin-left: 8vw;*/
     width: 16vw;
     text-align: right;
+  }
+  .sport_listItemContainer{
+    position:relative;
+    min-height: 16vw;
+    width:90vw;
+    overflow:hidden;
   }
       `],
     template: `
@@ -276,16 +284,17 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 </form>
 
 <div class="sport_list">
-  <div *ngFor="#item of pickedSportContainer; #i = index">
-
-    <div class="sport_listItem" fmSwipe (fmSwipeLeft)="removeSport(i, item)" (fmSwipeRight)="removeSport(i, item)" (click)="openSets(item,i)">
-      {{item?.name[language]}}
-      <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}"></div>
-    </div>
-    <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+  <div   *ngFor="#item of pickedSportContainer; #i = index">
+<div class="sport_listItemContainer" (fmSwipeDeleteSide)="removeSport(i, item)">
+<div class="sport_listItem" >
+  {{item?.name[language]}}
+  <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}" (touchend)="openSets(item,i)"></div>
+</div>
+<div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (touchend)="checkBoxToggle(i, item)"></div>
+</div>
 
     <div *ngIf="item['setsToggle']">
-      <div *ngFor="#it of item.sets; #setIndex = index" fmSwipe (fmSwipeLeft)="removeSet(i, item, setIndex)" (fmSwipeRight)="removeSet(i, item, setIndex)">
+      <div  class="sport_listItemContainer" *ngFor="#it of item.sets; #setIndex = index" (fmSwipeDeleteSide)="removeSet(i, item, setIndex)">
         <div class="sport_listSet" >{{'set'| translate}} {{setIndex+1}}</div>
         <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item['sets'][setIndex].weight" (blur)="changeSport(i, item)" placeholder="{{'kg'| translate}}">
         <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item['sets'][setIndex].numbers" (blur)="changeSport(i, item)" placeholder="{{'resp'| translate}}">

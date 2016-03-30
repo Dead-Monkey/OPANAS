@@ -128,6 +128,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 
         <div class="date" *ngFor="#item of pushDays"></div>
         <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
+        <div class="date" *ngFor="#item of pushDaysEnd"></div>
       </div>
 
       <div class="calendar_buttons">
@@ -145,6 +146,7 @@ export class CalendarComponent implements OnInit {
 
     private clMonth = []
     private pushDays = []
+    private pushDaysEnd = []
     private currentYear = new Date().getFullYear()
     private currentMonth = new Date().getMonth()
     private currentDay = false
@@ -158,12 +160,16 @@ export class CalendarComponent implements OnInit {
 
     createView() {
         this.clMonth = this._calendarServe.getMonth();
-        this.pushDays = [];
-        if (this.clMonth[0].date.getDay()) {
-            let pusher = this.clMonth[0].date.getDay() - 1;
-            for (let i = 0; i <= pusher; i++) {
-                this.pushDays.push(i)
-            }
+        this.pushDays = []
+        this.pushDaysEnd = []
+
+        let pusher = this.clMonth[0].date.getDay() - 1;
+        for (let i = 0; i <= pusher; i++) {
+            this.pushDays.push(i)
+        }
+        let pusherEnd = this.clMonth[this.clMonth.length - 1].date.getDay()
+        for (let i = 0; i < (6 - pusherEnd); i++) {
+            this.pushDaysEnd.push(i)
         }
     }
 
@@ -197,9 +203,9 @@ export class CalendarComponent implements OnInit {
         }
     }
 
-    goToday(){
-      this._calendarServe.swithToToday()
-      this.createView();
+    goToday() {
+        this._calendarServe.swithToToday()
+        this.createView();
     }
 
 }

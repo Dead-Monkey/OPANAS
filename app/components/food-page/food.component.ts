@@ -6,13 +6,11 @@ import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
-import {AdMobService} from '../../services/admob/admob.service';
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective, SwipeDeleteSideDirective],
+    directives: [ProgressBar, PlusComponent, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -31,7 +29,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     width: 60vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
     font-size: 6vw;
     color: #D0D9D9;
@@ -43,7 +41,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     left: 61vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
     font-size: 6vw;
     color: #D0D9D9;
@@ -57,7 +55,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
   }
   .food_inputButton_on {
@@ -69,18 +67,18 @@ import {AdMobService} from '../../services/admob/admob.service';
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
   }
   .food_serchContainer {
     position: absolute;
     background-color: #0C1017;
-    border-bottom: 6px solid #0C1017;
+    border-bottom: 2px solid #0C1017;
     box-sizing: border-box;
     width: 60vw;
     max-height: 30vh;
-    padding-left: 2vw;
-    padding-top: 2vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
     left: 0;
     top: 10vw;
     overflow-y: scroll;
@@ -91,7 +89,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     float:left;
     margin-bottom: 1vw;
     min-height: 12vw;
-    width: 56vw;
+    width: 58vw;
     line-height: 12vw;
     box-sizing: border-box;
     background-color: #3f414a;
@@ -103,9 +101,9 @@ import {AdMobService} from '../../services/admob/admob.service';
   .food_list {
     position: absolute;;
     top:87vw;
-    margin-left: 5vw;
-    width: 90vw;
-    height: 90vw;
+    padding-left: 5vw;
+    width: 95vw;
+    bottom:1px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -173,7 +171,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     `],
     template: `
 <op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar  [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
 <fm-progress-bar [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
@@ -196,14 +194,14 @@ import {AdMobService} from '../../services/admob/admob.service';
 </form>
 
 <div class="food_list">
-<div [style.left.vw]="0" class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (touchmove)="removeFood(i, item)">
+<div class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (fmSwipeDeleteSide)="removeFood(i, item)" >
 
-    <div   class="food_listItem" >
+    <div class="food_listItem" >
       {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)">
 
-    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (touchend)="checkBoxToggle(i, item)"></div>
   </div>
 
 </div>
@@ -211,7 +209,6 @@ import {AdMobService} from '../../services/admob/admob.service';
 })
 
 export class FoodComponent implements OnInit {
-
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;
@@ -243,7 +240,7 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService, private _AdMobServe: AdMobService) { }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService) { }
 
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();
