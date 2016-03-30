@@ -16,10 +16,9 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 
 .container {
   position: fixed;
-  left: 5vw;
   top: 15vw;
   overflow: hidden;
-  width:90vw;
+  width:100vw;
   height: 50vw;
   z-index: 10;
 }
@@ -60,7 +59,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   float:left;
   margin-bottom: 2vw;
   height: 12vw;
-  width: 50vw;
+  width: 80vw;
   line-height: 11vw;
   box-sizing: border-box;
   background-color: #3f414a;
@@ -70,30 +69,13 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   border-radius: 2vw;
   border: 2px solid #ff9d2d;
 }
-.listItemEditing {
-  margin-bottom: 2vw;
-  margin-left: 3vw;
-  float: left;
-  width: 12vw;
-  height: 12vw;
-  background: url('./src/img/wrench.png') no-repeat center center;
-  background-size: cover;
-}
-.listItemDelete {
-  margin-bottom: 2vw;
-  margin-left: 3vw;
-  float: left;
-  width: 12vw;
-  height: 12vw;
-  background: url('./src/img/delete.png') no-repeat center center;
-  background-size: cover;
-}
 .foodListMove{
   position: absolute;;
-  width: 80vw;
+  width: 100vw;
+  padding-left: 10vw;
   top: 80vw;
-  left: 4vw;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 .listItemName {
   width: 80vw;
@@ -115,6 +97,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 40vw;
   height: 10vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 10vw;
@@ -127,7 +110,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 7vw;
   color: #ff9d2d;
@@ -139,6 +122,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 40vw;
   height: 9vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 8vw;
@@ -150,7 +134,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 20vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 6vw;
   color: #ff9d2d;
@@ -169,7 +153,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .food_inputButton_on {
@@ -180,7 +164,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .sport_inputButton_off {
@@ -191,7 +175,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 
@@ -203,7 +187,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
 }
 .sport_inputSportName {
@@ -211,6 +195,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 40vw;
   height: 12vw;
   float: left;
+  margin-left: 5vw;
   margin-bottom: 2vw;
   color: #ff9d2d;
   line-height: 10vw;
@@ -223,7 +208,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 3px solid #0C1017;
+  border: 2px solid #0C1017;
   border-radius: 2vw;
   font-size: 7vw;
   color: #ff9d2d;
@@ -231,10 +216,11 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 }
 .sportListMove {
   position: absolute;;
-  width: 80vw;
+  width: 100vw;
   top: 40vw;
-  left: 4vw;
+  padding-left: 10vw;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .createExercise{
@@ -243,13 +229,13 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 }
 .sportBtnMove{
   top:0;
-  right:0;
+  right:33vw;
 }
 .plusBar_menuButtons {
   position: absolute;
   height: 50vw;
   width: 90vw;
-  right: 0;
+  right: 5vw;
   color: #ff9d2d;
   font-size: 5.5vw;
   overflow: hidden;
@@ -317,7 +303,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 }
 .containerFull {
   height: 165vw;
-  width: 90vw;
+  width: 100vw;
 }
 .listItemContainer{
   position:relative;
@@ -380,8 +366,6 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       <div class="listItemName">{{'added.meals' | translate}}</div>
       <div *ngFor="#item of customFood"  class="listItemContainer"  (fmSwipeDeleteSide)="removeFood(item)">
         <div class="listItem">{{item.name[language]}} </div>
-        <div class="listItemEditing"></div>
-        <div class="listItemDelete"></div>
       </div>
     </div>
   </div>
@@ -456,15 +440,14 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
       <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
+      <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
     <div class="sportListMove">
+      <div class="listItemName">{{'added.exercise' | translate}}</div>
       <div  *ngFor="#item of customSport" class="listItemContainer"  (fmSwipeDeleteSide)="removeSport(item)">
-        <div class="listItemName">{{'added.exercise' | translate}}</div>
-        <div class="listItem">{{item.name.ru}} </div>
-        <div class="listItemEditing"></div>
-        <div class="listItemDelete"></div>
+          <div class="listItem">{{item.name.ru}} </div>
       </div>
     </div>
   </div>

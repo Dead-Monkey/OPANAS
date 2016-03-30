@@ -14,7 +14,7 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
   left: 5vw;
   background-color: rgba(49, 51, 61, 0.7);
   box-sizing: border-box;
-  border: 5px solid #0C1017;
+  border:3px solid #0C1017;
   border-radius: 10px;
   z-index: 1;
 }
@@ -52,6 +52,7 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
   width: 90vw;
   overflow: hidden;
   font-weight: bold;
+  line-height: 6vw;
 }
  `],
     template: `

@@ -29,7 +29,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     width: 60vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
     font-size: 6vw;
     color: #D0D9D9;
@@ -41,7 +41,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     left: 61vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
     font-size: 6vw;
     color: #D0D9D9;
@@ -55,7 +55,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
   }
   .food_inputButton_on {
@@ -67,18 +67,18 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
   }
   .food_serchContainer {
     position: absolute;
     background-color: #0C1017;
-    border-bottom: 6px solid #0C1017;
+    border-bottom: 2px solid #0C1017;
     box-sizing: border-box;
     width: 60vw;
     max-height: 30vh;
-    padding-left: 2vw;
-    padding-top: 2vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
     left: 0;
     top: 10vw;
     overflow-y: scroll;
@@ -89,7 +89,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     float:left;
     margin-bottom: 1vw;
     min-height: 12vw;
-    width: 56vw;
+    width: 58vw;
     line-height: 12vw;
     box-sizing: border-box;
     background-color: #3f414a;
@@ -101,8 +101,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   .food_list {
     position: absolute;;
     top:87vw;
-    margin-left: 5vw;
-    width: 90vw;
+    padding-left: 5vw;
+    width: 95vw;
     bottom:1px;
     overflow-y: scroll;
     overflow-x: hidden;

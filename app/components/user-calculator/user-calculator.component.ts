@@ -69,7 +69,7 @@ import {UserService} from '../../services/user/user.service';
     width: 30vw;
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
-    border: 5px solid #0C1017;
+    border: 2px solid #0C1017;
     border-radius: 2vw;
     font-size: 6vw;
     color: #D0D9D9;
@@ -98,17 +98,17 @@ import {UserService} from '../../services/user/user.service';
 .toggleBar {
   margin-top: 2vw;
   width: 90vw;
-  height: 8vw;
+  height: 6vw;
   background: #0C1017;
   box-sizing: border-box;
-  border: 5px solid #0C1017;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
 }
 .activityToggle {
   position: relative;
   float: left;
-  height: 5vw;
-  width: 12.5vw;
+  height: 4.5vw;
+  width: 12.7vw;
   margin-right: 1vw;
   margin-left: 1vw;
   border-radius: 1vw;
@@ -122,8 +122,8 @@ import {UserService} from '../../services/user/user.service';
 .pointToggle {
   position: relative;
   float: left;
-  height: 5vw;
-  width: 19.7vw;
+  height: 4.5vw;
+  width: 20vw;
   margin-right: 1vw;
   margin-left: 1vw;
   border-radius: 1vw;
@@ -137,13 +137,13 @@ import {UserService} from '../../services/user/user.service';
 .calculator_result {
   position: relative;
   height: 13vw;
-  line-height: 10vw;
+  line-height: 11vw;
   width: 40vw;
   margin-left: 22.5vw;
   margin-top: 7vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
-  border: 6px solid #0C1017;
+  border: 3px solid #0C1017;
   border-radius: 2vw;
   font-size: 6vw;
   font-weight: bold;

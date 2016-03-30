@@ -30,7 +30,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         font-size: 6vw;
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
     .sport_inputButton_off {
@@ -42,7 +42,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
       .sport_inputButton_on {
@@ -54,28 +54,29 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
-        border: 5px solid #0C1017;
+        border: 2px solid #0C1017;
         border-radius: 2vw;
       }
 
       .sport_serchContainer {
         position: absolute;
         background-color: #0C1017;
-        width: 68vw;
+        width: 70vw;
         max-height: 30vh;
-        padding: 2vw;
+        padding: 1vw;
         left: 0;
         right: 2vw;
         top: 9vw;
         overflow-y: scroll;
         border-radius: 2vw;
-        z-index: 3
+        z-index: 3;
+        border-bottom: 2px solid #0C1017;
       }
       .sport_searchListItem {
         float:left;
         margin-bottom: 1vw;
         height: 15vw;
-        width: 68vw;
+        width: 70vw;
         line-height: 15vw;
         box-sizing: border-box;
         background-color: #3f414a;
@@ -88,8 +89,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       .sport_list {
         position: absolute;;
         top:60vw;
-        margin-left: 5vw;
-        width: 90vw;
+        padding-left: 5vw;
+        width: 95vw;
         bottom:1px;
         overflow-y: scroll;
         overflow-x: hidden;
@@ -211,7 +212,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     height: 12vw;
     text-align: center;
     background-color: #3f414a;
-    border: 5px solid #0d0e15;
+    border: 3px solid #0d0e15;
     box-sizing: border-box;
     border-radius: 3vw;
     line-height: 10vw;
@@ -228,7 +229,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   .clockFace {
     float: left;
     width: 39vw;
-    height: 10vw;
+    height: 11vw;
     font-size: 6vw;
     color: #de5200;
     border-right: 3px solid #0d0e15;
