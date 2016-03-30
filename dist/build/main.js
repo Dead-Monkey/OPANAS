@@ -2921,21 +2921,24 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getFullYear() === year) {
-                            console.log(this.calendar.indexOf(day));
                         }
                     }
+                };
+                CalendarService.prototype.swithToToday = function () {
+                    this.currentYear = new Date().getFullYear();
+                    this.currentMonth = new Date().getMonth();
+                    this.currentDate = new Date();
+                    this.currentDate.setHours(0, 0, 0, 0);
                 };
                 CalendarService.prototype.switchYearPlus = function () {
                     if (this.currentYear < this.getLastYear() - 1) {
                         this.currentYear++;
                     }
-                    console.log("plus", this.currentYear);
                 };
                 CalendarService.prototype.switchYearMinus = function () {
                     if (this.currentYear > this.getFirstYear()) {
                         this.currentYear--;
                     }
-                    console.log("minus");
                 };
                 CalendarService.prototype.getMonth = function (year, month) {
                     if (year === void 0) { year = this.currentYear; }
@@ -3070,48 +3073,58 @@ System.register("shared/directives/swipe-delete-side/swipe-delete-side.directive
                 function SwipeDeleteSideDirective(_el) {
                     this._el = _el;
                     this.fmSwipeDeleteSide = new core_12.EventEmitter();
-                    this.fmSwipeRight = new core_12.EventEmitter();
-                    this.fmSwipeLeft = new core_12.EventEmitter();
-                    this.fmSwipeDown = new core_12.EventEmitter();
-                    this.fmSwipeUp = new core_12.EventEmitter();
+                    this.shadowOpacityTarget = 0.3;
+                    this.lastTouch = { x: 0, y: 0 };
+                    this.pusher = 0;
+                    this.pusherTarget = 100;
+                    this._el.nativeElement.style.opacity = 1;
                 }
-                SwipeDeleteSideDirective.prototype.start = function (evt) {
-                };
                 SwipeDeleteSideDirective.prototype.move = function (evt) {
-                    this.fmSwipeDeleteSide.emit('opa');
-                    this._el.nativeElement.style.left = '30vw';
-                    console.log(this._el.nativeElement);
-                };
-                SwipeDeleteSideDirective.prototype.end = function (evt) {
+                    if (evt.type === 'touchmove') {
+                        if (evt.touches[0].clientX - 2 > this.lastTouch.x) {
+                            evt.preventDefault();
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                            }
+                            this.pusher = this.pusher + 4;
+                        }
+                        else if (evt.touches[0].clientX + 2 < this.lastTouch.x) {
+                            evt.preventDefault();
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                            }
+                            this.pusher = this.pusher - 4;
+                        }
+                        this.lastTouch.x = evt.touches[0].clientX;
+                    }
+                    if (evt.type === 'touchend') {
+                        if (this.pusher > this.pusherTarget || this.pusher < -this.pusherTarget) {
+                            this.fmSwipeDeleteSide.emit('close');
+                            console.log("end");
+                        }
+                        else {
+                            this.pusher = 0;
+                            this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
+                            this._el.nativeElement.style.opacity = 1;
+                        }
+                        this.lastTouch.x = 0;
+                    }
                 };
                 __decorate([
                     core_12.Output(), 
                     __metadata('design:type', Object)
                 ], SwipeDeleteSideDirective.prototype, "fmSwipeDeleteSide", void 0);
-                __decorate([
-                    core_12.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeRight", void 0);
-                __decorate([
-                    core_12.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeLeft", void 0);
-                __decorate([
-                    core_12.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeDown", void 0);
-                __decorate([
-                    core_12.Output(), 
-                    __metadata('design:type', Object)
-                ], SwipeDeleteSideDirective.prototype, "fmSwipeUp", void 0);
                 SwipeDeleteSideDirective = __decorate([
                     core_12.Directive({
                         selector: '[fmSwipeDeleteSide]',
                         host: {
-                            '(touchstart)': 'move($event)',
                             '(touchmove)': 'move($event)',
-                            '(touchend)': 'end($event)',
-                            '(click)': 'move($event)'
+                            '(touchend)': 'move($event)'
                         }
                     }), 
                     __metadata('design:paramtypes', [core_12.ElementRef])
@@ -3364,8 +3377,8 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_holder_directive_2.SwipeHoldertDirective, swipe_delete_side_directive_1.SwipeDeleteSideDirective],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_2.SimpleSearch],
-                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  input {\n    padding-left: 1vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 12vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 12vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 11vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    border-bottom: 6px solid #0C1017;\n    box-sizing: border-box;\n    width: 60vw;\n    max-height: 30vh;\n    padding-left: 2vw;\n    padding-top: 2vw;\n    left: 0;\n    top: 10vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n    z-index: 3;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 56vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    position: absolute;;\n    top:87vw;\n    margin-left: 5vw;\n    width: 90vw;\n    height: 90vw;\n    overflow-y: scroll;\n    overflow-x: hidden;\n  }\n  .food_listItem {\n    float:left;\n    margin-right: 1vw;\n    margin-top: 2vw;\n    min-height: 12vw;\n    width: 60vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-top: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n    text-align: center;\n  }\n\n  .food_listButton_on {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listItemContainer{\n    position:relative;\n    height: 16vw;\n    width:90vw;\n  }\n    "],
-                        template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate)\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"'0 ' +('weight'|translate) \" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\"*ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n<div [style.left.vw]=\"0\" class=\"food_listItemContainer\" *ngFor=\"#item of pickedFoodContainer; #i = index\" (touchmove)=\"removeFood(i, item)\">\n\n    <div   class=\"food_listItem\" >\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (click)=\"checkBoxToggle(i, item)\"></div>\n  </div>\n\n</div>\n    "
+                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  input {\n    padding-left: 1vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 12vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 12vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 11vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 5px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    border-bottom: 6px solid #0C1017;\n    box-sizing: border-box;\n    width: 60vw;\n    max-height: 30vh;\n    padding-left: 2vw;\n    padding-top: 2vw;\n    left: 0;\n    top: 10vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n    z-index: 3;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 56vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    position: absolute;;\n    top:87vw;\n    margin-left: 5vw;\n    width: 90vw;\n    height: 80vw;\n    overflow-y: scroll;\n    overflow-x: hidden;\n  }\n  .food_listItem {\n    float:left;\n    margin-right: 1vw;\n    margin-top: 2vw;\n    min-height: 12vw;\n    width: 60vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-top: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n    text-align: center;\n  }\n\n  .food_listButton_on {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listItemContainer{\n    position:relative;\n    height: 16vw;\n    width:90vw;\n  }\n    "],
+                        template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar  [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate)\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"'0 ' +('weight'|translate) \" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\"*ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n<div fmSwipeDeleteSide  class=\"food_listItemContainer\" *ngFor=\"#item of pickedFoodContainer; #i = index\" (fmSwipeDeleteSide)=\"removeFood(i, item)\" >\n\n    <div class=\"food_listItem\" >\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (touchend)=\"checkBoxToggle(i, item)\"></div>\n  </div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService, admob_service_1.AdMobService])
                 ], FoodComponent);
@@ -3709,12 +3722,15 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
                 };
                 CalendarComponent.prototype.pickDate = function (item) {
                     this._calendarServe.setCurrentDate(item['date']);
-                    console.log(item);
                 };
                 CalendarComponent.prototype.marker = function (item) {
                     if (this._calendarServe.getCurrentDate().getTime() === item['date'].getTime()) {
                         return true;
                     }
+                };
+                CalendarComponent.prototype.goToday = function () {
+                    this._calendarServe.swithToToday();
+                    this.createView();
                 };
                 CalendarComponent = __decorate([
                     core_17.Component({
@@ -3723,7 +3739,7 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
                         providers: [],
                         pipes: [],
                         styles: ["\n.calendar{\n  position:absolute;\n  top:20vw;\n  left:13vw;\n  width:74vw;\n  background:#3f414a;\n  text-align: center;\n  color: #ff9d2d;\n  overflow:hidden;\n  line-height: 10vw;\n}\n.year{\n  height:10vw;\n  width:100%;\n  overflow:hidden;\n  font-size: 7vw;\n\n}\n.month{\n  height:10vw;\n  width: 100%;\n  font-size: 6vw;\n}\n\n.date {\n  float: left;\n  width: 10vw;\n  height: 10vw;\n  border: 0.5vw solid #ff9d2d;\n}\n.currentDate {\n  background-color: #0d0e15;\n  color: #de5200;\n}\n.toggleLeft {\n  float: left;\n  width: 25vw;\n}\n.toggleRight {\n  float: left;\n  width: 20vw;\n}\n.calendar_buttons {\n  position: absolute;\n  top: 110vw;\n  left: 13vw;\n  width: 74vw;\n  height: 50vw;\n  font-size: 5vw;\n  color: #ff9d2d;\n  float: left;\n}\n.calendar_todayButton {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 50vw;\n  margin-bottom: 3vw;\n}\n.calendar_todayIcon {\n  position: relative;\n  height: 12vw;\n  width: 12vw;\n  float: left;\n  background: url('./src/img/today.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n}\n.calendar_todayText {\n  position: relative;\n  width: 20vw;\n  float: left;\n  line-height: 12vw;\n  height: 12vw;\n  left: 3vw;\n}\n      "],
-                        template: "\n  <div class=\"container\">\n  <div class=\"calendar\">\n    <div class=\"year\">\n\n      <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\">\n        <</div>\n          <div class=\"toggleLeft\">\n            {{clMonth[0]['date'].getFullYear()}}\n          </div>\n          <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n      </div>\n\n      <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n        <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\">\n          <</div>\n\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n            <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n        </div>\n\n        <div class=\"date\">Sun</div>\n        <div class=\"date\">Mon</div>\n        <div class=\"date\">Tue</div>\n        <div class=\"date\">Wed</div>\n        <div class=\"date\">Thu</div>\n        <div class=\"date\">Fri</div>\n        <div class=\"date\">Sat</div>\n\n        <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n        <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n      </div>\n\n      <div class=\"calendar_buttons\">\n        <div class=\"calendar_todayButton\">\n          <div class=\"calendar_todayIcon\"></div>\n          <div class=\"calendar_todayText\">Today</div>\n        </div>\n      </div>\n\n    </div>\n\n"
+                        template: "\n  <div class=\"container\">\n  <div class=\"calendar\">\n    <div class=\"year\">\n\n      <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\">\n        <</div>\n          <div class=\"toggleLeft\">\n            {{clMonth[0]['date'].getFullYear()}}\n          </div>\n          <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n      </div>\n\n      <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n        <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\">\n          <</div>\n\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n            <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n        </div>\n\n        <div class=\"date\">Sun</div>\n        <div class=\"date\">Mon</div>\n        <div class=\"date\">Tue</div>\n        <div class=\"date\">Wed</div>\n        <div class=\"date\">Thu</div>\n        <div class=\"date\">Fri</div>\n        <div class=\"date\">Sat</div>\n\n        <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n        <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n      </div>\n\n      <div class=\"calendar_buttons\">\n        <div class=\"calendar_todayButton\" (touchend)=\"goToday()\">\n          <div class=\"calendar_todayIcon\"></div>\n          <div class=\"calendar_todayText\" >Today</div>\n        </div>\n      </div>\n\n    </div>\n\n"
                     }), 
                     __metadata('design:paramtypes', [calendar_service_3.CalendarService])
                 ], CalendarComponent);

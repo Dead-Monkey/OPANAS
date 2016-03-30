@@ -105,7 +105,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     top:87vw;
     margin-left: 5vw;
     width: 90vw;
-    height: 90vw;
+    height: 80vw;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -173,7 +173,7 @@ import {AdMobService} from '../../services/admob/admob.service';
     `],
     template: `
 <op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar  [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
 <fm-progress-bar [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
 <fm-progress-bar [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
 <fm-progress-bar [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
@@ -196,14 +196,14 @@ import {AdMobService} from '../../services/admob/admob.service';
 </form>
 
 <div class="food_list">
-<div [style.left.vw]="0" class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (touchmove)="removeFood(i, item)">
+<div fmSwipeDeleteSide  class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (fmSwipeDeleteSide)="removeFood(i, item)" >
 
-    <div   class="food_listItem" >
+    <div class="food_listItem" >
       {{item?.name[language]}}
     </div>
     <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(i, item)">
 
-    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+    <div [ngClass]="{food_listButton_off: !item.picked, food_listButton_on: item.picked}" (touchend)="checkBoxToggle(i, item)"></div>
   </div>
 
 </div>
@@ -211,7 +211,6 @@ import {AdMobService} from '../../services/admob/admob.service';
 })
 
 export class FoodComponent implements OnInit {
-
     private model: Object = {};
     private foodContainer: Food[];
     private calendar: Array<Day>;
