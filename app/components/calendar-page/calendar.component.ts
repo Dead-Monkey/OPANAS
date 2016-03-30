@@ -51,7 +51,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .calendar_buttons {
   position: absolute;
-  top: 110vw;
+  top: 117vw;
   left: 13vw;
   width: 74vw;
   height: 50vw;
