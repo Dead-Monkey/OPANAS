@@ -103,7 +103,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     top:87vw;
     margin-left: 5vw;
     width: 90vw;
-    height: 80vw;
+    bottom:1px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
