@@ -5,12 +5,13 @@ import {PlusComponent} from '../plus-bar/plus-bar.component';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SportService, Sport} from '../../services/sport/sport.service';
+import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
+
 
 @Component({
     selector: 'op-sport',
-    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective],
+    directives: [ProgressBar, PlusComponent,SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -242,6 +243,12 @@ import {SportService, Sport} from '../../services/sport/sport.service';
     width: 16vw;
     text-align: right;
   }
+  .sport_listItemContainer{
+    position:relative;
+    min-height: 16vw;
+    width:90vw;
+    overflow:hidden;
+  }
       `],
     template: `
 <op-plus [iAm]="'sport'" [(isOpen)]="plusIsOpen"></op-plus>
@@ -276,16 +283,17 @@ import {SportService, Sport} from '../../services/sport/sport.service';
 </form>
 
 <div class="sport_list">
-  <div *ngFor="#item of pickedSportContainer; #i = index">
-
-    <div class="sport_listItem" fmSwipe (fmSwipeLeft)="removeSport(i, item)" (fmSwipeRight)="removeSport(i, item)" (click)="openSets(item,i)">
-      {{item?.name[language]}}
-      <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}"></div>
-    </div>
-    <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (click)="checkBoxToggle(i, item)"></div>
+  <div   *ngFor="#item of pickedSportContainer; #i = index">
+<div class="sport_listItemContainer" (fmSwipeDeleteSide)="removeSport(i, item)">
+<div class="sport_listItem" >
+  {{item?.name[language]}}
+  <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}" (touchend)="openSets(item,i)"></div>
+</div>
+<div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (touchend)="checkBoxToggle(i, item)"></div>
+</div>
 
     <div *ngIf="item['setsToggle']">
-      <div *ngFor="#it of item.sets; #setIndex = index" fmSwipe (fmSwipeLeft)="removeSet(i, item, setIndex)" (fmSwipeRight)="removeSet(i, item, setIndex)">
+      <div  class="sport_listItemContainer" *ngFor="#it of item.sets; #setIndex = index" (fmSwipeDeleteSide)="removeSet(i, item, setIndex)">
         <div class="sport_listSet" >{{'set'| translate}} {{setIndex+1}}</div>
         <input class="sport_listWeight" type="number" min="0" [(ngModel)]="item['sets'][setIndex].weight" (blur)="changeSport(i, item)" placeholder="{{'kg'| translate}}">
         <input class="sport_listNumbers" type="number" min="0" [(ngModel)]="item['sets'][setIndex].numbers" (blur)="changeSport(i, item)" placeholder="{{'resp'| translate}}">

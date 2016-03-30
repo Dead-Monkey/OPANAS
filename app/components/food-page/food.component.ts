@@ -6,13 +6,11 @@ import {FoodService, Food} from '../../services/food/food.service';
 import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 import {UserService} from '../../services/user/user.service';
-import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
-import {AdMobService} from '../../services/admob/admob.service';
 
 @Component({
     selector: 'op-food',
-    directives: [ProgressBar, PlusComponent, SwipeHoldertDirective, SwipeDeleteSideDirective],
+    directives: [ProgressBar, PlusComponent, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -196,7 +194,7 @@ import {AdMobService} from '../../services/admob/admob.service';
 </form>
 
 <div class="food_list">
-<div fmSwipeDeleteSide  class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (fmSwipeDeleteSide)="removeFood(i, item)" >
+<div class="food_listItemContainer" *ngFor="#item of pickedFoodContainer; #i = index" (fmSwipeDeleteSide)="removeFood(i, item)" >
 
     <div class="food_listItem" >
       {{item?.name[language]}}
@@ -242,7 +240,7 @@ export class FoodComponent implements OnInit {
         }
     }
 
-    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService, private _AdMobServe: AdMobService) { }
+    constructor(private _foodServe: FoodService, private _calendarService: CalendarService, private _userServe: UserService) { }
 
     ngOnInit() {
         this.currentDate = this._calendarService.getCurrentDate();

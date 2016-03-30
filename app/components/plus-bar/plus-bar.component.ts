@@ -5,10 +5,11 @@ import {SimpleSearch} from '../../shared/pipes/simple-search/simple-search.pipe'
 import {TranslateService, TranslatePipe} from '../../shared/services/translate/translate.service';
 import {UserService} from '../../services/user/user.service';
 import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
+import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
 
 @Component({
     selector: 'op-plus',
-    directives: [SwipeHoldertDirective],
+    directives: [SwipeHoldertDirective, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -318,6 +319,12 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
   height: 165vw;
   width: 90vw;
 }
+.listItemContainer{
+  position:relative;
+  min-height: 16vw;
+  width:90vw;
+  overflow:hidden;
+}
     `],
     template: `
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}" (click)="toggle()"></div>
@@ -369,9 +376,9 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
       <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmit(name)"></button>
     </form>
-    <div class="list foodListMove">
+    <div class="list foodListMove" >
       <div class="listItemName">{{'added.meals' | translate}}</div>
-      <div *ngFor="#item of customFood">
+      <div *ngFor="#item of customFood"  class="listItemContainer"  (fmSwipeDeleteSide)="removeFood(item)">
         <div class="listItem">{{item.name[language]}} </div>
         <div class="listItemEditing"></div>
         <div class="listItemDelete"></div>
@@ -449,11 +456,11 @@ import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-
     <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
       <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
-      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmitSport(name)"></button>
+      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
     <div class="sportListMove">
-      <div *ngFor="#item of customSport">
+      <div  *ngFor="#item of customSport" class="listItemContainer"  (fmSwipeDeleteSide)="removeSport(item)">
         <div class="listItemName">{{'added.exercise' | translate}}</div>
         <div class="listItem">{{item.name.ru}} </div>
         <div class="listItemEditing"></div>
@@ -605,6 +612,10 @@ export class PlusComponent implements OnInit {
         this.customFood = this._foodServe.getUserFood();
     }
 
+    removeFood(food){
+      this._foodServe.removeUserFood(food)
+    }
+
     //4 sport
     onSubmitSport(sport) {
         if (sport.value.trim()) {
@@ -622,6 +633,9 @@ export class PlusComponent implements OnInit {
     setSport(sport: Sport) {
         this._sportServe.setUserSport(sport);
         this.customSport = this._sportServe.getUserSport();
+    }
+    removeSport(sport){
+      this._sportServe.removeUserSport(sport)
     }
     toggle() {
         this.isOpen = !this.isOpen;
