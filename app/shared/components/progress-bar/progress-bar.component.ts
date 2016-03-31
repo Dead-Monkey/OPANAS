@@ -9,7 +9,7 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
     styles: [`
 .progress_container {
   width: 90vw;
-  height: 7vw;
+  height: 2.5%;
   position: relative;
   left: 5vw;
   background-color: rgba(49, 51, 61, 0.7);
@@ -27,7 +27,7 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
   border-radius: 5px;
   text-align: center;
   color: #181A21;
-  font-size: 4vw;
+  font-size: 3vw;
 }
 .progress_secondLine {
   position: absolute;
@@ -43,16 +43,16 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
 .progress_barHeader {
   text-align: center;
   color: #E48426;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 .numbers {
   position: absolute;
   color: #D0D9D9;
-  height: 7vw;
+  height: 5vw;
   width: 90vw;
   overflow: hidden;
   font-weight: bold;
-  line-height: 6vw;
+  line-height: 3vw;
 }
  `],
     template: `
