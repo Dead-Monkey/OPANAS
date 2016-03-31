@@ -2622,18 +2622,18 @@ System.register("shared/directives/swipe-delete-side/swipe-delete-side.directive
                             this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
                             this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
                             if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
-                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.02;
                             }
-                            this.pusher = this.pusher + 4;
+                            this.pusher = this.pusher + 6;
                         }
                         else if (evt.touches[0].clientX + 2 < this.lastTouch.x) {
                             evt.preventDefault();
                             this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
                             this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
                             if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
-                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.02;
                             }
-                            this.pusher = this.pusher - 4;
+                            this.pusher = this.pusher - 6;
                         }
                         this.lastTouch.x = evt.touches[0].clientX;
                     }
@@ -4211,7 +4211,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         //keepAwake screen
                         window.plugins.insomnia.keepAwake();
                         //AdMob
-                        _this._AdMobServe.createBottomBanerFirst();
+                        // this._AdMobServe.createBottomBanerFirst();
                         _this._AdMobServe.createInterstitialFirst();
                         _this._AdMobServe.prepareInterstitialFirst();
                         setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 10000);

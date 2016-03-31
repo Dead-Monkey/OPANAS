@@ -35,18 +35,18 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
                             this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
                             if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
-                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.02;
                             }
-                            this.pusher = this.pusher + 4;
+                            this.pusher = this.pusher + 6;
                         }
                         else if (evt.touches[0].clientX + 2 < this.lastTouch.x) {
                             evt.preventDefault();
                             this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)';
                             this._el.nativeElement.style['-webkit-transform'] = 'translate3d(' + this.pusher + 'px,0,0)';
                             if (this._el.nativeElement.style.opacity > this.shadowOpacityTarget) {
-                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.01;
+                                this._el.nativeElement.style.opacity = this._el.nativeElement.style.opacity - 0.02;
                             }
-                            this.pusher = this.pusher - 4;
+                            this.pusher = this.pusher - 6;
                         }
                         this.lastTouch.x = evt.touches[0].clientX;
                     }

@@ -69,7 +69,7 @@ export class OpanasComponent implements OnInit {
             //keepAwake screen
             window.plugins.insomnia.keepAwake()
             //AdMob
-            this._AdMobServe.createBottomBanerFirst();
+            // this._AdMobServe.createBottomBanerFirst();
             this._AdMobServe.createInterstitialFirst();
             this._AdMobServe.prepareInterstitialFirst();
             setTimeout(()=>this._AdMobServe.showInterstitialFirst(),10000)
