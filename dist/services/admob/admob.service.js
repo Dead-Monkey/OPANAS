@@ -21,6 +21,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
             AdMobService = (function () {
                 function AdMobService() {
                     this.admobidFirst = {};
+                    this.admobidInterstitialFirst = {};
                 }
                 AdMobService.prototype.createBottomBanerFirst = function () {
                     if (/(android)/i.test(navigator.userAgent)) {
@@ -46,6 +47,31 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             position: AdMob.AD_POSITION.BOTTOM_CENTER,
                             autoShow: true
                         });
+                };
+                AdMobService.prototype.createInterstitialFirst = function () {
+                    if (/(android)/i.test(navigator.userAgent)) {
+                        this.admobidInterstitialFirst = {
+                            interstitial: 'ca-app-pub-1213024579337881/1752684853'
+                        };
+                    }
+                    else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+                        this.admobidInterstitialFirst = {
+                            interstitial: 'ca-app-pub-1213024579337881/1752684853'
+                        };
+                    }
+                    else {
+                        this.admobidInterstitialFirst = {
+                            interstitial: 'ca-app-pub-1213024579337881/1752684853'
+                        };
+                    }
+                };
+                AdMobService.prototype.prepareInterstitialFirst = function () {
+                    if (AdMob)
+                        AdMob.prepareInterstitial({ adId: this.admobidInterstitialFirst['interstitial'], autoShow: false });
+                };
+                AdMobService.prototype.showInterstitialFirst = function () {
+                    if (AdMob)
+                        AdMob.showInterstitial();
                 };
                 AdMobService = __decorate([
                     core_1.Injectable(), 
