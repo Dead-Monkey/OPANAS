@@ -512,18 +512,18 @@ border: 2px solid #ff9d2d;
   <!-- Добавить новое меню -->
   <div *ngIf="createMenu">
 
-    <form class="create_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
+    <form class="create_form" (ngSubmit)="onSubmitMenu()">
 
       <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
+      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
       <label for="foodName"></label>
-      <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
+      <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
 
       <label for="foodWeight"></label>
-      <input class="create_inputWeight"type="number" [min]="1" [placeholder]="('weight'|translate) + '...'"  required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
+      <input class="create_inputWeight"type="number" [min]="1" [placeholder]="('weight'|translate) + '...'"  required [(ngModel)]="modelMenu.weight" #weight>
 
-      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!foodForm.form.valid || !correctFood"></button>
-      <div *ngIf="(name.valid && !correctFood)" class="create_serchContainer">
+      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctFood || !weight.value || !menuName.value"></button>
+      <div *ngIf="name.value" class="create_serchContainer">
         <div class="create_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
           {{item?.name[language]}}
         </div>
@@ -536,7 +536,7 @@ border: 2px solid #ff9d2d;
       </div>
     </div>
     <div *ngIf="createMenu">
-      {{'create.menu' | translate}}
+      {{'create.menu' | translate}} {{modelMenu.menuName}}
     </div>
 
 
@@ -676,12 +676,12 @@ export class PlusComponent implements OnInit {
         this.correctFood = true;
     }
 
-    onSubmitMenu(food) {
+    onSubmitMenu() {
 
-        this.pickedFoodMenu['weight'] = food.value.weight;
+        this.pickedFoodMenu['weight'] =   this.modelMenu['weight'];
         this.pickedFoodMenu['picked'] = false;
         this.foodMenuContainer.unshift(this.pickedFoodMenu)
-        this._foodServe.setUserMenu(food.value.menuName, this.foodMenuContainer);
+        this._foodServe.setUserMenu(this.modelMenu['menuName'], this.foodMenuContainer);
 
         this.pickedFoodMenu = <Food>{};
 
