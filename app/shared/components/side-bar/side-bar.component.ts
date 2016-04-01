@@ -12,7 +12,7 @@ import {TranslatePipe} from '../../services/translate/translate.service';
       position: absolute;
       display: flex;
       flex-flow: column nowrap;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       height: 100vh;
       width: 250px;
@@ -59,12 +59,12 @@ import {TranslatePipe} from '../../services/translate/translate.service';
   }
 
   p {
-    position: absolute;;
+    position: absolute;
     margin-top: 23vw;
-    left: 10vw;
+    left: 9%;
+    right: 9%;
     color: #ff9d2d;
     font-size: 6vw;
-    width: 50vw;
     overflow: hidden;
   }
 
@@ -75,10 +75,8 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     height: 22vw;
     text-align: center;
     text-decoration: none;
-    margin-top: 5vw;
-    margin-bottom: 7vw;
-
-
+    margin-top: 7vw;
+    margin-bottom: 11vw;
   }
   .sidebar_foodButton {
     background: url('./src/img/food.png') no-repeat center center;
@@ -122,9 +120,9 @@ import {TranslatePipe} from '../../services/translate/translate.service';
   <a class="sidebar_sportButton sidebar_button" (touchend)="toggle('Sport')">
     <p>{{'sport' | translate}}</p>
   </a>
-  <a class="sidebar_restButton sidebar_button" (touchend)="toggle('Rest')">
+  <!-- <a class="sidebar_restButton sidebar_button" (touchend)="toggle('Rest')">
     <p>{{'rest' | translate}}</p>
-  </a>
+  </a> -->
   <a class="sidebar_calendarButton sidebar_button" (touchend)="toggle('Calendar')">
     <p>{{'calendar' | translate}}</p>
   </a>

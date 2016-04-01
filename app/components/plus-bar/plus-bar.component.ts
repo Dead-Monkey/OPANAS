@@ -311,6 +311,145 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   width:90vw;
   overflow:hidden;
 }
+
+/*Avesatanas*/
+
+.create_inputFood {
+  position: absolute;
+height: 10vw;
+width: 52vw;
+background-color: rgba(49, 51, 61, 0.3);
+box-sizing: border-box;
+border: 2px solid #0C1017;
+border-radius: 2vw;
+font-size: 6vw;
+color: #D0D9D9;
+top: 12vw;
+left: 5vw;
+}
+.create_inputWeight {
+  position: absolute;
+      height: 10vw;
+      width: 16vw;
+      left: 58vw;
+      top: 12vw;
+      background-color: rgba(49, 51, 61, 0.3);
+      box-sizing: border-box;
+      border: 2px solid #0C1017;
+      border-radius: 2vw;
+      font-size: 6vw;
+      color: #D0D9D9;
+}
+.create_inputButton_off {
+  position: absolute;
+    right: 5vw;
+    height: 10vw;
+    width: 10vw;
+    background: url('./src/img/check-off.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border: 2px solid #0C1017;
+    border-radius: 2vw;
+    top: 12vw;
+}
+.create_inputButton_on {
+  position: absolute;
+    right: 5vw;
+    height: 10vw;
+    width: 10vw;
+    background: url('./src/img/check-on.png') no-repeat center center;
+    background-size: cover;
+    box-sizing: border-box;
+    color: #0d0e15;
+    border: 2px solid #0C1017;
+    border-radius: 2vw;
+    top: 12vw;
+}
+.create_serchContainer {
+  position: absolute;
+  background-color: #0C1017;
+  border-bottom: 2px solid #0C1017;
+  box-sizing: border-box;
+  width: 52vw;
+  max-height: 30vh;
+  padding-left: 1vw;
+  padding-top: 1vw;
+  left: 5vw;
+  top: 22vw;
+  overflow-y: scroll;
+  border-radius: 2vw;
+  z-index: 3;
+}
+.create_searchListItem {
+  float: left;
+    margin-bottom: 1vw;
+    min-height: 12vw;
+    width: 50vw;
+    line-height: 12vw;
+    box-sizing: border-box;
+    background-color: #3f414a;
+    color: #ff9d2d;
+    font-size: 6vw;
+    text-align: center;
+    border-radius: 2vw;
+}
+.create_list {
+  position: relative;
+  margin-top: 3vw;
+  padding-left: 5vw;
+  width: 95vw;
+  bottom:1px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.create_listItem {
+  float: left;
+margin-right: 1vw;
+margin-top: 2vw;
+min-height: 10vw;
+width: 65vw;
+box-sizing: border-box;
+background-color: #3f414a;
+color: #ff9d2d;
+font-size: 6vw;
+text-align: center;
+border-radius: 2vw;
+line-height: 10vw;
+border: 2px solid #ff9d2d;
+
+}
+.create_listWeight {
+  float: left;
+margin-top: 2vw;
+margin-right: 2vw;
+height: 11vw;
+width: 15vw;
+line-height: 10vw;
+background-color: #3f414a;
+box-sizing: border-box;
+color: #ff9d2d;
+font-size: 6vw;
+border-radius: 2vw;
+text-align: center;
+border: 2px solid #ff9d2d;
+}
+
+.create_form {
+    position: relative;
+    margin: 5vw;
+    height: 20vw;
+}
+.createListMove {
+    position: absolute;
+    width: 100vw;
+    padding-left: 10vw;
+    top: 45vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
     `],
     template: `
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}" (click)="toggle()"></div>
@@ -373,34 +512,33 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   <!-- Добавить новое меню -->
   <div *ngIf="createMenu">
 
-    <form class="food_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
+    <form class="create_form" (ngSubmit)="onSubmitMenu(foodForm)" #foodForm="ngForm">
 
-      <label for="menuName"></label>
-      <input class="" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
-
+      <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
+      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" ngControl="menuName" #menuName="ngForm" #menuNameMain (input)="searchMenu(menuNameMain.value)">
       <label for="foodName"></label>
-      <input class="" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
+      <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" ngControl="name" #name="ngForm" (input)="pickFoodMenuInput(modelMenu.name)">
 
       <label for="foodWeight"></label>
-      <input type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" class="" required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
+      <input class="create_inputWeight"type="number" [min]="1" [placeholder]="('weight'|translate) + '...'"  required [(ngModel)]="modelMenu.weight" ngControl="weight" #weight="ngForm">
 
-      <button #subBtn type="submit" [ngClass]="{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}" [disabled]="!foodForm.form.valid || !correctFood"></button>
-
-      <div *ngIf="(name.valid && !correctFood)" class="food_serchContainer">
-        <div class="food_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
+      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!foodForm.form.valid || !correctFood"></button>
+      <div *ngIf="(name.valid && !correctFood)" class="create_serchContainer">
+        <div class="create_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
           {{item?.name[language]}}
         </div>
       </div>
     </form>
-    <div class="list foodListMove">
+    <div class="list createListMove">
       <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
-        <div class="listItem">{{item?.name[language]}} </div>
-        <input class="food_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
+        <div class="create_listItem">{{item?.name[language]}} </div>
+        <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
     </div>
     <div *ngIf="createMenu">
       {{'create.menu' | translate}}
     </div>
+
 
     <div *ngIf="pasteMenu">
     {{'paste.menu' | translate}}

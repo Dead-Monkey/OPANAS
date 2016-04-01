@@ -9,20 +9,22 @@ import {ROUTER_DIRECTIVES}from 'angular2/router';
     styles: [`
   .startPage_navigator {
     position: absolute;
-    width: 30vw;
-    height: 100vh;
-    left: 35vw;
-    overflow: hidden;
+  width: 30vw;
+  display: flex;
+  top: 0;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  left: 35vw;
+  overflow: hidden;
   }
   .startPage_Buttons {
     position: relative;
-    width: 27vw;
-    height: 27vw;
-    margin-bottom: 9vw;
-    margin-left: 1vw;
-    float: left;
-    top: 8vw;
-
+  width: 27vw;
+  height: 27vw;
+  margin: auto;
+  margin-top: 5vw;
+  margin-bottom: 5vw;
   }
   .startPage_food {
     background: url('./src/img/food.png') no-repeat center center;
@@ -49,9 +51,9 @@ import {ROUTER_DIRECTIVES}from 'angular2/router';
       <a [routerLink]="['Sport']">
         <div class="startPage_Buttons startPage_sport"></div>
       </a>
-      <a [routerLink]="['Rest']">
+      <!-- <a [routerLink]="['Rest']">
         <div class="startPage_Buttons startPage_rest"></div>
-      </a>
+      </a> -->
       <a [routerLink]="['User']">
         <div class="startPage_Buttons startPage_user"></div>
       </a>

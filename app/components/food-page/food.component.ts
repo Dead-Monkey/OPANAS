@@ -99,8 +99,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     border-radius: 2vw;
   }
   .food_list {
-    position: absolute;;
-    top:87vw;
+    position: relative;
+    margin-top: 3vw;
     padding-left: 5vw;
     width: 95vw;
     bottom:1px;
