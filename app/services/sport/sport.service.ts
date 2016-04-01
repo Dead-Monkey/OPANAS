@@ -93,7 +93,7 @@ let sportVendor: Sport[] = [
     },
     {
         "name": {
-            "en": "squat",
+            "en": "barbell back squat",
             "ru": "присед"
         },
         "custom": false,
@@ -120,6 +120,182 @@ let sportVendor: Sport[] = [
         "name": {
             "en": "push ups",
             "ru": "отжимания"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "bent-over barbell row",
+            "ru": "тяга штанги к животу"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "standing t-bar row",
+            "ru": "тяга т-грифа"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "wide-grip seated cable row",
+            "ru": "тяга к животу в тренажере"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "pull-down",
+            "ru": "тяга сверху"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "single-arm dumbbell row",
+            "ru": "тяга гантели в наклоне"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "pull-over",
+            "ru": "пуловер"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "barbell curl",
+            "ru": "подъем штанги на бицепс"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "incline dumbbell curl",
+            "ru": "подъем гантелей на бицепс сидя"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "standing biceps cable curl",
+            "ru": "тяга снизу на бицепс в тренажере"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "reverse grip bent-over rows",
+            "ru": "тяга штанги к животу обратным хватом"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "concentration curls",
+            "ru": "концентрированные сгибания рук с гантелей на бицепс"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "flat-bench dumbbell press",
+            "ru": "жим гантелей лежа"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "low-incline barbell bench press",
+            "ru": "жим лежа на наклонной скамье(положительной)"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "cable crossover",
+            "ru": "кроссовер"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "seated machine chest press",
+            "ru": "жим в хаммере"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "incline dumbbell press",
+            "ru": "жим гантелей на наклонной скамье(положительной)"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "bar dip",
+            "ru": "брусья"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "pec-deck machine",
+            "ru": "бабочка на грудь"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "flat dumbbell fly",
+            "ru": "разводка гантелей на грудь"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "front squats",
+            "ru": "фронтальный присед"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "squats with dumbbells",
+            "ru": "присед с гантелями"
+        },
+        "custom": false,
+        "calories": 0
+    },
+    {
+        "name": {
+            "en": "dumbbell lunges ",
+            "ru": "выпады с гантелями"
         },
         "custom": false,
         "calories": 0
