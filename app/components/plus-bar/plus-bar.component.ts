@@ -539,7 +539,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       <input class="create_inputWeight"type="number" [min]="1" [placeholder]="('weight'|translate) + '...'"  required [(ngModel)]="modelMenu.weight" #weight>
 
       <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctFood || !weight.value || !menuName.value"></button>
-      <div *ngIf="name.value" class="create_serchContainer">
+      <div *ngIf="name.value && !correctFood" class="create_serchContainer">
         <div class="create_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
           {{item?.name[language]}}
         </div>
@@ -683,7 +683,6 @@ export class PlusComponent implements OnInit {
         }
     }
     pickFoodMenuInput(name) {
-        console.log(name);
         for (let obj of this.foodContainer) {
             if (obj['name'][this.language] === name) {
                 return this.pickFoodMenu(obj);
@@ -701,7 +700,6 @@ export class PlusComponent implements OnInit {
     }
 
     onSubmitMenu() {
-
         this.pickedFoodMenu['weight'] =   this.modelMenu['weight'];
         this.pickedFoodMenu['picked'] = false;
         this.foodMenuContainer.unshift(this.pickedFoodMenu)
