@@ -98,7 +98,7 @@ import {UserService} from '../../services/user/user.service';
 .toggleBar {
   margin-top: 2vw;
   width: 90vw;
-  height: 6vw;
+  height: 6.2vw;
   background: #0C1017;
   box-sizing: border-box;
   border: 3px solid #0C1017;
@@ -151,31 +151,20 @@ import {UserService} from '../../services/user/user.service';
   margin-bottom: 4vw;
   text-align: center;
 }
-.calculator_resultApply_on {
+.calculator_resultApply {
   position: absolute;
   top: 129vw;
   left: 58vw;
   height: 13vw;
+  line-height: 11vw;
   width: 12vw;
-  background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
-  color: #0d0e15;
+  color: #ff9d2d;
   border: 3px solid #0C1017;
   border-radius: 7px;
-}
-.calculator_resultApply_off {
-  position: absolute;
-  top: 129vw;
-  left: 58vw;
-  height: 13vw;
-  width: 12vw;
-  background: url('./src/img/check-off.png') no-repeat center center;
-  background-size: cover;
-  box-sizing: border-box;
-  color: #0d0e15;
-  border: 3px solid #0C1017;
-  border-radius: 7px;
+  text-align: center;
+  font-weight: bold;
 }
     `],
     template: `
@@ -236,8 +225,8 @@ import {UserService} from '../../services/user/user.service';
       <div class="pointToggle" [ngClass]="{ pointToggle_off:!(model.goal.lvl == '11'), pointToggle_on:model.goal.lvl == '11'}"  (click)="changeGoal(11)"></div>
     </div>
 
-  <div (click)="calculate()" class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
-    <div class="calculator_resultApply"></div>
+  <div class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
+    <div (click)="calculate()" class="calculator_resultApply">OK</div>
   </div>
 
 
