@@ -55,7 +55,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
     }
     .user_secondHeader {
       position: absolute;
-      top: 64vw;
+      top: 66vw;
       font-size: 5vw;
       min-height: 8vw;
       line-height: 8vw;
