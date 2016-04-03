@@ -46,7 +46,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       background-color: rgba(49, 51, 61, 0.3);
       box-sizing: border-box;
       border: 2px solid #0C1017;
-      border-radius: 2vw;
+      border-radius: 7px;
       line-height: 10vw;
       font-size: 6vw;
       color: #D0D9D9;

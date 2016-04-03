@@ -31,7 +31,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         background-color: rgba(49, 51, 61, 0.3);
         box-sizing: border-box;
         border: 2px solid #0C1017;
-        border-radius: 2vw;
+        border-radius: 7px;
         padding-left: 1vw;
       }
     .sport_inputButton_off {
@@ -44,7 +44,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         box-sizing: border-box;
         color: #0d0e15;
         border: 2px solid #0C1017;
-        border-radius: 2vw;
+        border-radius: 7px;
       }
       .sport_inputButton_on {
         position: absolute;
@@ -56,7 +56,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         box-sizing: border-box;
         color: #0d0e15;
         border: 2px solid #0C1017;
-        border-radius: 2vw;
+        border-radius: 7px;
       }
 
       .sport_serchContainer {
@@ -69,7 +69,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         right: 2vw;
         top: 9vw;
         overflow-y: scroll;
-        border-radius: 2vw;
+        border-radius: 7px;
         z-index: 3;
         border-bottom: 2px solid #0C1017;
       }
@@ -84,7 +84,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         color: #ff9d2d;
         font-size: 6vw;
         text-align: center;
-        border-radius: 2vw;
+        border-radius: 7px;
       }
 
       .sport_list {
@@ -107,7 +107,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         color: #de5200;
         font-size: 6vw;
         text-align: center;
-        border-radius: 2vw;
+        border-radius: 7px;
         line-height: 15vw;
       }
       .sport_listSet {
@@ -122,7 +122,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         color: #ff9d2d;
         font-size: 6vw;
         text-align: center;
-        border-radius: 2vw;
+        border-radius: 7px;
         border: none;
       }
       .sport_listWeight {
@@ -136,7 +136,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         color: #ff9d2d;
         font-size: 6vw;
         text-align: center;
-        border-radius: 2vw;
+        border-radius: 7px;
         border: none;
       }
       .sport_listNumbers {
@@ -152,7 +152,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         color: #ff9d2d;
         font-size: 6vw;
         text-align: center;
-        border-radius: 2vw;
+        border-radius: 7px;
         border: none;
       }
       .sport_dropdownButton {
@@ -178,7 +178,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       background-size: cover;
       box-sizing: border-box;
       color: #0d0e15;
-      border-radius: 2vw;
+      border-radius: 7px;
       margin-top: 1vh;
     }
   .sport_listButton_on_exrc {
@@ -191,7 +191,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .sport_listButton_off {
     float: left;
@@ -203,7 +203,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .sport_timer {
     position: absolute;;
