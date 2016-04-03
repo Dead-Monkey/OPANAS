@@ -16,7 +16,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 
 .container {
   position: fixed;
-  top: 15vw;
+  top: 16vw;
   overflow: hidden;
   width:100vw;
   height: 50vw;
@@ -35,7 +35,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 .plusBar {
   position: absolute;
   right: 5vw;
-  top: 0;
+  top: 1vw;
   width: 15vw;
   height: 15vw;
   background: url('./src/img/newPlus.png') no-repeat center center;
@@ -312,59 +312,59 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   overflow:hidden;
 }
 
-/*Avesatanas*/
+/*Тут начинаются классы для кнопки Create Menu*/
 
 .create_inputFood {
   position: absolute;
-height: 10vw;
-width: 52vw;
-background-color: rgba(49, 51, 61, 0.3);
-box-sizing: border-box;
-border: 2px solid #0C1017;
-border-radius: 2vw;
-font-size: 6vw;
-color: #D0D9D9;
-top: 12vw;
-left: 5vw;
+  height: 10vw;
+  width: 52vw;
+  background-color: rgba(49, 51, 61, 0.3);
+  box-sizing: border-box;
+  border: 2px solid #0C1017;
+  border-radius: 2vw;
+  font-size: 6vw;
+  color: #D0D9D9;
+  top: 12vw;
+  left: 5vw;
 }
 .create_inputWeight {
   position: absolute;
-      height: 10vw;
-      width: 16vw;
-      left: 58vw;
-      top: 12vw;
-      background-color: rgba(49, 51, 61, 0.3);
-      box-sizing: border-box;
-      border: 2px solid #0C1017;
-      border-radius: 2vw;
-      font-size: 6vw;
-      color: #D0D9D9;
+  height: 10vw;
+  width: 16vw;
+  left: 58vw;
+  top: 12vw;
+  background-color: rgba(49, 51, 61, 0.3);
+  box-sizing: border-box;
+  border: 2px solid #0C1017;
+  border-radius: 2vw;
+  font-size: 6vw;
+  color: #D0D9D9;
 }
 .create_inputButton_off {
   position: absolute;
-    right: 5vw;
-    height: 10vw;
-    width: 10vw;
-    background: url('./src/img/check-off.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    color: #0d0e15;
-    border: 2px solid #0C1017;
-    border-radius: 2vw;
-    top: 12vw;
+  right: 5vw;
+  height: 10vw;
+  width: 10vw;
+  background: url('./src/img/check-off.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  color: #0d0e15;
+  border: 2px solid #0C1017;
+  border-radius: 2vw;
+  top: 12vw;
 }
 .create_inputButton_on {
   position: absolute;
-    right: 5vw;
-    height: 10vw;
-    width: 10vw;
-    background: url('./src/img/check-on.png') no-repeat center center;
-    background-size: cover;
-    box-sizing: border-box;
-    color: #0d0e15;
-    border: 2px solid #0C1017;
-    border-radius: 2vw;
-    top: 12vw;
+  right: 5vw;
+  height: 10vw;
+  width: 10vw;
+  background: url('./src/img/check-on.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  color: #0d0e15;
+  border: 2px solid #0C1017;
+  border-radius: 2vw;
+  top: 12vw;
 }
 .create_serchContainer {
   position: absolute;
@@ -383,79 +383,95 @@ left: 5vw;
 }
 .create_searchListItem {
   float: left;
-    margin-bottom: 1vw;
-    min-height: 12vw;
-    width: 50vw;
-    line-height: 12vw;
-    box-sizing: border-box;
-    background-color: #3f414a;
-    color: #ff9d2d;
-    font-size: 6vw;
-    text-align: center;
-    border-radius: 2vw;
+  margin-bottom: 1vw;
+  min-height: 12vw;
+  width: 50vw;
+  line-height: 12vw;
+  box-sizing: border-box;
+  background-color: #3f414a;
+  color: #ff9d2d;
+  font-size: 6vw;
+  text-align: center;
+  border-radius: 2vw;
 }
 .create_list {
   position: relative;
   margin-top: 3vw;
   padding-left: 5vw;
   width: 95vw;
-  bottom:1px;
+  bottom: 1px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .create_listItem {
   float: left;
-margin-right: 1vw;
-margin-top: 2vw;
-min-height: 10vw;
-width: 65vw;
-box-sizing: border-box;
-background-color: #3f414a;
-color: #ff9d2d;
-font-size: 6vw;
-text-align: center;
-border-radius: 2vw;
-line-height: 10vw;
-border: 2px solid #ff9d2d;
-
+  margin-right: 1vw;
+  margin-top: 2vw;
+  min-height: 10vw;
+  width: 65vw;
+  box-sizing: border-box;
+  background-color: #3f414a;
+  color: #ff9d2d;
+  font-size: 6vw;
+  text-align: center;
+  border-radius: 2vw;
+  line-height: 10vw;
+  border: 2px solid #ff9d2d;
 }
 .create_listWeight {
   float: left;
-margin-top: 2vw;
-margin-right: 2vw;
-height: 11vw;
-width: 15vw;
-line-height: 10vw;
-background-color: #3f414a;
-box-sizing: border-box;
-color: #ff9d2d;
-font-size: 6vw;
-border-radius: 2vw;
-text-align: center;
-border: 2px solid #ff9d2d;
+  margin-top: 2vw;
+  margin-right: 2vw;
+  height: 11vw;
+  width: 15vw;
+  line-height: 10vw;
+  background-color: #3f414a;
+  box-sizing: border-box;
+  color: #ff9d2d;
+  font-size: 6vw;
+  border-radius: 2vw;
+  text-align: center;
+  border: 2px solid #ff9d2d;
 }
-
 .create_form {
-    position: relative;
-    margin: 5vw;
-    height: 20vw;
+  position: relative;
+  margin: 5vw;
+  height: 20vw;
 }
 .createListMove {
-    position: absolute;
-    width: 100vw;
-    padding-left: 10vw;
-    top: 45vw;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  position: absolute;
+  width: 100vw;
+  padding-left: 10vw;
+  top: 40vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
+.create_listItemName {
+  width: 80vw;
+  float:left;
+  height: 10vw;
+  text-align: center;
+  font-size: 6vw;
+  color: #ff9d2d;
+  font-weight: bold;
+  margin-left: 10vw;
+}
+.pasteListMove {
+  position: absolute;
+  width: 100vw;
+  padding-left: 10vw;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
-
+}
     `],
     template: `
+
+<!-- Плюсбар в Food -->
 <div class="plusBar" [ngClass]="{plusBarAnime: isOpen}" (click)="toggle()"></div>
 <div *ngIf="isOpen" class="closeMe" (click)="toggle()"></div>
 
-<div class="container" *ngIf="isOpen && (iAm === 'food')" [ngClass]="{containerFull: createFood || createMenu}">
+<div class="container" *ngIf="isOpen && (iAm === 'food')" [ngClass]="{containerFull: createFood || createMenu || pasteMenu}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
     <div class="plusBar_list1Btn" (click)="createFoodToggle()">
@@ -472,12 +488,12 @@ border: 2px solid #ff9d2d;
       </div>
     </div>
 
-    <!-- <div class="plusBar_list3Btn" (click)="pasteMenuToggle()">
+    <div class="plusBar_list3Btn" (click)="pasteMenuToggle()">
       <div class=" plusBar_listItem plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
-        {{'paste.menu' | translate}}
+        {{'choose.menu' | translate}}
       </div>
-    </div> -->
+    </div>
   </div>
 
   <!-- Добавить блюдо -->
@@ -535,17 +551,25 @@ border: 2px solid #ff9d2d;
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
     </div>
-    <div *ngIf="createMenu">
-      {{'create.menu' | translate}} {{modelMenu.menuName}}
+    <div *ngIf="createMenu" class="create_listItemName">
+     {{modelMenu.menuName}}
     </div>
+</div>
+
+<!-- Список созданных меню -->
+      <div *ngIf="pasteMenu">
+
+        <div class="pasteListMove">
+          <div class="listItemName">{{'choose.menu' | translate}}</div>
+        </div>
+      </div>
 
 
-    <div *ngIf="pasteMenu">
-    {{'paste.menu' | translate}}
-  </div>
 </div>
-</div>
+
+    <!-- ******************** -->
     <!-- тут начинается спорт -->
+    <!-- ******************** -->
 
     <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">

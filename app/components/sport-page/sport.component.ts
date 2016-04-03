@@ -32,6 +32,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         box-sizing: border-box;
         border: 2px solid #0C1017;
         border-radius: 2vw;
+        padding-left: 1vw;
       }
     .sport_inputButton_off {
         position: absolute;

@@ -139,7 +139,7 @@ import {UserService} from '../../services/user/user.service';
   height: 13vw;
   line-height: 11vw;
   width: 40vw;
-  margin-left: 22.5vw;
+  margin-left: 15vw;
   margin-top: 7vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
@@ -150,9 +150,33 @@ import {UserService} from '../../services/user/user.service';
   color: #ff9d2d;
   margin-bottom: 4vw;
   text-align: center;
-
 }
-
+.calculator_resultApply_on {
+  position: absolute;
+  top: 129vw;
+  left: 58vw;
+  height: 13vw;
+  width: 12vw;
+  background: url('./src/img/check-on.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  color: #0d0e15;
+  border: 3px solid #0C1017;
+  border-radius: 2vw;
+}
+.calculator_resultApply_off {
+  position: absolute;
+  top: 129vw;
+  left: 58vw;
+  height: 13vw;
+  width: 12vw;
+  background: url('./src/img/check-off.png') no-repeat center center;
+  background-size: cover;
+  box-sizing: border-box;
+  color: #0d0e15;
+  border: 3px solid #0C1017;
+  border-radius: 2vw;
+}
     `],
     template: `
 <div class="calculator">
@@ -213,7 +237,7 @@ import {UserService} from '../../services/user/user.service';
     </div>
 
   <div (click)="calculate()" class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
-
+    <div class="calculator_resultApply"></div>
   </div>
 
 

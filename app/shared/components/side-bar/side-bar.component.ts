@@ -38,7 +38,7 @@ import {TranslatePipe} from '../../services/translate/translate.service';
   }
   .sideBar_toggle {
     position: absolute;
-    top:0;
+    top:1vw;
     left:5vw;
     background: url('./src/img/newMenu.png') no-repeat center center;
     background-size: cover;
