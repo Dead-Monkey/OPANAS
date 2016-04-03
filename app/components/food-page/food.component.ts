@@ -30,7 +30,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
     border: 2px solid #0C1017;
-    border-radius: 2vw;
+    border-radius: 7px;
     font-size: 6vw;
     color: #D0D9D9;
   }
@@ -42,7 +42,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
     border: 2px solid #0C1017;
-    border-radius: 2vw;
+    border-radius: 7px;
     font-size: 6vw;
     color: #D0D9D9;
   }
@@ -56,7 +56,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     box-sizing: border-box;
     color: #0d0e15;
     border: 2px solid #0C1017;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .food_inputButton_on {
     position: absolute;
@@ -68,7 +68,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     box-sizing: border-box;
     color: #0d0e15;
     border: 2px solid #0C1017;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .food_serchContainer {
     position: absolute;
@@ -82,7 +82,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     left: 0;
     top: 10vw;
     overflow-y: scroll;
-    border-radius: 2vw;
+    border-radius: 7px;
     z-index: 3;
   }
   .food_searchListItem {
@@ -96,7 +96,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     color: #ff9d2d;
     font-size: 6vw;
     text-align: center;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .food_list {
     position: relative;
@@ -118,7 +118,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     color: #ff9d2d;
     font-size: 6vw;
     text-align: center;
-    border-radius: 2vw;
+    border-radius: 7px;
     line-height: 12vw;
 
   }
@@ -134,7 +134,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     color: #ff9d2d;
     font-size: 6vw;
     text-align: center;
-    border-radius: 2vw;
+    border-radius: 7px;
     border: none;
     text-align: center;
   }
@@ -149,7 +149,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .food_listButton_off {
     float:left;
@@ -161,7 +161,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
-    border-radius: 2vw;
+    border-radius: 7px;
   }
   .food_listItemContainer{
     position:relative;

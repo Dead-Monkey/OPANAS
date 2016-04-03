@@ -70,7 +70,7 @@ import {UserService} from '../../services/user/user.service';
     background-color: rgba(49, 51, 61, 0.3);
     box-sizing: border-box;
     border: 2px solid #0C1017;
-    border-radius: 2vw;
+    border-radius: 7px;
     font-size: 6vw;
     color: #D0D9D9;
     margin-bottom: 4vw;
@@ -102,7 +102,7 @@ import {UserService} from '../../services/user/user.service';
   background: #0C1017;
   box-sizing: border-box;
   border: 3px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .activityToggle {
   position: relative;
@@ -144,7 +144,7 @@ import {UserService} from '../../services/user/user.service';
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 3px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 6vw;
   font-weight: bold;
   color: #ff9d2d;
@@ -162,7 +162,7 @@ import {UserService} from '../../services/user/user.service';
   box-sizing: border-box;
   color: #0d0e15;
   border: 3px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .calculator_resultApply_off {
   position: absolute;
@@ -175,7 +175,7 @@ import {UserService} from '../../services/user/user.service';
   box-sizing: border-box;
   color: #0d0e15;
   border: 3px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
     `],
     template: `

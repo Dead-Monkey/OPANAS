@@ -66,7 +66,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   color: #ff9d2d;
   font-size: 6vw;
   text-align: center;
-  border-radius: 2vw;
+  border-radius: 7px;
   border: 2px solid #ff9d2d;
 }
 .foodListMove{
@@ -111,7 +111,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 7vw;
   color: #ff9d2d;
   margin-bottom: 2vw;
@@ -135,7 +135,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 6vw;
   color: #ff9d2d;
   margin-bottom: 2vw;
@@ -154,7 +154,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .food_inputButton_on {
   position: relative;
@@ -165,7 +165,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .sport_inputButton_off {
   position: relative;
@@ -176,7 +176,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 
 .sport_inputButton_on {
@@ -188,7 +188,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .sport_inputSportName {
   font-size: 6.5vw;
@@ -209,7 +209,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 7vw;
   color: #ff9d2d;
   margin-bottom: 2vw;
@@ -321,7 +321,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 6vw;
   color: #D0D9D9;
   top: 12vw;
@@ -336,7 +336,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   font-size: 6vw;
   color: #D0D9D9;
 }
@@ -350,7 +350,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   box-sizing: border-box;
   color: #0d0e15;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   top: 12vw;
 }
 .create_inputButton_on {
@@ -363,7 +363,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   box-sizing: border-box;
   color: #0d0e15;
   border: 2px solid #0C1017;
-  border-radius: 2vw;
+  border-radius: 7px;
   top: 12vw;
 }
 .create_serchContainer {
@@ -378,7 +378,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   left: 5vw;
   top: 22vw;
   overflow-y: scroll;
-  border-radius: 2vw;
+  border-radius: 7px;
   z-index: 3;
 }
 .create_searchListItem {
@@ -392,7 +392,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   color: #ff9d2d;
   font-size: 6vw;
   text-align: center;
-  border-radius: 2vw;
+  border-radius: 7px;
 }
 .create_list {
   position: relative;
@@ -414,7 +414,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   color: #ff9d2d;
   font-size: 6vw;
   text-align: center;
-  border-radius: 2vw;
+  border-radius: 7px;
   line-height: 10vw;
   border: 2px solid #ff9d2d;
 }
@@ -429,7 +429,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   box-sizing: border-box;
   color: #ff9d2d;
   font-size: 6vw;
-  border-radius: 2vw;
+  border-radius: 7px;
   text-align: center;
   border: 2px solid #ff9d2d;
 }
@@ -462,8 +462,22 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   padding-left: 10vw;
   overflow-y: scroll;
   overflow-x: hidden;
-
 }
+.createTrain_inputSport {
+  position: relative;
+float: left;
+height: 10vw;
+width: 68vw;
+background-color: rgba(49, 51, 61, 0.3);
+box-sizing: border-box;
+border: 2px solid #0C1017;
+border-radius: 7px;
+font-size: 7vw;
+color: #ff9d2d;
+margin-left: 5vw;
+margin-bottom: 2vw;
+}
+
     `],
     template: `
 
@@ -571,6 +585,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     <!-- тут начинается спорт -->
     <!-- ******************** -->
 
+
+<!-- Плюсбар в Food -->
     <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
@@ -596,7 +612,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     </div>
   </div>
 
-
+<!-- Создать упражнение -->
   <div *ngIf="createExercise">
 
     <form class="food_form">
@@ -614,11 +630,40 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     </div>
   </div>
 
-
+<!-- создать тренировку -->
   <div *ngIf="createTrain">
-    create train
+
+    <form class="create_form" (ngSubmit)="onSubmitMenu()">
+
+      <div class="food_inputFoodName">Traine name</div>
+      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
+
+
+      <label for="sportName"></label>
+      <input class="createTrain_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
+
+      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctFood || !weight.value || !menuName.value"></button>
+      <div *ngIf="name.value && !correctFood" class="create_serchContainer">
+        <div class="create_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
+          {{item?.name[language]}}
+        </div>
+      </div>
+    </form>
+
+
+    <div class="list createListMove">
+      <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+        <div class="create_listItem">{{item?.name[language]}} </div>
+        <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
+      </div>
+    </div>
+    <div *ngIf="createMenu" class="create_listItemName">
+     {{modelMenu.menuName}}
+    </div>
   </div>
 
+
+<!-- выбрать тренировку -->
   <div *ngIf="pasteTrain">
     paste train
   </div>
