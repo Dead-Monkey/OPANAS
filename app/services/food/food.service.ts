@@ -129,7 +129,6 @@ export class FoodService {
         this.refreshUserMenu();
     }
 
-
     refreshUserMenu() {
         this._storageService.setItem(this.storageKeys.userMenu, this.userMenu);
     }
