@@ -201,7 +201,7 @@ export class CalendarService {
         console.log(`not exist date`);
     }
 
-    setDailySport(sport: Sport, date: Date) {
+    setDailySport(sport: Sport, date: Date=this.currentDate) {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {

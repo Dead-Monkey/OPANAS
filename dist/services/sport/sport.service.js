@@ -31,11 +31,16 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     this.sport = sportVendor;
                     this.userSport = [];
                     this.allSport = [];
+                    this.userTrain = [];
                     this.storageKeys = {
-                        'userSport': 'userSport'
+                        'userSport': 'userSport',
+                        'userTrain': 'userTrain'
                     };
                     if (this._storageService.getItem(this.storageKeys.userSport)) {
                         this.userSport = this._storageService.getItem(this.storageKeys.userSport);
+                    }
+                    if (this._storageService.getItem(this.storageKeys.userTrain)) {
+                        this.userTrain = this._storageService.getItem(this.storageKeys.userTrain);
                     }
                     this.prepareSport();
                 }
@@ -92,6 +97,63 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     }
                     this.refreshUserSport();
                     this.prepareSport();
+                };
+                SportService.prototype.getUserTrainAll = function () {
+                    return this.userTrain;
+                };
+                SportService.prototype.getUserTrain = function (name) {
+                    for (var _i = 0, _a = this.userTrain; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            return item;
+                        }
+                    }
+                };
+                SportService.prototype.setUserTrain = function (name, sport) {
+                    for (var _i = 0, _a = this.userTrain; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            var rem = this.userTrain.indexOf(item);
+                            this.userTrain.splice(rem, 1);
+                        }
+                    }
+                    this.userTrain.unshift(this.createUserTrain(name, sport));
+                    this.refreshUserTrain();
+                };
+                SportService.prototype.createUserTrain = function (name, sport) {
+                    var res = {};
+                    res['name'] = name;
+                    res['sport'] = sport;
+                    return res;
+                };
+                SportService.prototype.removeTrain = function (name) {
+                    for (var _i = 0, _a = this.userTrain; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            this.userTrain.splice(this.userTrain.indexOf(item), 1);
+                        }
+                    }
+                    this.refreshUserTrain();
+                };
+                SportService.prototype.removeSportFromTrain = function (name, index) {
+                    for (var _i = 0, _a = this.userTrain; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            item['sport'].splice(index, 1);
+                        }
+                    }
+                    this.refreshUserTrain();
+                };
+                // changeSportInTrain(name: string, index, weight) {
+                //     for (let item of this.userTrain) {
+                //         if (item.name.trim() === name.trim()) {
+                //             item['food'][index]['weight'] = weight
+                //         }
+                //     }
+                //     this.refreshUserTrain()
+                // }
+                SportService.prototype.refreshUserTrain = function () {
+                    this._storageService.setItem(this.storageKeys.userTrain, this.userTrain);
                 };
                 SportService = __decorate([
                     core_1.Injectable(), 

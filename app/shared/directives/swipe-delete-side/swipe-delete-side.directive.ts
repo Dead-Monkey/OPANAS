@@ -43,7 +43,6 @@ export class SwipeDeleteSideDirective {
         if (evt.type === 'touchend') {
             if (this.pusher > this.pusherTarget || this.pusher < -this.pusherTarget) {
                 this.fmSwipeDeleteSide.emit('close')
-                console.log(`end`);
             } else {
                 this.pusher = 0;
                 this._el.nativeElement.style.transform = 'translate3d(' + this.pusher + 'px,0,0)'

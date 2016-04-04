@@ -206,6 +206,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     console.log("not exist date");
                 };
                 CalendarService.prototype.setDailySport = function (sport, date) {
+                    if (date === void 0) { date = this.currentDate; }
                     date.setHours(0, 0, 0, 0);
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];

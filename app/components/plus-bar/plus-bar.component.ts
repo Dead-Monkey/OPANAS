@@ -513,9 +513,9 @@ margin-bottom: 2vw;
 
   <!-- Добавить блюдо -->
   <div *ngIf="createFood">
-    <form class="food_form" >
+    <form class="food_form">
       <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [(ngModel)]="model.name"  #name>
+      <input class="food_inputFood" required [(ngModel)]="model.name" #name>
 
       <div class="food_inputFoodNameNutritions">{{'calories' | translate}}</div>
       <input class="food_inputFoodNutritions" type="number" min="0" required [(ngModel)]="model.calories">
@@ -532,9 +532,9 @@ margin-bottom: 2vw;
       <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmit(name)"></button>
     </form>
-    <div class="list foodListMove" >
+    <div class="list foodListMove">
       <div class="listItemName">{{'added.meals' | translate}}</div>
-      <div *ngFor="#item of customFood"  class="listItemContainer"  (fmSwipeDeleteSide)="removeFood(item)">
+      <div *ngFor="#item of customFood" class="listItemContainer" (fmSwipeDeleteSide)="removeFood(item)">
         <div class="listItem">{{item.name[language]}} </div>
       </div>
     </div>
@@ -551,7 +551,7 @@ margin-bottom: 2vw;
       <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
 
       <label for="foodWeight"></label>
-      <input class="create_inputWeight"type="number" [min]="1" [placeholder]="('weight'|translate) + '...'"  required [(ngModel)]="modelMenu.weight" #weight>
+      <input class="create_inputWeight" type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" required [(ngModel)]="modelMenu.weight" #weight>
 
       <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctFood || !weight.value || !menuName.value"></button>
       <div *ngIf="name.value && !correctFood" class="create_serchContainer">
@@ -567,33 +567,33 @@ margin-bottom: 2vw;
       </div>
     </div>
     <div *ngIf="createMenu" class="create_listItemName">
-     {{modelMenu.menuName}}
+      {{modelMenu.menuName}}
     </div>
-</div>
+  </div>
 
-<!-- Список созданных меню -->
-      <div *ngIf="pasteMenu">
+  <!-- Список созданных меню -->
+  <div *ngIf="pasteMenu">
 
-        <div class="pasteListMove">
-          <div class="listItemName">{{'choose.menu' | translate}}</div>
-        </div>
-        <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
-        <div class="create_listItemName">
+    <div class="pasteListMove">
+      <div class="listItemName">{{'choose.menu' | translate}}</div>
+    </div>
+    <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
+      <div class="create_listItemName">
         {{item['name']}} <span (click)="viewMenuDetail(item)">VIEW</span> <span (click)="pasteMenuToDay(item)">GO</span>
-        </div>
-        </div>
       </div>
+    </div>
+  </div>
 
 
 </div>
 
-    <!-- ******************** -->
-    <!-- тут начинается спорт -->
-    <!-- ******************** -->
+<!-- ******************** -->
+<!-- тут начинается спорт -->
+<!-- ******************** -->
 
 
 <!-- Плюсбар в Food -->
-    <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
+<div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
     <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
@@ -618,7 +618,7 @@ margin-bottom: 2vw;
     </div>
   </div>
 
-<!-- Создать упражнение -->
+  <!-- Создать упражнение -->
   <div *ngIf="createExercise">
 
     <form class="food_form">
@@ -630,27 +630,27 @@ margin-bottom: 2vw;
 
     <div class="sportListMove">
       <div class="listItemName">{{'added.exercise' | translate}}</div>
-      <div  *ngFor="#item of customSport" class="listItemContainer"  (fmSwipeDeleteSide)="removeSport(item)">
-          <div class="listItem">{{item.name.ru}} </div>
+      <div *ngFor="#item of customSport" class="listItemContainer" (fmSwipeDeleteSide)="removeSport(item)">
+        <div class="listItem">{{item.name.ru}} </div>
       </div>
     </div>
   </div>
 
-<!-- создать тренировку -->
-  <!-- <div *ngIf="createTrain">
+  <!-- создать тренировку -->
+  <div *ngIf="createTrain">
 
-    <form class="create_form" (ngSubmit)="onSubmitMenu()">
+    <form class="create_form" (ngSubmit)="onSubmitTrain()">
 
       <div class="food_inputFoodName">Traine name</div>
-      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
+      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
 
 
       <label for="sportName"></label>
-      <input class="createTrain_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="model.name" ngControl="name" #name="ngForm" (input)="pickSportInput(model.name)">
+      <input class="createTrain_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelTrain.name" #name (input)="pickSportTrainInput(name.value)">
 
-      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctFood || !weight.value || !menuName.value"></button>
-      <div *ngIf="name.value && !correctFood" class="create_serchContainer">
-        <div class="create_searchListItem" *ngFor="#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickFoodMenu(item);">
+      <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctSport || !trainName.value"></button>
+      <div *ngIf="name.value && !correctSport" class="create_serchContainer">
+        <div class="create_searchListItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSportTrain(item)">
           {{item?.name[language]}}
         </div>
       </div>
@@ -658,21 +658,25 @@ margin-bottom: 2vw;
 
 
     <div class="list createListMove">
-      <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeSport(item)">
+      <div *ngFor="#item of sportTrainContainer; #i = index" (fmSwipeDeleteSide)="removeSportTrain(modelTrain.trainName,i)">
         <div class="create_listItem">{{item?.name[language]}} </div>
-        <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
     </div>
-    <div *ngIf="createMenu" class="create_listItemName">
-     {{modelMenu.menuName}}
-    </div>
+
   </div>
 
 
-<!-- выбрать тренировку -->
+  <!-- выбрать тренировку-->
   <div *ngIf="pasteTrain">
-    paste train
-  </div> -->
+    <div class="pasteListMove">
+      <div class="listItemName">{{'choose.menu' | translate}}</div>
+    </div>
+    <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
+      <div class="create_listItemName">
+        {{item['name']}} <span (click)="viewTrainDetail(item)">VIEW</span> <span (click)="pasteTrainToDay(item)">GO</span>
+      </div>
+    </div>
+  </div>
 </div>
     `
 })
@@ -699,13 +703,19 @@ export class PlusComponent implements OnInit {
     private modelSport: Object = {};
 
     private foodContainer: Food[];
+    private sportContainer: Sport[]
 
     private pickedFoodMenu: Food = <Food>{};
+    private pickedSportTrain: Sport = <Sport>{};
 
     private allMenus = []
+    private allTrains = []
     private foodMenuContainer: Array<Food> = [];
+    private sportTrainContainer: Array<Sport> = []
     private modelMenu: Object = {};
+    private modelTrain: Object = {};
     private correctFood: boolean = false;
+    private correctSport: boolean = false;
 
     constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService, private _userServe: UserService, private _calendarServe: CalendarService) { }
 
@@ -714,9 +724,12 @@ export class PlusComponent implements OnInit {
 
         this.customFood = this._foodServe.getUserFood();
         this.refreshModel();
-        this.customSport = this._sportServe.getUserSport();
         this.foodContainer = this._foodServe.getAllFood();
         this.allMenus = this._foodServe.getUserMenuAll();
+        this.allTrains = this._sportServe.getUserTrainAll();
+        console.log(this.allTrains);
+        this.sportContainer = this._sportServe.getAllSport();
+        this.customSport = this._sportServe.getUserSport();
     }
 
     checkForm(value) {
@@ -725,13 +738,72 @@ export class PlusComponent implements OnInit {
         }
         return false;
     }
+    //train
+    searchTrain(name: string) {
+        if (name) {
+            this.sportTrainContainer = [];
+            if (this._sportServe.getUserTrain(name)) {
+                this.sportTrainContainer = this._sportServe.getUserTrain(name)['sport'];
+            }
+        }
+    }
+    pickSportTrainInput(name) {
+        for (let obj of this.sportContainer) {
+            if (obj['name'][this.language] === name) {
+                return this.pickSportTrain(obj);
+            } else {
+                this.correctSport = false;
+            }
+        }
+    }
+    pickSportTrain(sport) {
+        this.pickedSportTrain = Object.assign({}, sport);
+        setTimeout(() => this.modelTrain['name'] = sport.name[this.language], 0)
+        this.correctSport = true;
+
+    }
+    onSubmitTrain() {
+        this.pickedSportTrain['picked'] = false;
+        this.sportTrainContainer.unshift(this.pickedSportTrain)
+        this._sportServe.setUserTrain(this.modelTrain['trainName'], this.sportTrainContainer);
+
+        this.pickedSportTrain = <Sport>{};
+
+        for (let item in this.modelTrain) {
+            if (!(item === 'trainName')) {
+                this.modelTrain[item] = undefined;
+            }
+        }
+        this.searchTrain(this.modelTrain['trainName'])
+        this.correctSport = false;
+
+    }
+    removeSportTrain(trainName, item) {
+        this._sportServe.removeSportFromTrain(trainName, item);
+
+    }
+    removeTrain(name) {
+        this._sportServe.removeTrain(name)
+    }
+
+    pasteTrainToDay(item) {
+        for (let variable of item['sport']) {
+            this._calendarServe.setDailySport(variable);
+        }
+    }
+    viewTrainDetail(item) {
+        this.pasteTrainToggle();
+        this.createTrainToggle()
+        this.searchTrain(item['name'])
+        this.modelTrain['trainName'] = item['name']
+
+    }
     //4menu
     searchMenu(name: string) {
         if (name) {
             this.foodMenuContainer = [];
             if (this._foodServe.getUserMenu(name)) {
                 this.foodMenuContainer = this._foodServe.getUserMenu(name)['food'];
-                console.log(this.foodMenuContainer);
             }
         }
     }
@@ -741,7 +813,6 @@ export class PlusComponent implements OnInit {
                 return this.pickFoodMenu(obj);
             } else {
                 this.correctFood = false;
-                console.log(`unCorrectFood`);
             }
         }
     }
@@ -773,8 +844,8 @@ export class PlusComponent implements OnInit {
     changeFoodWeight(menuName, item, weight) {
         this._foodServe.changeFoodInMenu(menuName, item, weight);
     }
-    removeMenu(name){
-      this._foodServe.removeMenu(name)
+    removeMenu(name) {
+        this._foodServe.removeMenu(name)
     }
     removeFoodMenu(menuName, item) {
         this._foodServe.removeFoodFromMenu(menuName, item);

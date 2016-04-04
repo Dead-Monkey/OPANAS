@@ -53,7 +53,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     if (evt.type === 'touchend') {
                         if (this.pusher > this.pusherTarget || this.pusher < -this.pusherTarget) {
                             this.fmSwipeDeleteSide.emit('close');
-                            console.log("end");
                         }
                         else {
                             this.pusher = 0;
