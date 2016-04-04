@@ -577,7 +577,7 @@ margin-bottom: 2vw;
         <div class="pasteListMove">
           <div class="listItemName">{{'choose.menu' | translate}}</div>
         </div>
-        <div *ngFor="#item of allMenus">
+        <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
         <div class="create_listItemName">
         {{item['name']}} <span (click)="viewMenuDetail(item)">VIEW</span> <span (click)="pasteMenuToDay(item)">GO</span>
         </div>
@@ -772,6 +772,9 @@ export class PlusComponent implements OnInit {
     }
     changeFoodWeight(menuName, item, weight) {
         this._foodServe.changeFoodInMenu(menuName, item, weight);
+    }
+    removeMenu(name){
+      this._foodServe.removeMenu(name)
     }
     removeFoodMenu(menuName, item) {
         this._foodServe.removeFoodFromMenu(menuName, item);

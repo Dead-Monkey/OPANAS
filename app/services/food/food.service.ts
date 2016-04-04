@@ -112,6 +112,14 @@ export class FoodService {
       res['food'] = food;
       return res;
     }
+    removeMenu(name:string){
+      for (let item of this.userMenu) {
+          if (item.name.trim() === name.trim()) {
+          this.userMenu.splice(this.userMenu.indexOf(item),1)
+          }
+      }
+        this.refreshUserMenu();
+    }
     removeFoodFromMenu(name:string, index) {
       for (let item of this.userMenu) {
           if (item.name.trim() === name.trim()) {

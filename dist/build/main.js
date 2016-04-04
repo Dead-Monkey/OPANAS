@@ -227,7 +227,7 @@ System.register("shared/components/progress-bar/progress-bar.component", ['angul
                         directives: [],
                         providers: [],
                         pipes: [],
-                        styles: ["\n.progress_container {\n  width: 90vw;\n  height: 7vw;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border:3px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 4vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 5vw;\n}\n.numbers {\n  position: absolute;\n  color: #D0D9D9;\n  height: 7vw;\n  width: 90vw;\n  overflow: hidden;\n  font-weight: bold;\n  line-height: 6vw;\n}\n "],
+                        styles: ["\n.progress_container {\n  width: 90vw;\n  height: 2.5%;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border:3px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 3vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 4vw;\n}\n.numbers {\n  position: absolute;\n  color: #D0D9D9;\n  height: 5vw;\n  width: 90vw;\n  overflow: hidden;\n  font-weight: bold;\n  line-height: 3vw;\n}\n "],
                         template: "\n<div class=\"progress_barHeader\">{{name|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
@@ -2424,7 +2424,7 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
                 },
                 {
                     "name": {
-                        "en": "squat",
+                        "en": "barbell back squat",
                         "ru": "присед"
                     },
                     "custom": false,
@@ -2450,6 +2450,182 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
                     "name": {
                         "en": "push ups",
                         "ru": "отжимания"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "bent-over barbell row",
+                        "ru": "тяга штанги к животу"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "standing t-bar row",
+                        "ru": "тяга т-грифа"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "wide-grip seated cable row",
+                        "ru": "тяга к животу в тренажере"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "pull-down",
+                        "ru": "тяга сверху"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "single-arm dumbbell row",
+                        "ru": "тяга гантели в наклоне"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "pull-over",
+                        "ru": "пуловер"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "barbell curl",
+                        "ru": "подъем штанги на бицепс"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "incline dumbbell curl",
+                        "ru": "подъем гантелей на бицепс сидя"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "standing biceps cable curl",
+                        "ru": "тяга снизу на бицепс в тренажере"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "reverse grip bent-over rows",
+                        "ru": "тяга штанги к животу обратным хватом"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "concentration curls",
+                        "ru": "концентрированные сгибания рук с гантелей на бицепс"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "flat-bench dumbbell press",
+                        "ru": "жим гантелей лежа"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "low-incline barbell bench press",
+                        "ru": "жим лежа на наклонной скамье(положительной)"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "cable crossover",
+                        "ru": "кроссовер"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "seated machine chest press",
+                        "ru": "жим в хаммере"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "incline dumbbell press",
+                        "ru": "жим гантелей на наклонной скамье(положительной)"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "bar dip",
+                        "ru": "брусья"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "pec-deck machine",
+                        "ru": "бабочка на грудь"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "flat dumbbell fly",
+                        "ru": "разводка гантелей на грудь"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "front squats",
+                        "ru": "фронтальный присед"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "squats with dumbbells",
+                        "ru": "присед с гантелями"
+                    },
+                    "custom": false,
+                    "calories": 0
+                },
+                {
+                    "name": {
+                        "en": "dumbbell lunges ",
+                        "ru": "выпады с гантелями"
                     },
                     "custom": false,
                     "calories": 0
@@ -2671,250 +2847,15 @@ System.register("shared/directives/swipe-delete-side/swipe-delete-side.directive
         }
     }
 });
-System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service", "services/user/user.service", "shared/directives/swipe-holder/swipe-holder.directive", "shared/directives/swipe-delete-side/swipe-delete-side.directive"], function(exports_12, context_12) {
+System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_12, context_12) {
     "use strict";
     var __moduleName = context_12 && context_12.id;
-    var core_11, food_service_1, sport_service_1, simple_search_pipe_1, translate_service_3, user_service_3, swipe_holder_directive_1, swipe_delete_side_directive_1;
-    var PlusComponent;
+    var core_11, storage_service_4;
+    var CalendarService;
     return {
         setters:[
             function (core_11_1) {
                 core_11 = core_11_1;
-            },
-            function (food_service_1_1) {
-                food_service_1 = food_service_1_1;
-            },
-            function (sport_service_1_1) {
-                sport_service_1 = sport_service_1_1;
-            },
-            function (simple_search_pipe_1_1) {
-                simple_search_pipe_1 = simple_search_pipe_1_1;
-            },
-            function (translate_service_3_1) {
-                translate_service_3 = translate_service_3_1;
-            },
-            function (user_service_3_1) {
-                user_service_3 = user_service_3_1;
-            },
-            function (swipe_holder_directive_1_1) {
-                swipe_holder_directive_1 = swipe_holder_directive_1_1;
-            },
-            function (swipe_delete_side_directive_1_1) {
-                swipe_delete_side_directive_1 = swipe_delete_side_directive_1_1;
-            }],
-        execute: function() {
-            PlusComponent = (function () {
-                function PlusComponent(_foodServe, _sportServe, _translateService, _userServe) {
-                    this._foodServe = _foodServe;
-                    this._sportServe = _sportServe;
-                    this._translateService = _translateService;
-                    this._userServe = _userServe;
-                    this.isOpen = false;
-                    this.isOpenChange = new core_11.EventEmitter();
-                    this.language = 'en';
-                    this.listOptions = false;
-                    this.createFood = false;
-                    this.createMenu = false;
-                    this.pasteMenu = false;
-                    this.createExercise = false;
-                    this.createTrain = false;
-                    this.pasteTrain = false;
-                    this.model = {};
-                    this.modelSport = {};
-                    this.pickedFoodMenu = {};
-                    this.foodMenuContainer = [];
-                    this.modelMenu = {};
-                    this.correctFood = false;
-                }
-                PlusComponent.prototype.ngOnInit = function () {
-                    this.language = this._userServe.getLanguage();
-                    this.customFood = this._foodServe.getUserFood();
-                    this.refreshModel();
-                    this.customSport = this._sportServe.getUserSport();
-                    this.foodContainer = this._foodServe.getAllFood();
-                };
-                PlusComponent.prototype.checkForm = function (value) {
-                    if (value) {
-                        return true;
-                    }
-                    return false;
-                };
-                //4menu
-                PlusComponent.prototype.searchMenu = function (name) {
-                    if (name) {
-                        this.foodMenuContainer = [];
-                        if (this._foodServe.getUserMenu(name)) {
-                            this.foodMenuContainer = this._foodServe.getUserMenu(name)['food'];
-                            console.log(this.foodMenuContainer);
-                        }
-                    }
-                };
-                PlusComponent.prototype.pickFoodMenuInput = function (name) {
-                    console.log(name);
-                    for (var _i = 0, _a = this.foodContainer; _i < _a.length; _i++) {
-                        var obj = _a[_i];
-                        if (obj['name'][this.language] === name) {
-                            return this.pickFoodMenu(obj);
-                        }
-                        else {
-                            this.correctFood = false;
-                            console.log("unCorrectFood");
-                        }
-                    }
-                };
-                PlusComponent.prototype.pickFoodMenu = function (food) {
-                    var _this = this;
-                    this.pickedFoodMenu = Object.assign({}, food);
-                    setTimeout(function () { return _this.modelMenu['name'] = food.name[_this.language]; }, 0);
-                    this.correctFood = true;
-                };
-                PlusComponent.prototype.onSubmitMenu = function (food) {
-                    this.pickedFoodMenu['weight'] = food.value.weight;
-                    this.pickedFoodMenu['picked'] = false;
-                    this.foodMenuContainer.unshift(this.pickedFoodMenu);
-                    this._foodServe.setUserMenu(food.value.menuName, this.foodMenuContainer);
-                    this.pickedFoodMenu = {};
-                    for (var item in this.modelMenu) {
-                        if (!(item === 'menuName')) {
-                            console.log(item);
-                            this.modelMenu[item] = undefined;
-                        }
-                    }
-                    this.searchMenu(this.modelMenu['menuName']);
-                    this.correctFood = false;
-                };
-                PlusComponent.prototype.changeFoodWeight = function (menuName, item, weight) {
-                    this._foodServe.changeFoodInMenu(menuName, item, weight);
-                };
-                PlusComponent.prototype.removeFoodMenu = function (menuName, item) {
-                    this._foodServe.removeFoodFromMenu(menuName, item);
-                };
-                //4 food
-                PlusComponent.prototype.onSubmit = function (food) {
-                    if (food.value.trim()) {
-                        var name_1 = food.value.trim();
-                        food = { 'value': {} };
-                        food.value['name'] = {};
-                        for (var key in this._translateService.getSupportLanguages()) {
-                            food.value['name'][key] = name_1;
-                        }
-                        food.value['custom'] = true;
-                        food.value['calories'] = this.model['calories'];
-                        food.value['protein'] = this.model['protein'];
-                        food.value['fat'] = this.model['fat'];
-                        food.value['carbohydrates'] = this.model['carbohydrates'];
-                        this.setFood(food.value);
-                        this.refreshModel();
-                    }
-                };
-                PlusComponent.prototype.refreshModel = function () {
-                    this.model['name'] = '';
-                    this.model['calories'] = 0;
-                    this.model['protein'] = 0;
-                    this.model['fat'] = 0;
-                    this.model['carbohydrates'] = 0;
-                };
-                PlusComponent.prototype.setFood = function (food) {
-                    this._foodServe.setUserFood(food);
-                    this.customFood = this._foodServe.getUserFood();
-                };
-                PlusComponent.prototype.removeFood = function (food) {
-                    this._foodServe.removeUserFood(food);
-                };
-                //4 sport
-                PlusComponent.prototype.onSubmitSport = function (sport) {
-                    if (sport.value.trim()) {
-                        var name_2 = sport.value.trim();
-                        sport = { 'value': {} };
-                        sport.value['name'] = {};
-                        for (var key in this._translateService.getSupportLanguages()) {
-                            sport.value['name'][key] = name_2;
-                        }
-                        sport.value['custom'] = true;
-                        this.setSport(sport.value);
-                        this.modelSport['name'] = '';
-                    }
-                };
-                PlusComponent.prototype.setSport = function (sport) {
-                    this._sportServe.setUserSport(sport);
-                    this.customSport = this._sportServe.getUserSport();
-                };
-                PlusComponent.prototype.removeSport = function (sport) {
-                    this._sportServe.removeUserSport(sport);
-                };
-                PlusComponent.prototype.toggle = function () {
-                    this.isOpen = !this.isOpen;
-                    this.listOptions = true;
-                    this.createFood = false;
-                    this.createMenu = false;
-                    this.pasteMenu = false;
-                    this.createExercise = false;
-                    this.createTrain = false;
-                    this.pasteTrain = false;
-                    this.isOpenChange.emit(this.isOpen);
-                };
-                PlusComponent.prototype.createFoodToggle = function () {
-                    this.createFood = !this.createFood;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createMenuToggle = function () {
-                    this.createMenu = !this.createMenu;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.pasteMenuToggle = function () {
-                    this.pasteMenu = !this.pasteMenu;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createExerciseToggle = function () {
-                    this.createExercise = !this.createExercise;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.createTrainToggle = function () {
-                    this.createTrain = !this.createTrain;
-                    this.listOptions = !this.listOptions;
-                };
-                PlusComponent.prototype.pasteTrainToggle = function () {
-                    this.pasteTrain = !this.pasteTrain;
-                    this.listOptions = !this.listOptions;
-                };
-                __decorate([
-                    core_11.Input(), 
-                    __metadata('design:type', Boolean)
-                ], PlusComponent.prototype, "isOpen", void 0);
-                __decorate([
-                    core_11.Input(), 
-                    __metadata('design:type', String)
-                ], PlusComponent.prototype, "iAm", void 0);
-                __decorate([
-                    core_11.Output(), 
-                    __metadata('design:type', Object)
-                ], PlusComponent.prototype, "isOpenChange", void 0);
-                PlusComponent = __decorate([
-                    core_11.Component({
-                        selector: 'op-plus',
-                        directives: [swipe_holder_directive_1.SwipeHoldertDirective, swipe_delete_side_directive_1.SwipeDeleteSideDirective],
-                        providers: [],
-                        pipes: [translate_service_3.TranslatePipe, simple_search_pipe_1.SimpleSearch],
-                        styles: ["\n\n.container {\n  position: fixed;\n  top: 15vw;\n  overflow: hidden;\n  width:100vw;\n  height: 50vw;\n  z-index: 10;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #3f414a;\n  opacity: 0.95;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n}\n.plusBar {\n  position: absolute;\n  right: 5vw;\n  top: 0;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/newPlus.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n.list {\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 80vw;\n  line-height: 11vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 2vw;\n  border: 2px solid #ff9d2d;\n}\n.foodListMove{\n  position: absolute;;\n  width: 100vw;\n  padding-left: 10vw;\n  top: 80vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n.listItemName {\n  width: 80vw;\n  float:left;\n  height: 10vw;\n  text-align: center;\n  font-size: 6vw;\n  color: #ff9d2d;\n  font-weight: bold;\n  margin-bottom: 2vw;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFoodName {\n  font-size: 6.5vw;\n  width: 40vw;\n  height: 10vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 10vw;\n  font-weight: bold;\n}\n.food_inputFood {\n  position: relative;\n  float: left;\n  height: 10vw;\n  width: 40vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 7vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n}\n.food_inputFoodNameNutritions {\n  position: relative;\n  font-size: 6vw;\n  width: 40vw;\n  height: 9vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 8vw;\n}\n.food_inputFoodNutritions {\n  position: relative;\n  float: left;\n  height: 9vw;\n  width: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 6vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n  line-height: 8vw;\n}\n.food_inputButtonName {\n  margin-top: 2vw;\n  font-size: 6.5vw;\n}\n.food_inputButton_off {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n}\n.food_inputButton_on {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n}\n.sport_inputButton_off {\n  position: relative;\n  float: right;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n}\n\n.sport_inputButton_on {\n  position: relative;\n  float: right;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n}\n.sport_inputSportName {\n  font-size: 6.5vw;\n  width: 40vw;\n  height: 12vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 10vw;\n  font-weight: bold;\n}\n.sport_inputSport{\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 40vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 7vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n}\n.sportListMove {\n  position: absolute;;\n  width: 100vw;\n  top: 40vw;\n  padding-left: 10vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sportBtnMove{\n  top:0;\n  right:33vw;\n}\n.plusBar_menuButtons {\n  position: absolute;\n  height: 50vw;\n  width: 90vw;\n  right: 5vw;\n  color: #ff9d2d;\n  font-size: 5.5vw;\n  overflow: hidden;\n}\n.plusBar_listItem {\n  width: 15vw;\n  height: 15vw;\n  position: absolute;\n  right: 0;\n  overflow: hidden;\n}\n.plusBar_createFoodButton {\n  background: url('./src/img/addfood.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createMenuButton {\n  background: url('./src/img/createMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_pasteMenuButton {\n  background: url('./src/img/pasteMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createExercise {\n  background: url('./src/img/exercise.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createTraining{\n  background: url('./src/img/trainingPlan.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_listName {\n  position: absolute;\n  right: 16vw;\n  text-align: right;\n  height: 15vw;\n  width: 90vw;\n  line-height: 15vw;\n  margin-bottom: 1vw;\n\n}\n.plusBar_list1Btn{\n  position: absolute;\n  right:0;\n}\n.plusBar_list2Btn{\n  position: absolute;\n  right:0;\n  top: 30%;\n  animation:  mainList2Btn 300ms linear;\n}\n.plusBar_list3Btn{\n  position: absolute;\n  top: 60%;\n  right:0;\n  animation:  mainList3Btn 300ms linear;\n}\n@keyframes mainList2Btn {\n    0%   {top:0px;}\n    100% {top:30%;}\n}\n@keyframes mainList3Btn {\n    0%   {top:0;}\n    100% {top:60%;}\n}\n.containerFull {\n  height: 165vw;\n  width: 100vw;\n}\n.listItemContainer{\n  position:relative;\n  min-height: 16vw;\n  width:90vw;\n  overflow:hidden;\n}\n    "],
-                        template: "\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\" (click)=\"toggle()\"></div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\" [ngClass]=\"{containerFull: createFood || createMenu}\">\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createFoodToggle()\">\n      <div class=\"plusBar_listItem plusBar_createFoodButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.food' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createMenuToggle()\">\n      <div class=\"plusBar_listItem plusBar_createMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.menu' | translate}}\n      </div>\n    </div>\n\n    <!-- <div class=\"plusBar_list3Btn\" (click)=\"pasteMenuToggle()\">\n      <div class=\" plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'paste.menu' | translate}}\n      </div>\n    </div> -->\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0431\u043B\u044E\u0434\u043E -->\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" >\n      <div class=\"food_inputFoodName\">{{'meals.name' | translate}}</div>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\"  #name>\n\n      <div class=\"food_inputFoodNameNutritions\">{{'calories' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.calories\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'protein' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.protein\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'fat' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.fat\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'carbohydrates' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.carbohydrates\">\n\n      <div class=\"food_inputFoodNameNutritions food_inputButtonName \">{{'done' | translate}}</div>\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\" (click)=\"onSubmit(name)\"></button>\n    </form>\n    <div class=\"list foodListMove\" >\n      <div class=\"listItemName\">{{'added.meals' | translate}}</div>\n      <div *ngFor=\"#item of customFood\"  class=\"listItemContainer\"  (fmSwipeDeleteSide)=\"removeFood(item)\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043D\u043E\u0432\u043E\u0435 \u043C\u0435\u043D\u044E -->\n  <div *ngIf=\"createMenu\">\n\n    <form class=\"food_form\" (ngSubmit)=\"onSubmitMenu(foodForm)\" #foodForm=\"ngForm\">\n\n      <label for=\"menuName\"></label>\n      <input class=\"\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" ngControl=\"menuName\" #menuName=\"ngForm\" #menuNameMain (input)=\"searchMenu(menuNameMain.value)\">\n\n      <label for=\"foodName\"></label>\n      <input class=\"\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodMenuInput(modelMenu.name)\">\n\n      <label for=\"foodWeight\"></label>\n      <input type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\" class=\"\" required [(ngModel)]=\"modelMenu.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n      <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n      <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n        <div class=\"food_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n          {{item?.name[language]}}\n        </div>\n      </div>\n    </form>\n    <div class=\"list foodListMove\">\n      <div *ngFor=\"#item of foodMenuContainer; #i = index\" fmSwipe (fmSwipeLeft)=\"removeFoodMenu(modelMenu.menuName,i)\" (fmSwipeRight)=\"removeFoodMenu(modelMenu.menuName, i)\">\n        <div class=\"listItem\">{{item?.name[language]}} </div>\n        <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n      </div>\n    </div>\n    <div *ngIf=\"createMenu\">\n      {{'create.menu' | translate}}\n    </div>\n\n    <div *ngIf=\"pasteMenu\">\n    {{'paste.menu' | translate}}\n  </div>\n</div>\n</div>\n    <!-- \u0442\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0440\u0442 -->\n\n    <div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\" [ngClass]=\"{containerFull: createExercise || createTrain}\">\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createExerciseToggle()\">\n      <div class=\"plusBar_listItem plusBar_createExercise \"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.exercise' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_createTraining\"></div>\n      <div class=\"plusBar_listName \">\n        {{'create.training.plan' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list3Btn\" (click)=\"pasteTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        paste train\n      </div>\n    </div>\n  </div>\n\n\n  <div *ngIf=\"createExercise\">\n\n    <form class=\"food_form\">\n      <label class=\"sport_inputSportName\" for=\"name\">{{'name' | translate}}:</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" #name>\n      <div class=\"food_inputFoodNameNutritions food_inputButtonName \">{{'done' | translate}}</div>\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\" (touchend)=\"onSubmitSport(name)\"></button>\n    </form>\n\n    <div class=\"sportListMove\">\n      <div class=\"listItemName\">{{'added.exercise' | translate}}</div>\n      <div  *ngFor=\"#item of customSport\" class=\"listItemContainer\"  (fmSwipeDeleteSide)=\"removeSport(item)\">\n          <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n\n  <div *ngIf=\"createTrain\">\n    create train\n  </div>\n\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div>\n</div>\n    "
-                    }), 
-                    __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService, user_service_3.UserService])
-                ], PlusComponent);
-                return PlusComponent;
-            }());
-            exports_12("PlusComponent", PlusComponent);
-        }
-    }
-});
-System.register("services/calenadar/calendar.service", ['angular2/core', "shared/services/storage/storage.service"], function(exports_13, context_13) {
-    "use strict";
-    var __moduleName = context_13 && context_13.id;
-    var core_12, storage_service_4;
-    var CalendarService;
-    return {
-        setters:[
-            function (core_12_1) {
-                core_12 = core_12_1;
             },
             function (storage_service_4_1) {
                 storage_service_4 = storage_service_4_1;
@@ -3060,6 +3001,7 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
+                    if (date === void 0) { date = this.currentDate; }
                     if (isNaN(food['weight'])) {
                         food['weight'] = 0;
                     }
@@ -3068,6 +3010,7 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
                             day['food'].unshift(food);
+                            console.log(food);
                         }
                     }
                     this.refreshCalendar();
@@ -3135,19 +3078,271 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                 CalendarService.prototype.setDailyRest = function () {
                 };
                 CalendarService = __decorate([
-                    core_12.Injectable(), 
+                    core_11.Injectable(), 
                     __metadata('design:paramtypes', [storage_service_4.StorageService])
                 ], CalendarService);
                 return CalendarService;
             }());
-            exports_13("CalendarService", CalendarService);
+            exports_12("CalendarService", CalendarService);
+        }
+    }
+});
+System.register("components/plus-bar/plus-bar.component", ['angular2/core', "services/food/food.service", "services/sport/sport.service", "shared/pipes/simple-search/simple-search.pipe", "shared/services/translate/translate.service", "services/user/user.service", "shared/directives/swipe-holder/swipe-holder.directive", "shared/directives/swipe-delete-side/swipe-delete-side.directive", "services/calenadar/calendar.service"], function(exports_13, context_13) {
+    "use strict";
+    var __moduleName = context_13 && context_13.id;
+    var core_12, food_service_1, sport_service_1, simple_search_pipe_1, translate_service_3, user_service_3, swipe_holder_directive_1, swipe_delete_side_directive_1, calendar_service_1;
+    var PlusComponent;
+    return {
+        setters:[
+            function (core_12_1) {
+                core_12 = core_12_1;
+            },
+            function (food_service_1_1) {
+                food_service_1 = food_service_1_1;
+            },
+            function (sport_service_1_1) {
+                sport_service_1 = sport_service_1_1;
+            },
+            function (simple_search_pipe_1_1) {
+                simple_search_pipe_1 = simple_search_pipe_1_1;
+            },
+            function (translate_service_3_1) {
+                translate_service_3 = translate_service_3_1;
+            },
+            function (user_service_3_1) {
+                user_service_3 = user_service_3_1;
+            },
+            function (swipe_holder_directive_1_1) {
+                swipe_holder_directive_1 = swipe_holder_directive_1_1;
+            },
+            function (swipe_delete_side_directive_1_1) {
+                swipe_delete_side_directive_1 = swipe_delete_side_directive_1_1;
+            },
+            function (calendar_service_1_1) {
+                calendar_service_1 = calendar_service_1_1;
+            }],
+        execute: function() {
+            PlusComponent = (function () {
+                function PlusComponent(_foodServe, _sportServe, _translateService, _userServe, _calendarServe) {
+                    this._foodServe = _foodServe;
+                    this._sportServe = _sportServe;
+                    this._translateService = _translateService;
+                    this._userServe = _userServe;
+                    this._calendarServe = _calendarServe;
+                    this.isOpen = false;
+                    this.isOpenChange = new core_12.EventEmitter();
+                    this.language = 'en';
+                    this.listOptions = false;
+                    this.createFood = false;
+                    this.createMenu = false;
+                    this.pasteMenu = false;
+                    this.createExercise = false;
+                    this.createTrain = false;
+                    this.pasteTrain = false;
+                    this.model = {};
+                    this.modelSport = {};
+                    this.pickedFoodMenu = {};
+                    this.allMenus = [];
+                    this.foodMenuContainer = [];
+                    this.modelMenu = {};
+                    this.correctFood = false;
+                }
+                PlusComponent.prototype.ngOnInit = function () {
+                    this.language = this._userServe.getLanguage();
+                    this.customFood = this._foodServe.getUserFood();
+                    this.refreshModel();
+                    this.customSport = this._sportServe.getUserSport();
+                    this.foodContainer = this._foodServe.getAllFood();
+                    this.allMenus = this._foodServe.getUserMenuAll();
+                };
+                PlusComponent.prototype.checkForm = function (value) {
+                    if (value) {
+                        return true;
+                    }
+                    return false;
+                };
+                //4menu
+                PlusComponent.prototype.searchMenu = function (name) {
+                    if (name) {
+                        this.foodMenuContainer = [];
+                        if (this._foodServe.getUserMenu(name)) {
+                            this.foodMenuContainer = this._foodServe.getUserMenu(name)['food'];
+                            console.log(this.foodMenuContainer);
+                        }
+                    }
+                };
+                PlusComponent.prototype.pickFoodMenuInput = function (name) {
+                    for (var _i = 0, _a = this.foodContainer; _i < _a.length; _i++) {
+                        var obj = _a[_i];
+                        if (obj['name'][this.language] === name) {
+                            return this.pickFoodMenu(obj);
+                        }
+                        else {
+                            this.correctFood = false;
+                            console.log("unCorrectFood");
+                        }
+                    }
+                };
+                PlusComponent.prototype.pickFoodMenu = function (food) {
+                    var _this = this;
+                    this.pickedFoodMenu = Object.assign({}, food);
+                    setTimeout(function () { return _this.modelMenu['name'] = food.name[_this.language]; }, 0);
+                    this.correctFood = true;
+                };
+                PlusComponent.prototype.onSubmitMenu = function () {
+                    this.pickedFoodMenu['weight'] = this.modelMenu['weight'];
+                    this.pickedFoodMenu['picked'] = false;
+                    this.foodMenuContainer.unshift(this.pickedFoodMenu);
+                    this._foodServe.setUserMenu(this.modelMenu['menuName'], this.foodMenuContainer);
+                    this.pickedFoodMenu = {};
+                    for (var item in this.modelMenu) {
+                        if (!(item === 'menuName')) {
+                            console.log(item);
+                            this.modelMenu[item] = undefined;
+                        }
+                    }
+                    this.searchMenu(this.modelMenu['menuName']);
+                    this.correctFood = false;
+                };
+                PlusComponent.prototype.changeFoodWeight = function (menuName, item, weight) {
+                    this._foodServe.changeFoodInMenu(menuName, item, weight);
+                };
+                PlusComponent.prototype.removeFoodMenu = function (menuName, item) {
+                    this._foodServe.removeFoodFromMenu(menuName, item);
+                };
+                PlusComponent.prototype.pasteMenuToDay = function (item) {
+                    for (var _i = 0, _a = item['food']; _i < _a.length; _i++) {
+                        var variable = _a[_i];
+                        this._calendarServe.setDailyFood(variable);
+                    }
+                };
+                PlusComponent.prototype.viewMenuDetail = function (item) {
+                    this.pasteMenuToggle();
+                    this.createMenuToggle();
+                    this.searchMenu(item['name']);
+                    this.modelMenu['menuName'] = item['name'];
+                };
+                //4 food
+                PlusComponent.prototype.onSubmit = function (food) {
+                    if (food.value.trim()) {
+                        var name_1 = food.value.trim();
+                        food = { 'value': {} };
+                        food.value['name'] = {};
+                        for (var key in this._translateService.getSupportLanguages()) {
+                            food.value['name'][key] = name_1;
+                        }
+                        food.value['custom'] = true;
+                        food.value['calories'] = this.model['calories'];
+                        food.value['protein'] = this.model['protein'];
+                        food.value['fat'] = this.model['fat'];
+                        food.value['carbohydrates'] = this.model['carbohydrates'];
+                        this.setFood(food.value);
+                        this.refreshModel();
+                    }
+                };
+                PlusComponent.prototype.refreshModel = function () {
+                    this.model['name'] = '';
+                    this.model['calories'] = 0;
+                    this.model['protein'] = 0;
+                    this.model['fat'] = 0;
+                    this.model['carbohydrates'] = 0;
+                };
+                PlusComponent.prototype.setFood = function (food) {
+                    this._foodServe.setUserFood(food);
+                    this.customFood = this._foodServe.getUserFood();
+                };
+                PlusComponent.prototype.removeFood = function (food) {
+                    this._foodServe.removeUserFood(food);
+                };
+                //4 sport
+                PlusComponent.prototype.onSubmitSport = function (sport) {
+                    if (sport.value.trim()) {
+                        var name_2 = sport.value.trim();
+                        sport = { 'value': {} };
+                        sport.value['name'] = {};
+                        for (var key in this._translateService.getSupportLanguages()) {
+                            sport.value['name'][key] = name_2;
+                        }
+                        sport.value['custom'] = true;
+                        this.setSport(sport.value);
+                        this.modelSport['name'] = '';
+                    }
+                };
+                PlusComponent.prototype.setSport = function (sport) {
+                    this._sportServe.setUserSport(sport);
+                    this.customSport = this._sportServe.getUserSport();
+                };
+                PlusComponent.prototype.removeSport = function (sport) {
+                    this._sportServe.removeUserSport(sport);
+                };
+                PlusComponent.prototype.toggle = function () {
+                    this.isOpen = !this.isOpen;
+                    this.listOptions = true;
+                    this.createFood = false;
+                    this.createMenu = false;
+                    this.pasteMenu = false;
+                    this.createExercise = false;
+                    this.createTrain = false;
+                    this.pasteTrain = false;
+                    this.isOpenChange.emit(this.isOpen);
+                };
+                PlusComponent.prototype.createFoodToggle = function () {
+                    this.createFood = !this.createFood;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createMenuToggle = function () {
+                    this.createMenu = !this.createMenu;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.pasteMenuToggle = function () {
+                    this.pasteMenu = !this.pasteMenu;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createExerciseToggle = function () {
+                    this.createExercise = !this.createExercise;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.createTrainToggle = function () {
+                    this.createTrain = !this.createTrain;
+                    this.listOptions = !this.listOptions;
+                };
+                PlusComponent.prototype.pasteTrainToggle = function () {
+                    this.pasteTrain = !this.pasteTrain;
+                    this.listOptions = !this.listOptions;
+                };
+                __decorate([
+                    core_12.Input(), 
+                    __metadata('design:type', Boolean)
+                ], PlusComponent.prototype, "isOpen", void 0);
+                __decorate([
+                    core_12.Input(), 
+                    __metadata('design:type', String)
+                ], PlusComponent.prototype, "iAm", void 0);
+                __decorate([
+                    core_12.Output(), 
+                    __metadata('design:type', Object)
+                ], PlusComponent.prototype, "isOpenChange", void 0);
+                PlusComponent = __decorate([
+                    core_12.Component({
+                        selector: 'op-plus',
+                        directives: [swipe_holder_directive_1.SwipeHoldertDirective, swipe_delete_side_directive_1.SwipeDeleteSideDirective],
+                        providers: [],
+                        pipes: [translate_service_3.TranslatePipe, simple_search_pipe_1.SimpleSearch],
+                        styles: ["\n\n.container {\n  position: fixed;\n  top: 16vw;\n  overflow: hidden;\n  width:100vw;\n  height: 50vw;\n  z-index: 10;\n}\n.closeMe {\n  position: fixed;\n  left: 0;\n  top: 0;\n  background-color: #3f414a;\n  opacity: 0.95;\n  width: 100vw;\n  height: 100vh;\n  z-index: 9;\n}\n.plusBar {\n  position: absolute;\n  right: 5vw;\n  top: 1vw;\n  width: 15vw;\n  height: 15vw;\n  background: url('./src/img/newPlus.png') no-repeat center center;\n  background-size: cover;\n  overflow: hidden;\n  z-index: 10;\n  transition: 0.3s;\n}\n.plusBarAnime {\n  transition: transform 0.5s;\n  transform: rotate(135deg);\n  -ms-transform: rotate(135deg);\n  -webkit-transform: rotate(135deg);\n}\n.list {\n  width: 90vw;\n  height: 80vw;\n  overflow-y: scroll;\n}\n.listItem {\n  float:left;\n  margin-bottom: 2vw;\n  height: 12vw;\n  width: 80vw;\n  line-height: 11vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 7px;\n  border: 2px solid #ff9d2d;\n}\n.foodListMove{\n  position: absolute;;\n  width: 100vw;\n  padding-left: 10vw;\n  top: 80vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n.listItemName {\n  width: 80vw;\n  float:left;\n  height: 10vw;\n  text-align: center;\n  font-size: 6vw;\n  color: #ff9d2d;\n  font-weight: bold;\n  margin-bottom: 2vw;\n}\n.food_form {\n  position: relative;\n  margin: 5vw;\n  height: 10vw;\n}\n.food_inputFoodName {\n  font-size: 6.5vw;\n  width: 40vw;\n  height: 10vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 10vw;\n  font-weight: bold;\n}\n.food_inputFood {\n  position: relative;\n  float: left;\n  height: 10vw;\n  width: 40vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  font-size: 7vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n}\n.food_inputFoodNameNutritions {\n  position: relative;\n  font-size: 6vw;\n  width: 40vw;\n  height: 9vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 8vw;\n}\n.food_inputFoodNutritions {\n  position: relative;\n  float: left;\n  height: 9vw;\n  width: 20vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  font-size: 6vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n  line-height: 8vw;\n}\n.food_inputButtonName {\n  margin-top: 2vw;\n  font-size: 6.5vw;\n}\n.food_inputButton_off {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n}\n.food_inputButton_on {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n}\n.sport_inputButton_off {\n  position: relative;\n  float: right;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n}\n\n.sport_inputButton_on {\n  position: relative;\n  float: right;\n  height: 12vw;\n  width: 12vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n}\n.sport_inputSportName {\n  font-size: 6.5vw;\n  width: 40vw;\n  height: 12vw;\n  float: left;\n  margin-left: 5vw;\n  margin-bottom: 2vw;\n  color: #ff9d2d;\n  line-height: 10vw;\n  font-weight: bold;\n}\n.sport_inputSport{\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 40vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  font-size: 7vw;\n  color: #ff9d2d;\n  margin-bottom: 2vw;\n}\n.sportListMove {\n  position: absolute;;\n  width: 100vw;\n  top: 40vw;\n  padding-left: 10vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n\n.createExercise{\n  width: 100%;\n  height: 100%\n}\n.sportBtnMove{\n  top:0;\n  right:33vw;\n}\n.plusBar_menuButtons {\n  position: absolute;\n  height: 50vw;\n  width: 90vw;\n  right: 5vw;\n  color: #ff9d2d;\n  font-size: 5.5vw;\n  overflow: hidden;\n}\n.plusBar_listItem {\n  width: 15vw;\n  height: 15vw;\n  position: absolute;\n  right: 0;\n  overflow: hidden;\n}\n.plusBar_createFoodButton {\n  background: url('./src/img/addfood.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createMenuButton {\n  background: url('./src/img/createMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_pasteMenuButton {\n  background: url('./src/img/pasteMenuButton.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createExercise {\n  background: url('./src/img/exercise.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_createTraining{\n  background: url('./src/img/trainingPlan.png') no-repeat center center;\n  background-size: cover;\n}\n.plusBar_listName {\n  position: absolute;\n  right: 16vw;\n  text-align: right;\n  height: 15vw;\n  width: 90vw;\n  line-height: 15vw;\n  margin-bottom: 1vw;\n\n}\n.plusBar_list1Btn{\n  position: absolute;\n  right:0;\n}\n.plusBar_list2Btn{\n  position: absolute;\n  right:0;\n  top: 30%;\n  animation:  mainList2Btn 300ms linear;\n}\n.plusBar_list3Btn{\n  position: absolute;\n  top: 60%;\n  right:0;\n  animation:  mainList3Btn 300ms linear;\n}\n@keyframes mainList2Btn {\n    0%   {top:0px;}\n    100% {top:30%;}\n}\n@keyframes mainList3Btn {\n    0%   {top:0;}\n    100% {top:60%;}\n}\n.containerFull {\n  height: 165vw;\n  width: 100vw;\n}\n.listItemContainer{\n  position:relative;\n  min-height: 16vw;\n  width:90vw;\n  overflow:hidden;\n}\n\n/*\u0422\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u044E\u0442\u0441\u044F \u043A\u043B\u0430\u0441\u0441\u044B \u0434\u043B\u044F \u043A\u043D\u043E\u043F\u043A\u0438 Create Menu*/\n\n.create_inputFood {\n  position: absolute;\n  height: 10vw;\n  width: 52vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  font-size: 6vw;\n  color: #D0D9D9;\n  top: 12vw;\n  left: 5vw;\n}\n.create_inputWeight {\n  position: absolute;\n  height: 10vw;\n  width: 16vw;\n  left: 58vw;\n  top: 12vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  font-size: 6vw;\n  color: #D0D9D9;\n}\n.create_inputButton_off {\n  position: absolute;\n  right: 5vw;\n  height: 10vw;\n  width: 10vw;\n  background: url('./src/img/check-off.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  top: 12vw;\n}\n.create_inputButton_on {\n  position: absolute;\n  right: 5vw;\n  height: 10vw;\n  width: 10vw;\n  background: url('./src/img/check-on.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #0d0e15;\n  border: 2px solid #0C1017;\n  border-radius: 7px;\n  top: 12vw;\n}\n.create_serchContainer {\n  position: absolute;\n  background-color: #0C1017;\n  border-bottom: 2px solid #0C1017;\n  box-sizing: border-box;\n  width: 52vw;\n  max-height: 30vh;\n  padding-left: 1vw;\n  padding-top: 1vw;\n  left: 5vw;\n  top: 22vw;\n  overflow-y: scroll;\n  border-radius: 7px;\n  z-index: 3;\n}\n.create_searchListItem {\n  float: left;\n  margin-bottom: 1vw;\n  min-height: 12vw;\n  width: 50vw;\n  line-height: 12vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 7px;\n}\n.create_list {\n  position: relative;\n  margin-top: 3vw;\n  padding-left: 5vw;\n  width: 95vw;\n  bottom: 1px;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n.create_listItem {\n  float: left;\n  margin-right: 1vw;\n  margin-top: 2vw;\n  min-height: 10vw;\n  width: 65vw;\n  box-sizing: border-box;\n  background-color: #3f414a;\n  color: #ff9d2d;\n  font-size: 6vw;\n  text-align: center;\n  border-radius: 7px;\n  line-height: 10vw;\n  border: 2px solid #ff9d2d;\n}\n.create_listWeight {\n  float: left;\n  margin-top: 2vw;\n  margin-right: 2vw;\n  height: 11vw;\n  width: 15vw;\n  line-height: 10vw;\n  background-color: #3f414a;\n  box-sizing: border-box;\n  color: #ff9d2d;\n  font-size: 6vw;\n  border-radius: 7px;\n  text-align: center;\n  border: 2px solid #ff9d2d;\n}\n.create_form {\n  position: relative;\n  margin: 5vw;\n  height: 20vw;\n}\n.createListMove {\n  position: absolute;\n  width: 100vw;\n  padding-left: 10vw;\n  top: 40vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n.create_listItemName {\n  width: 80vw;\n  float:left;\n  height: 10vw;\n  text-align: center;\n  font-size: 6vw;\n  color: #ff9d2d;\n  font-weight: bold;\n  margin-left: 10vw;\n}\n.pasteListMove {\n  position: relative;\n  width: 100vw;\n  padding-left: 10vw;\n  overflow-y: scroll;\n  overflow-x: hidden;\n}\n.createTrain_inputSport {\n  position: relative;\nfloat: left;\nheight: 10vw;\nwidth: 68vw;\nbackground-color: rgba(49, 51, 61, 0.3);\nbox-sizing: border-box;\nborder: 2px solid #0C1017;\nborder-radius: 7px;\nfont-size: 7vw;\ncolor: #ff9d2d;\nmargin-left: 5vw;\nmargin-bottom: 2vw;\n}\n\n    "],
+                        template: "\n\n<!-- \u041F\u043B\u044E\u0441\u0431\u0430\u0440 \u0432 Food -->\n<div class=\"plusBar\" [ngClass]=\"{plusBarAnime: isOpen}\" (click)=\"toggle()\"></div>\n<div *ngIf=\"isOpen\" class=\"closeMe\" (click)=\"toggle()\"></div>\n\n<div class=\"container\" *ngIf=\"isOpen && (iAm === 'food')\" [ngClass]=\"{containerFull: createFood || createMenu || pasteMenu}\">\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createFoodToggle()\">\n      <div class=\"plusBar_listItem plusBar_createFoodButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.food' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createMenuToggle()\">\n      <div class=\"plusBar_listItem plusBar_createMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.menu' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list3Btn\" (click)=\"pasteMenuToggle()\">\n      <div class=\" plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        {{'choose.menu' | translate}}\n      </div>\n    </div>\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0431\u043B\u044E\u0434\u043E -->\n  <div *ngIf=\"createFood\">\n    <form class=\"food_form\" >\n      <div class=\"food_inputFoodName\">{{'meals.name' | translate}}</div>\n      <input class=\"food_inputFood\" required [(ngModel)]=\"model.name\"  #name>\n\n      <div class=\"food_inputFoodNameNutritions\">{{'calories' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.calories\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'protein' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.protein\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'fat' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.fat\">\n\n      <div class=\"food_inputFoodNameNutritions\">{{'carbohydrates' | translate}}</div>\n      <input class=\"food_inputFoodNutritions\" type=\"number\" min=\"0\" required [(ngModel)]=\"model.carbohydrates\">\n\n      <div class=\"food_inputFoodNameNutritions food_inputButtonName \">{{'done' | translate}}</div>\n      <button type=\"submit\" [ngClass]=\"{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\" (click)=\"onSubmit(name)\"></button>\n    </form>\n    <div class=\"list foodListMove\" >\n      <div class=\"listItemName\">{{'added.meals' | translate}}</div>\n      <div *ngFor=\"#item of customFood\"  class=\"listItemContainer\"  (fmSwipeDeleteSide)=\"removeFood(item)\">\n        <div class=\"listItem\">{{item.name[language]}} </div>\n      </div>\n    </div>\n  </div>\n\n  <!-- \u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043D\u043E\u0432\u043E\u0435 \u043C\u0435\u043D\u044E -->\n  <div *ngIf=\"createMenu\">\n\n    <form class=\"create_form\" (ngSubmit)=\"onSubmitMenu()\">\n\n      <div class=\"food_inputFoodName\">{{'meals.name' | translate}}</div>\n      <input class=\"food_inputFood\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" #menuName (input)=\"searchMenu(menuName.value)\">\n      <label for=\"foodName\"></label>\n      <input class=\"create_inputFood\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"modelMenu.name\" #name (input)=\"pickFoodMenuInput(name.value)\">\n\n      <label for=\"foodWeight\"></label>\n      <input class=\"create_inputWeight\"type=\"number\" [min]=\"1\" [placeholder]=\"('weight'|translate) + '...'\"  required [(ngModel)]=\"modelMenu.weight\" #weight>\n\n      <button #subBtn type=\"submit\" [ngClass]=\"{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!correctFood || !weight.value || !menuName.value\"></button>\n      <div *ngIf=\"name.value && !correctFood\" class=\"create_serchContainer\">\n        <div class=\"create_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n          {{item?.name[language]}}\n        </div>\n      </div>\n    </form>\n    <div class=\"list createListMove\">\n      <div *ngFor=\"#item of foodMenuContainer; #i = index\" (fmSwipeDeleteSide)=\"removeFoodMenu(modelMenu.menuName,i)\">\n        <div class=\"create_listItem\">{{item?.name[language]}} </div>\n        <input class=\"create_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n      </div>\n    </div>\n    <div *ngIf=\"createMenu\" class=\"create_listItemName\">\n     {{modelMenu.menuName}}\n    </div>\n</div>\n\n<!-- \u0421\u043F\u0438\u0441\u043E\u043A \u0441\u043E\u0437\u0434\u0430\u043D\u043D\u044B\u0445 \u043C\u0435\u043D\u044E -->\n      <div *ngIf=\"pasteMenu\">\n\n        <div class=\"pasteListMove\">\n          <div class=\"listItemName\">{{'choose.menu' | translate}}</div>\n        </div>\n        <div *ngFor=\"#item of allMenus\">\n        <div class=\"create_listItemName\">\n        {{item['name']}} <span (click)=\"viewMenuDetail(item)\">VIEW</span> <span (click)=\"pasteMenuToDay(item)\">GO</span>\n        </div>\n        </div>\n      </div>\n\n\n</div>\n\n    <!-- ******************** -->\n    <!-- \u0442\u0443\u0442 \u043D\u0430\u0447\u0438\u043D\u0430\u0435\u0442\u0441\u044F \u0441\u043F\u043E\u0440\u0442 -->\n    <!-- ******************** -->\n\n\n<!-- \u041F\u043B\u044E\u0441\u0431\u0430\u0440 \u0432 Food -->\n    <div class=\"container\" *ngIf=\"isOpen && (iAm === 'sport')\" [ngClass]=\"{containerFull: createExercise || createTrain}\">\n  <div *ngIf=\"listOptions\" class=\"plusBar_menuButtons\">\n\n    <div class=\"plusBar_list1Btn\" (click)=\"createExerciseToggle()\">\n      <div class=\"plusBar_listItem plusBar_createExercise \"></div>\n      <div class=\"plusBar_listName\">\n        {{'create.exercise' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list2Btn\" (click)=\"createTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_createTraining\"></div>\n      <div class=\"plusBar_listName \">\n        {{'create.training.plan' | translate}}\n      </div>\n    </div>\n\n    <div class=\"plusBar_list3Btn\" (click)=\"pasteTrainToggle()\">\n      <div class=\"plusBar_listItem plusBar_pasteMenuButton\"></div>\n      <div class=\"plusBar_listName\">\n        paste train\n      </div>\n    </div>\n  </div>\n\n<!-- \u0421\u043E\u0437\u0434\u0430\u0442\u044C \u0443\u043F\u0440\u0430\u0436\u043D\u0435\u043D\u0438\u0435 -->\n  <div *ngIf=\"createExercise\">\n\n    <form class=\"food_form\">\n      <label class=\"sport_inputSportName\" for=\"name\">{{'name' | translate}}:</label>\n      <input class=\"sport_inputSport\" required [(ngModel)]=\"modelSport.name\" #name>\n      <div class=\"food_inputFoodNameNutritions food_inputButtonName \">{{'done' | translate}}</div>\n      <button type=\"submit\" class=\"sportBtnMove\" [ngClass]=\"{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }\" [disabled]=\"!checkForm(name.value)\" (touchend)=\"onSubmitSport(name)\"></button>\n    </form>\n\n    <div class=\"sportListMove\">\n      <div class=\"listItemName\">{{'added.exercise' | translate}}</div>\n      <div  *ngFor=\"#item of customSport\" class=\"listItemContainer\"  (fmSwipeDeleteSide)=\"removeSport(item)\">\n          <div class=\"listItem\">{{item.name.ru}} </div>\n      </div>\n    </div>\n  </div>\n\n<!-- \u0441\u043E\u0437\u0434\u0430\u0442\u044C \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0443 -->\n  <!-- <div *ngIf=\"createTrain\">\n\n    <form class=\"create_form\" (ngSubmit)=\"onSubmitMenu()\">\n\n      <div class=\"food_inputFoodName\">Traine name</div>\n      <input class=\"food_inputFood\" required [placeholder]=\"('menuName'|translate) + '...'\" [(ngModel)]=\"modelMenu.menuName\" #menuName (input)=\"searchMenu(menuName.value)\">\n\n\n      <label for=\"sportName\"></label>\n      <input class=\"createTrain_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n      <button #subBtn type=\"submit\" [ngClass]=\"{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!correctFood || !weight.value || !menuName.value\"></button>\n      <div *ngIf=\"name.value && !correctFood\" class=\"create_serchContainer\">\n        <div class=\"create_searchListItem\" *ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFoodMenu(item);\">\n          {{item?.name[language]}}\n        </div>\n      </div>\n    </form>\n\n\n    <div class=\"list createListMove\">\n      <div *ngFor=\"#item of foodMenuContainer; #i = index\" (fmSwipeDeleteSide)=\"removeSport(item)\">\n        <div class=\"create_listItem\">{{item?.name[language]}} </div>\n        <input class=\"create_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(modelMenu.menuName, i, item.weight)\">\n      </div>\n    </div>\n    <div *ngIf=\"createMenu\" class=\"create_listItemName\">\n     {{modelMenu.menuName}}\n    </div>\n  </div>\n\n\n<!-- \u0432\u044B\u0431\u0440\u0430\u0442\u044C \u0442\u0440\u0435\u043D\u0438\u0440\u043E\u0432\u043A\u0443 -->\n  <div *ngIf=\"pasteTrain\">\n    paste train\n  </div> -->\n</div>\n    "
+                    }), 
+                    __metadata('design:paramtypes', [food_service_1.FoodService, sport_service_1.SportService, translate_service_3.TranslateService, user_service_3.UserService, calendar_service_1.CalendarService])
+                ], PlusComponent);
+                return PlusComponent;
+            }());
+            exports_13("PlusComponent", PlusComponent);
         }
     }
 });
 System.register("components/food-page/food.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "services/food/food.service", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "shared/directives/swipe-delete-side/swipe-delete-side.directive"], function(exports_14, context_14) {
     "use strict";
     var __moduleName = context_14 && context_14.id;
-    var core_13, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_1, user_service_4, swipe_delete_side_directive_2;
+    var core_13, translate_service_4, progress_bar_component_1, plus_bar_component_1, food_service_2, simple_search_pipe_2, calendar_service_2, user_service_4, swipe_delete_side_directive_2;
     var FoodComponent;
     return {
         setters:[
@@ -3169,8 +3364,8 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
             function (simple_search_pipe_2_1) {
                 simple_search_pipe_2 = simple_search_pipe_2_1;
             },
-            function (calendar_service_1_1) {
-                calendar_service_1 = calendar_service_1_1;
+            function (calendar_service_2_1) {
+                calendar_service_2 = calendar_service_2_1;
             },
             function (user_service_4_1) {
                 user_service_4 = user_service_4_1;
@@ -3329,10 +3524,10 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
                         directives: [progress_bar_component_1.ProgressBar, plus_bar_component_1.PlusComponent, swipe_delete_side_directive_2.SwipeDeleteSideDirective],
                         providers: [],
                         pipes: [translate_service_4.TranslatePipe, simple_search_pipe_2.SimpleSearch],
-                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  input {\n    padding-left: 1vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 12vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 12vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 2px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 11vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 2px solid #0C1017;\n    border-radius: 2vw;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    border-bottom: 2px solid #0C1017;\n    box-sizing: border-box;\n    width: 60vw;\n    max-height: 30vh;\n    padding-left: 1vw;\n    padding-top: 1vw;\n    left: 0;\n    top: 10vw;\n    overflow-y: scroll;\n    border-radius: 2vw;\n    z-index: 3;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 58vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n  }\n  .food_list {\n    position: absolute;;\n    top:87vw;\n    padding-left: 5vw;\n    width: 95vw;\n    bottom:1px;\n    overflow-y: scroll;\n    overflow-x: hidden;\n  }\n  .food_listItem {\n    float:left;\n    margin-right: 1vw;\n    margin-top: 2vw;\n    min-height: 12vw;\n    width: 60vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-top: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 2vw;\n    border: none;\n    text-align: center;\n  }\n\n  .food_listButton_on {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listButton_off {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .food_listItemContainer{\n    position:relative;\n    height: 16vw;\n    width:90vw;\n  }\n    "],
+                        styles: ["\n\n  .food_form {\n    position: relative;\n    margin: 5vw;\n    height: 10vw;\n  }\n  input {\n    padding-left: 1vw;\n  }\n  .food_inputFood {\n    position: absolute;\n    height: 12vw;\n    width: 60vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 7px;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputWeight {\n    position: absolute;\n    height: 12vw;\n    width: 16vw;\n    left: 61vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 7px;\n    font-size: 6vw;\n    color: #D0D9D9;\n  }\n  .food_inputButton_off {\n    position: absolute;\n    right: 0;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 2px solid #0C1017;\n    border-radius: 7px;\n  }\n  .food_inputButton_on {\n    position: absolute;\n    right: 0;\n    height: 11vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border: 2px solid #0C1017;\n    border-radius: 7px;\n  }\n  .food_serchContainer {\n    position: absolute;\n    background-color: #0C1017;\n    border-bottom: 2px solid #0C1017;\n    box-sizing: border-box;\n    width: 60vw;\n    max-height: 30vh;\n    padding-left: 1vw;\n    padding-top: 1vw;\n    left: 0;\n    top: 10vw;\n    overflow-y: scroll;\n    border-radius: 7px;\n    z-index: 3;\n  }\n  .food_searchListItem {\n    float:left;\n    margin-bottom: 1vw;\n    min-height: 12vw;\n    width: 58vw;\n    line-height: 12vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 7px;\n  }\n  .food_list {\n    position: relative;\n    margin-top: 3vw;\n    padding-left: 5vw;\n    width: 95vw;\n    bottom:1px;\n    overflow-y: scroll;\n    overflow-x: hidden;\n  }\n  .food_listItem {\n    float:left;\n    margin-right: 1vw;\n    margin-top: 2vw;\n    min-height: 12vw;\n    width: 60vw;\n    box-sizing: border-box;\n    background-color: #3f414a;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 7px;\n    line-height: 12vw;\n\n  }\n  .food_listWeight {\n    float:left;\n    margin-top: 2vw;\n    margin-right: 2vw;\n    height: 12vw;\n    width: 15vw;\n    line-height: 12vw;\n    background-color: #3f414a;\n    box-sizing: border-box;\n    color: #ff9d2d;\n    font-size: 6vw;\n    text-align: center;\n    border-radius: 7px;\n    border: none;\n    text-align: center;\n  }\n\n  .food_listButton_on {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .food_listButton_off {\n    float:left;\n    margin-top: 2vw;\n    height: 12vw;\n    width: 12vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .food_listItemContainer{\n    position:relative;\n    height: 16vw;\n    width:90vw;\n  }\n    "],
                         template: "\n<op-plus [iAm]=\"'food'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n<fm-progress-bar  [name]=\"'calories'|translate\" [mainLine]=\"totalFood.calories.full / userSets.calories.full * 100\" [secondLine]=\"totalFood.calories.maybe / userSets.calories.full * 100\" [minNumber]=\"totalFood.calories.full\" [maxNumber]=\"userSets.calories.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'protein'|translate\" [mainLine]=\"totalFood.protein.full / userSets.protein.full * 100\" [secondLine]=\"totalFood.protein.maybe / userSets.protein.full * 100\" [minNumber]=\"totalFood.protein.full\" [maxNumber]=\"userSets.protein.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'fat'|translate\" [mainLine]=\"totalFood.fat.full / userSets.fat.full * 100\" [secondLine]=\"totalFood.fat.maybe / userSets.fat.full * 100\" [minNumber]=\"totalFood.fat.full\" [maxNumber]=\"userSets.fat.full\"></fm-progress-bar>\n<fm-progress-bar [name]=\"'carbohydrates'|translate\" [mainLine]=\"totalFood.carbohydrates.full / userSets.carbohydrates.full * 100\" [secondLine]=\"totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100\" [minNumber]=\"totalFood.carbohydrates.full\" [maxNumber]=\"userSets.carbohydrates.full\"></fm-progress-bar>\n\n<form class=\"food_form\" (ngSubmit)=\"onSubmit(foodForm)\" #foodForm=\"ngForm\">\n\n  <label for=\"foodName\"></label>\n  <input class=\"food_inputFood\" required [placeholder]=\"('search'|translate)\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickFoodInput(model.name)\">\n\n  <label for=\"foodWeight\"></label>\n  <input type=\"number\" [min]=\"1\" [placeholder]=\"'0 ' +('weight'|translate) \" class=\"food_inputWeight\" required [(ngModel)]=\"model.weight\" ngControl=\"weight\" #weight=\"ngForm\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{food_inputButton_off: subBtn['disabled'], food_inputButton_on: !subBtn['disabled']}\"  [disabled]=\"!foodForm.form.valid || !correctFood\"></button>\n\n  <div *ngIf=\"(name.valid && !correctFood)\" class=\"food_serchContainer\">\n    <div class=\"food_searchListItem\"*ngFor=\"#item of foodContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickFood(item);\">\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"food_list\">\n<div class=\"food_listItemContainer\" *ngFor=\"#item of pickedFoodContainer; #i = index\" (fmSwipeDeleteSide)=\"removeFood(i, item)\" >\n\n    <div class=\"food_listItem\" >\n      {{item?.name[language]}}\n    </div>\n    <input class=\"food_listWeight\" type=\"number\" min=\"0\" required [(ngModel)]=\"item.weight\" (blur)=\"changeFoodWeight(i, item)\">\n\n    <div [ngClass]=\"{food_listButton_off: !item.picked, food_listButton_on: item.picked}\" (touchend)=\"checkBoxToggle(i, item)\"></div>\n  </div>\n\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_1.CalendarService, user_service_4.UserService])
+                    __metadata('design:paramtypes', [food_service_2.FoodService, calendar_service_2.CalendarService, user_service_4.UserService])
                 ], FoodComponent);
                 return FoodComponent;
             }());
@@ -3343,7 +3538,7 @@ System.register("components/food-page/food.component", ['angular2/core', "shared
 System.register("components/sport-page/sport.component", ['angular2/core', "shared/services/translate/translate.service", "shared/components/progress-bar/progress-bar.component", "components/plus-bar/plus-bar.component", "shared/pipes/simple-search/simple-search.pipe", "services/calenadar/calendar.service", "services/user/user.service", "services/sport/sport.service", "shared/directives/swipe-delete-side/swipe-delete-side.directive"], function(exports_15, context_15) {
     "use strict";
     var __moduleName = context_15 && context_15.id;
-    var core_14, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_2, user_service_5, sport_service_2, swipe_delete_side_directive_3;
+    var core_14, translate_service_5, progress_bar_component_2, plus_bar_component_2, simple_search_pipe_3, calendar_service_3, user_service_5, sport_service_2, swipe_delete_side_directive_3;
     var SportComponent;
     return {
         setters:[
@@ -3362,8 +3557,8 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
             function (simple_search_pipe_3_1) {
                 simple_search_pipe_3 = simple_search_pipe_3_1;
             },
-            function (calendar_service_2_1) {
-                calendar_service_2 = calendar_service_2_1;
+            function (calendar_service_3_1) {
+                calendar_service_3 = calendar_service_3_1;
             },
             function (user_service_5_1) {
                 user_service_5 = user_service_5_1;
@@ -3557,10 +3752,10 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         directives: [progress_bar_component_2.ProgressBar, plus_bar_component_2.PlusComponent, swipe_delete_side_directive_3.SwipeDeleteSideDirective],
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_3.SimpleSearch],
-                        styles: ["\n      .sport_form {\n        position: absolute;;\n        left: 5vw;\n        top: 46vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 72vw;\n        color: #D0D9D9;\n        font-size: 6vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 2px solid #0C1017;\n        border-radius: 2vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 2vw;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 2vw;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 70vw;\n        max-height: 30vh;\n        padding: 1vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 2vw;\n        z-index: 3;\n        border-bottom: 2px solid #0C1017;\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        height: 15vw;\n        width: 70vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n      }\n\n      .sport_list {\n        position: absolute;;\n        top:60vw;\n        padding-left: 5vw;\n        width: 95vw;\n        bottom:1px;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        min-height: 15vw;\n        width: 72vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        line-height: 15vw;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        min-height: 15vw;\n        width: 27vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 21vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 2vw;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-left: 8vw;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n    .sport_dropdownButonAnime{\n      transform:rotate(180deg)\n    }\n    .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 2vw;\n      margin-top: 1vh;\n    }\n  .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .sport_listButton_off {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 2vw;\n  }\n  .sport_timer {\n    position: absolute;;\n    margin-left: 5vw;\n    top: 30vw;\n    width: 90vw;\n    height: 12vw;\n    text-align: center;\n    background-color: #3f414a;\n    border: 3px solid #0d0e15;\n    box-sizing: border-box;\n    border-radius: 3vw;\n    line-height: 10vw;\n\n  }\n  .sport_timerButtons {\n    float: left;\n    width: 23vw;\n    height: 10vw;\n    border-radius: 3vw;\n    color: #ff9d2d;\n    /*font-weight: bold;*/\n  }\n  .clockFace {\n    float: left;\n    width: 39vw;\n    height: 11vw;\n    font-size: 6vw;\n    color: #de5200;\n    border-right: 3px solid #0d0e15;\n    border-left: 3px solid #0d0e15;\n  }\n  .clockFace_numbers {\n    float: left;\n    width: 8vw;\n  }\n  .clockFace_hours {\n    /*margin-left: 8vw;*/\n    width: 16vw;\n    text-align: right;\n  }\n  .sport_listItemContainer{\n    position:relative;\n    min-height: 16vw;\n    width:90vw;\n    overflow:hidden;\n  }\n      "],
+                        styles: ["\n      .sport_form {\n        position: absolute;;\n        left: 5vw;\n        top: 46vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 72vw;\n        color: #D0D9D9;\n        font-size: 6vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n        padding-left: 1vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 70vw;\n        max-height: 30vh;\n        padding: 1vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 7px;\n        z-index: 3;\n        border-bottom: 2px solid #0C1017;\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        height: 15vw;\n        width: 70vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n      }\n\n      .sport_list {\n        position: absolute;;\n        top:60vw;\n        padding-left: 5vw;\n        width: 95vw;\n        bottom:1px;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        min-height: 15vw;\n        width: 72vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        line-height: 15vw;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        min-height: 15vw;\n        width: 27vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 21vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-left: 8vw;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n    .sport_dropdownButonAnime{\n      transform:rotate(180deg)\n    }\n    .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 7px;\n      margin-top: 1vh;\n    }\n  .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .sport_listButton_off {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .sport_timer {\n    position: absolute;;\n    margin-left: 5vw;\n    top: 30vw;\n    width: 90vw;\n    height: 12vw;\n    text-align: center;\n    background-color: #3f414a;\n    border: 3px solid #0d0e15;\n    box-sizing: border-box;\n    border-radius: 3vw;\n    line-height: 10vw;\n\n  }\n  .sport_timerButtons {\n    float: left;\n    width: 23vw;\n    height: 10vw;\n    border-radius: 3vw;\n    color: #ff9d2d;\n    /*font-weight: bold;*/\n  }\n  .clockFace {\n    float: left;\n    width: 39vw;\n    height: 11vw;\n    font-size: 6vw;\n    color: #de5200;\n    border-right: 3px solid #0d0e15;\n    border-left: 3px solid #0d0e15;\n  }\n  .clockFace_numbers {\n    float: left;\n    width: 8vw;\n  }\n  .clockFace_hours {\n    /*margin-left: 8vw;*/\n    width: 16vw;\n    text-align: right;\n  }\n  .sport_listItemContainer{\n    position:relative;\n    min-height: 16vw;\n    width:90vw;\n    overflow:hidden;\n  }\n      "],
                         template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n  <div class=\"sport_timerButtons\" (click)=\"stopwatchReset()\">{{'reset'| translate}}</div>\n  <div class=\"clockFace\">\n      <div class=\"clockFace_numbers clockFace_hours\">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}</div>\n  </div>\n  <div *ngIf=\"(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'start'| translate}}</div>\n  <div *ngIf=\"stopwatchBussy\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'stop'| translate}}</div>\n  <div *ngIf=\"(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'resume'| translate}}</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_searchListItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div   *ngFor=\"#item of pickedSportContainer; #i = index\">\n<div class=\"sport_listItemContainer\" (fmSwipeDeleteSide)=\"removeSport(i, item)\">\n<div class=\"sport_listItem\" >\n  {{item?.name[language]}}\n  <div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\" (touchend)=\"openSets(item,i)\"></div>\n</div>\n<div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (touchend)=\"checkBoxToggle(i, item)\"></div>\n</div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div  class=\"sport_listItemContainer\" *ngFor=\"#it of item.sets; #setIndex = index\" (fmSwipeDeleteSide)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >{{'set'| translate}} {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'kg'| translate}}\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'resp'| translate}}\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">{{'+set'| translate}}</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_2.CalendarService, user_service_5.UserService])
+                    __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_3.CalendarService, user_service_5.UserService])
                 ], SportComponent);
                 return SportComponent;
             }());
@@ -3623,15 +3818,15 @@ System.register("components/rest-page/rest.component", ['angular2/core'], functi
 System.register("components/calendar-page/calendar.component", ['angular2/core', "services/calenadar/calendar.service"], function(exports_17, context_17) {
     "use strict";
     var __moduleName = context_17 && context_17.id;
-    var core_16, calendar_service_3;
+    var core_16, calendar_service_4;
     var CalendarComponent;
     return {
         setters:[
             function (core_16_1) {
                 core_16 = core_16_1;
             },
-            function (calendar_service_3_1) {
-                calendar_service_3 = calendar_service_3_1;
+            function (calendar_service_4_1) {
+                calendar_service_4 = calendar_service_4_1;
             }],
         execute: function() {
             CalendarComponent = (function () {
@@ -3697,7 +3892,7 @@ System.register("components/calendar-page/calendar.component", ['angular2/core',
                         styles: ["\n.calendar{\n  position:absolute;\n  top:20vw;\n  left:13vw;\n  width:74vw;\n  background:#3f414a;\n  text-align: center;\n  color: #ff9d2d;\n  overflow:hidden;\n  line-height: 10vw;\n}\n.year{\n  height:10vw;\n  width:100%;\n  overflow:hidden;\n  font-size: 7vw;\n\n}\n.month{\n  height:10vw;\n  width: 100%;\n  font-size: 6vw;\n}\n\n.date {\n  float: left;\n  width: 10vw;\n  height: 10vw;\n  border: 0.5vw solid #ff9d2d;\n}\n.currentDate {\n  background-color: #0d0e15;\n  color: #de5200;\n}\n.toggleLeft {\n  float: left;\n  width: 25vw;\n}\n.toggleRight {\n  float: left;\n  width: 20vw;\n}\n.calendar_buttons {\n  position: absolute;\n  top: 117vw;\n  left: 13vw;\n  width: 74vw;\n  height: 50vw;\n  font-size: 5vw;\n  color: #ff9d2d;\n  float: left;\n}\n.calendar_todayButton {\n  position: relative;\n  float: left;\n  height: 12vw;\n  width: 50vw;\n  margin-bottom: 3vw;\n}\n.calendar_todayIcon {\n  position: relative;\n  height: 12vw;\n  width: 12vw;\n  float: left;\n  background: url('./src/img/today.png') no-repeat center center;\n  background-size: cover;\n  box-sizing: border-box;\n}\n.calendar_todayText {\n  position: relative;\n  width: 20vw;\n  float: left;\n  line-height: 12vw;\n  height: 12vw;\n  left: 3vw;\n}\n      "],
                         template: "\n  <div class=\"container\">\n  <div class=\"calendar\">\n    <div class=\"year\">\n\n      <div class=\"toggleLeft\" (click)=\"switchViewYearMinus()\">\n        <</div>\n          <div class=\"toggleLeft\">\n            {{clMonth[0]['date'].getFullYear()}}\n          </div>\n          <div class=\"toggleRight\" (click)=\"switchViewYearPlus()\">></div>\n      </div>\n\n      <div class=\"month\" [ngSwitch]=\"clMonth[0]['date'].getMonth()\">\n        <div class=\"toggleLeft\" (click)=\"switchViewMonthMinus()\">\n          <</div>\n\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"0\"> January </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"1\"> February </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"2\"> March </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"3\"> April </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"4\"> May </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"5\"> June </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"6\"> July </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"7\"> August </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"8\"> September </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"9\"> October </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"10\"> November </div>\n            <div class=\"toggleLeft\" *ngSwitchWhen=\"11\"> December </div>\n\n            <div class=\"toggleRight\" (click)=\"switchViewMonthPlus()\">></div>\n\n        </div>\n\n        <div class=\"date\">Sun</div>\n        <div class=\"date\">Mon</div>\n        <div class=\"date\">Tue</div>\n        <div class=\"date\">Wed</div>\n        <div class=\"date\">Thu</div>\n        <div class=\"date\">Fri</div>\n        <div class=\"date\">Sat</div>\n\n        <div class=\"date\" *ngFor=\"#item of pushDays\"></div>\n        <div class=\"date\" [ngClass]=\"{currentDate: marker(item)}\" *ngFor=\"#item of clMonth\" (click)=\"pickDate(item, marker);\">{{item['date'].getDate()}}</div>\n        <div class=\"date\" *ngFor=\"#item of pushDaysEnd\"></div>\n      </div>\n\n      <div class=\"calendar_buttons\">\n        <div class=\"calendar_todayButton\" (touchend)=\"goToday()\">\n          <div class=\"calendar_todayIcon\"></div>\n          <div class=\"calendar_todayText\" >Today</div>\n        </div>\n      </div>\n\n    </div>\n\n"
                     }), 
-                    __metadata('design:paramtypes', [calendar_service_3.CalendarService])
+                    __metadata('design:paramtypes', [calendar_service_4.CalendarService])
                 ], CalendarComponent);
                 return CalendarComponent;
             }());
@@ -3766,8 +3961,8 @@ System.register("components/user-calculator/user-calculator.component", ['angula
                         directives: [],
                         providers: [],
                         pipes: [translate_service_6.TranslatePipe],
-                        styles: ["\n\n  .calculator {\n    position: absolute;\n    top: 12vw;\n    left: 0vw;\n    width: 90vw;\n    height: 150vw;\n    margin: 5vw;\n    overflow-x: hidden;\n    overflow-y: scroll;\n\n  }\n  .calculator_buttons {\n    position: relative;\n    width: 90vw;\n    height: 65vw;\n    line-height: 10vw;\n  }\n  .calculator_sexIcon {\n    position: relative;\n    height: 14vw;\n    width: 14vw;\n    float: left;\n    background: url('./src/img/maleOn.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    margin-bottom: 4vw;\n    margin-right: 2vw;\n  }\n  .calculator_sexMale_on {\n    background: url('./src/img/maleOn.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexMale_off {\n    background: url('./src/img/maleOff.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexFemale_on {\n    background: url('./src/img/femaleOn.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexFemale_off {\n    background: url('./src/img/femaleOff.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_nameInput {\n    position: relative;\n    width: 46vw;\n    float: left;\n    left: 11vw;\n    margin-bottom: 2vw;\n    color: #ff9d2d;\n    font-size: 7vw;\n  }\n  .calculator_input {\n    position: relative;\n    float: left;\n    height: 11vw;\n    width: 30vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 2vw;\n    font-size: 6vw;\n    color: #D0D9D9;\n    margin-bottom: 4vw;\n    text-align: center;\n  }\n  .calculator_sex {\n    line-height: 14vw;\n  }\n  .calculator_headerBig {\n    font-size: 6vw;\n    width: 90vw;\n    text-align: center;\n    margin-top: 3vw;\n    font-weight: bolder;\n    color: #ff9d2d;\n  }\n  .calculator_headerSmall {\n    font-size: 6vw;\n    width: 90vw;\n    text-align: center;\n    margin-top: 3vw;\n    margin-bottom: 1vw;\n    color: #ff9d2d;\n  }\n.toggleBar {\n  margin-top: 2vw;\n  width: 90vw;\n  height: 6vw;\n  background: #0C1017;\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n}\n.activityToggle {\n  position: relative;\n  float: left;\n  height: 4.5vw;\n  width: 12.7vw;\n  margin-right: 1vw;\n  margin-left: 1vw;\n  border-radius: 1vw;\n}\n.activityToggle_off {\n  background: #3f414a;\n}\n.activityToggle_on {\n  background: #ff9d2d;\n}\n.pointToggle {\n  position: relative;\n  float: left;\n  height: 4.5vw;\n  width: 20vw;\n  margin-right: 1vw;\n  margin-left: 1vw;\n  border-radius: 1vw;\n}\n.pointToggle_off {\n  background: #3f414a;\n}\n.pointToggle_on {\n  background: #ff9d2d;\n}\n.calculator_result {\n  position: relative;\n  height: 13vw;\n  line-height: 11vw;\n  width: 40vw;\n  margin-left: 22.5vw;\n  margin-top: 7vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 2vw;\n  font-size: 6vw;\n  font-weight: bold;\n  color: #ff9d2d;\n  margin-bottom: 4vw;\n  text-align: center;\n\n}\n\n    "],
-                        template: "\n<div class=\"calculator\">\n  <div class=\"calculator_buttons\">\n\n    <div class=\"calculator_nameInput calculator_sex \">{{'sex'|translate}}:</div>\n    <div class=\"calculator_sexIcon\" [ngClass]=\"{calculator_sexMale_on: model.sex === 'male', calculator_sexMale_off: model.sex === 'female'}\" (click)=\"changeSex()\"></div>\n    <div class=\"calculator_sexIcon\"  [ngClass]=\"{calculator_sexFemale_on: model.sex === 'female', calculator_sexFemale_off: model.sex === 'male'}\" (click)=\"changeSex()\"></div>\n\n    <div class=\"calculator_nameInput\">{{'age'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'years'|translate}}\" [(ngModel)]=\"model.age\">\n\n\n    <div class=\"calculator_nameInput\">{{'height'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'cm'|translate}}\" [(ngModel)]=\"model.height\">\n\n    <div class=\"calculator_nameInput\">{{'mass'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'kg'|translate}}\" [(ngModel)]=\"model.weight\">\n\n    </div>\n\n    <div class=\"calculator_headerBig\">\n        {{'activity.level'|translate}}:\n    </div>\n    <div class=\"calculator_headerSmall\" [ngSwitch]=\"model.activity.lvl\">\n    <div *ngSwitchWhen=\"1\">\u043C\u0438\u043D\u0438\u043C\u0443\u043C \u0438\u043B\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435</div>\n  <div *ngSwitchWhen=\"2\">3 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"3\">5 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"4\">\u0438\u043D\u0442\u0435\u043D\u0441\u0438\u0432\u043D\u043E 5 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"5\">\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C</div>\n  <div *ngSwitchWhen=\"6\">\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C \u0438\u043D\u0442\u0435\u043D\u0441\u0438\u0432\u043D\u043E \u0438\u043B\u0438 2 \u0440. \u0432 \u0434\u0435\u043D\u044C</div>\n    </div>\n\n    <div class=\"toggleBar\">\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '1'), activityToggle_on:model.activity.lvl == '1'}\" (click)=\"changeActivity(1)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '2'), activityToggle_on:model.activity.lvl == '2'}\" (click)=\"changeActivity(2)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '3'), activityToggle_on:model.activity.lvl == '3'}\" (click)=\"changeActivity(3)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '4'), activityToggle_on:model.activity.lvl == '4'}\" (click)=\"changeActivity(4)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '5'), activityToggle_on:model.activity.lvl == '5'}\" (click)=\"changeActivity(5)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '6'), activityToggle_on:model.activity.lvl == '6'}\" (click)=\"changeActivity(6)\"></div>\n    </div>\n\n\n    <div class=\"calculator_headerBig\">\n        {{'point'|translate}}:\n    </div>\n    <div class=\"calculator_headerSmall\" [ngSwitch]=\"model.goal.lvl\">\n    <div *ngSwitchWhen=\"8\">\u043E\u0447\u0435\u043D\u044C \u0445\u0443\u0434\u0435\u0442\u044C</div>\n  <div *ngSwitchWhen=\"9\">\u0445\u0443\u0434\u0435\u0442\u044C</div>\n  <div *ngSwitchWhen=\"10\">\u0434\u0435\u0440\u0436\u0430\u0442\u044C</div>\n  <div *ngSwitchWhen=\"11\">\u043D\u0430\u0431\u043E\u0440</div>\n    </div>\n    <div class=\"toggleBar\">\n      <div class=\"pointToggle\"  [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '8'), pointToggle_on:model.goal.lvl == '8'}\" (click)=\"changeGoal(8)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '9'), pointToggle_on:model.goal.lvl == '9'}\"  (click)=\"changeGoal(9)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '10'), pointToggle_on:model.goal.lvl == '10'}\"  (click)=\"changeGoal(10)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '11'), pointToggle_on:model.goal.lvl == '11'}\"  (click)=\"changeGoal(11)\"></div>\n    </div>\n\n  <div (click)=\"calculate()\" class=\"calculator_result\">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>\n\n  </div>\n\n\n" }), 
+                        styles: ["\n\n  .calculator {\n    position: absolute;\n    top: 12vw;\n    left: 0vw;\n    width: 90vw;\n    height: 150vw;\n    margin: 5vw;\n    overflow-x: hidden;\n    overflow-y: scroll;\n\n  }\n  .calculator_buttons {\n    position: relative;\n    width: 90vw;\n    height: 65vw;\n    line-height: 10vw;\n  }\n  .calculator_sexIcon {\n    position: relative;\n    height: 14vw;\n    width: 14vw;\n    float: left;\n    background: url('./src/img/maleOn.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    margin-bottom: 4vw;\n    margin-right: 2vw;\n  }\n  .calculator_sexMale_on {\n    background: url('./src/img/maleOn.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexMale_off {\n    background: url('./src/img/maleOff.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexFemale_on {\n    background: url('./src/img/femaleOn.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_sexFemale_off {\n    background: url('./src/img/femaleOff.png') no-repeat center center;\n    background-size: cover;\n  }\n  .calculator_nameInput {\n    position: relative;\n    width: 46vw;\n    float: left;\n    left: 11vw;\n    margin-bottom: 2vw;\n    color: #ff9d2d;\n    font-size: 7vw;\n  }\n  .calculator_input {\n    position: relative;\n    float: left;\n    height: 11vw;\n    width: 30vw;\n    background-color: rgba(49, 51, 61, 0.3);\n    box-sizing: border-box;\n    border: 2px solid #0C1017;\n    border-radius: 7px;\n    font-size: 6vw;\n    color: #D0D9D9;\n    margin-bottom: 4vw;\n    text-align: center;\n  }\n  .calculator_sex {\n    line-height: 14vw;\n  }\n  .calculator_headerBig {\n    font-size: 6vw;\n    width: 90vw;\n    text-align: center;\n    margin-top: 3vw;\n    font-weight: bolder;\n    color: #ff9d2d;\n  }\n  .calculator_headerSmall {\n    font-size: 6vw;\n    width: 90vw;\n    text-align: center;\n    margin-top: 3vw;\n    margin-bottom: 1vw;\n    color: #ff9d2d;\n  }\n.toggleBar {\n  margin-top: 2vw;\n  width: 90vw;\n  height: 6.2vw;\n  background: #0C1017;\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 7px;\n}\n.activityToggle {\n  position: relative;\n  float: left;\n  height: 4.5vw;\n  width: 12.7vw;\n  margin-right: 1vw;\n  margin-left: 1vw;\n  border-radius: 1vw;\n}\n.activityToggle_off {\n  background: #3f414a;\n}\n.activityToggle_on {\n  background: #ff9d2d;\n}\n.pointToggle {\n  position: relative;\n  float: left;\n  height: 4.5vw;\n  width: 20vw;\n  margin-right: 1vw;\n  margin-left: 1vw;\n  border-radius: 1vw;\n}\n.pointToggle_off {\n  background: #3f414a;\n}\n.pointToggle_on {\n  background: #ff9d2d;\n}\n.calculator_result {\n  position: relative;\n  height: 13vw;\n  line-height: 11vw;\n  width: 40vw;\n  margin-left: 15vw;\n  margin-top: 7vw;\n  background-color: rgba(49, 51, 61, 0.3);\n  box-sizing: border-box;\n  border: 3px solid #0C1017;\n  border-radius: 7px;\n  font-size: 6vw;\n  font-weight: bold;\n  color: #ff9d2d;\n  margin-bottom: 4vw;\n  text-align: center;\n}\n.calculator_resultApply {\n  position: absolute;\n  top: 129vw;\n  left: 58vw;\n  height: 13vw;\n  line-height: 11vw;\n  width: 12vw;\n  background-size: cover;\n  box-sizing: border-box;\n  color: #ff9d2d;\n  border: 3px solid #0C1017;\n  border-radius: 7px;\n  text-align: center;\n  font-weight: bold;\n}\n    "],
+                        template: "\n<div class=\"calculator\">\n  <div class=\"calculator_buttons\">\n\n    <div class=\"calculator_nameInput calculator_sex \">{{'sex'|translate}}:</div>\n    <div class=\"calculator_sexIcon\" [ngClass]=\"{calculator_sexMale_on: model.sex === 'male', calculator_sexMale_off: model.sex === 'female'}\" (click)=\"changeSex()\"></div>\n    <div class=\"calculator_sexIcon\"  [ngClass]=\"{calculator_sexFemale_on: model.sex === 'female', calculator_sexFemale_off: model.sex === 'male'}\" (click)=\"changeSex()\"></div>\n\n    <div class=\"calculator_nameInput\">{{'age'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'years'|translate}}\" [(ngModel)]=\"model.age\">\n\n\n    <div class=\"calculator_nameInput\">{{'height'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'cm'|translate}}\" [(ngModel)]=\"model.height\">\n\n    <div class=\"calculator_nameInput\">{{'mass'|translate}}:</div>\n    <input class=\"calculator_input\" type=\"number\" min=\"0\" placeholder=\"{{'kg'|translate}}\" [(ngModel)]=\"model.weight\">\n\n    </div>\n\n    <div class=\"calculator_headerBig\">\n        {{'activity.level'|translate}}:\n    </div>\n    <div class=\"calculator_headerSmall\" [ngSwitch]=\"model.activity.lvl\">\n    <div *ngSwitchWhen=\"1\">\u043C\u0438\u043D\u0438\u043C\u0443\u043C \u0438\u043B\u0438 \u043E\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0438\u0435</div>\n  <div *ngSwitchWhen=\"2\">3 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"3\">5 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"4\">\u0438\u043D\u0442\u0435\u043D\u0441\u0438\u0432\u043D\u043E 5 \u0440. \u0432 \u043D\u0435\u0434\u0435\u043B\u044E</div>\n  <div *ngSwitchWhen=\"5\">\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C</div>\n  <div *ngSwitchWhen=\"6\">\u043A\u0430\u0436\u0434\u044B\u0439 \u0434\u0435\u043D\u044C \u0438\u043D\u0442\u0435\u043D\u0441\u0438\u0432\u043D\u043E \u0438\u043B\u0438 2 \u0440. \u0432 \u0434\u0435\u043D\u044C</div>\n    </div>\n\n    <div class=\"toggleBar\">\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '1'), activityToggle_on:model.activity.lvl == '1'}\" (click)=\"changeActivity(1)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '2'), activityToggle_on:model.activity.lvl == '2'}\" (click)=\"changeActivity(2)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '3'), activityToggle_on:model.activity.lvl == '3'}\" (click)=\"changeActivity(3)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '4'), activityToggle_on:model.activity.lvl == '4'}\" (click)=\"changeActivity(4)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '5'), activityToggle_on:model.activity.lvl == '5'}\" (click)=\"changeActivity(5)\"></div>\n      <div class=\"activityToggle\" [ngClass]=\"{ activityToggle_off:!(model.activity.lvl == '6'), activityToggle_on:model.activity.lvl == '6'}\" (click)=\"changeActivity(6)\"></div>\n    </div>\n\n\n    <div class=\"calculator_headerBig\">\n        {{'point'|translate}}:\n    </div>\n    <div class=\"calculator_headerSmall\" [ngSwitch]=\"model.goal.lvl\">\n    <div *ngSwitchWhen=\"8\">\u043E\u0447\u0435\u043D\u044C \u0445\u0443\u0434\u0435\u0442\u044C</div>\n  <div *ngSwitchWhen=\"9\">\u0445\u0443\u0434\u0435\u0442\u044C</div>\n  <div *ngSwitchWhen=\"10\">\u0434\u0435\u0440\u0436\u0430\u0442\u044C</div>\n  <div *ngSwitchWhen=\"11\">\u043D\u0430\u0431\u043E\u0440</div>\n    </div>\n    <div class=\"toggleBar\">\n      <div class=\"pointToggle\"  [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '8'), pointToggle_on:model.goal.lvl == '8'}\" (click)=\"changeGoal(8)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '9'), pointToggle_on:model.goal.lvl == '9'}\"  (click)=\"changeGoal(9)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '10'), pointToggle_on:model.goal.lvl == '10'}\"  (click)=\"changeGoal(10)\"></div>\n      <div class=\"pointToggle\" [ngClass]=\"{ pointToggle_off:!(model.goal.lvl == '11'), pointToggle_on:model.goal.lvl == '11'}\"  (click)=\"changeGoal(11)\"></div>\n    </div>\n\n  <div class=\"calculator_result\">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>\n    <div (click)=\"calculate()\" class=\"calculator_resultApply\">OK</div>\n  </div>\n\n\n" }), 
                     __metadata('design:paramtypes', [user_service_6.UserService])
                 ], UserCalculatorComponent);
                 return UserCalculatorComponent;
@@ -3821,7 +4016,7 @@ System.register("components/user-details/user-details.component", ['angular2/cor
                         directives: [router_1.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_7.TranslatePipe],
-                        styles: ["\n\n    .container {\n      position: relative;;\n      margin: 5vw;\n      margin-left: 10vw;\n      height: 100vw;\n      width: 80vw;\n    }\n\n    .user_firstHeader {\n      font-size: 6vw;\n      width: 80vw;\n      text-align: center;\n      margin-bottom: 5vw;\n      font-weight: bolder;\n      color: #ff9d2d;\n    }\n    .user_nameInput {\n      position: relative;\n      font-size: 6vw;\n      width: 52vw;\n      float: left;\n      left: 8vw;\n      margin-bottom: 2vw;\n      color: #ff9d2d;\n      line-height: 10vw;\n    }\n    .user_input {\n      position: relative;\n      float: left;\n      height: 11vw;\n      width: 20vw;\n      background-color: rgba(49, 51, 61, 0.3);\n      box-sizing: border-box;\n      border: 2px solid #0C1017;\n      border-radius: 2vw;\n      line-height: 10vw;\n      font-size: 6vw;\n      color: #D0D9D9;\n      margin-bottom: 2vw;\n      text-align: center;\n    }\n    .user_secondHeader {\n      position: absolute;\n      top: 64vw;\n      font-size: 5vw;\n      min-height: 8vw;\n      line-height: 8vw;\n      width: 80vw;\n      text-align: center;\n      font-weight: bolder;\n      color: #ff9d2d;\n      border: 2px solid #ff9d2d;\n      border-radius: 3vw;\n    }\n    .user_lang {\n      position: absolute;\n      top: 83vw;\n      width: 60vw;\n      font-size: 5vw;\n      color: #ff9d2d;\n      float: left;\n    }\n    .user_langName {\n      position: relative;\n      float: left;\n      height: 10vw;\n      width: 50vw;\n      margin: 2vw;\n    }\n    .user_langEnIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/en.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langRuIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/ru.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langText {\n      position: relative;\n      width: 20vw;\n      float: left;\n      line-height: 10vw;\n      left: 6vw;\n    }\n\n    "],
+                        styles: ["\n\n    .container {\n      position: relative;;\n      margin: 5vw;\n      margin-left: 10vw;\n      height: 100vw;\n      width: 80vw;\n    }\n\n    .user_firstHeader {\n      font-size: 6vw;\n      width: 80vw;\n      text-align: center;\n      margin-bottom: 5vw;\n      font-weight: bolder;\n      color: #ff9d2d;\n    }\n    .user_nameInput {\n      position: relative;\n      font-size: 6vw;\n      width: 52vw;\n      float: left;\n      left: 8vw;\n      margin-bottom: 2vw;\n      color: #ff9d2d;\n      line-height: 10vw;\n    }\n    .user_input {\n      position: relative;\n      float: left;\n      height: 11vw;\n      width: 20vw;\n      background-color: rgba(49, 51, 61, 0.3);\n      box-sizing: border-box;\n      border: 2px solid #0C1017;\n      border-radius: 7px;\n      line-height: 10vw;\n      font-size: 6vw;\n      color: #D0D9D9;\n      margin-bottom: 2vw;\n      text-align: center;\n    }\n    .user_secondHeader {\n      position: absolute;\n      top: 66vw;\n      font-size: 5vw;\n      min-height: 8vw;\n      line-height: 8vw;\n      width: 80vw;\n      text-align: center;\n      font-weight: bolder;\n      color: #ff9d2d;\n      border: 2px solid #ff9d2d;\n      border-radius: 3vw;\n    }\n    .user_lang {\n      position: absolute;\n      top: 83vw;\n      width: 60vw;\n      font-size: 5vw;\n      color: #ff9d2d;\n      float: left;\n    }\n    .user_langName {\n      position: relative;\n      float: left;\n      height: 10vw;\n      width: 50vw;\n      margin: 2vw;\n    }\n    .user_langEnIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/en.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langRuIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/ru.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langText {\n      position: relative;\n      width: 20vw;\n      float: left;\n      line-height: 10vw;\n      left: 6vw;\n    }\n\n    "],
                         template: "\n  <div class=\"container\">\n  <div class=\"user_firstHeader\">\n      {{'daily.rate'|translate}}\n  </div>\n  <div class=\"user_nameInput\">\n    {{'calories'|translate}}\n  </div>\n  <input #calories class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.calories['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'protein'|translate}}\n  </div>\n  <input #protein class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.protein['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'fat'|translate}}\n  </div>\n  <input #fat class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.fat['full']\" (blur)=\"changeSets()\">\n  <div class=\"user_nameInput\">\n    {{'carbohydrates'|translate}}\n  </div>\n  <input #carbohydrates class=\"user_input\" type=\"number\" min=\"0\" [(ngModel)]=\"sets?.foodSets?.carbohydrates['full']\" (blur)=\"changeSets()\">\n\n\n  <a [routerLink]=\"['UserCalculator']\">\n  <div class=\"user_secondHeader\">\n      {{'determine.daily.rate'|translate}}\n  </div>\n</a>\n\n  <div class=\"user_lang\">\n    <div class=\"user_nameInput\">\n      {{'language'|translate}}\n    </div>\n    <div (click)=\"changeLang('en')\" class=\"user_langName\">\n      <div class=\"user_langEnIcon\"></div>\n      <div class=\"user_langText\">English</div>\n    </div>\n    <div (click)=\"changeLang('ru')\" class=\"user_langName\">\n      <div class=\"user_langRuIcon\"></div>\n      <div class=\"user_langText\">Russian</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [user_service_7.UserService, translate_service_7.TranslateService])
@@ -3904,8 +4099,8 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                         directives: [router_3.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [],
-                        styles: ["\n  .startPage_navigator {\n    position: absolute;\n    width: 30vw;\n    height: 100vh;\n    left: 35vw;\n    overflow: hidden;\n  }\n  .startPage_Buttons {\n    position: relative;\n    width: 27vw;\n    height: 27vw;\n    margin-bottom: 9vw;\n    margin-left: 1vw;\n    float: left;\n    top: 8vw;\n\n  }\n  .startPage_food {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_sport {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_rest {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_user {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n      "],
-                        template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </a>\n      <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </a>\n      <a [routerLink]=\"['User']\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </a>\n    </nav>\n    "
+                        styles: ["\n  .startPage_navigator {\n    position: absolute;\n  width: 30vw;\n  display: flex;\n  top: 0;\n  justify-content: center;\n  flex-direction: column;\n  height: 100vh;\n  left: 35vw;\n  overflow: hidden;\n  }\n  .startPage_Buttons {\n    position: relative;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n  margin-top: 5vw;\n  margin-bottom: 5vw;\n  }\n  .startPage_food {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_sport {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_rest {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_user {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n      "],
+                        template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </a>\n      <!-- <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </a> -->\n      <a [routerLink]=\"['User']\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </a>\n    </nav>\n    "
                     }), 
                     __metadata('design:paramtypes', [])
                 ], StartComponent);
@@ -4005,8 +4200,8 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
                         directives: [router_4.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_9.TranslatePipe],
-                        styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: flex-start;\n      align-items: center;\n      height: 100vh;\n      width: 250px;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n      left:-250px;\n\n  }\n  .sideBarAnime{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(250px,0,0);\n    -webkit-transform: translate3d(250px,0,0);\n  }\n  .sideBarAnimeBack{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(-250px,0,0);\n    -webkit-transform: translate3d(-250px,0,0);\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:0;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 999;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: black;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n\n  }\n\n  p {\n    position: absolute;;\n    margin-top: 23vw;\n    left: 10vw;\n    color: #ff9d2d;\n    font-size: 6vw;\n    width: 50vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 5vw;\n    margin-bottom: 7vw;\n\n\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n.sideBar_close{\n  position:absolute;\n  left:0;\n  top:0;\n  width:100vw;\n  height:100vh;\n  z-index:998;\n}\n  "],
-                        template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [ngClass]=\"{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}\" [style.transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" [style.-webkit-transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\">\n  <a class=\"sidebar_foodButton sidebar_button\" (touchend)=\"toggle('Food')\">\n    <p>{{'food' | translate}}</p>\n  </a>\n  <a class=\"sidebar_sportButton sidebar_button\" (touchend)=\"toggle('Sport')\">\n    <p>{{'sport' | translate}}</p>\n  </a>\n  <a class=\"sidebar_restButton sidebar_button\" (touchend)=\"toggle('Rest')\">\n    <p>{{'rest' | translate}}</p>\n  </a>\n  <a class=\"sidebar_calendarButton sidebar_button\" (touchend)=\"toggle('Calendar')\">\n    <p>{{'calendar' | translate}}</p>\n  </a>\n  <a class=\"sidebar_userButton sidebar_button\" (touchend)=\"toggle('User')\">\n    <p>{{'settings' | translate}}</p>\n  </a>\n</div>\n<div class=\"sideBarSwipePlace\" #swipePlace [style.opacity]=\"shadowOpacity\" [ngClass]=\"{sideBarSwipePlaceBig: isOpen}\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\"></div>\n\n<div *ngIf=\"isOpen\" class=\"sideBar_close\" (click)=\"toggle()\"></div>\n  "
+                        styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: center;\n      align-items: center;\n      height: 100vh;\n      width: 250px;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n      left:-250px;\n\n  }\n  .sideBarAnime{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(250px,0,0);\n    -webkit-transform: translate3d(250px,0,0);\n  }\n  .sideBarAnimeBack{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(-250px,0,0);\n    -webkit-transform: translate3d(-250px,0,0);\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:1vw;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 999;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: black;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n\n  }\n\n  p {\n    position: absolute;\n    margin-top: 23vw;\n    left: 9%;\n    right: 9%;\n    color: #ff9d2d;\n    font-size: 6vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 7vw;\n    margin-bottom: 11vw;\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n.sideBar_close{\n  position:absolute;\n  left:0;\n  top:0;\n  width:100vw;\n  height:100vh;\n  z-index:998;\n}\n  "],
+                        template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [ngClass]=\"{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}\" [style.transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" [style.-webkit-transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\">\n  <a class=\"sidebar_foodButton sidebar_button\" (touchend)=\"toggle('Food')\">\n    <p>{{'food' | translate}}</p>\n  </a>\n  <a class=\"sidebar_sportButton sidebar_button\" (touchend)=\"toggle('Sport')\">\n    <p>{{'sport' | translate}}</p>\n  </a>\n  <!-- <a class=\"sidebar_restButton sidebar_button\" (touchend)=\"toggle('Rest')\">\n    <p>{{'rest' | translate}}</p>\n  </a> -->\n  <a class=\"sidebar_calendarButton sidebar_button\" (touchend)=\"toggle('Calendar')\">\n    <p>{{'calendar' | translate}}</p>\n  </a>\n  <a class=\"sidebar_userButton sidebar_button\" (touchend)=\"toggle('User')\">\n    <p>{{'settings' | translate}}</p>\n  </a>\n</div>\n<div class=\"sideBarSwipePlace\" #swipePlace [style.opacity]=\"shadowOpacity\" [ngClass]=\"{sideBarSwipePlaceBig: isOpen}\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\"></div>\n\n<div *ngIf=\"isOpen\" class=\"sideBar_close\" (click)=\"toggle()\"></div>\n  "
                     }), 
                     __metadata('design:paramtypes', [router_4.Router])
                 ], SideBar);
@@ -4135,7 +4330,7 @@ System.register("services/admob/admob.service", ['angular2/core'], function(expo
 System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service", "services/admob/admob.service"], function(exports_25, context_25) {
     "use strict";
     var __moduleName = context_25 && context_25.id;
-    var core_24, router_5, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_10, food_service_3, sport_service_3, calendar_service_4, refresh_date_service_1, storage_service_5, user_service_8, admob_service_1;
+    var core_24, router_5, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_10, food_service_3, sport_service_3, calendar_service_5, refresh_date_service_1, storage_service_5, user_service_8, admob_service_1;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
@@ -4175,8 +4370,8 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
             function (sport_service_3_1) {
                 sport_service_3 = sport_service_3_1;
             },
-            function (calendar_service_4_1) {
-                calendar_service_4 = calendar_service_4_1;
+            function (calendar_service_5_1) {
+                calendar_service_5 = calendar_service_5_1;
             },
             function (refresh_date_service_1_1) {
                 refresh_date_service_1 = refresh_date_service_1_1;
@@ -4238,7 +4433,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     core_24.Component({
                         selector: 'opanas-app',
                         directives: [router_5.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_5.ROUTER_PROVIDERS, core_24.provide(router_5.LocationStrategy, { useClass: router_5.HashLocationStrategy }), translate_service_10.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_8.UserService, admob_service_1.AdMobService],
+                        providers: [router_5.ROUTER_PROVIDERS, core_24.provide(router_5.LocationStrategy, { useClass: router_5.HashLocationStrategy }), translate_service_10.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_8.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_10.TranslatePipe],
                         styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n  "],
                         template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
@@ -4251,7 +4446,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/user/...', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_10.TranslateService, calendar_service_4.CalendarService, refresh_date_service_1.RefreshDateService, user_service_8.UserService, admob_service_1.AdMobService])
+                    __metadata('design:paramtypes', [translate_service_10.TranslateService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, user_service_8.UserService, admob_service_1.AdMobService])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
@@ -4281,7 +4476,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'language': 'Language',
                     'create.food': 'Create food',
                     'create.menu': 'Create menu',
-                    'paste.menu': 'Paste menu',
+                    'choose.menu': 'Choose menu',
                     'menuName': 'menu name',
                     'set': 'set',
                     '+set': '+set',
@@ -4329,7 +4524,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                     'done': 'Готово',
                     'create.food': 'Добавить блюдо',
                     'create.menu': 'Создать новое меню',
-                    'paste.menu': 'Выбрать готовое меню',
+                    'choose.menu': 'Выбрать меню',
                     'menuName': 'название меню',
                     'set': 'сет',
                     '+set': '+сет',

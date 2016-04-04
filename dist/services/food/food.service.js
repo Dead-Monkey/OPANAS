@@ -127,6 +127,15 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     res['food'] = food;
                     return res;
                 };
+                FoodService.prototype.removeMenu = function (name) {
+                    for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
+                        var item = _a[_i];
+                        if (item.name.trim() === name.trim()) {
+                            this.userMenu.splice(this.userMenu.indexOf(item), 1);
+                        }
+                    }
+                    this.refreshUserMenu();
+                };
                 FoodService.prototype.removeFoodFromMenu = function (name, index) {
                     for (var _i = 0, _a = this.userMenu; _i < _a.length; _i++) {
                         var item = _a[_i];
