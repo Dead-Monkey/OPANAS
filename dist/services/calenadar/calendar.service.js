@@ -161,6 +161,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
+                    if (date === void 0) { date = this.currentDate; }
                     if (isNaN(food['weight'])) {
                         food['weight'] = 0;
                     }
@@ -169,6 +170,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
                             day['food'].unshift(food);
+                            console.log(food);
                         }
                     }
                     this.refreshCalendar();

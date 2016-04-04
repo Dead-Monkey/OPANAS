@@ -6,6 +6,7 @@ import {TranslateService, TranslatePipe} from '../../shared/services/translate/t
 import {UserService} from '../../services/user/user.service';
 import {SwipeHoldertDirective} from '../../shared/directives/swipe-holder/swipe-holder.directive';
 import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
+import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 
 @Component({
     selector: 'op-plus',
@@ -457,7 +458,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   margin-left: 10vw;
 }
 .pasteListMove {
-  position: absolute;
+  position: relative;
   width: 100vw;
   padding-left: 10vw;
   overflow-y: scroll;
@@ -560,7 +561,7 @@ margin-bottom: 2vw;
       </div>
     </form>
     <div class="list createListMove">
-      <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+      <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeFoodMenu(modelMenu.menuName,i)">
         <div class="create_listItem">{{item?.name[language]}} </div>
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
@@ -575,6 +576,11 @@ margin-bottom: 2vw;
 
         <div class="pasteListMove">
           <div class="listItemName">{{'choose.menu' | translate}}</div>
+        </div>
+        <div *ngFor="#item of allMenus">
+        <div class="create_listItemName">
+        {{item['name']}} <span (click)="viewMenuDetail(item)">VIEW</span> <span (click)="pasteMenuToDay(item)">GO</span>
+        </div>
         </div>
       </div>
 
@@ -631,7 +637,7 @@ margin-bottom: 2vw;
   </div>
 
 <!-- создать тренировку -->
-  <div *ngIf="createTrain">
+  <!-- <div *ngIf="createTrain">
 
     <form class="create_form" (ngSubmit)="onSubmitMenu()">
 
@@ -652,7 +658,7 @@ margin-bottom: 2vw;
 
 
     <div class="list createListMove">
-      <div *ngFor="#item of foodMenuContainer; #i = index" fmSwipe (fmSwipeLeft)="removeFoodMenu(modelMenu.menuName,i)" (fmSwipeRight)="removeFoodMenu(modelMenu.menuName, i)">
+      <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeSport(item)">
         <div class="create_listItem">{{item?.name[language]}} </div>
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
@@ -666,7 +672,7 @@ margin-bottom: 2vw;
 <!-- выбрать тренировку -->
   <div *ngIf="pasteTrain">
     paste train
-  </div>
+  </div> -->
 </div>
     `
 })
@@ -696,11 +702,12 @@ export class PlusComponent implements OnInit {
 
     private pickedFoodMenu: Food = <Food>{};
 
+    private allMenus = []
     private foodMenuContainer: Array<Food> = [];
     private modelMenu: Object = {};
     private correctFood: boolean = false;
 
-    constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService, private _userServe: UserService) { }
+    constructor(private _foodServe: FoodService, private _sportServe: SportService, private _translateService: TranslateService, private _userServe: UserService, private _calendarServe: CalendarService) { }
 
     ngOnInit() {
         this.language = this._userServe.getLanguage();
@@ -709,6 +716,7 @@ export class PlusComponent implements OnInit {
         this.refreshModel();
         this.customSport = this._sportServe.getUserSport();
         this.foodContainer = this._foodServe.getAllFood();
+        this.allMenus = this._foodServe.getUserMenuAll();
     }
 
     checkForm(value) {
@@ -745,7 +753,7 @@ export class PlusComponent implements OnInit {
     }
 
     onSubmitMenu() {
-        this.pickedFoodMenu['weight'] =   this.modelMenu['weight'];
+        this.pickedFoodMenu['weight'] = this.modelMenu['weight'];
         this.pickedFoodMenu['picked'] = false;
         this.foodMenuContainer.unshift(this.pickedFoodMenu)
         this._foodServe.setUserMenu(this.modelMenu['menuName'], this.foodMenuContainer);
@@ -767,6 +775,18 @@ export class PlusComponent implements OnInit {
     }
     removeFoodMenu(menuName, item) {
         this._foodServe.removeFoodFromMenu(menuName, item);
+    }
+    pasteMenuToDay(item) {
+        for (let variable of item['food']) {
+            this._calendarServe.setDailyFood(variable);
+        }
+    }
+    viewMenuDetail(item) {
+        this.pasteMenuToggle();
+        this.createMenuToggle()
+        this.searchMenu(item['name'])
+        this.modelMenu['menuName'] = item['name']
+
     }
     //4 food
     onSubmit(food) {
@@ -800,8 +820,8 @@ export class PlusComponent implements OnInit {
         this.customFood = this._foodServe.getUserFood();
     }
 
-    removeFood(food){
-      this._foodServe.removeUserFood(food)
+    removeFood(food) {
+        this._foodServe.removeUserFood(food)
     }
 
     //4 sport
@@ -822,8 +842,8 @@ export class PlusComponent implements OnInit {
         this._sportServe.setUserSport(sport);
         this.customSport = this._sportServe.getUserSport();
     }
-    removeSport(sport){
-      this._sportServe.removeUserSport(sport)
+    removeSport(sport) {
+        this._sportServe.removeUserSport(sport)
     }
     toggle() {
         this.isOpen = !this.isOpen;

@@ -155,7 +155,7 @@ export class CalendarService {
     }
 
     //can be use 4 menu
-    setDailyFood(food: Food, date: Date) {
+    setDailyFood(food: Food, date: Date=this.currentDate) {
         if (isNaN(food['weight'])) {
             food['weight'] = 0
         }
@@ -163,6 +163,7 @@ export class CalendarService {
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
                 day['food'].unshift(food);
+                console.log(food);
             }
         }
         this.refreshCalendar();
