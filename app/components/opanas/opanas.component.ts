@@ -173,8 +173,8 @@ let keysVendor: Object = {
         'activity.level': 'Activity level',
         'point': 'Point',
         'ccal': 'ccal',
-        'name': 'Name'
-
+        'name': 'Name',
+        'menu':'menu'
 
     },
 
@@ -224,7 +224,8 @@ let keysVendor: Object = {
         'activity.level': 'Уровень активности',
         'point': 'Цель',
         'ccal': 'ккал',
-        'name': 'Название'
+        'name': 'Название',
+        'menu':'меню'
 
 
     }

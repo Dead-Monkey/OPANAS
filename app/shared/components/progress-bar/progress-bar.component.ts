@@ -9,7 +9,7 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
     styles: [`
 .progress_container {
   width: 90vw;
-  height: 2.5%;
+  height: 16px;
   position: relative;
   left: 5vw;
   background-color: rgba(49, 51, 61, 0.7);
@@ -48,11 +48,11 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
 .numbers {
   position: absolute;
   color: #D0D9D9;
-  height: 5vw;
+  height: 11px;
   width: 90vw;
   overflow: hidden;
   font-weight: bold;
-  line-height: 3vw;
+  line-height: 11px;
 }
  `],
     template: `

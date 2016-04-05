@@ -194,7 +194,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'activity.level': 'Activity level',
                     'point': 'Point',
                     'ccal': 'ccal',
-                    'name': 'Name'
+                    'name': 'Name',
+                    'menu': 'menu'
                 },
                 'ru': {
                     'food': 'Питание',
@@ -242,7 +243,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'activity.level': 'Уровень активности',
                     'point': 'Цель',
                     'ccal': 'ккал',
-                    'name': 'Название'
+                    'name': 'Название',
+                    'menu': 'меню'
                 }
             };
         }

@@ -74,13 +74,15 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;;
   width: 100vw;
   padding-left: 10vw;
-  top: 80vw;
+  top: 90vw;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .listItemName {
-  width: 80vw;
-  float:left;
+  position: absolute;
+  top: 80vw;
+  padding-left: 10vw;
+    width: 80vw;
   height: 10vw;
   text-align: center;
   font-size: 6vw;
@@ -218,7 +220,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .sportListMove {
   position: absolute;;
   width: 100vw;
-  top: 40vw;
+  top: 50vw;
+  height: 111vw;
   padding-left: 10vw;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -442,6 +445,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .createListMove {
   position: absolute;
   width: 100vw;
+  height: 121vw;
   padding-left: 10vw;
   top: 40vw;
   overflow-y: scroll;
@@ -478,7 +482,73 @@ color: #ff9d2d;
 margin-left: 5vw;
 margin-bottom: 2vw;
 }
-
+.createExercise_listItemName {
+  position: absolute;
+  top: 38vw;
+  padding-left: 10vw;
+  width: 80vw;
+  height: 10vw;
+  text-align: center;
+  font-size: 6vw;
+  color: #ff9d2d;
+  font-weight: bold;
+  margin-bottom: 2vw;
+}
+.createTrain_serchContainer {
+  position: absolute;
+  background-color: #0C1017;
+  border-bottom: 2px solid #0C1017;
+  box-sizing: border-box;
+  width: 68vw;
+  max-height: 30vh;
+  padding-left: 1vw;
+  padding-top: 1vw;
+  left: 5vw;
+  top: 22vw;
+  overflow-y: scroll;
+  border-radius: 7px;
+  z-index: 3;
+}
+.createTrain_searchListItem {
+  float: left;
+  margin-bottom: 1vw;
+  min-height: 12vw;
+  width: 66vw;
+  line-height: 12vw;
+  box-sizing: border-box;
+  background-color: #3f414a;
+  color: #ff9d2d;
+  font-size: 6vw;
+  text-align: center;
+  border-radius: 7px;
+}
+.createTrain_listItemName {
+  position: absolute;
+    top: 32vw;
+    padding-left: 10vw;
+    width: 80vw;
+    height: 10vw;
+    text-align: center;
+    font-size: 6vw;
+    color: #ff9d2d;
+    font-weight: bold;
+    margin-bottom: 2vw;
+}
+.createTrain_listItem{
+  float: left;
+    margin-right: 1vw;
+    margin-top: 2vw;
+    min-height: 10vw;
+    width: 80vw;
+    box-sizing: border-box;
+    background-color: #3f414a;
+    color: #ff9d2d;
+    font-size: 6vw;
+    text-align: center;
+    border-radius: 7px;
+    line-height: 10vw;
+    border: 2px solid #ff9d2d;
+}
     `],
     template: `
 
@@ -532,8 +602,8 @@ margin-bottom: 2vw;
       <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
       <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (click)="onSubmit(name)"></button>
     </form>
+    <div class="listItemName">{{'added.meals' | translate}}</div>
     <div class="list foodListMove">
-      <div class="listItemName">{{'added.meals' | translate}}</div>
       <div *ngFor="#item of customFood" class="listItemContainer" (fmSwipeDeleteSide)="removeFood(item)">
         <div class="listItem">{{item.name[language]}} </div>
       </div>
@@ -546,7 +616,7 @@ margin-bottom: 2vw;
     <form class="create_form" (ngSubmit)="onSubmitMenu()">
 
       <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
+      <input class="food_inputFood" required [placeholder]="('menu'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
       <label for="foodName"></label>
       <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
 
@@ -560,14 +630,14 @@ margin-bottom: 2vw;
         </div>
       </div>
     </form>
+    <div *ngIf="createMenu" class="create_listItemName">
+      {{modelMenu.menuName}}
+    </div>
     <div class="list createListMove">
       <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeFoodMenu(modelMenu.menuName,i)">
         <div class="create_listItem">{{item?.name[language]}} </div>
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
       </div>
-    </div>
-    <div *ngIf="createMenu" class="create_listItemName">
-      {{modelMenu.menuName}}
     </div>
   </div>
 
@@ -628,9 +698,9 @@ margin-bottom: 2vw;
       <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
+<div class="createExercise_listItemName">{{'added.exercise' | translate}}</div>
     <div class="sportListMove">
-      <div class="listItemName">{{'added.exercise' | translate}}</div>
-      <div *ngFor="#item of customSport" class="listItemContainer" (fmSwipeDeleteSide)="removeSport(item)">
+            <div *ngFor="#item of customSport" class="listItemContainer" (fmSwipeDeleteSide)="removeSport(item)">
         <div class="listItem">{{item.name.ru}} </div>
       </div>
     </div>
@@ -641,7 +711,7 @@ margin-bottom: 2vw;
 
     <form class="create_form" (ngSubmit)="onSubmitTrain()">
 
-      <div class="food_inputFoodName">Traine name</div>
+      <div class="food_inputFoodName">Train name</div>
       <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
 
 
@@ -649,17 +719,18 @@ margin-bottom: 2vw;
       <input class="createTrain_inputSport" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelTrain.name" #name (input)="pickSportTrainInput(name.value)">
 
       <button #subBtn type="submit" [ngClass]="{create_inputButton_off: subBtn['disabled'], create_inputButton_on: !subBtn['disabled']}" [disabled]="!correctSport || !trainName.value"></button>
-      <div *ngIf="name.value && !correctSport" class="create_serchContainer">
-        <div class="create_searchListItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSportTrain(item)">
+      <div *ngIf="name.value && !correctSport" class="createTrain_serchContainer">
+        <div class="createTrain_searchListItem" *ngFor="#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;" (click)="pickSportTrain(item)">
           {{item?.name[language]}}
         </div>
       </div>
     </form>
 
 
+  <div *ngIf="createTrain" class="createTrain_listItemName">  {{modelTrain.trainName}}</div>
     <div class="list createListMove">
       <div *ngFor="#item of sportTrainContainer; #i = index" (fmSwipeDeleteSide)="removeSportTrain(modelTrain.trainName,i)">
-        <div class="create_listItem">{{item?.name[language]}} </div>
+        <div class="createTrain_listItem">{{item?.name[language]}} </div>
       </div>
     </div>
 
@@ -672,7 +743,7 @@ margin-bottom: 2vw;
       <div class="listItemName">{{'choose.menu' | translate}}</div>
     </div>
     <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
-      <div class="create_listItemName">
+      <div class="createTrain_listItem">
         {{item['name']}} <span (click)="viewTrainDetail(item)">VIEW</span> <span (click)="pasteTrainToDay(item)">GO</span>
       </div>
     </div>
