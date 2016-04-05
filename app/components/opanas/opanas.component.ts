@@ -1,5 +1,5 @@
 import {Component, OnInit, provide} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, Router} from 'angular2/router';
 import {FoodComponent} from '../food-page/food.component';
 import {SportComponent} from '../sport-page/sport.component';
 import {RestComponent} from '../rest-page/rest.component';
@@ -33,11 +33,19 @@ import {AdMobService} from '../../services/admob/admob.service';
       height: 100vh;
       overflow: hidden;
     }
+    .calendar{
+      position:absolute;
+      width:20vw;
+      height:10vw;
+      left:40vw;
+      background-color:blue;
+    }
   `],
     template: `
 <div class="container">
 
   <div class="header">
+  <div class="calendar" (touchend)="goCalendar()">{{date|date}}</div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
@@ -57,11 +65,8 @@ import {AdMobService} from '../../services/admob/admob.service';
 ])
 export class OpanasComponent implements OnInit {
     private sideBarIsOpen: boolean = false;
-
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService) { }
-    bla() {
-        location.reload();
-    }
+    private date;
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) { }
     //config app
     ngOnInit() {
         //cordova plugins setup
@@ -94,6 +99,7 @@ export class OpanasComponent implements OnInit {
         //check first enter
         this._userServe.setFirstEnter();
 
+        this.date = this._calendarService.getCurrentDate()
     }
 
     //replace this 2 userPage;
@@ -103,6 +109,13 @@ export class OpanasComponent implements OnInit {
     goRu() {
         this._translator.setCurrentLanguage('ru');
     }
+    goCalendar() {
+        this._router.navigate(['Calendar'])
+    }
+    ngAfterContentChecked() {
+        this.date = this._calendarService.getCurrentDate()
+    }
+
 }
 
 

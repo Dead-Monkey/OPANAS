@@ -67,17 +67,15 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
             }],
         execute: function() {
             OpanasComponent = (function () {
-                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe, _AdMobServe) {
+                function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe, _AdMobServe, _router) {
                     this._translator = _translator;
                     this._calendarService = _calendarService;
                     this._refreshDateService = _refreshDateService;
                     this._userServe = _userServe;
                     this._AdMobServe = _AdMobServe;
+                    this._router = _router;
                     this.sideBarIsOpen = false;
                 }
-                OpanasComponent.prototype.bla = function () {
-                    location.reload();
-                };
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
                     var _this = this;
@@ -108,6 +106,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._translator.setDefaultLanguage('en');
                     //check first enter
                     this._userServe.setFirstEnter();
+                    this.date = this._calendarService.getCurrentDate();
                 };
                 //replace this 2 userPage;
                 OpanasComponent.prototype.goEn = function () {
@@ -116,14 +115,20 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                 OpanasComponent.prototype.goRu = function () {
                     this._translator.setCurrentLanguage('ru');
                 };
+                OpanasComponent.prototype.goCalendar = function () {
+                    this._router.navigate(['Calendar']);
+                };
+                OpanasComponent.prototype.ngAfterContentChecked = function () {
+                    this.date = this._calendarService.getCurrentDate();
+                };
                 OpanasComponent = __decorate([
                     core_1.Component({
                         selector: 'opanas-app',
                         directives: [router_1.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        styles: ["\n    .header{\n    height: 15vw;\n    width: 100vw;\n    }\n\t\t.container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar{\n      position:absolute;\n      width:20vw;\n      height:10vw;\n      left:40vw;\n      background-color:blue;\n    }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div class=\"calendar\" (touchend)=\"goCalendar()\">{{date|date}}</div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
@@ -133,7 +138,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         { path: '/user/...', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService, admob_service_1.AdMobService])
+                    __metadata('design:paramtypes', [translate_service_1.TranslateService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, user_service_1.UserService, admob_service_1.AdMobService, router_1.Router])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
