@@ -89,7 +89,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         // this._AdMobServe.createBottomBanerFirst();
                         _this._AdMobServe.createInterstitialFirst();
                         _this._AdMobServe.prepareInterstitialFirst();
-                        setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 10000);
+                        setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 20000);
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date

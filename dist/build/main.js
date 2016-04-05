@@ -43,7 +43,6 @@ System.register("shared/services/translate/src/services/translate.service", ['an
                             return this.currentLanguage;
                         }
                     }
-                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
                 };
                 TranslateService.prototype.getCurrentLanguage = function () {
                     return this.currentLanguage;
@@ -55,7 +54,6 @@ System.register("shared/services/translate/src/services/translate.service", ['an
                             return this.currentLanguage;
                         }
                     }
-                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
                 };
                 TranslateService.prototype.getSupportLanguages = function () {
                     return this.supportLanguages;
@@ -81,18 +79,15 @@ System.register("shared/services/translate/src/services/translate.service", ['an
                                     res = this.keys[this.defaultLanguage][word];
                                 }
                                 else {
-                                    console.log(word + " - " + this.messages.error.badKey);
                                     res = "" + this.messages.error.translate;
                                 }
                             }
                             else {
-                                console.log(word + " - " + this.messages.error.badKey);
                                 res = "" + this.messages.error.translate;
                             }
                         }
                         return "" + res;
                     }
-                    console.log(this.messages.error.translate + " :: " + this.messages.error.currentLanguage);
                     return "" + this.messages.error.translate;
                 };
                 TranslateService = __decorate([
@@ -254,11 +249,9 @@ System.register("shared/services/storage/storage.service", ['angular2/core'], fu
                 }
                 StorageService.prototype.setItem = function (name, item) {
                     localStorage.setItem(name, JSON.stringify(item));
-                    console.log("set " + name + " :: size is " + localStorage.getItem(name).length / 1000 + " KB");
                 };
                 StorageService.prototype.getItem = function (name) {
                     if (localStorage.getItem(name)) {
-                        console.log("get " + name + " :: size is " + localStorage.getItem(name).length / 1000 + " KB");
                     }
                     return JSON.parse(localStorage.getItem(name));
                 };
@@ -608,7 +601,6 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
                     }
                     this.userMenu.unshift(this.createUserMenu(name, food));
                     this.refreshUserMenu();
-                    console.log(this.userMenu);
                 };
                 FoodService.prototype.createUserMenu = function (name, food) {
                     var res = {};
@@ -2968,7 +2960,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                     for (var i = 1; i < days; i++) {
                         this.addDay(new Date(startYear, 0, i));
                     }
-                    console.log("calendare is created");
                 };
                 CalendarService.prototype.saveCalendar = function () {
                     if (this._storageService.getItem(this.storageKeys.calendar)) {
@@ -2977,7 +2968,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                             var day = _a[_i];
                             day['date'] = new Date(day['date']);
                         }
-                        console.log("calendar saved");
                     }
                     else {
                         this.createCalendar();
@@ -2987,7 +2977,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                             var day = _c[_b];
                             day['date'] = new Date(day['date']);
                         }
-                        console.log("new calendar created and saved");
                     }
                 };
                 CalendarService.prototype.refreshCalendar = function () {
@@ -3009,7 +2998,7 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
-                            return console.log("date already exist");
+                            return;
                         }
                     }
                     this.calendar.push(daySample);
@@ -3076,7 +3065,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                             return day['food'];
                         }
                     }
-                    console.log("not exist date");
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
@@ -3089,7 +3077,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
                             day['food'].unshift(food);
-                            console.log(food);
                         }
                     }
                     this.refreshCalendar();
@@ -3122,7 +3109,6 @@ System.register("services/calenadar/calendar.service", ['angular2/core', "shared
                             return day['sport'];
                         }
                     }
-                    console.log("not exist date");
                 };
                 CalendarService.prototype.setDailySport = function (sport, date) {
                     if (date === void 0) { date = this.currentDate; }
@@ -3239,7 +3225,6 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                     this.foodContainer = this._foodServe.getAllFood();
                     this.allMenus = this._foodServe.getUserMenuAll();
                     this.allTrains = this._sportServe.getUserTrainAll();
-                    console.log(this.allTrains);
                     this.sportContainer = this._sportServe.getAllSport();
                     this.customSport = this._sportServe.getUserSport();
                 };
@@ -3340,7 +3325,6 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                     this.pickedFoodMenu = {};
                     for (var item in this.modelMenu) {
                         if (!(item === 'menuName')) {
-                            console.log(item);
                             this.modelMenu[item] = undefined;
                         }
                     }
@@ -4381,9 +4365,7 @@ System.register("services/refresh-date/refresh-date.service", ['angular2/core'],
                     this.timer = this.tomorrow.getTime() - this.today.getTime();
                 };
                 RefreshDateService.prototype.refresher = function () {
-                    console.log("refresher in da house. refresh will make badaboom in " + this.timer / 1000 / 60 + " minutes");
                     setTimeout(function () {
-                        console.log("refresher da best");
                         location.reload();
                     }, this.timer);
                 };
@@ -4555,7 +4537,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         // this._AdMobServe.createBottomBanerFirst();
                         _this._AdMobServe.createInterstitialFirst();
                         _this._AdMobServe.prepareInterstitialFirst();
-                        setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 10000);
+                        setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 20000);
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
                     //refresh-date

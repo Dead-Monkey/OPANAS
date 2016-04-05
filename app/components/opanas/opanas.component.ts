@@ -72,7 +72,7 @@ export class OpanasComponent implements OnInit {
             // this._AdMobServe.createBottomBanerFirst();
             this._AdMobServe.createInterstitialFirst();
             this._AdMobServe.prepareInterstitialFirst();
-            setTimeout(() => this._AdMobServe.showInterstitialFirst(), 10000)
+            setTimeout(() => this._AdMobServe.showInterstitialFirst(), 20000)
         }
         document.addEventListener("deviceready", onDeviceReady, false);
 
