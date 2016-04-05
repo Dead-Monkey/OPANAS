@@ -72,7 +72,7 @@ export class OpanasComponent implements OnInit {
             // this._AdMobServe.createBottomBanerFirst();
             this._AdMobServe.createInterstitialFirst();
             this._AdMobServe.prepareInterstitialFirst();
-            setTimeout(()=>this._AdMobServe.showInterstitialFirst(),10000)
+            setTimeout(() => this._AdMobServe.showInterstitialFirst(), 10000)
         }
         document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -82,9 +82,18 @@ export class OpanasComponent implements OnInit {
         this._translator.setSupportLanguages(languages);
         this._translator.setKeys(keysVendor);
         //basic language of application
+        if (this._userServe.getFirstEnter()) {
+            if (navigator.language.startsWith('ru')) {
+                this._userServe.setLanguage('ru')
+            }
+        }
         this._translator.setCurrentLanguage(this._userServe.getLanguage());
         //default language will be use if current language dont has key. it's an optional.
         this._translator.setDefaultLanguage('en');
+
+        //check first enter
+        this._userServe.setFirstEnter();
+
     }
 
     //replace this 2 userPage;

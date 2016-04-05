@@ -43,7 +43,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             return this.currentLanguage;
                         }
                     }
-                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
                 };
                 TranslateService.prototype.getCurrentLanguage = function () {
                     return this.currentLanguage;
@@ -55,7 +54,6 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                             return this.currentLanguage;
                         }
                     }
-                    console.log(lang + " " + this.messages.error.supportLang + " ", this.supportLanguages);
                 };
                 TranslateService.prototype.getSupportLanguages = function () {
                     return this.supportLanguages;
@@ -81,18 +79,15 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                                     res = this.keys[this.defaultLanguage][word];
                                 }
                                 else {
-                                    console.log(word + " - " + this.messages.error.badKey);
                                     res = "" + this.messages.error.translate;
                                 }
                             }
                             else {
-                                console.log(word + " - " + this.messages.error.badKey);
                                 res = "" + this.messages.error.translate;
                             }
                         }
                         return "" + res;
                     }
-                    console.log(this.messages.error.translate + " :: " + this.messages.error.currentLanguage);
                     return "" + this.messages.error.translate;
                 };
                 TranslateService = __decorate([

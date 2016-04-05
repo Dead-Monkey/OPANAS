@@ -34,7 +34,6 @@ export class TranslateService {
                 return this.currentLanguage;
             }
         }
-        console.log(`${lang} ${this.messages.error.supportLang} `, this.supportLanguages)
     }
 
 
@@ -49,7 +48,6 @@ export class TranslateService {
                 return this.currentLanguage;
             }
         }
-        console.log(`${lang} ${this.messages.error.supportLang} `, this.supportLanguages)
     }
 
     getSupportLanguages(): Object {
@@ -78,17 +76,14 @@ export class TranslateService {
                     if (this.keys[this.defaultLanguage].hasOwnProperty(word)) {
                         res = this.keys[this.defaultLanguage][word];
                     } else {
-                        console.log(`${word} - ${this.messages.error.badKey}`);
                         res = `${this.messages.error.translate}`;
                     }
                 } else {
-                    console.log(`${word} - ${this.messages.error.badKey}`);
                     res = `${this.messages.error.translate}`;
                 }
             }
             return `${res}`;
         }
-        console.log(`${this.messages.error.translate} :: ${this.messages.error.currentLanguage}`);
         return `${this.messages.error.translate}`;
     }
 }

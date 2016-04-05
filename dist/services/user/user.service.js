@@ -55,7 +55,8 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             'lvl': 10,
                             'multi': 1,
                         },
-                        'language': 'en'
+                        'language': 'en',
+                        'firstEnter': true
                     };
                     if (this._storageService.getItem(this.storageKeys['userSets'])) {
                         this.sets = this._storageService.getItem(this.storageKeys['userSets']);
@@ -68,6 +69,14 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         }
                     }
                     this._storageService.setItem(this.storageKeys['userSets'], this.sets);
+                };
+                UserService.prototype.getFirstEnter = function () {
+                    return this.sets['firstEnter'];
+                };
+                UserService.prototype.setFirstEnter = function (enter) {
+                    if (enter === void 0) { enter = false; }
+                    this.sets['firstEnter'] = enter;
+                    this.refreshUser();
                 };
                 UserService.prototype.getLanguage = function () {
                     return this.sets['language'];

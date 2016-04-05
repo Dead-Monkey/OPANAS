@@ -103,7 +103,6 @@ export class FoodService {
       }
       this.userMenu.unshift(this.createUserMenu(name, food))
         this.refreshUserMenu()
-      console.log(this.userMenu);
 
     }
     createUserMenu(name:string, food:Array<Food>){

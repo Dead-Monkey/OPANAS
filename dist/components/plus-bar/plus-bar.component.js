@@ -79,7 +79,6 @@ System.register(['angular2/core', '../../services/food/food.service', '../../ser
                     this.foodContainer = this._foodServe.getAllFood();
                     this.allMenus = this._foodServe.getUserMenuAll();
                     this.allTrains = this._sportServe.getUserTrainAll();
-                    console.log(this.allTrains);
                     this.sportContainer = this._sportServe.getAllSport();
                     this.customSport = this._sportServe.getUserSport();
                 };
@@ -180,7 +179,6 @@ System.register(['angular2/core', '../../services/food/food.service', '../../ser
                     this.pickedFoodMenu = {};
                     for (var item in this.modelMenu) {
                         if (!(item === 'menuName')) {
-                            console.log(item);
                             this.modelMenu[item] = undefined;
                         }
                     }

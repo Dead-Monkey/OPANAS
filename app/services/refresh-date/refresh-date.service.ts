@@ -20,9 +20,7 @@ export class RefreshDateService {
     }
 
     refresher() {
-        console.log(`refresher in da house. refresh will make badaboom in ${this.timer / 1000 / 60} minutes`);
         setTimeout(() => {
-            console.log(`refresher da best`);
             location.reload();
         }, this.timer);
     }

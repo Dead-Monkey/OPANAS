@@ -35,7 +35,8 @@ export class UserService {
             'lvl': 10,
             'multi': 1,
         },
-        'language': 'en'
+        'language': 'en',
+        'firstEnter': true
     }
 
     constructor(private _storageService: StorageService) {
@@ -45,7 +46,6 @@ export class UserService {
     }
 
     refreshUser() {
-
         for (let key in this.sets['foodSets']) {
             if (!this.sets['foodSets'][key]['full']) {
                 this.sets['foodSets'][key]['full'] = 0;
@@ -53,7 +53,13 @@ export class UserService {
         }
         this._storageService.setItem(this.storageKeys['userSets'], this.sets);
     }
-
+    getFirstEnter() {
+        return this.sets['firstEnter']
+    }
+    setFirstEnter(enter = false) {
+        this.sets['firstEnter'] = enter
+        this.refreshUser();
+    }
     getLanguage(): string {
         return this.sets['language'];
     }

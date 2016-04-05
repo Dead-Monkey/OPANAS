@@ -98,9 +98,16 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._translator.setSupportLanguages(languages);
                     this._translator.setKeys(keysVendor);
                     //basic language of application
+                    if (this._userServe.getFirstEnter()) {
+                        if (navigator.language.startsWith('ru')) {
+                            this._userServe.setLanguage('ru');
+                        }
+                    }
                     this._translator.setCurrentLanguage(this._userServe.getLanguage());
                     //default language will be use if current language dont has key. it's an optional.
                     this._translator.setDefaultLanguage('en');
+                    //check first enter
+                    this._userServe.setFirstEnter();
                 };
                 //replace this 2 userPage;
                 OpanasComponent.prototype.goEn = function () {

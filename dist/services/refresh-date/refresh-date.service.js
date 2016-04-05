@@ -31,9 +31,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     this.timer = this.tomorrow.getTime() - this.today.getTime();
                 };
                 RefreshDateService.prototype.refresher = function () {
-                    console.log("refresher in da house. refresh will make badaboom in " + this.timer / 1000 / 60 + " minutes");
                     setTimeout(function () {
-                        console.log("refresher da best");
                         location.reload();
                     }, this.timer);
                 };

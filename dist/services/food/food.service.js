@@ -119,7 +119,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     }
                     this.userMenu.unshift(this.createUserMenu(name, food));
                     this.refreshUserMenu();
-                    console.log(this.userMenu);
                 };
                 FoodService.prototype.createUserMenu = function (name, food) {
                     var res = {};

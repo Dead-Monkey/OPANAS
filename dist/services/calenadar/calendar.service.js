@@ -49,7 +49,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     for (var i = 1; i < days; i++) {
                         this.addDay(new Date(startYear, 0, i));
                     }
-                    console.log("calendare is created");
                 };
                 CalendarService.prototype.saveCalendar = function () {
                     if (this._storageService.getItem(this.storageKeys.calendar)) {
@@ -58,7 +57,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             var day = _a[_i];
                             day['date'] = new Date(day['date']);
                         }
-                        console.log("calendar saved");
                     }
                     else {
                         this.createCalendar();
@@ -68,7 +66,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             var day = _c[_b];
                             day['date'] = new Date(day['date']);
                         }
-                        console.log("new calendar created and saved");
                     }
                 };
                 CalendarService.prototype.refreshCalendar = function () {
@@ -90,7 +87,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                     for (var _i = 0, _a = this.calendar; _i < _a.length; _i++) {
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
-                            return console.log("date already exist");
+                            return;
                         }
                     }
                     this.calendar.push(daySample);
@@ -157,7 +154,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             return day['food'];
                         }
                     }
-                    console.log("not exist date");
                 };
                 //can be use 4 menu
                 CalendarService.prototype.setDailyFood = function (food, date) {
@@ -170,7 +166,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         var day = _a[_i];
                         if (day['date'].getTime() === date.getTime()) {
                             day['food'].unshift(food);
-                            console.log(food);
                         }
                     }
                     this.refreshCalendar();
@@ -203,7 +198,6 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                             return day['sport'];
                         }
                     }
-                    console.log("not exist date");
                 };
                 CalendarService.prototype.setDailySport = function (sport, date) {
                     if (date === void 0) { date = this.currentDate; }

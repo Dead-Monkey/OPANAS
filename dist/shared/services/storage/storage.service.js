@@ -23,11 +23,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                 }
                 StorageService.prototype.setItem = function (name, item) {
                     localStorage.setItem(name, JSON.stringify(item));
-                    console.log("set " + name + " :: size is " + localStorage.getItem(name).length / 1000 + " KB");
                 };
                 StorageService.prototype.getItem = function (name) {
                     if (localStorage.getItem(name)) {
-                        console.log("get " + name + " :: size is " + localStorage.getItem(name).length / 1000 + " KB");
                     }
                     return JSON.parse(localStorage.getItem(name));
                 };

@@ -727,7 +727,6 @@ export class PlusComponent implements OnInit {
         this.foodContainer = this._foodServe.getAllFood();
         this.allMenus = this._foodServe.getUserMenuAll();
         this.allTrains = this._sportServe.getUserTrainAll();
-        console.log(this.allTrains);
         this.sportContainer = this._sportServe.getAllSport();
         this.customSport = this._sportServe.getUserSport();
     }
@@ -833,7 +832,6 @@ export class PlusComponent implements OnInit {
 
         for (let item in this.modelMenu) {
             if (!(item === 'menuName')) {
-                console.log(item);
                 this.modelMenu[item] = undefined;
             }
         }

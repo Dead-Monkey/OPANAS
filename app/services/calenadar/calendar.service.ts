@@ -38,7 +38,6 @@ export class CalendarService {
         for (let i = 1; i < days; i++) {
             this.addDay(new Date(startYear, 0, i));
         }
-        console.log(`calendare is created`);
     }
 
     saveCalendar() {
@@ -47,7 +46,6 @@ export class CalendarService {
             for (let day of this.calendar) {
                 day['date'] = new Date(<any>day['date']);
             }
-            console.log(`calendar saved`);
         } else {
             this.createCalendar();
             this._storageService.setItem(this.storageKeys.calendar, this.calendar)
@@ -55,7 +53,6 @@ export class CalendarService {
             for (let day of this.calendar) {
                 day['date'] = new Date(<any>day['date']);
             }
-            console.log(`new calendar created and saved`);
         }
     }
 
@@ -80,7 +77,7 @@ export class CalendarService {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
-                return console.log(`date already exist`);
+                return 
             }
         }
         this.calendar.push(daySample);
@@ -151,7 +148,6 @@ export class CalendarService {
                 return day['food'];
             }
         }
-        console.log(`not exist date`);
     }
 
     //can be use 4 menu
@@ -163,7 +159,6 @@ export class CalendarService {
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
                 day['food'].unshift(food);
-                console.log(food);
             }
         }
         this.refreshCalendar();
@@ -198,7 +193,6 @@ export class CalendarService {
                 return day['sport'];
             }
         }
-        console.log(`not exist date`);
     }
 
     setDailySport(sport: Sport, date: Date=this.currentDate) {
