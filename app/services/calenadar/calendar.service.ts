@@ -77,7 +77,7 @@ export class CalendarService {
         date.setHours(0, 0, 0, 0);
         for (let day of this.calendar) {
             if (day['date'].getTime() === date.getTime()) {
-                return 
+                return
             }
         }
         this.calendar.push(daySample);
