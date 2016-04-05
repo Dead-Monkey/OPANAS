@@ -76,7 +76,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       .sport_searchListItem {
         float:left;
         margin-bottom: 1vw;
-        height: 15vw;
+        min-height: 15vw;
         width: 70vw;
         line-height: 15vw;
         box-sizing: border-box;
@@ -101,6 +101,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         margin-right: 3vw;
         margin-top: 2vw;
         min-height: 15vw;
+        padding-left: 5vw;
         width: 72vw;
         box-sizing: border-box;
         background-color: #3f414a;
@@ -157,7 +158,6 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       }
       .sport_dropdownButton {
         float: left;
-        margin-left: 8vw;
         margin-top: 3vw;
         width: 10vw;
         height: 10vw;
@@ -288,8 +288,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   <div   *ngFor="#item of pickedSportContainer; #i = index">
 <div class="sport_listItemContainer" (fmSwipeDeleteSide)="removeSport(i, item)">
 <div class="sport_listItem" >
+<div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}" (touchend)="openSets(item,i)"></div>
   {{item?.name[language]}}
-  <div class="sport_dropdownButton" [ngClass]="{sport_dropdownButonAnime:!item['setsToggle']}" (touchend)="openSets(item,i)"></div>
 </div>
 <div [ngClass]="{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}" (touchend)="checkBoxToggle(i, item)"></div>
 </div>

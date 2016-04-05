@@ -17,7 +17,7 @@ import {UserService} from '../../services/user/user.service';
     height: 150vw;
     margin: 5vw;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
 
   }
   .calculator_buttons {
@@ -135,7 +135,7 @@ import {UserService} from '../../services/user/user.service';
   background: #ff9d2d;
 }
 .calculator_result {
-  position: relative;
+float: left;
   height: 13vw;
   line-height: 11vw;
   width: 40vw;
@@ -152,12 +152,12 @@ import {UserService} from '../../services/user/user.service';
   text-align: center;
 }
 .calculator_resultApply {
-  position: absolute;
-  top: 129vw;
-  left: 58vw;
+float: left;
   height: 13vw;
   line-height: 11vw;
   width: 12vw;
+  margin-top: 7vw;
+  margin-left: 2vw;
   background-size: cover;
   box-sizing: border-box;
   color: #ff9d2d;
@@ -165,6 +165,10 @@ import {UserService} from '../../services/user/user.service';
   border-radius: 7px;
   text-align: center;
   font-weight: bold;
+}
+.opapa {
+  position: relative;
+  width: 80vw;
 }
     `],
     template: `
@@ -225,8 +229,11 @@ import {UserService} from '../../services/user/user.service';
       <div class="pointToggle" [ngClass]="{ pointToggle_off:!(model.goal.lvl == '11'), pointToggle_on:model.goal.lvl == '11'}"  (click)="changeGoal(11)"></div>
     </div>
 
+<div class="opapa">
   <div class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
     <div (click)="calculate()" class="calculator_resultApply">OK</div>
+  </div>
+
   </div>
 
 

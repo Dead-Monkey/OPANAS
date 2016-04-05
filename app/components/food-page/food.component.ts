@@ -80,7 +80,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     padding-left: 1vw;
     padding-top: 1vw;
     left: 0;
-    top: 10vw;
+    top: 11vw;
     overflow-y: scroll;
     border-radius: 7px;
     z-index: 3;
@@ -99,8 +99,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     border-radius: 7px;
   }
   .food_list {
-    position: relative;
-    margin-top: 3vw;
+    position: absolute;;
+    top:71vw;
     padding-left: 5vw;
     width: 95vw;
     bottom:1px;
