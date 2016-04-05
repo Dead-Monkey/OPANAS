@@ -45,7 +45,8 @@ import {AdMobService} from '../../services/admob/admob.service';
 <div class="container">
 
   <div class="header">
-  <div class="calendar" (touchend)="goCalendar()">{{date|date}}</div>
+  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date|date:"MM"}}///{{date|date:"dd"}}///{{date|date:"yy"}}</div>
+  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date|date:"dd"}}///{{date|date:"MM"}}///{{date|date:"yy"}}</div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
