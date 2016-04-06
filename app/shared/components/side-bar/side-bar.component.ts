@@ -22,6 +22,8 @@ import {TranslatePipe} from '../../services/translate/translate.service';
       overflow-x: hidden;
       overflow-y: scroll;
       left:-250px;
+      user-select: none;
+     -webkit-user-select: none;
 
   }
   .sideBarAnime{

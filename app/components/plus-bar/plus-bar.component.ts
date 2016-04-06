@@ -59,9 +59,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .listItem {
   float:left;
   margin-bottom: 2vw;
-  height: 12vw;
+  height: 10vw;
   width: 80vw;
-  line-height: 11vw;
+  line-height: 8vw;
   box-sizing: border-box;
   background-color: #3f414a;
   color: #ff9d2d;
@@ -82,7 +82,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;
   top: 80vw;
   padding-left: 10vw;
-    width: 80vw;
+    width: 78vw;
   height: 10vw;
   text-align: center;
   font-size: 6vw;
@@ -120,7 +120,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   margin-bottom: 2vw;
 }
 .food_inputFoodNameNutritions {
-  position: relative;
   font-size: 6vw;
   width: 40vw;
   height: 9vw;
@@ -131,7 +130,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   line-height: 8vw;
 }
 .food_inputFoodNutritions {
-  position: relative;
   float: left;
   height: 9vw;
   width: 20vw;
@@ -151,8 +149,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .food_inputButton_off {
   position: relative;
   float: left;
-  height: 12vw;
-  width: 12vw;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -162,8 +160,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .food_inputButton_on {
   position: relative;
   float: left;
-  height: 12vw;
-  width: 12vw;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -172,9 +170,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .sport_inputButton_off {
   position: relative;
-  float: right;
-  height: 12vw;
-  width: 12vw;
+  float: left;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -184,9 +182,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 
 .sport_inputButton_on {
   position: relative;
-  float: right;
-  height: 12vw;
-  width: 12vw;
+  float: left;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -207,7 +205,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .sport_inputSport{
   position: relative;
   float: left;
-  height: 12vw;
+  height: 10vw;
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
@@ -230,10 +228,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .createExercise{
   width: 100%;
   height: 100%
-}
-.sportBtnMove{
-  top:0;
-  right:33vw;
 }
 .plusBar_menuButtons {
   position: absolute;
@@ -311,13 +305,26 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .listItemContainer{
   position:relative;
-  min-height: 16vw;
-  width:90vw;
+  min-height: 13vw;
+  width:80vw;
   overflow:hidden;
 }
 
 /*Тут начинаются классы для кнопки Create Menu*/
 
+.create_inputMenuName {
+  position: relative;
+height: 10vw;
+margin-left: 5vw;
+width: 80vw;
+background-color: rgba(49, 51, 61, 0.3);
+box-sizing: border-box;
+border: 2px solid #0C1017;
+border-radius: 7px;
+font-size: 7vw;
+color: #ff9d2d;
+margin-bottom: 2vw;
+}
 .create_inputFood {
   position: absolute;
   height: 10vw;
@@ -327,7 +334,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   border: 2px solid #0C1017;
   border-radius: 7px;
   font-size: 6vw;
-  color: #D0D9D9;
+  color: #ff9d2d;
   top: 12vw;
   left: 5vw;
 }
@@ -342,7 +349,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   border: 2px solid #0C1017;
   border-radius: 7px;
   font-size: 6vw;
-  color: #D0D9D9;
+  color: #ff9d2d;
 }
 .create_inputButton_off {
   position: absolute;
@@ -549,6 +556,14 @@ margin-bottom: 2vw;
     line-height: 10vw;
     border: 2px solid #ff9d2d;
 }
+.anomaliya {
+  font-size: 6vw;
+width: 40vw;
+height: 9vw;
+margin-left: 5vw;
+color: #ff9d2d;
+line-height: 8vw;
+}
     `],
     template: `
 
@@ -615,8 +630,7 @@ margin-bottom: 2vw;
 
     <form class="create_form" (ngSubmit)="onSubmitMenu()">
 
-      <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [placeholder]="('menu'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
+      <input class="create_inputMenuName" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
       <label for="foodName"></label>
       <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
 
@@ -694,8 +708,8 @@ margin-bottom: 2vw;
     <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
       <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
-      <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
-      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
+      <div class="anomaliya food_inputButtonName ">{{'done' | translate}}</div>
+      <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
 <div class="createExercise_listItemName">{{'added.exercise' | translate}}</div>
@@ -711,8 +725,7 @@ margin-bottom: 2vw;
 
     <form class="create_form" (ngSubmit)="onSubmitTrain()">
 
-      <div class="food_inputFoodName">Train name</div>
-      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
+      <input class="create_inputMenuName" required [placeholder]="('trainingName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
 
 
       <label for="sportName"></label>
