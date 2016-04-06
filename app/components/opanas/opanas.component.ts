@@ -39,6 +39,7 @@ import {AdMobService} from '../../services/admob/admob.service';
       height:10vw;
       left:40vw;
       background-color:blue;
+      z-index:10;
     }
   `],
     template: `
