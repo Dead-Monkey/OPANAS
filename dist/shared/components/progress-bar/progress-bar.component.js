@@ -1,4 +1,4 @@
-System.register(['angular2/core'], function(exports_1, context_1) {
+System.register(['angular2/core', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,16 +10,20 @@ System.register(['angular2/core'], function(exports_1, context_1) {
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1;
+    var core_1, router_1;
     var ProgressBar;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             ProgressBar = (function () {
-                function ProgressBar() {
+                function ProgressBar(_router) {
+                    this._router = _router;
                     this.maxNumber = 0;
                     this.minNumber = 0;
                 }
@@ -51,6 +55,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         }
                     }
                 };
+                ProgressBar.prototype.navigate = function () {
+                    this._router.navigate(['User']);
+                };
                 __decorate([
                     core_1.Input(), 
                     __metadata('design:type', String)
@@ -78,9 +85,9 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                         providers: [],
                         pipes: [],
                         styles: ["\n.progress_container {\n  width: 90vw;\n  height: 16px;\n  position: relative;\n  left: 5vw;\n  background-color: rgba(49, 51, 61, 0.7);\n  box-sizing: border-box;\n  border:3px solid #0C1017;\n  border-radius: 10px;\n  z-index: 1;\n}\n.progress_mainLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #E48426;\n  height: 100%;\n  border-radius: 5px;\n  text-align: center;\n  color: #181A21;\n  font-size: 3vw;\n}\n.progress_secondLine {\n  position: absolute;\n  top: 0;\n  left: 0;\n  background-color: #2a2b2d;\n  height: 100%;\n  border-radius: 5px;\n  text-align: right;\n  color: #E48426;\n  font-size: 4vw;\n}\n.progress_barHeader {\n  text-align: center;\n  color: #E48426;\n  font-size: 4vw;\n}\n.numbers {\n  position: absolute;\n  color: #D0D9D9;\n  height: 11px;\n  width: 90vw;\n  overflow: hidden;\n  font-weight: bold;\n  line-height: 11px;\n}\n "],
-                        template: "\n<div class=\"progress_barHeader\">{{name|uppercase}}</div>\n<div class=\"progress_container\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
+                        template: "\n<div class=\"progress_barHeader\" (touchend)=\"navigate()\">{{name|uppercase}}</div>\n<div class=\"progress_container\" (touchend)=\"navigate()\">\n  <div class=\"progress_secondLine\" [style.width.%]=\"secondLine\">\n  </div>\n  <div class=\"progress_mainLine\" [style.width.%]=\"mainLine\">\n    <div class=\"numbers\">{{minNumber}} / {{maxNumber}}</div>\n  </div>\n\n</div>\n    "
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [router_1.Router])
                 ], ProgressBar);
                 return ProgressBar;
             }());

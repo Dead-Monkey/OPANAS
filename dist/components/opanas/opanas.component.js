@@ -108,18 +108,11 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._userServe.setFirstEnter();
                     this.date = this._calendarService.getCurrentDate();
                 };
-                //replace this 2 userPage;
-                OpanasComponent.prototype.goEn = function () {
-                    this._translator.setCurrentLanguage('en');
-                };
-                OpanasComponent.prototype.goRu = function () {
-                    this._translator.setCurrentLanguage('ru');
+                OpanasComponent.prototype.ngAfterContentChecked = function () {
+                    this.date = this._calendarService.getCurrentDate();
                 };
                 OpanasComponent.prototype.goCalendar = function () {
                     this._router.navigate(['Calendar']);
-                };
-                OpanasComponent.prototype.ngAfterContentChecked = function () {
-                    this.date = this._calendarService.getCurrentDate();
                 };
                 OpanasComponent = __decorate([
                     core_1.Component({
