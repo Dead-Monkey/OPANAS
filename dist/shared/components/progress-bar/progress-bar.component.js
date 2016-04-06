@@ -26,6 +26,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                     this._router = _router;
                     this.maxNumber = 0;
                     this.minNumber = 0;
+                    this.goSettings = false;
                 }
                 ProgressBar.prototype.ngOnChanges = function (changes) {
                     if (changes['mainLine']) {
@@ -56,7 +57,9 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                     }
                 };
                 ProgressBar.prototype.navigate = function () {
-                    this._router.navigate(['User']);
+                    if (this.goSettings) {
+                        this._router.navigate(['User']);
+                    }
                 };
                 __decorate([
                     core_1.Input(), 
@@ -78,6 +81,10 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                     core_1.Input(), 
                     __metadata('design:type', Number)
                 ], ProgressBar.prototype, "minNumber", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', Boolean)
+                ], ProgressBar.prototype, "goSettings", void 0);
                 ProgressBar = __decorate([
                     core_1.Component({
                         selector: 'fm-progress-bar',

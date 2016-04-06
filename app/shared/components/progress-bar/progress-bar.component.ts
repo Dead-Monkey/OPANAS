@@ -75,6 +75,7 @@ export class ProgressBar implements OnChanges {
     @Input() private secondLine: number;
     @Input() private maxNumber: number = 0;
     @Input() private minNumber: number = 0;
+    @Input() private goSettings: boolean = false;
     constructor(private _router: Router) { }
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         if (changes['mainLine']) {
@@ -108,7 +109,9 @@ export class ProgressBar implements OnChanges {
 
     }
     navigate() {
+      if(this.goSettings){
         this._router.navigate(['User'])
+      }
     }
 
 }

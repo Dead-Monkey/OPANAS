@@ -171,10 +171,10 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     `],
     template: `
 <op-plus [iAm]="'food'" [(isOpen)]="plusIsOpen"></op-plus>
-<fm-progress-bar  [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
-<fm-progress-bar [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
-<fm-progress-bar [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
-<fm-progress-bar [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
+<fm-progress-bar [goSettings]="true" [name]="'calories'|translate" [mainLine]="totalFood.calories.full / userSets.calories.full * 100" [secondLine]="totalFood.calories.maybe / userSets.calories.full * 100" [minNumber]="totalFood.calories.full" [maxNumber]="userSets.calories.full"></fm-progress-bar>
+<fm-progress-bar [goSettings]="true" [name]="'protein'|translate" [mainLine]="totalFood.protein.full / userSets.protein.full * 100" [secondLine]="totalFood.protein.maybe / userSets.protein.full * 100" [minNumber]="totalFood.protein.full" [maxNumber]="userSets.protein.full"></fm-progress-bar>
+<fm-progress-bar [goSettings]="true" [name]="'fat'|translate" [mainLine]="totalFood.fat.full / userSets.fat.full * 100" [secondLine]="totalFood.fat.maybe / userSets.fat.full * 100" [minNumber]="totalFood.fat.full" [maxNumber]="userSets.fat.full"></fm-progress-bar>
+<fm-progress-bar [goSettings]="true" [name]="'carbohydrates'|translate" [mainLine]="totalFood.carbohydrates.full / userSets.carbohydrates.full * 100" [secondLine]="totalFood.carbohydrates.maybe / userSets.carbohydrates.full * 100" [minNumber]="totalFood.carbohydrates.full" [maxNumber]="userSets.carbohydrates.full"></fm-progress-bar>
 
 <form class="food_form" (ngSubmit)="onSubmit(foodForm)" #foodForm="ngForm">
 
