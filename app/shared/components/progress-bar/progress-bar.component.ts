@@ -58,7 +58,7 @@ import {Router}from 'angular2/router';
  `],
     template: `
 <div class="progress_barHeader" (touchend)="navigate()">{{name|uppercase}}</div>
-<div class="progress_container" (touchend)="navigate()">
+<div class="progress_container" [style.border-color]="(minNumber > maxNumber)?'red':''" (touchend)="navigate()">
   <div class="progress_secondLine" [style.width.%]="secondLine">
   </div>
   <div class="progress_mainLine" [style.width.%]="mainLine">
