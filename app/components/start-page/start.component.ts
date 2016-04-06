@@ -1,11 +1,11 @@
 import {Component} from 'angular2/core';
-import {ROUTER_DIRECTIVES}from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router}from 'angular2/router';
 
 @Component({
     selector: 'op-start',
     directives: [ROUTER_DIRECTIVES],
     providers: [],
-    pipes:[],
+    pipes: [],
     styles: [`
   .startPage_navigator {
     position: absolute;
@@ -45,19 +45,25 @@ import {ROUTER_DIRECTIVES}from 'angular2/router';
       `],
     template: `
     <nav class="startPage_navigator">
-      <a [routerLink]="['Food']">
+      <div (touchend)="toggle('Food')">
         <div class="startPage_food startPage_Buttons"></div>
-      </a>
-      <a [routerLink]="['Sport']">
+      </div>
+      <div (touchend)="toggle('Sport')">
         <div class="startPage_Buttons startPage_sport"></div>
-      </a>
-      <!-- <a [routerLink]="['Rest']">
+      </div>
+      <!-- <div (touchend)="toggle('Rest')">
         <div class="startPage_Buttons startPage_rest"></div>
-      </a> -->
-      <a [routerLink]="['User']">
+      </div> -->
+      <div (touchend)="toggle('User')">
         <div class="startPage_Buttons startPage_user"></div>
-      </a>
+      </div>
     </nav>
     `
 })
-export class StartComponent { }
+export class StartComponent {
+    constructor(private _router: Router) {
+    }
+    toggle(route){
+      this._router.navigate([route])
+    }
+}

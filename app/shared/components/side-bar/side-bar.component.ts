@@ -114,21 +114,21 @@ import {TranslatePipe} from '../../services/translate/translate.service';
 <div *ngIf="!isOpen" class="sideBar_toggle" (click)="toggle()"></div>
 
 <div class="sideBarContainer" [ngClass]="{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}" [style.transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" [style.-webkit-transform]="pushClass?'':'translate3d('+lastTouch+'px,0,0)'" (touchmove)="swipe($event)" (touchend)="swipe($event)">
-  <a class="sidebar_foodButton sidebar_button" (touchend)="toggle('Food')">
+  <div class="sidebar_foodButton sidebar_button" (touchend)="toggle('Food')">
     <p>{{'food' | translate}}</p>
-  </a>
-  <a class="sidebar_sportButton sidebar_button" (touchend)="toggle('Sport')">
+  </div>
+  <div class="sidebar_sportButton sidebar_button" (touchend)="toggle('Sport')">
     <p>{{'sport' | translate}}</p>
-  </a>
-  <!-- <a class="sidebar_restButton sidebar_button" (touchend)="toggle('Rest')">
+  </div>
+  <!-- <div class="sidebar_restButton sidebar_button" (touchend)="toggle('Rest')">
     <p>{{'rest' | translate}}</p>
-  </a> -->
-  <a class="sidebar_calendarButton sidebar_button" (touchend)="toggle('Calendar')">
+  </div> -->
+  <div class="sidebar_calendarButton sidebar_button" (touchend)="toggle('Calendar')">
     <p>{{'calendar' | translate}}</p>
-  </a>
-  <a class="sidebar_userButton sidebar_button" (touchend)="toggle('User')">
+  </div>
+  <div class="sidebar_userButton sidebar_button" (touchend)="toggle('User')">
     <p>{{'settings' | translate}}</p>
-  </a>
+  </div>
 </div>
 <div class="sideBarSwipePlace" #swipePlace [style.opacity]="shadowOpacity" [ngClass]="{sideBarSwipePlaceBig: isOpen}" (touchmove)="swipe($event)" (touchend)="swipe($event)"></div>
 

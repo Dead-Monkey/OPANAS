@@ -22,8 +22,12 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
             }],
         execute: function() {
             StartComponent = (function () {
-                function StartComponent() {
+                function StartComponent(_router) {
+                    this._router = _router;
                 }
+                StartComponent.prototype.toggle = function (route) {
+                    this._router.navigate([route]);
+                };
                 StartComponent = __decorate([
                     core_1.Component({
                         selector: 'op-start',
@@ -31,9 +35,9 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1, contex
                         providers: [],
                         pipes: [],
                         styles: ["\n  .startPage_navigator {\n    position: absolute;\n  width: 30vw;\n  display: flex;\n  top: 0;\n  justify-content: center;\n  flex-direction: column;\n  height: 100vh;\n  left: 35vw;\n  overflow: hidden;\n  }\n  .startPage_Buttons {\n    position: relative;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n  margin-top: 5vw;\n  margin-bottom: 5vw;\n  }\n  .startPage_food {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_sport {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_rest {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_user {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n      "],
-                        template: "\n    <nav class=\"startPage_navigator\">\n      <a [routerLink]=\"['Food']\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </a>\n      <a [routerLink]=\"['Sport']\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </a>\n      <!-- <a [routerLink]=\"['Rest']\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </a> -->\n      <a [routerLink]=\"['User']\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </a>\n    </nav>\n    "
+                        template: "\n    <nav class=\"startPage_navigator\">\n      <div (touchend)=\"toggle('Food')\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </div>\n      <div (touchend)=\"toggle('Sport')\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </div>\n      <!-- <div (touchend)=\"toggle('Rest')\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </div> -->\n      <div (touchend)=\"toggle('User')\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </div>\n    </nav>\n    "
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [router_1.Router])
                 ], StartComponent);
                 return StartComponent;
             }());
