@@ -17,6 +17,7 @@ export class RefreshDateService {
         this.tomorrow.setHours(0, 0, 0, 0);
         this.tomorrow.setDate(this.today.getDate() + 1);
         this.timer = this.tomorrow.getTime() - this.today.getTime();
+        console.log(`timer ${Math.floor(this.timer/1000/60/60)} hours ${Math.floor(this.timer/1000/60%60)} minutes ${Math.floor(this.timer/1000-Math.floor(this.timer/1000/60)*60)} seconds`);
     }
 
     refresher() {

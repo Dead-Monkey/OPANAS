@@ -68,6 +68,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
         execute: function() {
             OpanasComponent = (function () {
                 function OpanasComponent(_translator, _calendarService, _refreshDateService, _userServe, _AdMobServe, _router) {
+                    var _this = this;
                     this._translator = _translator;
                     this._calendarService = _calendarService;
                     this._refreshDateService = _refreshDateService;
@@ -75,6 +76,15 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._AdMobServe = _AdMobServe;
                     this._router = _router;
                     this.sideBarIsOpen = false;
+                    this.route = {
+                        'start': '',
+                        'prev': '',
+                        'current': ''
+                    };
+                    this._router.subscribe(function (val) {
+                        _this.route['current'] = val;
+                        console.log(_this._router.hostComponent.name);
+                    });
                 }
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
@@ -89,7 +99,13 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         _this._AdMobServe.prepareInterstitialFirst();
                         setTimeout(function () { return _this._AdMobServe.showInterstitialFirst(); }, 20000);
                     };
+                    var onBackKeyDown = function () {
+                        _this._router.navigate(['Start']);
+                        // this.route['prev'] = this.route['current'];
+                        console.log("back");
+                    };
                     document.addEventListener("deviceready", onDeviceReady, false);
+                    document.addEventListener("backbutton", onBackKeyDown, true);
                     //refresh-date
                     this._refreshDateService.refresher();
                     //translator config

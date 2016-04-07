@@ -68,7 +68,17 @@ import {AdMobService} from '../../services/admob/admob.service';
 export class OpanasComponent implements OnInit {
     private sideBarIsOpen: boolean = false;
     private date;
-    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) { }
+    private route = {
+        'start':'',
+        'prev': '',
+        'current': ''
+    }
+    constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) {
+        this._router.subscribe((val) => {
+            this.route['current'] = val;
+            console.log(this._router.hostComponent.name);
+        })
+    }
     //config app
     ngOnInit() {
         //cordova plugins setup
@@ -81,8 +91,13 @@ export class OpanasComponent implements OnInit {
             this._AdMobServe.prepareInterstitialFirst();
             setTimeout(() => this._AdMobServe.showInterstitialFirst(), 20000)
         }
+        let onBackKeyDown = () => {
+            this._router.navigate(['Start'])
+            // this.route['prev'] = this.route['current'];
+            console.log(`back`);
+        }
         document.addEventListener("deviceready", onDeviceReady, false);
-
+        document.addEventListener("backbutton", onBackKeyDown, true);
         //refresh-date
         this._refreshDateService.refresher();
         //translator config
@@ -104,7 +119,7 @@ export class OpanasComponent implements OnInit {
         this.date = this._calendarService.getCurrentDate()
     }
     ngAfterContentChecked() {
-      this.date = this._calendarService.getCurrentDate()
+        this.date = this._calendarService.getCurrentDate()
     }
     goCalendar() {
         this._router.navigate(['Calendar'])
@@ -166,7 +181,7 @@ let keysVendor: Object = {
         'point': 'Point',
         'ccal': 'ccal',
         'name': 'Name',
-        'menu':'menu'
+        'menu': 'menu'
 
     },
 
@@ -218,7 +233,7 @@ let keysVendor: Object = {
         'point': 'Цель',
         'ccal': 'ккал',
         'name': 'Название',
-        'menu':'меню'
+        'menu': 'меню'
 
 
     }
