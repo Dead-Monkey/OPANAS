@@ -23,31 +23,36 @@ import {AdMobService} from '../../services/admob/admob.service';
         { useClass: HashLocationStrategy }), TranslateService, FoodService, SportService, CalendarService, RefreshDateService, StorageService, UserService, AdMobService],
     pipes: [TranslatePipe],
     styles: [`
-    .header{
-    height: 15vw;
-    width: 100vw;
+    .header {
+      height: 15vw;
+      width: 100vw;
     }
-		.container {
+    .container {
       background: url(./src/img/tempBackground.png) no-repeat center center;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
     }
-    .calendar{
-      position:absolute;
-      width:20vw;
-      height:10vw;
-      left:40vw;
-      background-color:blue;
-      z-index:10;
+    .calendar {
+      position: absolute;
+      width: 24vw;
+      height: 6vw;
+      left: 38vw;
+      margin-top: 2vw;
+      color: #ff9d2d;
+      font-size: 19px;
+      z-index: 10;
+      border-top: 2px solid #ff9d2d;
+    border-bottom: 2px solid #ff9d2d;
+      text-align: center;
     }
   `],
     template: `
 <div class="container">
 
   <div class="header">
-  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date|date:"MM"}}///{{date|date:"dd"}}///{{date|date:"yy"}}</div>
-  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date|date:"dd"}}///{{date|date:"MM"}}///{{date|date:"yy"}}</div>
+  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date|date:"MM"}}/{{date|date:"dd"}}/{{date|date:"yy"}}</div>
+  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date|date:"dd"}}/{{date|date:"MM"}}/{{date|date:"yy"}}</div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>

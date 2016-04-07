@@ -302,7 +302,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 {
                     "name": {
                         "en": "low-incline barbell bench press",
-                        "ru": "жим лежа на наклонной скамье(положительной)"
+                        "ru": "жим лежа на наклонной скамье (положительной)"
                     },
                     "custom": false,
                     "calories": 0
@@ -326,7 +326,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 {
                     "name": {
                         "en": "incline dumbbell press",
-                        "ru": "жим гантелей на наклонной скамье(положительной)"
+                        "ru": "жим гантелей на наклонной скамье (положительной)"
                     },
                     "custom": false,
                     "calories": 0
