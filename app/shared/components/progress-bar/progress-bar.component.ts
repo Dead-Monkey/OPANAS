@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
+import {Router}from 'angular2/router';
 
 
 @Component({
@@ -56,8 +57,8 @@ import {Component, Input, OnChanges, SimpleChange} from 'angular2/core';
 }
  `],
     template: `
-<div class="progress_barHeader">{{name|uppercase}}</div>
-<div class="progress_container">
+<div class="progress_barHeader" (touchend)="navigate()">{{name|uppercase}}</div>
+<div class="progress_container" [style.border-color]="(minNumber > maxNumber)?'red':''" (touchend)="navigate()">
   <div class="progress_secondLine" [style.width.%]="secondLine">
   </div>
   <div class="progress_mainLine" [style.width.%]="mainLine">
@@ -74,7 +75,8 @@ export class ProgressBar implements OnChanges {
     @Input() private secondLine: number;
     @Input() private maxNumber: number = 0;
     @Input() private minNumber: number = 0;
-
+    @Input() private goSettings: boolean = false;
+    constructor(private _router: Router) { }
     ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
         if (changes['mainLine']) {
             if (isNaN(changes['mainLine'].currentValue)) {
@@ -105,6 +107,11 @@ export class ProgressBar implements OnChanges {
             }
         }
 
+    }
+    navigate() {
+      if(this.goSettings){
+        this._router.navigate(['User'])
+      }
     }
 
 }

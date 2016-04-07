@@ -11,7 +11,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
 
 @Component({
     selector: 'op-sport',
-    directives: [ProgressBar, PlusComponent,SwipeDeleteSideDirective],
+    directives: [ProgressBar, PlusComponent, SwipeDeleteSideDirective],
     providers: [],
     pipes: [TranslatePipe, SimpleSearch],
     styles: [`
@@ -241,10 +241,14 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     width: 8vw;
   }
   .clockFace_hours {
-    /*margin-left: 8vw;*/
-    width: 16vw;
+    width: 12vw;
     text-align: right;
   }
+  .clockFace_mseconds {
+    font-size: 5vw;
+    padding-top: 1px;
+  }
+
   .sport_listItemContainer{
     position:relative;
     min-height: 16vw;
@@ -262,7 +266,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   <div class="clockFace">
       <div class="clockFace_numbers clockFace_hours">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>
       <div class="clockFace_numbers">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>
-      <div class="clockFace_numbers">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}</div>
+      <div class="clockFace_numbers">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}:</div>
+      <div class="clockFace_numbers clockFace_mseconds">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>
   </div>
   <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'start'| translate}}</div>
   <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle()">{{'stop'| translate}}</div>
@@ -328,10 +333,11 @@ export class SportComponent implements OnInit {
     };
 
     private stopwatch: Object = {
-      'hours':0,
-      'minutes':0,
-      'seconds': 0
-        };
+        'hours': 0,
+        'minutes': 0,
+        'seconds': 0,
+        'mseconds': 0
+    };
     private stopwatchVendor;
     private stopwatchBussy = false;
 
@@ -359,9 +365,9 @@ export class SportComponent implements OnInit {
         }
 
         this.pickedSport = <Sport>{};
-        setTimeout(()=>{
-          this.model = {};
-        },0)
+        setTimeout(() => {
+            this.model = {};
+        }, 0)
         this.correctSport = false;
     }
 
@@ -471,17 +477,21 @@ export class SportComponent implements OnInit {
     stopwatchToggle() {
         if (!this.stopwatchBussy) {
             this.stopwatchVendor = setInterval(() => {
-              this.stopwatch['seconds']++
-          if (this.stopwatch['seconds'] === 60) {
-              this.stopwatch['minutes']++;
-              this.stopwatch['seconds'] = 0;
-          }
-          if (this.stopwatch['minutes'] === 60) {
-              this.stopwatch['hours']++;
-              this.stopwatch['minutes'] = 0;
-          }
+                this.stopwatch['mseconds']++
+                if (this.stopwatch['mseconds'] === 100) {
+                    this.stopwatch['seconds']++
+                    this.stopwatch['mseconds'] = 0
+                }
+                if (this.stopwatch['seconds'] === 60) {
+                    this.stopwatch['minutes']++;
+                    this.stopwatch['seconds'] = 0;
+                }
+                if (this.stopwatch['minutes'] === 60) {
+                    this.stopwatch['hours']++;
+                    this.stopwatch['minutes'] = 0;
+                }
             }
-              , 1000);
+                , 10);
 
         } else {
             clearInterval(this.stopwatchVendor);
@@ -492,7 +502,7 @@ export class SportComponent implements OnInit {
 
     stopwatchReset() {
         for (let key in this.stopwatch) {
-          this.stopwatch[key] = 0;
+            this.stopwatch[key] = 0;
         }
     }
     stopwatchBussyToggle() {

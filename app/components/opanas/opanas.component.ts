@@ -39,6 +39,7 @@ import {AdMobService} from '../../services/admob/admob.service';
       height:10vw;
       left:40vw;
       background-color:blue;
+      z-index:10;
     }
   `],
     template: `
@@ -102,23 +103,13 @@ export class OpanasComponent implements OnInit {
 
         this.date = this._calendarService.getCurrentDate()
     }
-
-    //replace this 2 userPage;
-    goEn() {
-        this._translator.setCurrentLanguage('en');
-    }
-    goRu() {
-        this._translator.setCurrentLanguage('ru');
+    ngAfterContentChecked() {
+      this.date = this._calendarService.getCurrentDate()
     }
     goCalendar() {
         this._router.navigate(['Calendar'])
     }
-    ngAfterContentChecked() {
-        this.date = this._calendarService.getCurrentDate()
-    }
-
 }
-
 
 let languages: Object = {
     'en': 'english',
