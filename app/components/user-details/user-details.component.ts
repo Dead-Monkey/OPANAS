@@ -141,11 +141,11 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
     <div class="user_nameInput">
       {{'language'|translate}}
     </div>
-    <div (click)="changeLang('en')" class="user_langName">
+    <div (touchend)="changeLang('en')" class="user_langName">
       <div class="user_langEnIcon"></div>
       <div class="user_langText">English</div>
     </div>
-    <div (click)="changeLang('ru')" class="user_langName">
+    <div (touchend)="changeLang('ru')" class="user_langName">
       <div class="user_langRuIcon"></div>
       <div class="user_langText">Russian</div>
     </div>

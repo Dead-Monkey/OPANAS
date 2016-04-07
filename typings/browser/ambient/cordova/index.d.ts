@@ -27,7 +27,7 @@ interface Cordova {
     /** Access a Cordova module by name. */
     require(moduleName: string): any;
     /** Namespace for Cordova plugin functionality */
-    plugins:CordovaPlugins;
+    plugins:any;
 }
 
 interface CordovaPlugins {}

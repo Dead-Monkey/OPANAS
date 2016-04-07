@@ -20,8 +20,20 @@ System.register(['angular2/core'], function(exports_1, context_1) {
         execute: function() {
             RefreshDateService = (function () {
                 function RefreshDateService() {
+                    var _this = this;
                     this.today = new Date();
                     this.timerMaker();
+                    this.refresher();
+                    document.addEventListener("deviceready", function () {
+                        cordova.plugins.backgroundMode.onactivate = function () {
+                            clearTimeout(_this.go);
+                            _this.refresher();
+                        };
+                        cordova.plugins.backgroundMode.ondeactivate = function () {
+                            clearTimeout(_this.go);
+                            _this.refresher();
+                        };
+                    }, false);
                 }
                 RefreshDateService.prototype.timerMaker = function () {
                     this.today = new Date();
@@ -32,7 +44,7 @@ System.register(['angular2/core'], function(exports_1, context_1) {
                     console.log("timer " + Math.floor(this.timer / 1000 / 60 / 60) + " hours " + Math.floor(this.timer / 1000 / 60 % 60) + " minutes " + Math.floor(this.timer / 1000 - Math.floor(this.timer / 1000 / 60) * 60) + " seconds");
                 };
                 RefreshDateService.prototype.refresher = function () {
-                    setTimeout(function () {
+                    this.go = setTimeout(function () {
                         location.reload();
                     }, this.timer);
                 };

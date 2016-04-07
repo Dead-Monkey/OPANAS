@@ -74,10 +74,6 @@ export class OpanasComponent implements OnInit {
         'current': ''
     }
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) {
-        this._router.subscribe((val) => {
-            this.route['current'] = val;
-            console.log(this._router.hostComponent.name);
-        })
     }
     //config app
     ngOnInit() {
@@ -85,21 +81,18 @@ export class OpanasComponent implements OnInit {
         let onDeviceReady = () => {
             //keepAwake screen
             window.plugins.insomnia.keepAwake()
+            //backgound mode
+            cordova.plugins.backgroundMode.enable();
             //AdMob
-            // this._AdMobServe.createBottomBanerFirst();
             this._AdMobServe.createInterstitialFirst();
             this._AdMobServe.prepareInterstitialFirst();
             setTimeout(() => this._AdMobServe.showInterstitialFirst(), 20000)
         }
         let onBackKeyDown = () => {
             this._router.navigate(['Start'])
-            // this.route['prev'] = this.route['current'];
-            console.log(`back`);
         }
         document.addEventListener("deviceready", onDeviceReady, false);
         document.addEventListener("backbutton", onBackKeyDown, true);
-        //refresh-date
-        this._refreshDateService.refresher();
         //translator config
         this._translator.setSupportLanguages(languages);
         this._translator.setKeys(keysVendor);

@@ -267,7 +267,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       <div class="clockFace_numbers clockFace_hours">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>
       <div class="clockFace_numbers">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>
       <div class="clockFace_numbers">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}:</div>
-      <div class="clockFace_numbers clockFace_mseconds">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>
+      <div class="clockFace_numbers">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>
   </div>
   <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'start'| translate}}</div>
   <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle()">{{'stop'| translate}}</div>
@@ -352,6 +352,18 @@ export class SportComponent implements OnInit {
         for (let variable of this.pickedSportContainer) {
             this.calculateTotalSportInit(variable);
         }
+        document.addEventListener("deviceready", () => {
+            cordova.plugins.backgroundMode.onactivate = () => {
+                cordova.plugins.backgroundMode.configure({
+                    text: 'stopwatch'
+                });
+                this.stopwatchToggle()
+            }
+            cordova.plugins.backgroundMode.ondeactivate = () => {
+                this.stopwatchToggle()
+            };
+        }, false);
+
     }
 
     onSubmit(sport) {
