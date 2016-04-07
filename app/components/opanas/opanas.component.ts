@@ -83,6 +83,7 @@ export class OpanasComponent implements OnInit {
             window.plugins.insomnia.keepAwake()
             //backgound mode
             cordova.plugins.backgroundMode.enable();
+            cordova.plugins.backgroundMode.setDefaults({ text:'waiting for you :-)'});
             //AdMob
             this._AdMobServe.createInterstitialFirst();
             this._AdMobServe.prepareInterstitialFirst();

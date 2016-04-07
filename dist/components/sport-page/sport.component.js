@@ -66,7 +66,6 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                     this.stopwatchBussy = false;
                 }
                 SportComponent.prototype.ngOnInit = function () {
-                    var _this = this;
                     this.currentDate = this._calendarService.getCurrentDate();
                     this.language = this._userServe.getLanguage();
                     this.userSets = this._userServe.getUserSets()['sport'];
@@ -81,11 +80,11 @@ System.register(['angular2/core', '../../shared/services/translate/translate.ser
                             cordova.plugins.backgroundMode.configure({
                                 text: 'stopwatch'
                             });
-                            _this.stopwatchToggle();
+                            // this.stopwatchToggle()
                         };
-                        cordova.plugins.backgroundMode.ondeactivate = function () {
-                            _this.stopwatchToggle();
-                        };
+                        // cordova.plugins.backgroundMode.ondeactivate = () => {
+                        //     this.stopwatchToggle()
+                        // };
                     }, false);
                 };
                 SportComponent.prototype.onSubmit = function (sport) {

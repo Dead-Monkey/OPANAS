@@ -359,11 +359,11 @@ export class SportComponent implements OnInit {
                 cordova.plugins.backgroundMode.configure({
                     text: 'stopwatch'
                 });
-                this.stopwatchToggle()
+                // this.stopwatchToggle()
             }
-            cordova.plugins.backgroundMode.ondeactivate = () => {
-                this.stopwatchToggle()
-            };
+            // cordova.plugins.backgroundMode.ondeactivate = () => {
+            //     this.stopwatchToggle()
+            // };
         }, false);
 
     }
