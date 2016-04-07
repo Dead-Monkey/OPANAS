@@ -74,13 +74,13 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;;
   width: 100vw;
   padding-left: 10vw;
-  top: 90vw;
+  top: 87vw;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .listItemName {
-  position: absolute;
-  top: 80vw;
+  position: relative;
+  top: 2vw;
   padding-left: 10vw;
     width: 78vw;
   height: 10vw;
@@ -408,7 +408,7 @@ margin-bottom: 2vw;
 .create_list {
   position: relative;
   margin-top: 3vw;
-  padding-left: 5vw;
+  padding-left: 10vw;
   width: 95vw;
   bottom: 1px;
   overflow-y: scroll;
@@ -564,6 +564,50 @@ margin-left: 5vw;
 color: #ff9d2d;
 line-height: 8vw;
 }
+.paste_list {
+ position: absolute;
+ width: 100vw;
+ height: 161vw;
+ overflow-x: hidden;
+ overflow-y: scroll;
+}
+.paste_listItem {
+  float: left;
+  margin-left: 10vw;
+margin-bottom: 2vw;
+height: 10vw;
+width: 57vw;
+line-height: 8vw;
+box-sizing: border-box;
+background-color: #3f414a;
+color: #ff9d2d;
+font-size: 6vw;
+text-align: center;
+border-radius: 7px;
+border: 2px solid #ff9d2d;
+}
+.paste_vievIcon {
+    width: 10vw;
+    height: 10vw;
+    float: left;
+    overflow: hidden;
+    margin-left: 2vw;
+    background: url('./src/img/wrench.png') no-repeat center center;
+    background-size: cover;
+}
+.paste_goIcon {
+  width: 10vw;
+  height: 10vw;
+  float: left;
+  overflow: hidden;
+  margin-left: 2vw;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: #ff9d2d;
+  text-align: center;
+  line-height: 9vw;
+}
     `],
     template: `
 
@@ -647,7 +691,7 @@ line-height: 8vw;
     <div *ngIf="createMenu" class="create_listItemName">
       {{modelMenu.menuName}}
     </div>
-    <div class="list createListMove">
+    <div class="create_list">
       <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeFoodMenu(modelMenu.menuName,i)">
         <div class="create_listItem">{{item?.name[language]}} </div>
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
@@ -658,17 +702,18 @@ line-height: 8vw;
   <!-- Список созданных меню -->
   <div *ngIf="pasteMenu">
 
-    <div class="pasteListMove">
+    <div class="paste_list">
       <div class="listItemName">{{'choose.menu' | translate}}</div>
-    </div>
     <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
-      <div class="create_listItemName">
-        {{item['name']}} <span (click)="viewMenuDetail(item)">VIEW</span> <span (click)="pasteMenuToDay(item)">GO</span>
+      <div class="paste_listItemName">
+        <div class="paste_listItem">{{item['name']}}</div>
+        <span class="paste_vievIcon" (click)="viewMenuDetail(item)"></span>
+        <span class="paste_goIcon" (click)="pasteMenuToDay(item)">GO</span>
       </div>
     </div>
   </div>
 
-
+    </div>
 </div>
 
 <!-- ******************** -->
@@ -676,7 +721,7 @@ line-height: 8vw;
 <!-- ******************** -->
 
 
-<!-- Плюсбар в Food -->
+<!-- Плюсбар в Sport -->
 <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
@@ -752,13 +797,15 @@ line-height: 8vw;
 
   <!-- выбрать тренировку-->
   <div *ngIf="pasteTrain">
-    <div class="pasteListMove">
-      <div class="listItemName">{{'choose.menu' | translate}}</div>
-    </div>
-    <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
-      <div class="createTrain_listItem">
-        {{item['name']}} <span (click)="viewTrainDetail(item)">VIEW</span> <span (click)="pasteTrainToDay(item)">GO</span>
+    <div class="paste_list">
+      <div class="listItemName">{{'choose.training' | translate}}</div>
+        <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
+      <div class="paste_listItemName">
+        <div class="paste_listItem">{{item['name']}} </div>
+        <span class="paste_vievIcon" (click)="viewTrainDetail(item)"></span>
+         <span class="paste_goIcon" (click)="pasteTrainToDay(item)">GO</span>
       </div>
+    </div>
     </div>
   </div>
 </div>
