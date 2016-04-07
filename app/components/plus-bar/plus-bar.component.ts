@@ -59,7 +59,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .listItem {
   float:left;
   margin-bottom: 2vw;
-  height: 10vw;
+  min-height: 10vw;
   width: 80vw;
   line-height: 8vw;
   box-sizing: border-box;
@@ -454,7 +454,7 @@ margin-bottom: 2vw;
   width: 100vw;
   height: 121vw;
   padding-left: 10vw;
-  top: 40vw;
+  top: 45vw;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -531,10 +531,9 @@ margin-bottom: 2vw;
 }
 .createTrain_listItemName {
   position: absolute;
-    top: 32vw;
     padding-left: 10vw;
     width: 80vw;
-    height: 10vw;
+    min-height: 10vw;
     text-align: center;
     font-size: 6vw;
     color: #ff9d2d;
@@ -573,9 +572,9 @@ line-height: 8vw;
 }
 .paste_listItem {
   float: left;
+  min-height: 10vw;
   margin-left: 10vw;
 margin-bottom: 2vw;
-height: 10vw;
 width: 57vw;
 line-height: 8vw;
 box-sizing: border-box;
@@ -705,11 +704,11 @@ border: 2px solid #ff9d2d;
     <div class="paste_list">
       <div class="listItemName">{{'choose.menu' | translate}}</div>
     <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
-      <div class="paste_listItemName">
+      <!-- <div class="paste_listItemName"> -->
         <div class="paste_listItem">{{item['name']}}</div>
         <span class="paste_vievIcon" (click)="viewMenuDetail(item)"></span>
         <span class="paste_goIcon" (click)="pasteMenuToDay(item)">GO</span>
-      </div>
+      <!-- </div> -->
     </div>
   </div>
 
@@ -722,7 +721,7 @@ border: 2px solid #ff9d2d;
 
 
 <!-- Плюсбар в Sport -->
-<div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
+<div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain || pasteTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
     <div class="plusBar_list1Btn" (click)="createExerciseToggle()">
