@@ -116,6 +116,8 @@ System.register(['angular2/core', '../../services/food/food.service', '../../ser
                 };
                 PlusComponent.prototype.onSubmitTrain = function () {
                     this.pickedSportTrain['picked'] = false;
+                    this.pickedSportTrain['setsToggle'] = true;
+                    this.pickedSportTrain['sets'] = [{ 'picked': false }];
                     this.sportTrainContainer.unshift(this.pickedSportTrain);
                     this._sportServe.setUserTrain(this.modelTrain['trainName'], this.sportTrainContainer);
                     this.pickedSportTrain = {};
