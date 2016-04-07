@@ -138,6 +138,7 @@ System.register(['angular2/core', '../../services/food/food.service', '../../ser
                         var variable = _a[_i];
                         this._calendarServe.setDailySport(variable);
                     }
+                    this.toggle();
                 };
                 PlusComponent.prototype.viewTrainDetail = function (item) {
                     this.pasteTrainToggle();
@@ -199,6 +200,7 @@ System.register(['angular2/core', '../../services/food/food.service', '../../ser
                         var variable = _a[_i];
                         this._calendarServe.setDailyFood(variable);
                     }
+                    this.toggle();
                 };
                 PlusComponent.prototype.viewMenuDetail = function (item) {
                     this.pasteMenuToggle();

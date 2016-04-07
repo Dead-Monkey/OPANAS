@@ -3299,6 +3299,7 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                         var variable = _a[_i];
                         this._calendarServe.setDailySport(variable);
                     }
+                    this.toggle();
                 };
                 PlusComponent.prototype.viewTrainDetail = function (item) {
                     this.pasteTrainToggle();
@@ -3360,6 +3361,7 @@ System.register("components/plus-bar/plus-bar.component", ['angular2/core', "ser
                         var variable = _a[_i];
                         this._calendarServe.setDailyFood(variable);
                     }
+                    this.toggle();
                 };
                 PlusComponent.prototype.viewMenuDetail = function (item) {
                     this.pasteMenuToggle();

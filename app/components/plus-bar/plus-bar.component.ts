@@ -920,6 +920,7 @@ export class PlusComponent implements OnInit {
         for (let variable of item['sport']) {
             this._calendarServe.setDailySport(variable);
         }
+        this.toggle()
     }
     viewTrainDetail(item) {
         this.pasteTrainToggle();
@@ -983,6 +984,7 @@ export class PlusComponent implements OnInit {
         for (let variable of item['food']) {
             this._calendarServe.setDailyFood(variable);
         }
+        this.toggle()
     }
     viewMenuDetail(item) {
         this.pasteMenuToggle();
