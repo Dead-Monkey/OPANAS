@@ -69,6 +69,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   text-align: center;
   border-radius: 7px;
   border: 2px solid #ff9d2d;
+  overflow-x: hidden;
 }
 .foodListMove{
   position: absolute;;
@@ -317,6 +318,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 height: 10vw;
 margin-left: 5vw;
 width: 80vw;
+padding-left: 1vw;
 background-color: rgba(49, 51, 61, 0.3);
 box-sizing: border-box;
 border: 2px solid #0C1017;
@@ -460,13 +462,14 @@ margin-bottom: 2vw;
 }
 .create_listItemName {
   width: 80vw;
-  float:left;
-  height: 10vw;
+  float: left;
+  min-height: 10vw;
   text-align: center;
   font-size: 6vw;
   color: #ff9d2d;
   font-weight: bold;
   margin-left: 10vw;
+  overflow: hidden;
 }
 .pasteListMove {
   position: relative;
@@ -480,6 +483,7 @@ margin-bottom: 2vw;
 float: left;
 height: 10vw;
 width: 68vw;
+padding-left: 1vw;
 background-color: rgba(49, 51, 61, 0.3);
 box-sizing: border-box;
 border: 2px solid #0C1017;
@@ -528,6 +532,7 @@ margin-bottom: 2vw;
   font-size: 6vw;
   text-align: center;
   border-radius: 7px;
+  overflow: hidden;
 }
 .createTrain_listItemName {
   position: absolute;
@@ -584,6 +589,7 @@ font-size: 6vw;
 text-align: center;
 border-radius: 7px;
 border: 2px solid #ff9d2d;
+overflow-x: hidden;
 }
 .paste_vievIcon {
     width: 10vw;
@@ -606,6 +612,9 @@ border: 2px solid #ff9d2d;
   color: #ff9d2d;
   text-align: center;
   line-height: 9vw;
+}
+.toRight {
+  float: right;
 }
     `],
     template: `
@@ -675,7 +684,7 @@ border: 2px solid #ff9d2d;
 
       <input class="create_inputMenuName" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
       <label for="foodName"></label>
-      <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
+      <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(modelMenu.name)">
 
       <label for="foodWeight"></label>
       <input class="create_inputWeight" type="number" [min]="1" [placeholder]="('weight'|translate) + '...'" required [(ngModel)]="modelMenu.weight" #weight>
