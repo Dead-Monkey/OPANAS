@@ -59,9 +59,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .listItem {
   float:left;
   margin-bottom: 2vw;
-  height: 12vw;
+  height: 10vw;
   width: 80vw;
-  line-height: 11vw;
+  line-height: 8vw;
   box-sizing: border-box;
   background-color: #3f414a;
   color: #ff9d2d;
@@ -74,15 +74,15 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;;
   width: 100vw;
   padding-left: 10vw;
-  top: 90vw;
+  top: 87vw;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .listItemName {
-  position: absolute;
-  top: 80vw;
+  position: relative;
+  top: 2vw;
   padding-left: 10vw;
-    width: 80vw;
+    width: 78vw;
   height: 10vw;
   text-align: center;
   font-size: 6vw;
@@ -120,7 +120,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   margin-bottom: 2vw;
 }
 .food_inputFoodNameNutritions {
-  position: relative;
   font-size: 6vw;
   width: 40vw;
   height: 9vw;
@@ -131,7 +130,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   line-height: 8vw;
 }
 .food_inputFoodNutritions {
-  position: relative;
   float: left;
   height: 9vw;
   width: 20vw;
@@ -151,8 +149,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .food_inputButton_off {
   position: relative;
   float: left;
-  height: 12vw;
-  width: 12vw;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -162,8 +160,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .food_inputButton_on {
   position: relative;
   float: left;
-  height: 12vw;
-  width: 12vw;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -172,9 +170,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .sport_inputButton_off {
   position: relative;
-  float: right;
-  height: 12vw;
-  width: 12vw;
+  float: left;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -184,9 +182,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 
 .sport_inputButton_on {
   position: relative;
-  float: right;
-  height: 12vw;
-  width: 12vw;
+  float: left;
+  height: 10vw;
+  width: 10vw;
   background: url('./src/img/check-on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -207,7 +205,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .sport_inputSport{
   position: relative;
   float: left;
-  height: 12vw;
+  height: 10vw;
   width: 40vw;
   background-color: rgba(49, 51, 61, 0.3);
   box-sizing: border-box;
@@ -230,10 +228,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .createExercise{
   width: 100%;
   height: 100%
-}
-.sportBtnMove{
-  top:0;
-  right:33vw;
 }
 .plusBar_menuButtons {
   position: absolute;
@@ -311,13 +305,26 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .listItemContainer{
   position:relative;
-  min-height: 16vw;
-  width:90vw;
+  min-height: 13vw;
+  width:80vw;
   overflow:hidden;
 }
 
 /*Тут начинаются классы для кнопки Create Menu*/
 
+.create_inputMenuName {
+  position: relative;
+height: 10vw;
+margin-left: 5vw;
+width: 80vw;
+background-color: rgba(49, 51, 61, 0.3);
+box-sizing: border-box;
+border: 2px solid #0C1017;
+border-radius: 7px;
+font-size: 7vw;
+color: #ff9d2d;
+margin-bottom: 2vw;
+}
 .create_inputFood {
   position: absolute;
   height: 10vw;
@@ -327,7 +334,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   border: 2px solid #0C1017;
   border-radius: 7px;
   font-size: 6vw;
-  color: #D0D9D9;
+  color: #ff9d2d;
   top: 12vw;
   left: 5vw;
 }
@@ -342,7 +349,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   border: 2px solid #0C1017;
   border-radius: 7px;
   font-size: 6vw;
-  color: #D0D9D9;
+  color: #ff9d2d;
 }
 .create_inputButton_off {
   position: absolute;
@@ -401,7 +408,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 .create_list {
   position: relative;
   margin-top: 3vw;
-  padding-left: 5vw;
+  padding-left: 10vw;
   width: 95vw;
   bottom: 1px;
   overflow-y: scroll;
@@ -549,6 +556,58 @@ margin-bottom: 2vw;
     line-height: 10vw;
     border: 2px solid #ff9d2d;
 }
+.anomaliya {
+  font-size: 6vw;
+width: 40vw;
+height: 9vw;
+margin-left: 5vw;
+color: #ff9d2d;
+line-height: 8vw;
+}
+.paste_list {
+ position: absolute;
+ width: 100vw;
+ height: 161vw;
+ overflow-x: hidden;
+ overflow-y: scroll;
+}
+.paste_listItem {
+  float: left;
+  margin-left: 10vw;
+margin-bottom: 2vw;
+height: 10vw;
+width: 57vw;
+line-height: 8vw;
+box-sizing: border-box;
+background-color: #3f414a;
+color: #ff9d2d;
+font-size: 6vw;
+text-align: center;
+border-radius: 7px;
+border: 2px solid #ff9d2d;
+}
+.paste_vievIcon {
+    width: 10vw;
+    height: 10vw;
+    float: left;
+    overflow: hidden;
+    margin-left: 2vw;
+    background: url('./src/img/wrench.png') no-repeat center center;
+    background-size: cover;
+}
+.paste_goIcon {
+  width: 10vw;
+  height: 10vw;
+  float: left;
+  overflow: hidden;
+  margin-left: 2vw;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: #ff9d2d;
+  text-align: center;
+  line-height: 9vw;
+}
     `],
     template: `
 
@@ -615,8 +674,7 @@ margin-bottom: 2vw;
 
     <form class="create_form" (ngSubmit)="onSubmitMenu()">
 
-      <div class="food_inputFoodName">{{'meals.name' | translate}}</div>
-      <input class="food_inputFood" required [placeholder]="('menu'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
+      <input class="create_inputMenuName" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelMenu.menuName" #menuName (input)="searchMenu(menuName.value)">
       <label for="foodName"></label>
       <input class="create_inputFood" required [placeholder]="('search'|translate) + '...'" [(ngModel)]="modelMenu.name" #name (input)="pickFoodMenuInput(name.value)">
 
@@ -633,7 +691,7 @@ margin-bottom: 2vw;
     <div *ngIf="createMenu" class="create_listItemName">
       {{modelMenu.menuName}}
     </div>
-    <div class="list createListMove">
+    <div class="create_list">
       <div *ngFor="#item of foodMenuContainer; #i = index" (fmSwipeDeleteSide)="removeFoodMenu(modelMenu.menuName,i)">
         <div class="create_listItem">{{item?.name[language]}} </div>
         <input class="create_listWeight" type="number" min="0" required [(ngModel)]="item.weight" (blur)="changeFoodWeight(modelMenu.menuName, i, item.weight)">
@@ -644,17 +702,18 @@ margin-bottom: 2vw;
   <!-- Список созданных меню -->
   <div *ngIf="pasteMenu">
 
-    <div class="pasteListMove">
+    <div class="paste_list">
       <div class="listItemName">{{'choose.menu' | translate}}</div>
-    </div>
     <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
-      <div class="create_listItemName">
-        {{item['name']}} <span (click)="viewMenuDetail(item)">VIEW</span> <span (click)="pasteMenuToDay(item)">GO</span>
+      <div class="paste_listItemName">
+        <div class="paste_listItem">{{item['name']}}</div>
+        <span class="paste_vievIcon" (click)="viewMenuDetail(item)"></span>
+        <span class="paste_goIcon" (click)="pasteMenuToDay(item)">GO</span>
       </div>
     </div>
   </div>
 
-
+    </div>
 </div>
 
 <!-- ******************** -->
@@ -662,7 +721,7 @@ margin-bottom: 2vw;
 <!-- ******************** -->
 
 
-<!-- Плюсбар в Food -->
+<!-- Плюсбар в Sport -->
 <div class="container" *ngIf="isOpen && (iAm === 'sport')" [ngClass]="{containerFull: createExercise || createTrain}">
   <div *ngIf="listOptions" class="plusBar_menuButtons">
 
@@ -694,8 +753,8 @@ margin-bottom: 2vw;
     <form class="food_form">
       <label class="sport_inputSportName" for="name">{{'name' | translate}}:</label>
       <input class="sport_inputSport" required [(ngModel)]="modelSport.name" #name>
-      <div class="food_inputFoodNameNutritions food_inputButtonName ">{{'done' | translate}}</div>
-      <button type="submit" class="sportBtnMove" [ngClass]="{sport_inputButton_off: !checkForm(name.value), sport_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
+      <div class="anomaliya food_inputButtonName ">{{'done' | translate}}</div>
+      <button type="submit" [ngClass]="{food_inputButton_off: !checkForm(name.value), food_inputButton_on: checkForm(name.value) }" [disabled]="!checkForm(name.value)" (touchend)="onSubmitSport(name)"></button>
     </form>
 
 <div class="createExercise_listItemName">{{'added.exercise' | translate}}</div>
@@ -711,8 +770,7 @@ margin-bottom: 2vw;
 
     <form class="create_form" (ngSubmit)="onSubmitTrain()">
 
-      <div class="food_inputFoodName">Train name</div>
-      <input class="food_inputFood" required [placeholder]="('menuName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
+      <input class="create_inputMenuName" required [placeholder]="('trainingName'|translate) + '...'" [(ngModel)]="modelTrain.trainName" #trainName (input)="searchTrain(trainName.value)">
 
 
       <label for="sportName"></label>
@@ -739,13 +797,15 @@ margin-bottom: 2vw;
 
   <!-- выбрать тренировку-->
   <div *ngIf="pasteTrain">
-    <div class="pasteListMove">
-      <div class="listItemName">{{'choose.menu' | translate}}</div>
-    </div>
-    <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
-      <div class="createTrain_listItem">
-        {{item['name']}} <span (click)="viewTrainDetail(item)">VIEW</span> <span (click)="pasteTrainToDay(item)">GO</span>
+    <div class="paste_list">
+      <div class="listItemName">{{'choose.training' | translate}}</div>
+        <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
+      <div class="paste_listItemName">
+        <div class="paste_listItem">{{item['name']}} </div>
+        <span class="paste_vievIcon" (click)="viewTrainDetail(item)"></span>
+         <span class="paste_goIcon" (click)="pasteTrainToDay(item)">GO</span>
       </div>
+    </div>
     </div>
   </div>
 </div>

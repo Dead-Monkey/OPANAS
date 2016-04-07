@@ -100,8 +100,6 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     };
                     document.addEventListener("deviceready", onDeviceReady, false);
                     document.addEventListener("backbutton", onBackKeyDown, true);
-                    // //refresh-date
-                    // this._refreshDateService.refresher();
                     //translator config
                     this._translator.setSupportLanguages(languages);
                     this._translator.setKeys(keysVendor);
@@ -172,7 +170,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'create.food': 'Create food',
                     'create.menu': 'Create menu',
                     'choose.menu': 'Choose menu',
+                    'choose.training': 'Choose training',
                     'menuName': 'menu name',
+                    'trainingName': 'training name',
                     'set': 'set',
                     '+set': '+set',
                     'kg': 'kg',
@@ -221,7 +221,9 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'create.food': 'Добавить блюдо',
                     'create.menu': 'Создать новое меню',
                     'choose.menu': 'Выбрать меню',
+                    'choose.training': 'Выбрать тренировку',
                     'menuName': 'название меню',
+                    'trainingName': 'название тренировки',
                     'set': 'сет',
                     '+set': '+сет',
                     'kg': 'кг',

@@ -244,10 +244,10 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     width: 12vw;
     text-align: right;
   }
-  .clockFace_mseconds {
+  /*.clockFace_mseconds {
     font-size: 5vw;
     padding-top: 1px;
-  }
+  }*/
 
   .sport_listItemContainer{
     position:relative;
@@ -267,7 +267,9 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       <div class="clockFace_numbers clockFace_hours">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>
       <div class="clockFace_numbers">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>
       <div class="clockFace_numbers">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}:</div>
+
       <div class="clockFace_numbers">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>
+
   </div>
   <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'start'| translate}}</div>
   <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle()">{{'stop'| translate}}</div>
