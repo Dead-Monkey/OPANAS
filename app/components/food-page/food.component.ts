@@ -165,8 +165,9 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   }
   .food_listItemContainer{
     position:relative;
-    height: 16vw;
+    min-height: 14vw;
     width:90vw;
+    overflow: hidden;
   }
     `],
     template: `
