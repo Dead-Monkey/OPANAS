@@ -131,7 +131,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     margin-top: 2vw;
     margin-right: 2vw;
     height: 12vw;
-    width: 15vw;
+    width: 14vw;
     line-height: 12vw;
     background-color: #3f414a;
     box-sizing: border-box;
@@ -152,8 +152,6 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
-    border: 2px solid #ff9d2d;
-    border-radius: 50%;
     color: #0d0e15;
     border-radius: 7px;
   }
@@ -166,8 +164,6 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
-    border: 2px solid #ff9d2d;
-    border-radius: 50%;
     color: #0d0e15;
     border-radius: 7px;
   }

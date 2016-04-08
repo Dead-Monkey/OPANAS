@@ -47,8 +47,8 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     box-sizing: border-box;
     border: 2px solid #ff9d2d;
     border-radius: 50%;
-    width: 15vw;
-    height: 15vw;
+    width: 14vw;
+    height: 14vw;
     z-index: 999;
   }
   .sideBarSwipePlace {
