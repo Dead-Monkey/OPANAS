@@ -51,8 +51,8 @@ import {AdMobService} from '../../services/admob/admob.service';
 <div class="container">
 
   <div class="header">
-  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date|date:"MM"}}/{{date|date:"dd"}}/{{date|date:"yy"}}</div>
-  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date|date:"dd"}}/{{date|date:"MM"}}/{{date|date:"yy"}}</div>
+  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>
+  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
@@ -73,11 +73,7 @@ import {AdMobService} from '../../services/admob/admob.service';
 export class OpanasComponent implements OnInit {
     private sideBarIsOpen: boolean = false;
     private date;
-    private route = {
-        'start':'',
-        'prev': '',
-        'current': ''
-    }
+
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) {
     }
     //config app

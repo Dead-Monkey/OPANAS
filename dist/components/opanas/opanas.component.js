@@ -75,11 +75,6 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._AdMobServe = _AdMobServe;
                     this._router = _router;
                     this.sideBarIsOpen = false;
-                    this.route = {
-                        'start': '',
-                        'prev': '',
-                        'current': ''
-                    };
                 }
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
@@ -90,6 +85,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         window.plugins.insomnia.keepAwake();
                         //backgound mode
                         cordova.plugins.backgroundMode.enable();
+                        cordova.plugins.backgroundMode.setDefaults({ text: 'waiting for you :-)' });
                         //AdMob
                         _this._AdMobServe.createInterstitialFirst();
                         _this._AdMobServe.prepareInterstitialFirst();
@@ -129,7 +125,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_1.TranslatePipe],
                         styles: ["\n    .header {\n      height: 15vw;\n      width: 100vw;\n    }\n    .container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar {\n      position: absolute;\n      width: 24vw;\n      height: 6vw;\n      left: 38vw;\n      margin-top: 2vw;\n      color: #ff9d2d;\n      font-size: 19px;\n      z-index: 10;\n      border-top: 2px solid #ff9d2d;\n    border-bottom: 2px solid #ff9d2d;\n      text-align: center;\n    }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date|date:\"MM\"}}/{{date|date:\"dd\"}}/{{date|date:\"yy\"}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date|date:\"dd\"}}/{{date|date:\"MM\"}}/{{date|date:\"yy\"}}</div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
