@@ -37,8 +37,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;
   right: 5vw;
   top: 1vw;
-  width: 15vw;
-  height: 15vw;
+  width: 14vw;
+  height: 14vw;
   background: url('./src/img/newPlus.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
@@ -56,7 +56,6 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
 }
 .list {
   width: 90vw;
-  height: 80vw;
   overflow-y: scroll;
 }
 .listItem {
@@ -75,12 +74,13 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   overflow-x: hidden;
 }
 .foodListMove{
-  position: absolute;;
-  width: 100vw;
-  padding-left: 10vw;
-  top: 87vw;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  position: fixed;
+      width: 100vw;
+      padding-left: 10vw;
+      top: 101vw;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      bottom: 1px;
 }
 .listItemName {
   float: left;
@@ -220,10 +220,10 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   margin-bottom: 2vw;
 }
 .sportListMove {
-  position: absolute;;
+  position: fixed;;;
   width: 100vw;
-  top: 50vw;
-  height: 111vw;
+  top: 58vw;
+  bottom: 1px;
   padding-left: 10vw;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -243,8 +243,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   overflow: hidden;
 }
 .plusBar_listItem {
-  width: 15vw;
-  height: 15vw;
+  width: 14vw;
+  height: 14vw;
   position: absolute;
   right: 0;
   overflow: hidden;
@@ -415,13 +415,13 @@ margin-bottom: 2vw;
   border-radius: 7px;
 }
 .create_list {
-  position: relative;
-  margin-top: 3vw;
-  padding-left: 10vw;
-  width: 95vw;
-  bottom: 1px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  position: fixed;
+      top: 61vw;
+      padding-left: 10vw;
+      width: 95vw;
+      bottom: 1px;
+      overflow-y: scroll;
+      overflow-x: hidden;
 }
 .create_listItem {
   float: left;
@@ -443,7 +443,7 @@ margin-bottom: 2vw;
   margin-top: 2vw;
   margin-right: 2vw;
   height: 11vw;
-  width: 15vw;
+  width: 14vw;
   line-height: 10vw;
   background-color: #3f414a;
   box-sizing: border-box;
@@ -459,24 +459,25 @@ margin-bottom: 2vw;
   height: 20vw;
 }
 .createListMove {
-  position: absolute;
+  position: fixed;
   width: 100vw;
-  height: 121vw;
   padding-left: 10vw;
-  top: 45vw;
+  top: 59vw;
+  bottom: 1px;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 .create_listItemName {
   width: 80vw;
   float: left;
-  min-height: 10vw;
+  height: 14vw;
   text-align: center;
   font-size: 6vw;
   color: #ff9d2d;
   font-weight: bold;
   margin-left: 10vw;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 .pasteListMove {
   position: relative;
@@ -502,7 +503,7 @@ margin-bottom: 2vw;
 }
 .createExercise_listItemName {
   position: absolute;
-  top: 38vw;
+  top: 33vw;
   padding-left: 10vw;
   width: 80vw;
   height: 10vw;
@@ -545,12 +546,14 @@ margin-bottom: 2vw;
   position: absolute;
     padding-left: 10vw;
     width: 80vw;
-    min-height: 10vw;
+    height: 14vw;
     text-align: center;
     font-size: 6vw;
     color: #ff9d2d;
     font-weight: bold;
     margin-bottom: 2vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 .createTrain_listItem{
   float: left;
@@ -576,9 +579,10 @@ color: #ff9d2d;
 line-height: 8vw;
 }
 .paste_list {
- position: absolute;
+  position: fixed;
+ top: 27vw;
  width: 100vw;
- height: 161vw;
+ bottom: 1px;
  overflow-x: hidden;
  overflow-y: scroll;
 }
@@ -720,8 +724,8 @@ overflow-x: hidden;
   <!-- Список созданных меню -->
   <div *ngIf="pasteMenu">
 
+  <div class="listItemName">{{'choose.menu' | translate}}</div>
     <div class="paste_list">
-      <div class="listItemName">{{'choose.menu' | translate}}</div>
     <div *ngFor="#item of allMenus" (fmSwipeDeleteSide)="removeMenu(item['name'])">
       <!-- <div class="paste_listItemName"> -->
         <div class="paste_listItem">{{item['name']}}</div>
@@ -815,8 +819,8 @@ overflow-x: hidden;
 
   <!-- выбрать тренировку-->
   <div *ngIf="pasteTrain">
+  <div class="listItemName">{{'choose.training' | translate}}</div>
     <div class="paste_list">
-      <div class="listItemName">{{'choose.training' | translate}}</div>
         <div *ngFor="#item of allTrains" (fmSwipeDeleteSide)="removeTrain(item['name'])">
       <div class="paste_listItemName">
         <div class="paste_listItem">{{item['name']}} </div>
