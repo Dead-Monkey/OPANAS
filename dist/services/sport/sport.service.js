@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../shared/services/storage/storage.service', '../user/user.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../shared/services/storage/storage.service', '../user/user.service', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, storage_service_1, user_service_1;
+    var core_1, storage_service_1, user_service_1, router_1;
     var SportService, sportVendor;
     return {
         setters:[
@@ -22,13 +22,17 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             SportService = (function () {
-                function SportService(_storageService, _userServe) {
+                function SportService(_storageService, _userServe, _router) {
                     var _this = this;
                     this._storageService = _storageService;
                     this._userServe = _userServe;
+                    this._router = _router;
                     this.sport = sportVendor;
                     this.userSport = [];
                     this.allSport = [];
@@ -78,19 +82,15 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                                     _this.stopwatch['hours'] = _this.stopwatch['hours'] + Math.floor(_this.stopwatch['minutes'] / 60);
                                     _this.stopwatch['minutes'] = _this.stopwatch['minutes'] - Math.floor(_this.stopwatch['minutes'] / 60) * 60;
                                 }
-                                // this._router.navigate(['Food'])
-                                // setTimeout(() => {
-                                //     this._router.navigate(['Sport'])
-                                // }, 0)
                                 _this.timerBussyToggle();
                                 _this.startTimer();
+                                _this._router.navigate(['Start']);
                             }
                         };
                     }, false);
                 }
                 SportService.prototype.startTimer = function () {
                     var _this = this;
-                    console.log("in");
                     if (!this.stopwatchBussy) {
                         this.stopwatchVendor = setInterval(function () {
                             _this.stopwatch['mseconds']++;
@@ -240,7 +240,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 };
                 SportService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService])
+                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService, router_1.Router])
                 ], SportService);
                 return SportService;
             }());
