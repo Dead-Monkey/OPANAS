@@ -172,7 +172,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     }
     .sport_listButton_on {
       float: left;
-      height: 15vw;
+      height: 14vw;
       width: 14vw;
       background: url('./src/img/check-on.png') no-repeat center center;
       background-color: #3f414a;
@@ -184,7 +184,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     }
   .sport_listButton_on_exrc {
     float: left;
-    height: 15vw;
+    height: 14vw;
     width: 14vw;
     margin-top: 2vw;
     background: url('./src/img/exrc_check-on.png') no-repeat center center;
@@ -196,7 +196,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   }
   .sport_listButton_off {
     float: left;
-    height: 15vw;
+    height: 14vw;
     width: 14vw;
     margin-top: 2vw;
     background: url('./src/img/check-off.png') no-repeat center center;
