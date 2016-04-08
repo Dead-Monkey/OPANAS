@@ -41,6 +41,9 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   height: 15vw;
   background: url('./src/img/newPlus.png') no-repeat center center;
   background-size: cover;
+  box-sizing: border-box;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
   overflow: hidden;
   z-index: 10;
   transition: 0.3s;
@@ -80,10 +83,10 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   overflow-x: hidden;
 }
 .listItemName {
-  position: relative;
-  top: 2vw;
+  float: left;
+      margin-top: 2vw;
   padding-left: 10vw;
-    width: 78vw;
+    width: 80vw;
   height: 10vw;
   text-align: center;
   font-size: 6vw;
@@ -245,10 +248,14 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   position: absolute;
   right: 0;
   overflow: hidden;
+  box-sizing: border-box;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
 }
 .plusBar_createFoodButton {
   background: url('./src/img/addfood.png') no-repeat center center;
   background-size: cover;
+
 }
 .plusBar_createMenuButton {
   background: url('./src/img/createMenuButton.png') no-repeat center center;
@@ -599,6 +606,9 @@ overflow-x: hidden;
     margin-left: 2vw;
     background: url('./src/img/wrench.png') no-repeat center center;
     background-size: cover;
+    box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
 }
 .paste_goIcon {
   width: 10vw;

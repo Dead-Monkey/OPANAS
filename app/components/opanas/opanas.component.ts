@@ -38,32 +38,40 @@ import {AdMobService} from '../../services/admob/admob.service';
       width: 24vw;
       height: 6vw;
       left: 38vw;
-      margin-top: 2vw;
+      margin-top: 2.5vw;
       color: #ff9d2d;
       font-size: 19px;
       z-index: 10;
       // border-top: 2px solid #ff9d2d;
-    border-bottom: 2px solid #ff9d2d;
+    // border-bottom: 2px solid #ff9d2d;
       text-align: center;
     }
     .line{
       position: absolute;
-      top:2vw;
       width:40vw;
       height: 3px;
-
       left:30vw;
-      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,1),rgba(255,0,0,0));
- background: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));
+      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255, 157, 45, 1),rgba(255,0,0,0));
+     background: linear-gradient(to right, rgba(255,0,0,0), rgba(255, 157, 45, 1),rgba(255,0,0,0));
+       z-index: 10;
+    }
+    .line_up {
+      position: absolute;
+      top:2vw;
+    }
+    .line_down {
+      position: absolute;
+      top:8vw;
     }
   `],
     template: `
 <div class="container">
 
   <div class="header">
+<div class="line line_up"></div>
   <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>
   <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>
-<div class="line"></div>
+<div class="line line_down"></div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>

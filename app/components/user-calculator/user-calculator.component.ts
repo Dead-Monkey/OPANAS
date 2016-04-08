@@ -34,24 +34,31 @@ import {UserService} from '../../services/user/user.service';
     background: url('./src/img/maleOn.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
+    border-radius: 50%;
     margin-bottom: 4vw;
     margin-right: 2vw;
+
   }
   .calculator_sexMale_on {
     background: url('./src/img/maleOn.png') no-repeat center center;
     background-size: cover;
+    box-sizing: border-box;
+    border: 2px solid #ff9d2d;
   }
   .calculator_sexMale_off {
     background: url('./src/img/maleOff.png') no-repeat center center;
     background-size: cover;
+    border: 2px solid #3c3f49;
   }
   .calculator_sexFemale_on {
     background: url('./src/img/femaleOn.png') no-repeat center center;
     background-size: cover;
+    border: 2px solid #ff9d2d;
   }
   .calculator_sexFemale_off {
     background: url('./src/img/femaleOff.png') no-repeat center center;
     background-size: cover;
+    border: 2px solid #3c3f49;
   }
   .calculator_nameInput {
     position: relative;
