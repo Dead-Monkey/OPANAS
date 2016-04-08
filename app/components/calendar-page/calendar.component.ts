@@ -1,11 +1,12 @@
 import {Component, OnInit} from 'angular2/core';
 import {CalendarService, Day} from '../../services/calenadar/calendar.service';
+import {TranslatePipe} from '../../shared/services/translate/translate.service';
 
 @Component({
     selector: 'op-calendar',
     directives: [],
     providers: [],
-    pipes: [],
+    pipes: [TranslatePipe],
     styles: [`
 .calendar{
   position:absolute;
@@ -100,33 +101,32 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
       </div>
 
       <div class="month" [ngSwitch]="clMonth[0]['date'].getMonth()">
-        <div class="toggleLeft" (click)="switchViewMonthMinus()">
-          <</div>
+        <div class="toggleLeft" (click)="switchViewMonthMinus()"> <</div>
 
-            <div class="toggleLeft" *ngSwitchWhen="0"> January </div>
-            <div class="toggleLeft" *ngSwitchWhen="1"> February </div>
-            <div class="toggleLeft" *ngSwitchWhen="2"> March </div>
-            <div class="toggleLeft" *ngSwitchWhen="3"> April </div>
-            <div class="toggleLeft" *ngSwitchWhen="4"> May </div>
-            <div class="toggleLeft" *ngSwitchWhen="5"> June </div>
-            <div class="toggleLeft" *ngSwitchWhen="6"> July </div>
-            <div class="toggleLeft" *ngSwitchWhen="7"> August </div>
-            <div class="toggleLeft" *ngSwitchWhen="8"> September </div>
-            <div class="toggleLeft" *ngSwitchWhen="9"> October </div>
-            <div class="toggleLeft" *ngSwitchWhen="10"> November </div>
-            <div class="toggleLeft" *ngSwitchWhen="11"> December </div>
+            <div class="toggleLeft" *ngSwitchWhen="0"> {{'January'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="1"> {{'February'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="2"> {{'March'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="3"> {{'April'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="4"> {{'May'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="5">{{'June'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="6">{{'July'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="7"> {{'August'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="8">{{'September'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="9">{{'October'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="10"> {{'November'|translate}} </div>
+            <div class="toggleLeft" *ngSwitchWhen="11"> {{'December'|translate}} </div>
 
             <div class="toggleRight" (click)="switchViewMonthPlus()">></div>
 
         </div>
 
-        <div class="date">Sun</div>
-        <div class="date">Mon</div>
-        <div class="date">Tue</div>
-        <div class="date">Wed</div>
-        <div class="date">Thu</div>
-        <div class="date">Fri</div>
-        <div class="date">Sat</div>
+        <div class="date">{{'Sun'|translate}}  </div>
+        <div class="date">{{'Mon'|translate}} </div>
+        <div class="date">{{'Tue'|translate}} </div>
+        <div class="date">{{'Wed'|translate}} </div>
+        <div class="date">{{'Thu'|translate}} </div>
+        <div class="date">{{'Fri'|translate}} </div>
+        <div class="date">{{'Sat'|translate}} </div>
 
         <div class="date" *ngFor="#item of pushDays"></div>
         <div class="date" [ngClass]="{currentDate: marker(item)}" *ngFor="#item of clMonth" (click)="pickDate(item, marker);">{{item['date'].getDate()}}</div>
@@ -136,7 +136,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
       <div class="calendar_buttons">
         <div class="calendar_todayButton" (touchend)="goToday()">
           <div class="calendar_todayIcon"></div>
-          <div class="calendar_todayText" >Today</div>
+          <div class="calendar_todayText" >{{'today'|translate}} </div>
         </div>
       </div>
 

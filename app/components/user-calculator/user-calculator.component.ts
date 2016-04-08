@@ -202,12 +202,12 @@ float: left;
         {{'activity.level'|translate}}:
     </div>
     <div class="calculator_headerSmall" [ngSwitch]="model.activity.lvl">
-    <div *ngSwitchWhen="1">минимум или отсутствие</div>
-  <div *ngSwitchWhen="2">3 р. в неделю</div>
-  <div *ngSwitchWhen="3">5 р. в неделю</div>
-  <div *ngSwitchWhen="4">интенсивно 5 р. в неделю</div>
-  <div *ngSwitchWhen="5">каждый день</div>
-  <div *ngSwitchWhen="6">каждый день интенсивно или 2 р. в день</div>
+    <div *ngSwitchWhen="1">  {{'minimum'|translate}}</div>
+  <div *ngSwitchWhen="2">{{'3times'|translate}}</div>
+  <div *ngSwitchWhen="3">{{'5times'|translate}}</div>
+  <div *ngSwitchWhen="4">{{'5times.intensity'|translate}}</div>
+  <div *ngSwitchWhen="5">{{'every.day'|translate}}</div>
+  <div *ngSwitchWhen="6">{{'every.day.intensity'|translate}}</div>
     </div>
 
     <div class="toggleBar">
@@ -224,10 +224,10 @@ float: left;
         {{'point'|translate}}:
     </div>
     <div class="calculator_headerSmall" [ngSwitch]="model.goal.lvl">
-    <div *ngSwitchWhen="8">очень худеть</div>
-  <div *ngSwitchWhen="9">худеть</div>
-  <div *ngSwitchWhen="10">держать</div>
-  <div *ngSwitchWhen="11">набор</div>
+    <div *ngSwitchWhen="8">{{'lose.weight.intensity'|translate}}</div>
+  <div *ngSwitchWhen="9">{{'lose.weight'|translate}}</div>
+  <div *ngSwitchWhen="10">{{'keep.weight'|translate}}</div>
+  <div *ngSwitchWhen="11">{{'gain.weight'|translate}}</div>
     </div>
     <div class="toggleBar">
       <div class="pointToggle"  [ngClass]="{ pointToggle_off:!(model.goal.lvl == '8'), pointToggle_on:model.goal.lvl == '8'}" (click)="changeGoal(8)"></div>
