@@ -2345,10 +2345,10 @@ System.register("services/food/food.service", ['angular2/core', "shared/services
         }
     }
 });
-System.register("services/sport/sport.service", ['angular2/core', "shared/services/storage/storage.service", "services/user/user.service"], function(exports_8, context_8) {
+System.register("services/sport/sport.service", ['angular2/core', "shared/services/storage/storage.service", "services/user/user.service", 'angular2/router'], function(exports_8, context_8) {
     "use strict";
     var __moduleName = context_8 && context_8.id;
-    var core_7, storage_service_3, user_service_2;
+    var core_7, storage_service_3, user_service_2, router_2;
     var SportService, sportVendor;
     return {
         setters:[
@@ -2360,16 +2360,28 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
             },
             function (user_service_2_1) {
                 user_service_2 = user_service_2_1;
+            },
+            function (router_2_1) {
+                router_2 = router_2_1;
             }],
         execute: function() {
             SportService = (function () {
-                function SportService(_storageService, _userServe) {
+                function SportService(_storageService, _userServe, _router) {
+                    var _this = this;
                     this._storageService = _storageService;
                     this._userServe = _userServe;
+                    this._router = _router;
                     this.sport = sportVendor;
                     this.userSport = [];
                     this.allSport = [];
                     this.userTrain = [];
+                    this.stopwatch = {
+                        'hours': 0,
+                        'minutes': 0,
+                        'seconds': 0,
+                        'mseconds': 0
+                    };
+                    this.stopwatchBussy = false;
                     this.storageKeys = {
                         'userSport': 'userSport',
                         'userTrain': 'userTrain'
@@ -2381,7 +2393,78 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
                         this.userTrain = this._storageService.getItem(this.storageKeys.userTrain);
                     }
                     this.prepareSport();
+                    document.addEventListener("deviceready", function () {
+                        var timeStart, timeEnd, diff, hours, minutes, seconds;
+                        cordova.plugins.backgroundMode.onactivate = function () {
+                            if (_this.stopwatchBussy) {
+                                _this.startTimer();
+                                timeStart = new Date();
+                                _this.timerBussyToggle();
+                            }
+                        };
+                        cordova.plugins.backgroundMode.ondeactivate = function () {
+                            if (_this.stopwatchBussy) {
+                                timeEnd = new Date();
+                                diff = timeEnd.getTime() - timeStart.getTime();
+                                hours = Math.floor(diff / 1000 / 60 / 60);
+                                minutes = Math.floor(diff / 1000 / 60 % 60);
+                                seconds = Math.floor(diff / 1000 - Math.floor(diff / 1000 / 60) * 60);
+                                _this.stopwatch['seconds'] = _this.stopwatch['seconds'] + seconds;
+                                _this.stopwatch['minutes'] = _this.stopwatch['minutes'] + minutes;
+                                _this.stopwatch['hours'] = _this.stopwatch['hours'] + hours;
+                                if (_this.stopwatch['seconds'] >= 60) {
+                                    _this.stopwatch['minutes'] = _this.stopwatch['minutes'] + Math.floor(_this.stopwatch['seconds'] / 60);
+                                    _this.stopwatch['seconds'] = _this.stopwatch['seconds'] - Math.floor(_this.stopwatch['seconds'] / 60) * 60;
+                                }
+                                if (_this.stopwatch['minutes'] >= 60) {
+                                    _this.stopwatch['hours'] = _this.stopwatch['hours'] + Math.floor(_this.stopwatch['minutes'] / 60);
+                                    _this.stopwatch['minutes'] = _this.stopwatch['minutes'] - Math.floor(_this.stopwatch['minutes'] / 60) * 60;
+                                }
+                                _this.timerBussyToggle();
+                                _this.startTimer();
+                                _this._router.navigate(['Start']);
+                            }
+                        };
+                    }, false);
                 }
+                SportService.prototype.startTimer = function () {
+                    var _this = this;
+                    if (!this.stopwatchBussy) {
+                        this.stopwatchVendor = setInterval(function () {
+                            _this.stopwatch['mseconds']++;
+                            if (_this.stopwatch['mseconds'] >= 100) {
+                                _this.stopwatch['seconds']++;
+                                _this.stopwatch['mseconds'] = 0;
+                            }
+                            if (_this.stopwatch['seconds'] >= 60) {
+                                _this.stopwatch['minutes']++;
+                                _this.stopwatch['seconds'] = 0;
+                            }
+                            if (_this.stopwatch['minutes'] >= 60) {
+                                _this.stopwatch['hours']++;
+                                _this.stopwatch['minutes'] = 0;
+                            }
+                        }, 10);
+                    }
+                    else {
+                        clearInterval(this.stopwatchVendor);
+                    }
+                    this.timerBussyToggle();
+                };
+                SportService.prototype.timerReset = function () {
+                    for (var key in this.stopwatch) {
+                        this.stopwatch[key] = 0;
+                    }
+                };
+                SportService.prototype.getTimer = function () {
+                    return this.stopwatch;
+                };
+                SportService.prototype.getTimerBussy = function () {
+                    return this.stopwatchBussy;
+                };
+                SportService.prototype.timerBussyToggle = function () {
+                    this.stopwatchBussy = !this.stopwatchBussy;
+                };
                 SportService.prototype.getAllSport = function () {
                     this.prepareSport();
                     return this.allSport;
@@ -2495,7 +2578,7 @@ System.register("services/sport/sport.service", ['angular2/core', "shared/servic
                 };
                 SportService = __decorate([
                     core_7.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_3.StorageService, user_service_2.UserService])
+                    __metadata('design:paramtypes', [storage_service_3.StorageService, user_service_2.UserService, router_2.Router])
                 ], SportService);
                 return SportService;
             }());
@@ -3734,13 +3817,14 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         'done': 0,
                         'procentDone': 0
                     };
-                    this.stopwatch = {
-                        'hours': 0,
-                        'minutes': 0,
-                        'seconds': 0,
-                        'mseconds': 0
-                    };
-                    this.stopwatchBussy = false;
+                    this.stopwatch = this._sportServe.getTimer();
+                    this.stopwatchBussy = this._sportServe.getTimerBussy();
+                    console.log(this.stopwatchBussy);
+                    if (this.stopwatchBussy) {
+                        console.log("12");
+                        this.stopwatchToggle();
+                        this.stopwatchToggle();
+                    }
                 }
                 SportComponent.prototype.ngOnInit = function () {
                     this.currentDate = this._calendarService.getCurrentDate();
@@ -3752,17 +3836,6 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         var variable = _a[_i];
                         this.calculateTotalSportInit(variable);
                     }
-                    document.addEventListener("deviceready", function () {
-                        cordova.plugins.backgroundMode.onactivate = function () {
-                            cordova.plugins.backgroundMode.configure({
-                                text: 'stopwatch'
-                            });
-                            // this.stopwatchToggle()
-                        };
-                        // cordova.plugins.backgroundMode.ondeactivate = () => {
-                        //     this.stopwatchToggle()
-                        // };
-                    }, false);
                 };
                 SportComponent.prototype.onSubmit = function (sport) {
                     var _this = this;
@@ -3880,36 +3953,16 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                 };
                 //timeromer
                 SportComponent.prototype.stopwatchToggle = function () {
-                    var _this = this;
-                    if (!this.stopwatchBussy) {
-                        this.stopwatchVendor = setInterval(function () {
-                            _this.stopwatch['mseconds']++;
-                            if (_this.stopwatch['mseconds'] === 100) {
-                                _this.stopwatch['seconds']++;
-                                _this.stopwatch['mseconds'] = 0;
-                            }
-                            if (_this.stopwatch['seconds'] === 60) {
-                                _this.stopwatch['minutes']++;
-                                _this.stopwatch['seconds'] = 0;
-                            }
-                            if (_this.stopwatch['minutes'] === 60) {
-                                _this.stopwatch['hours']++;
-                                _this.stopwatch['minutes'] = 0;
-                            }
-                        }, 10);
-                    }
-                    else {
-                        clearInterval(this.stopwatchVendor);
-                    }
-                    this.stopwatchBussyToggle();
+                    this._sportServe.startTimer();
+                    this.stopwatchBussy = this._sportServe.getTimerBussy();
                 };
                 SportComponent.prototype.stopwatchReset = function () {
-                    for (var key in this.stopwatch) {
-                        this.stopwatch[key] = 0;
-                    }
+                    this._sportServe.timerReset();
+                    this.stopwatchBussy = this._sportServe.getTimerBussy();
                 };
                 SportComponent.prototype.stopwatchBussyToggle = function () {
-                    this.stopwatchBussy = !this.stopwatchBussy;
+                    this._sportServe.timerBussyToggle();
+                    this.stopwatchBussy = this._sportServe.getTimerBussy();
                 };
                 SportComponent = __decorate([
                     core_14.Component({
@@ -3918,7 +3971,7 @@ System.register("components/sport-page/sport.component", ['angular2/core', "shar
                         providers: [],
                         pipes: [translate_service_5.TranslatePipe, simple_search_pipe_3.SimpleSearch],
                         styles: ["\n      .sport_form {\n        position: absolute;;\n        left: 5vw;\n        top: 46vw;\n        height: 5vw;\n        width: 90vw;\n      }\n      .sport_inputSport {\n        position: absolute;\n        height: 12vw;\n        width: 72vw;\n        color: #D0D9D9;\n        font-size: 6vw;\n        background-color: rgba(49, 51, 61, 0.3);\n        box-sizing: border-box;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n        padding-left: 1vw;\n      }\n    .sport_inputButton_off {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-off.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n      }\n      .sport_inputButton_on {\n        position: absolute;\n        right: 0;\n        height: 12vw;\n        width: 15vw;\n        background: url('./src/img/check-on.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n        color: #0d0e15;\n        border: 2px solid #0C1017;\n        border-radius: 7px;\n      }\n\n      .sport_serchContainer {\n        position: absolute;\n        background-color: #0C1017;\n        width: 70vw;\n        max-height: 30vh;\n        padding: 1vw;\n        left: 0;\n        right: 2vw;\n        top: 9vw;\n        overflow-y: scroll;\n        border-radius: 7px;\n        z-index: 3;\n        border-bottom: 2px solid #0C1017;\n      }\n      .sport_searchListItem {\n        float:left;\n        margin-bottom: 1vw;\n        min-height: 15vw;\n        width: 70vw;\n        line-height: 15vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n      }\n\n      .sport_list {\n        position: absolute;;\n        top:60vw;\n        padding-left: 5vw;\n        width: 95vw;\n        bottom:1px;\n        overflow-y: scroll;\n        overflow-x: hidden;\n      }\n      .sport_listItem {\n        float:left;\n        margin-right: 3vw;\n        margin-top: 2vw;\n        min-height: 15vw;\n        padding-left: 5vw;\n        width: 72vw;\n        box-sizing: border-box;\n        background-color: #3f414a;\n        color: #de5200;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        line-height: 15vw;\n      }\n      .sport_listSet {\n        float:left;\n        margin-right: 2vw;\n        margin-top: 1vh;\n        min-height: 15vw;\n        width: 27vw;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_listWeight {\n        float:left;\n        height: 15vw;\n        width: 21vw;\n        line-height: 15vw;\n        margin-top: 1vh;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_listNumbers {\n        float:left;\n        margin-left: 2vw;\n        margin-right: 3vw;\n        height: 15vw;\n        width: 20vw;\n        margin-top: 1vh;\n        line-height: 15vw;\n        background-color: #3f414a;\n        box-sizing: border-box;\n        color: #ff9d2d;\n        font-size: 6vw;\n        text-align: center;\n        border-radius: 7px;\n        border: none;\n      }\n      .sport_dropdownButton {\n        float: left;\n        margin-top: 3vw;\n        width: 10vw;\n        height: 10vw;\n        background: url('./src/img/dropdown.png') no-repeat center center;\n        background-size: cover;\n        box-sizing: border-box;\n      }\n\n    .sport_dropdownButonAnime{\n      transform:rotate(180deg)\n    }\n    .sport_listButton_on {\n      float: left;\n      height: 15vw;\n      width: 15vw;\n      background: url('./src/img/check-on.png') no-repeat center center;\n      background-color: #3f414a;\n      background-size: cover;\n      box-sizing: border-box;\n      color: #0d0e15;\n      border-radius: 7px;\n      margin-top: 1vh;\n    }\n  .sport_listButton_on_exrc {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/exrc_check-on.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .sport_listButton_off {\n    float: left;\n    height: 15vw;\n    width: 15vw;\n    margin-top: 2vw;\n    background: url('./src/img/check-off.png') no-repeat center center;\n    background-color: #3f414a;\n    background-size: cover;\n    box-sizing: border-box;\n    color: #0d0e15;\n    border-radius: 7px;\n  }\n  .sport_timer {\n    position: absolute;;\n    margin-left: 5vw;\n    top: 30vw;\n    width: 90vw;\n    height: 12vw;\n    text-align: center;\n    background-color: #3f414a;\n    border: 3px solid #0d0e15;\n    box-sizing: border-box;\n    border-radius: 3vw;\n    line-height: 10vw;\n\n  }\n  .sport_timerButtons {\n    float: left;\n    width: 23vw;\n    height: 10vw;\n    border-radius: 3vw;\n    color: #ff9d2d;\n    /*font-weight: bold;*/\n  }\n  .clockFace {\n    float: left;\n    width: 39vw;\n    height: 11vw;\n    font-size: 6vw;\n    color: #de5200;\n    border-right: 3px solid #0d0e15;\n    border-left: 3px solid #0d0e15;\n  }\n  .clockFace_numbers {\n    float: left;\n    width: 8vw;\n  }\n  .clockFace_hours {\n    width: 12vw;\n    text-align: right;\n  }\n  /*.clockFace_mseconds {\n    font-size: 5vw;\n    padding-top: 1px;\n  }*/\n\n  .sport_listItemContainer{\n    position:relative;\n    min-height: 16vw;\n    width:90vw;\n    overflow:hidden;\n  }\n      "],
-                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n  <div class=\"sport_timerButtons\" (click)=\"stopwatchReset()\">{{'reset'| translate}}</div>\n  <div class=\"clockFace\">\n      <div class=\"clockFace_numbers clockFace_hours\">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}:</div>\n\n      <div class=\"clockFace_numbers\">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>\n\n  </div>\n  <div *ngIf=\"(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'start'| translate}}</div>\n  <div *ngIf=\"stopwatchBussy\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'stop'| translate}}</div>\n  <div *ngIf=\"(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle()\">{{'resume'| translate}}</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_searchListItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div   *ngFor=\"#item of pickedSportContainer; #i = index\">\n<div class=\"sport_listItemContainer\" (fmSwipeDeleteSide)=\"removeSport(i, item)\">\n<div class=\"sport_listItem\" >\n<div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\" (touchend)=\"openSets(item,i)\"></div>\n  {{item?.name[language]}}\n</div>\n<div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (touchend)=\"checkBoxToggle(i, item)\"></div>\n</div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div  class=\"sport_listItemContainer\" *ngFor=\"#it of item.sets; #setIndex = index\" (fmSwipeDeleteSide)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >{{'set'| translate}} {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'kg'| translate}}\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'resp'| translate}}\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">{{'+set'| translate}}</div>\n    </div>\n  </div>\n</div>\n    "
+                        template: "\n<op-plus [iAm]=\"'sport'\" [(isOpen)]=\"plusIsOpen\"></op-plus>\n\n<fm-progress-bar [name]=\"'progress'|translate\" [mainLine]=\"totalSport.procentDone\" [secondLine]=\"\" [minNumber]=\"totalSport.done\" [maxNumber]=\"pickedSportContainer.length\"></fm-progress-bar>\n\n<div class=\"sport_timer\">\n  <div class=\"sport_timerButtons\" (click)=\"stopwatchReset()\">{{'reset'| translate}}</div>\n  <div class=\"clockFace\">\n      <div class=\"clockFace_numbers clockFace_hours\">{{(stopwatch['hours'] < 10)?'0'+ stopwatch['hours']:''+ stopwatch['hours']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['minutes'] < 10)?'0'+ stopwatch['minutes']:''+ stopwatch['minutes']}}:</div>\n      <div class=\"clockFace_numbers\">{{(stopwatch['seconds'] < 10)?'0'+ stopwatch['seconds']:''+ stopwatch['seconds'] }}:</div>\n\n      <div class=\"clockFace_numbers\">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>\n\n  </div>\n  <div *ngIf=\"(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle(timer)\">{{'start'| translate}}</div>\n  <div *ngIf=\"stopwatchBussy\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle(timer)\">{{'stop'| translate}}</div>\n  <div *ngIf=\"(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))\" class=\"sport_timerButtons\" (click)=\"stopwatchToggle(timer)\">{{'resume'| translate}}</div>\n</div>\n\n<form class=\"sport_form\" (ngSubmit)=\"onSubmit(sportForm)\" #sportForm=\"ngForm\">\n\n  <label for=\"sportName\"></label>\n  <input class=\"sport_inputSport\" required [placeholder]=\"('search'|translate) + '...'\" [(ngModel)]=\"model.name\" ngControl=\"name\" #name=\"ngForm\" (input)=\"pickSportInput(model.name)\">\n\n  <button #subBtn type=\"submit\" [ngClass]=\"{sport_inputButton_off: subBtn['disabled'], sport_inputButton_on: !subBtn['disabled']}\" [disabled]=\"!sportForm.form.valid || !correctSport\"></button>\n\n  <div *ngIf=\"(name.valid && !correctSport)\" class=\"sport_serchContainer\">\n    <div class=\"sport_searchListItem\" *ngFor=\"#item of sportContainer  | simpleSearch :'name':language : name.value; #i = index;\" (click)=\"pickSport(item);\">\n\n      {{item?.name[language]}}\n    </div>\n  </div>\n</form>\n\n<div class=\"sport_list\">\n  <div   *ngFor=\"#item of pickedSportContainer; #i = index\">\n<div class=\"sport_listItemContainer\" (fmSwipeDeleteSide)=\"removeSport(i, item)\">\n<div class=\"sport_listItem\" >\n<div class=\"sport_dropdownButton\" [ngClass]=\"{sport_dropdownButonAnime:!item['setsToggle']}\" (touchend)=\"openSets(item,i)\"></div>\n  {{item?.name[language]}}\n</div>\n<div [ngClass]=\"{sport_listButton_off: !item.picked, sport_listButton_on_exrc: item.picked}\" (touchend)=\"checkBoxToggle(i, item)\"></div>\n</div>\n\n    <div *ngIf=\"item['setsToggle']\">\n      <div  class=\"sport_listItemContainer\" *ngFor=\"#it of item.sets; #setIndex = index\" (fmSwipeDeleteSide)=\"removeSet(i, item, setIndex)\">\n        <div class=\"sport_listSet\" >{{'set'| translate}} {{setIndex+1}}</div>\n        <input class=\"sport_listWeight\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].weight\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'kg'| translate}}\">\n        <input class=\"sport_listNumbers\" type=\"number\" min=\"0\" [(ngModel)]=\"item['sets'][setIndex].numbers\" (blur)=\"changeSport(i, item)\" placeholder=\"{{'resp'| translate}}\">\n        <div [ngClass]=\"{sport_listButton_off: !it.picked, sport_listButton_on: it.picked}\" (click)=\"pickSet(item, i, setIndex)\"></div>\n      </div>\n      <div class=\"sport_listSet\" (click)=\"addSet(item, i)\">{{'+set'| translate}}</div>\n    </div>\n  </div>\n</div>\n    "
                     }), 
                     __metadata('design:paramtypes', [sport_service_2.SportService, calendar_service_3.CalendarService, user_service_5.UserService])
                 ], SportComponent);
@@ -4139,7 +4192,7 @@ System.register("components/user-calculator/user-calculator.component", ['angula
 System.register("components/user-details/user-details.component", ['angular2/core', "services/user/user.service", "shared/services/translate/translate.service", 'angular2/router'], function(exports_19, context_19) {
     "use strict";
     var __moduleName = context_19 && context_19.id;
-    var core_18, user_service_7, translate_service_7, router_2;
+    var core_18, user_service_7, translate_service_7, router_3;
     var UserDetailsComponent;
     return {
         setters:[
@@ -4152,8 +4205,8 @@ System.register("components/user-details/user-details.component", ['angular2/cor
             function (translate_service_7_1) {
                 translate_service_7 = translate_service_7_1;
             },
-            function (router_2_1) {
-                router_2 = router_2_1;
+            function (router_3_1) {
+                router_3 = router_3_1;
             }],
         execute: function() {
             UserDetailsComponent = (function () {
@@ -4177,7 +4230,7 @@ System.register("components/user-details/user-details.component", ['angular2/cor
                 UserDetailsComponent = __decorate([
                     core_18.Component({
                         selector: 'op-user-details',
-                        directives: [router_2.ROUTER_DIRECTIVES],
+                        directives: [router_3.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_7.TranslatePipe],
                         styles: ["\n\n    .container {\n      position: relative;;\n      margin: 5vw;\n      margin-left: 10vw;\n      height: 100vw;\n      width: 80vw;\n    }\n\n    .user_firstHeader {\n      font-size: 6vw;\n      width: 80vw;\n      text-align: center;\n      margin-bottom: 5vw;\n      font-weight: bolder;\n      color: #ff9d2d;\n    }\n    .user_nameInput {\n      position: relative;\n      font-size: 6vw;\n      width: 52vw;\n      float: left;\n      left: 8vw;\n      margin-bottom: 2vw;\n      color: #ff9d2d;\n      line-height: 10vw;\n    }\n    .user_input {\n      position: relative;\n      float: left;\n      height: 11vw;\n      width: 20vw;\n      background-color: rgba(49, 51, 61, 0.3);\n      box-sizing: border-box;\n      border: 2px solid #0C1017;\n      border-radius: 7px;\n      line-height: 10vw;\n      font-size: 6vw;\n      color: #D0D9D9;\n      margin-bottom: 2vw;\n      text-align: center;\n    }\n    .user_secondHeader {\n      position: absolute;\n      top: 66vw;\n      font-size: 5vw;\n      min-height: 8vw;\n      line-height: 8vw;\n      width: 80vw;\n      text-align: center;\n      font-weight: bolder;\n      color: #ff9d2d;\n      border: 2px solid #ff9d2d;\n      border-radius: 3vw;\n    }\n    .user_lang {\n      position: absolute;\n      top: 83vw;\n      width: 60vw;\n      font-size: 5vw;\n      color: #ff9d2d;\n      float: left;\n    }\n    .user_langName {\n      position: relative;\n      float: left;\n      height: 10vw;\n      width: 50vw;\n      margin: 2vw;\n    }\n    .user_langEnIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/en.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langRuIcon {\n      position: relative;\n      height: 10vw;\n      width: 10vw;\n      float: left;\n      background: url('./src/img/ru.png') no-repeat center center;\n      background-size: cover;\n      left: 4vw;\n    }\n    .user_langText {\n      position: relative;\n      width: 20vw;\n      float: left;\n      line-height: 10vw;\n      left: 6vw;\n    }\n\n    "],
@@ -4194,7 +4247,7 @@ System.register("components/user-details/user-details.component", ['angular2/cor
 System.register("components/user-page/user.component", ['angular2/core', "components/user-calculator/user-calculator.component", "components/user-details/user-details.component", "shared/services/translate/translate.service", 'angular2/router'], function(exports_20, context_20) {
     "use strict";
     var __moduleName = context_20 && context_20.id;
-    var core_19, user_calculator_component_1, user_details_component_1, translate_service_8, router_3;
+    var core_19, user_calculator_component_1, user_details_component_1, translate_service_8, router_4;
     var UserComponent;
     return {
         setters:[
@@ -4210,8 +4263,8 @@ System.register("components/user-page/user.component", ['angular2/core', "compon
             function (translate_service_8_1) {
                 translate_service_8 = translate_service_8_1;
             },
-            function (router_3_1) {
-                router_3 = router_3_1;
+            function (router_4_1) {
+                router_4 = router_4_1;
             }],
         execute: function() {
             UserComponent = (function () {
@@ -4222,13 +4275,13 @@ System.register("components/user-page/user.component", ['angular2/core', "compon
                 UserComponent = __decorate([
                     core_19.Component({
                         selector: 'op-user',
-                        directives: [router_3.ROUTER_DIRECTIVES],
+                        directives: [router_4.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_8.TranslatePipe],
                         styles: ["\n    "],
                         template: "\n<router-outlet></router-outlet>\n    "
                     }),
-                    router_3.RouteConfig([
+                    router_4.RouteConfig([
                         { path: '/details', name: 'UserDetailsComponent', component: user_details_component_1.UserDetailsComponent, useAsDefault: true },
                         { path: '/calculator', name: 'UserCalculator', component: user_calculator_component_1.UserCalculatorComponent },
                     ]), 
@@ -4243,15 +4296,15 @@ System.register("components/user-page/user.component", ['angular2/core', "compon
 System.register("components/start-page/start.component", ['angular2/core', 'angular2/router'], function(exports_21, context_21) {
     "use strict";
     var __moduleName = context_21 && context_21.id;
-    var core_20, router_4;
+    var core_20, router_5;
     var StartComponent;
     return {
         setters:[
             function (core_20_1) {
                 core_20 = core_20_1;
             },
-            function (router_4_1) {
-                router_4 = router_4_1;
+            function (router_5_1) {
+                router_5 = router_5_1;
             }],
         execute: function() {
             StartComponent = (function () {
@@ -4264,13 +4317,13 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
                 StartComponent = __decorate([
                     core_20.Component({
                         selector: 'op-start',
-                        directives: [router_4.ROUTER_DIRECTIVES],
+                        directives: [router_5.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [],
                         styles: ["\n  .startPage_navigator {\n    position: absolute;\n  width: 30vw;\n  display: flex;\n  top: 0;\n  justify-content: center;\n  flex-direction: column;\n  height: 100vh;\n  left: 35vw;\n  overflow: hidden;\n  }\n  .startPage_Buttons {\n    position: relative;\n  width: 27vw;\n  height: 27vw;\n  margin: auto;\n  margin-top: 5vw;\n  margin-bottom: 5vw;\n  }\n  .startPage_food {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_sport {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_rest {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .startPage_user {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n      "],
                         template: "\n    <nav class=\"startPage_navigator\">\n      <div (touchend)=\"toggle('Food')\">\n        <div class=\"startPage_food startPage_Buttons\"></div>\n      </div>\n      <div (touchend)=\"toggle('Sport')\">\n        <div class=\"startPage_Buttons startPage_sport\"></div>\n      </div>\n      <!-- <div (touchend)=\"toggle('Rest')\">\n        <div class=\"startPage_Buttons startPage_rest\"></div>\n      </div> -->\n      <div (touchend)=\"toggle('User')\">\n        <div class=\"startPage_Buttons startPage_user\"></div>\n      </div>\n    </nav>\n    "
                     }), 
-                    __metadata('design:paramtypes', [router_4.Router])
+                    __metadata('design:paramtypes', [router_5.Router])
                 ], StartComponent);
                 return StartComponent;
             }());
@@ -4281,15 +4334,15 @@ System.register("components/start-page/start.component", ['angular2/core', 'angu
 System.register("shared/components/side-bar/side-bar.component", ['angular2/core', 'angular2/router', "shared/services/translate/translate.service"], function(exports_22, context_22) {
     "use strict";
     var __moduleName = context_22 && context_22.id;
-    var core_21, router_5, translate_service_9;
+    var core_21, router_6, translate_service_9;
     var SideBar;
     return {
         setters:[
             function (core_21_1) {
                 core_21 = core_21_1;
             },
-            function (router_5_1) {
-                router_5 = router_5_1;
+            function (router_6_1) {
+                router_6 = router_6_1;
             },
             function (translate_service_9_1) {
                 translate_service_9 = translate_service_9_1;
@@ -4365,13 +4418,13 @@ System.register("shared/components/side-bar/side-bar.component", ['angular2/core
                 SideBar = __decorate([
                     core_21.Component({
                         selector: 'fm-side-bar',
-                        directives: [router_5.ROUTER_DIRECTIVES],
+                        directives: [router_6.ROUTER_DIRECTIVES],
                         providers: [],
                         pipes: [translate_service_9.TranslatePipe],
                         styles: ["\n    .sideBarContainer {\n      position: absolute;\n      display: flex;\n      flex-flow: column nowrap;\n      justify-content: center;\n      align-items: center;\n      height: 100vh;\n      width: 250px;\n      top: 0;\n      z-index: 999;\n      background-color: #3f414a;\n      overflow-x: hidden;\n      overflow-y: scroll;\n      left:-250px;\n      user-select: none;\n     -webkit-user-select: none;\n\n  }\n  .sideBarAnime{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(250px,0,0);\n    -webkit-transform: translate3d(250px,0,0);\n  }\n  .sideBarAnimeBack{\n    transition-duration: 500ms;\n    -webkit-transition-duration: 500ms;\n    transform: translate3d(-250px,0,0);\n    -webkit-transform: translate3d(-250px,0,0);\n  }\n  .sideBar_toggle {\n    position: absolute;\n    top:1vw;\n    left:5vw;\n    background: url('./src/img/newMenu.png') no-repeat center center;\n    background-size: cover;\n    box-sizing: border-box;\n    width: 15vw;\n    height: 15vw;\n    z-index: 999;\n  }\n  .sideBarSwipePlace {\n    position: fixed;\n    top:0;\n    left:0;\n    background-color: black;\n    height:100vh;\n    width:10vw;\n    z-index: 997;\n\n  }\n\n  p {\n    position: absolute;\n    margin-top: 23vw;\n    left: 9%;\n    right: 9%;\n    color: #ff9d2d;\n    font-size: 6vw;\n    overflow: hidden;\n  }\n\n  .sidebar_button {\n    background-size: cover;\n    box-sizing: border-box;\n    width: 22vw;\n    height: 22vw;\n    text-align: center;\n    text-decoration: none;\n    margin-top: 7vw;\n    margin-bottom: 11vw;\n  }\n  .sidebar_foodButton {\n    background: url('./src/img/food.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_sportButton {\n    background: url('./src/img/sport.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_restButton {\n    background: url('./src/img/rest.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_calendarButton {\n    background: url('./src/img/calendar.png') no-repeat center center;\n    background-size: cover;\n  }\n  .sidebar_userButton {\n    background: url('./src/img/user.png') no-repeat center center;\n    background-size: cover;\n  }\n.sideBarSwipePlaceBig{\n  width:100vw;\n}\n.sideBar_close{\n  position:absolute;\n  left:0;\n  top:0;\n  width:100vw;\n  height:100vh;\n  z-index:998;\n}\n  "],
                         template: "\n<div *ngIf=\"!isOpen\" class=\"sideBar_toggle\" (click)=\"toggle()\"></div>\n\n<div class=\"sideBarContainer\" [ngClass]=\"{sideBarAnime:pushClass, sideBarAnimeBack:pullClass}\" [style.transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" [style.-webkit-transform]=\"pushClass?'':'translate3d('+lastTouch+'px,0,0)'\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\">\n  <div class=\"sidebar_foodButton sidebar_button\" (touchend)=\"toggle('Food')\">\n    <p>{{'food' | translate}}</p>\n  </div>\n  <div class=\"sidebar_sportButton sidebar_button\" (touchend)=\"toggle('Sport')\">\n    <p>{{'sport' | translate}}</p>\n  </div>\n  <!-- <div class=\"sidebar_restButton sidebar_button\" (touchend)=\"toggle('Rest')\">\n    <p>{{'rest' | translate}}</p>\n  </div> -->\n  <div class=\"sidebar_calendarButton sidebar_button\" (touchend)=\"toggle('Calendar')\">\n    <p>{{'calendar' | translate}}</p>\n  </div>\n  <div class=\"sidebar_userButton sidebar_button\" (touchend)=\"toggle('User')\">\n    <p>{{'settings' | translate}}</p>\n  </div>\n</div>\n<div class=\"sideBarSwipePlace\" #swipePlace [style.opacity]=\"shadowOpacity\" [ngClass]=\"{sideBarSwipePlaceBig: isOpen}\" (touchmove)=\"swipe($event)\" (touchend)=\"swipe($event)\"></div>\n\n<div *ngIf=\"isOpen\" class=\"sideBar_close\" (click)=\"toggle()\"></div>\n  "
                     }), 
-                    __metadata('design:paramtypes', [router_5.Router])
+                    __metadata('design:paramtypes', [router_6.Router])
                 ], SideBar);
                 return SideBar;
             }());
@@ -4509,15 +4562,15 @@ System.register("services/admob/admob.service", ['angular2/core'], function(expo
 System.register("components/opanas/opanas.component", ['angular2/core', 'angular2/router', "components/food-page/food.component", "components/sport-page/sport.component", "components/rest-page/rest.component", "components/calendar-page/calendar.component", "components/user-page/user.component", "components/start-page/start.component", "shared/components/side-bar/side-bar.component", "shared/services/translate/translate.service", "services/food/food.service", "services/sport/sport.service", "services/calenadar/calendar.service", "services/refresh-date/refresh-date.service", "shared/services/storage/storage.service", "services/user/user.service", "services/admob/admob.service"], function(exports_25, context_25) {
     "use strict";
     var __moduleName = context_25 && context_25.id;
-    var core_24, router_6, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_10, food_service_3, sport_service_3, calendar_service_5, refresh_date_service_1, storage_service_5, user_service_8, admob_service_1;
+    var core_24, router_7, food_component_1, sport_component_1, rest_component_1, calendar_component_1, user_component_1, start_component_1, side_bar_component_1, translate_service_10, food_service_3, sport_service_3, calendar_service_5, refresh_date_service_1, storage_service_5, user_service_8, admob_service_1;
     var OpanasComponent, languages, keysVendor;
     return {
         setters:[
             function (core_24_1) {
                 core_24 = core_24_1;
             },
-            function (router_6_1) {
-                router_6 = router_6_1;
+            function (router_7_1) {
+                router_7 = router_7_1;
             },
             function (food_component_1_1) {
                 food_component_1 = food_component_1_1;
@@ -4620,12 +4673,12 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                 OpanasComponent = __decorate([
                     core_24.Component({
                         selector: 'opanas-app',
-                        directives: [router_6.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
-                        providers: [router_6.ROUTER_PROVIDERS, core_24.provide(router_6.LocationStrategy, { useClass: router_6.HashLocationStrategy }), translate_service_10.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_8.UserService, admob_service_1.AdMobService],
+                        directives: [router_7.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
+                        providers: [router_7.ROUTER_PROVIDERS, core_24.provide(router_7.LocationStrategy, { useClass: router_7.HashLocationStrategy }), translate_service_10.TranslateService, food_service_3.FoodService, sport_service_3.SportService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_5.StorageService, user_service_8.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_10.TranslatePipe],
-                        styles: ["\n    .header {\n      height: 15vw;\n      width: 100vw;\n    }\n    .container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar {\n      position: absolute;\n      width: 24vw;\n      height: 6vw;\n      left: 38vw;\n      margin-top: 2vw;\n      color: #ff9d2d;\n      font-size: 19px;\n      z-index: 10;\n      border-top: 2px solid #ff9d2d;\n    border-bottom: 2px solid #ff9d2d;\n      text-align: center;\n    }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>\n  </div>\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
-                    router_6.RouteConfig([
+                        styles: ["\n    .header {\n      height: 15vw;\n      width: 100vw;\n    }\n    .container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar {\n      position: absolute;\n      width: 24vw;\n      height: 6vw;\n      left: 38vw;\n      margin-top: 2vw;\n      color: #ff9d2d;\n      font-size: 19px;\n      z-index: 10;\n      // border-top: 2px solid #ff9d2d;\n    border-bottom: 2px solid #ff9d2d;\n      text-align: center;\n    }\n    .line{\n      position: absolute;\n      top:2vw;\n      width:40vw;\n      height: 3px;\n\n      left:30vw;\n      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255,0,0,1),rgba(255,0,0,0));\n background: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));\n    }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>\n<div class=\"line\"></div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                    router_7.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
                         { path: '/sport', name: 'Sport', component: sport_component_1.SportComponent },
@@ -4634,7 +4687,7 @@ System.register("components/opanas/opanas.component", ['angular2/core', 'angular
                         { path: '/user/...', name: 'User', component: user_component_1.UserComponent },
                         { path: '/*path', redirectTo: ['Start'] }
                     ]), 
-                    __metadata('design:paramtypes', [translate_service_10.TranslateService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, user_service_8.UserService, admob_service_1.AdMobService, router_6.Router])
+                    __metadata('design:paramtypes', [translate_service_10.TranslateService, calendar_service_5.CalendarService, refresh_date_service_1.RefreshDateService, user_service_8.UserService, admob_service_1.AdMobService, router_7.Router])
                 ], OpanasComponent);
                 return OpanasComponent;
             }());
