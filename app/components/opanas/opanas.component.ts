@@ -53,6 +53,7 @@ import {AdMobService} from '../../services/admob/admob.service';
       left:30vw;
       background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255, 157, 45, 1),rgba(255,0,0,0));
      background: linear-gradient(to right, rgba(255,0,0,0), rgba(255, 157, 45, 1),rgba(255,0,0,0));
+       z-index: 10;
     }
     .line_up {
       position: absolute;

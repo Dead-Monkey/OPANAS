@@ -54,6 +54,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background: url('./src/img/check-off.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
     color: #0d0e15;
     border: 2px solid #0C1017;
     border-radius: 7px;
@@ -63,6 +65,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     right: 0;
     height: 11vw;
     width: 12vw;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
     background: url('./src/img/check-on.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
@@ -148,6 +152,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
     color: #0d0e15;
     border-radius: 7px;
   }
@@ -160,6 +166,8 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
     color: #0d0e15;
     border-radius: 7px;
   }

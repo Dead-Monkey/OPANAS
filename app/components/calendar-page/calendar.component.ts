@@ -74,6 +74,8 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   background: url('./src/img/today.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
 }
 .calendar_todayText {
   position: relative;

@@ -25,6 +25,9 @@ import {ROUTER_DIRECTIVES, Router}from 'angular2/router';
   margin: auto;
   margin-top: 5vw;
   margin-bottom: 5vw;
+  box-sizing: border-box;
+  border: 2px solid #ff9d2d;
+  border-radius: 50%;
   }
   .startPage_food {
     background: url('./src/img/food.png') no-repeat center center;
