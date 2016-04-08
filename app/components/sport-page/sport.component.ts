@@ -8,7 +8,6 @@ import {UserService} from '../../services/user/user.service';
 import {SportService, Sport} from '../../services/sport/sport.service';
 import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-side/swipe-delete-side.directive';
 
-
 @Component({
     selector: 'op-sport',
     directives: [ProgressBar, PlusComponent, SwipeDeleteSideDirective],
@@ -271,9 +270,9 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       <div class="clockFace_numbers">{{(stopwatch['mseconds'] < 10)?'0'+ stopwatch['mseconds']:''+ stopwatch['mseconds'] }}</div>
 
   </div>
-  <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'start'| translate}}</div>
-  <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle()">{{'stop'| translate}}</div>
-  <div *ngIf="(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle()">{{'resume'| translate}}</div>
+  <div *ngIf="(!stopwatchBussy && !(stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle(timer)">{{'start'| translate}}</div>
+  <div *ngIf="stopwatchBussy" class="sport_timerButtons" (click)="stopwatchToggle(timer)">{{'stop'| translate}}</div>
+  <div *ngIf="(!stopwatchBussy && (stopwatch['seconds'] || stopwatch['minutes'] || stopwatch['hours']))" class="sport_timerButtons" (click)="stopwatchToggle(timer)">{{'resume'| translate}}</div>
 </div>
 
 <form class="sport_form" (ngSubmit)="onSubmit(sportForm)" #sportForm="ngForm">
@@ -315,13 +314,14 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     `
 
 })
-export class SportComponent implements OnInit {
+export class SportComponent implements OnInit{
 
     private model: Object = {};
     private sportContainer: Sport[];
     private calendar: Array<Day>;
     private currentDate: Date;
     private language: string = 'en';
+    private timerHolder;
     private userSets;
 
     private pickedSport: Sport = <Sport>{};
@@ -334,38 +334,35 @@ export class SportComponent implements OnInit {
         'procentDone': 0
     };
 
-    private stopwatch: Object = {
-        'hours': 0,
-        'minutes': 0,
-        'seconds': 0,
-        'mseconds': 0
-    };
+    private stopwatch;
     private stopwatchVendor;
-    private stopwatchBussy = false;
+    private stopwatchBussy;
 
-    constructor(private _sportServe: SportService, private _calendarService: CalendarService, private _userServe: UserService) { }
+    constructor(private _sportServe: SportService, private _calendarService: CalendarService, private _userServe: UserService) {
+
+        this.stopwatch = this._sportServe.getTimer()
+        this.stopwatchBussy = this._sportServe.getTimerBussy()
+        console.log(this.stopwatchBussy);
+
+        if (this.stopwatchBussy) {
+
+              console.log(`12`);
+              this.stopwatchToggle()
+              this.stopwatchToggle()
+
+
+        }
+    }
     ngOnInit() {
+
         this.currentDate = this._calendarService.getCurrentDate();
         this.language = this._userServe.getLanguage();
         this.userSets = this._userServe.getUserSets()['sport'];
         this.sportContainer = this._sportServe.getAllSport();
         this.pickedSportContainer = this._calendarService.getDailySport(this.currentDate);
-
         for (let variable of this.pickedSportContainer) {
             this.calculateTotalSportInit(variable);
         }
-        document.addEventListener("deviceready", () => {
-            cordova.plugins.backgroundMode.onactivate = () => {
-                cordova.plugins.backgroundMode.configure({
-                    text: 'stopwatch'
-                });
-                // this.stopwatchToggle()
-            }
-            // cordova.plugins.backgroundMode.ondeactivate = () => {
-            //     this.stopwatchToggle()
-            // };
-        }, false);
-
     }
 
     onSubmit(sport) {
@@ -489,37 +486,17 @@ export class SportComponent implements OnInit {
 
     //timeromer
     stopwatchToggle() {
-        if (!this.stopwatchBussy) {
-            this.stopwatchVendor = setInterval(() => {
-                this.stopwatch['mseconds']++
-                if (this.stopwatch['mseconds'] === 100) {
-                    this.stopwatch['seconds']++
-                    this.stopwatch['mseconds'] = 0
-                }
-                if (this.stopwatch['seconds'] === 60) {
-                    this.stopwatch['minutes']++;
-                    this.stopwatch['seconds'] = 0;
-                }
-                if (this.stopwatch['minutes'] === 60) {
-                    this.stopwatch['hours']++;
-                    this.stopwatch['minutes'] = 0;
-                }
-            }
-                , 10);
-
-        } else {
-            clearInterval(this.stopwatchVendor);
-        }
-        this.stopwatchBussyToggle();
+        this._sportServe.startTimer();
+        this.stopwatchBussy = this._sportServe.getTimerBussy()
 
     }
 
     stopwatchReset() {
-        for (let key in this.stopwatch) {
-            this.stopwatch[key] = 0;
-        }
+        this._sportServe.timerReset()
+        this.stopwatchBussy = this._sportServe.getTimerBussy()
     }
     stopwatchBussyToggle() {
-        this.stopwatchBussy = !this.stopwatchBussy;
+        this._sportServe.timerBussyToggle()
+        this.stopwatchBussy = this._sportServe.getTimerBussy()
     }
 }

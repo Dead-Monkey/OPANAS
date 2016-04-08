@@ -1,6 +1,8 @@
 import {Injectable} from 'angular2/core';
 import {StorageService} from '../../shared/services/storage/storage.service';
 import {UserService} from '../user/user.service';
+import {Router}from 'angular2/router';
+
 
 @Injectable()
 
@@ -10,21 +12,111 @@ export class SportService {
     private userSport: Array<Sport> = []
     private allSport: Array<Sport> = [];
     private userTrain: Array<Train> = [];
+    private stopwatch = {
+        'hours': 0,
+        'minutes': 0,
+        'seconds': 0,
+        'mseconds': 0
+    };
+    private stopwatchBussy= false
+    private stopwatchVendor;
     private storageKeys = {
         'userSport': 'userSport',
         'userTrain': 'userTrain'
     }
 
-    constructor(private _storageService: StorageService, private _userServe: UserService) {
+    constructor(private _storageService: StorageService, private _userServe: UserService, private _router:Router) {
         if (this._storageService.getItem(this.storageKeys.userSport)) {
             this.userSport = this._storageService.getItem(this.storageKeys.userSport);
         }
         if (this._storageService.getItem(this.storageKeys.userTrain)) {
-            this.userTrain= this._storageService.getItem(this.storageKeys.userTrain);
+            this.userTrain = this._storageService.getItem(this.storageKeys.userTrain);
         }
         this.prepareSport();
-    }
 
+        document.addEventListener("deviceready", () => {
+            let timeStart,
+                timeEnd,
+                diff,
+                hours,
+                minutes,
+                seconds
+            cordova.plugins.backgroundMode.onactivate = () => {
+                if (this.stopwatchBussy) {
+                    this.startTimer()
+                    timeStart = new Date();
+                    this.timerBussyToggle()
+                }
+            }
+            cordova.plugins.backgroundMode.ondeactivate = () => {
+                if (this.stopwatchBussy) {
+
+                    timeEnd = new Date()
+                    diff = timeEnd.getTime() - timeStart.getTime();
+                    hours = Math.floor(diff / 1000 / 60 / 60)
+                    minutes = Math.floor(diff / 1000 / 60 % 60)
+                    seconds = Math.floor(diff / 1000 - Math.floor(diff / 1000 / 60) * 60)
+
+                    this.stopwatch['seconds'] = this.stopwatch['seconds'] + seconds
+                    this.stopwatch['minutes'] = this.stopwatch['minutes'] + minutes
+                    this.stopwatch['hours'] = this.stopwatch['hours'] + hours
+                    if (this.stopwatch['seconds'] >= 60) {
+                        this.stopwatch['minutes'] = this.stopwatch['minutes'] + Math.floor(this.stopwatch['seconds'] / 60)
+                        this.stopwatch['seconds'] = this.stopwatch['seconds'] - Math.floor(this.stopwatch['seconds'] / 60) * 60
+                    }
+                    if (this.stopwatch['minutes'] >= 60) {
+                        this.stopwatch['hours'] = this.stopwatch['hours'] + Math.floor(this.stopwatch['minutes'] / 60)
+                        this.stopwatch['minutes'] = this.stopwatch['minutes'] - Math.floor(this.stopwatch['minutes'] / 60) * 60
+                    }
+
+                    this.timerBussyToggle()
+                    this.startTimer()
+                    this._router.navigate(['Start'])
+                  
+                }
+            };
+        }, false);
+
+    }
+    startTimer(){
+      if (!this.stopwatchBussy) {
+          this.stopwatchVendor = setInterval(() => {
+              this.stopwatch['mseconds']++
+              if (this.stopwatch['mseconds'] >= 100) {
+                  this.stopwatch['seconds']++
+                  this.stopwatch['mseconds'] = 0
+              }
+              if (this.stopwatch['seconds'] >= 60) {
+                  this.stopwatch['minutes']++;
+                  this.stopwatch['seconds'] = 0;
+              }
+              if (this.stopwatch['minutes'] >= 60) {
+                  this.stopwatch['hours']++;
+                  this.stopwatch['minutes'] = 0;
+              }
+          }
+              , 10);
+
+      } else {
+          clearInterval(this.stopwatchVendor);
+      }
+      this.timerBussyToggle()
+
+    }
+    timerReset(){
+      for (let key in this.stopwatch) {
+          this.stopwatch[key] = 0;
+      }
+    }
+    getTimer() {
+        return this.stopwatch;
+    }
+    getTimerBussy(){
+      return this.stopwatchBussy
+    }
+    timerBussyToggle(){
+      this.stopwatchBussy = !this.stopwatchBussy
+    }
     getAllSport(): Sport[] {
         this.prepareSport();
         return this.allSport;
@@ -79,19 +171,6 @@ export class SportService {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     getUserTrainAll() {
         return this.userTrain;
     }
@@ -115,7 +194,7 @@ export class SportService {
         this.refreshUserTrain()
     }
     createUserTrain(name: string, sport: Array<Sport>) {
-        let res:Train = <any>{};
+        let res: Train = <any>{};
         res['name'] = name;
         res['sport'] = sport;
         return res;
