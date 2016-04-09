@@ -155,7 +155,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   float: left;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-off.png') no-repeat center center;
+  background: url('./src/img/Go_off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
@@ -166,7 +166,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   float: left;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-on.png') no-repeat center center;
+  background: url('./src/img/Go_on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
@@ -177,7 +177,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   float: left;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-off.png') no-repeat center center;
+  background: url('./src/img/Go_off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
@@ -189,7 +189,7 @@ import {CalendarService, Day} from '../../services/calenadar/calendar.service';
   float: left;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-on.png') no-repeat center center;
+  background: url('./src/img/Go_on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   border: 2px solid #0C1017;
@@ -365,7 +365,7 @@ margin-bottom: 2vw;
   right: 5vw;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-off.png') no-repeat center center;
+  background: url('./src/img/Go_off.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   color: #0d0e15;
@@ -378,7 +378,7 @@ margin-bottom: 2vw;
   right: 5vw;
   height: 10vw;
   width: 10vw;
-  background: url('./src/img/check-on.png') no-repeat center center;
+  background: url('./src/img/Go_on.png') no-repeat center center;
   background-size: cover;
   box-sizing: border-box;
   color: #0d0e15;
@@ -764,7 +764,7 @@ overflow-x: hidden;
     <div class="plusBar_list3Btn" (click)="pasteTrainToggle()">
       <div class="plusBar_listItem plusBar_pasteMenuButton"></div>
       <div class="plusBar_listName">
-        paste train
+        {{'choose.training' | translate}}
       </div>
     </div>
   </div>
