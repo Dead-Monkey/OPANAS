@@ -38,21 +38,40 @@ import {AdMobService} from '../../services/admob/admob.service';
       width: 24vw;
       height: 6vw;
       left: 38vw;
-      margin-top: 2vw;
+      margin-top: 2.5vw;
       color: #ff9d2d;
       font-size: 19px;
       z-index: 10;
-      border-top: 2px solid #ff9d2d;
-    border-bottom: 2px solid #ff9d2d;
+      // border-top: 2px solid #ff9d2d;
+    // border-bottom: 2px solid #ff9d2d;
       text-align: center;
+    }
+    .line{
+      position: absolute;
+      width:40vw;
+      height: 3px;
+      left:30vw;
+      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255, 157, 45, 1),rgba(255,0,0,0));
+     background: linear-gradient(to right, rgba(255,0,0,0), rgba(255, 157, 45, 1),rgba(255,0,0,0));
+       z-index: 10;
+    }
+    .line_up {
+      position: absolute;
+      top:2vw;
+    }
+    .line_down {
+      position: absolute;
+      top:8vw;
     }
   `],
     template: `
 <div class="container">
 
   <div class="header">
-  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date|date:"MM"}}/{{date|date:"dd"}}/{{date|date:"yy"}}</div>
-  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date|date:"dd"}}/{{date|date:"MM"}}/{{date|date:"yy"}}</div>
+<div class="line line_up"></div>
+  <div *ngIf="_userServe.getLanguage()==='en'" class="calendar" (touchend)="goCalendar()">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>
+  <div *ngIf="_userServe.getLanguage()==='ru'" class="calendar" (touchend)="goCalendar()">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>
+<div class="line line_down"></div>
   </div>
 
   <fm-side-bar [(isOpen)]="sideBarIsOpen"></fm-side-bar>
@@ -73,11 +92,7 @@ import {AdMobService} from '../../services/admob/admob.service';
 export class OpanasComponent implements OnInit {
     private sideBarIsOpen: boolean = false;
     private date;
-    private route = {
-        'start':'',
-        'prev': '',
-        'current': ''
-    }
+
     constructor(private _translator: TranslateService, private _calendarService: CalendarService, private _refreshDateService: RefreshDateService, private _userServe: UserService, private _AdMobServe: AdMobService, private _router: Router) {
     }
     //config app
@@ -181,8 +196,37 @@ let keysVendor: Object = {
         'point': 'Point',
         'ccal': 'ccal',
         'name': 'Name',
-        'menu': 'menu'
-
+        'menu': 'menu',
+        'minimum':'minimum or abscence',
+        '3times':'3 times a week',
+        '5times':'5 times a week',
+        '5times.intensity':'5 times a week high intensity',
+        'every.day':'every day',
+        'every.day.intensity':'every day intensity or 2 times a day',
+        'lose.weight.intensity':'lose weight intensity',
+        'lose.weight':'lose weight',
+        'keep.weight':'keep weight',
+        'gain.weight':'gain weight',
+        'January':'January',
+        'February':'February',
+        'March':'March',
+        'April':'April',
+        'May':'May',
+        'June':'June',
+        'July':'July',
+        'August':'August',
+        'September':'September',
+        'October':'October',
+        'November':'November',
+        'December':'December',
+        'Sun':'Sun',
+        'Mon':'Mon',
+        'Tue':'Tue',
+        'Wed':'Wed',
+        'Thu':'Thu',
+        'Fri':'Fri',
+        'Sat':'Sat',
+        'today':'Today'
     },
 
     'ru': {
@@ -235,7 +279,35 @@ let keysVendor: Object = {
         'ccal': 'ккал',
         'name': 'Название',
         'menu': 'меню'
-
-
+        'minimum':'минимум или отсутствие',
+        '3times':'3 раза в неделю',
+        '5times':'5 раз в неделю',
+        '5times.intensity':'интенсивно 5 раз в неделю',
+        'every.day':'каждый день',
+        'every.day.intensity':'интенсивно каждый день или 2 раза в день',
+        'lose.weight.intensity':'интенсивно худеть',
+        'lose.weight':'худеть',
+        'keep.weight':'сохранять текущий вес',
+        'gain.weight':'набирать',
+        'January':'Январь',
+        'February':'Февраль',
+        'March':'Март',
+        'April':'Апрель',
+        'May':'Май',
+        'June':'Июнь',
+        'July':'Июль',
+        'August':'Август',
+        'September':'Сентябрь',
+        'October':'Октябрь',
+        'November':'Ноябрь',
+        'December':'Декабрь',
+        'Sun':'Вс',
+        'Mon':'Пн',
+        'Tue':'Вт',
+        'Wed':'Ср',
+        'Thu':'Чт',
+        'Fri':'Пт',
+        'Sat':'Сб',
+        'today':'Сегодня'
     }
 }

@@ -75,11 +75,6 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     this._AdMobServe = _AdMobServe;
                     this._router = _router;
                     this.sideBarIsOpen = false;
-                    this.route = {
-                        'start': '',
-                        'prev': '',
-                        'current': ''
-                    };
                 }
                 //config app
                 OpanasComponent.prototype.ngOnInit = function () {
@@ -90,6 +85,7 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         window.plugins.insomnia.keepAwake();
                         //backgound mode
                         cordova.plugins.backgroundMode.enable();
+                        cordova.plugins.backgroundMode.setDefaults({ text: 'waiting for you :-)' });
                         //AdMob
                         _this._AdMobServe.createInterstitialFirst();
                         _this._AdMobServe.prepareInterstitialFirst();
@@ -128,8 +124,8 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                         directives: [router_1.ROUTER_DIRECTIVES, side_bar_component_1.SideBar],
                         providers: [router_1.ROUTER_PROVIDERS, core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }), translate_service_1.TranslateService, food_service_1.FoodService, sport_service_1.SportService, calendar_service_1.CalendarService, refresh_date_service_1.RefreshDateService, storage_service_1.StorageService, user_service_1.UserService, admob_service_1.AdMobService],
                         pipes: [translate_service_1.TranslatePipe],
-                        styles: ["\n    .header {\n      height: 15vw;\n      width: 100vw;\n    }\n    .container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar {\n      position: absolute;\n      width: 24vw;\n      height: 6vw;\n      left: 38vw;\n      margin-top: 2vw;\n      color: #ff9d2d;\n      font-size: 19px;\n      z-index: 10;\n      border-top: 2px solid #ff9d2d;\n    border-bottom: 2px solid #ff9d2d;\n      text-align: center;\n    }\n  "],
-                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date|date:\"MM\"}}/{{date|date:\"dd\"}}/{{date|date:\"yy\"}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date|date:\"dd\"}}/{{date|date:\"MM\"}}/{{date|date:\"yy\"}}</div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
+                        styles: ["\n    .header {\n      height: 15vw;\n      width: 100vw;\n    }\n    .container {\n      background: url(./src/img/tempBackground.png) no-repeat center center;\n      width: 100vw;\n      height: 100vh;\n      overflow: hidden;\n    }\n    .calendar {\n      position: absolute;\n      width: 24vw;\n      height: 6vw;\n      left: 38vw;\n      margin-top: 2.5vw;\n      color: #ff9d2d;\n      font-size: 19px;\n      z-index: 10;\n      // border-top: 2px solid #ff9d2d;\n    // border-bottom: 2px solid #ff9d2d;\n      text-align: center;\n    }\n    .line{\n      position: absolute;\n      width:40vw;\n      height: 3px;\n      left:30vw;\n      background: -webkit-linear-gradient(left,rgba(255,0,0,0),rgba(255, 157, 45, 1),rgba(255,0,0,0));\n     background: linear-gradient(to right, rgba(255,0,0,0), rgba(255, 157, 45, 1),rgba(255,0,0,0));\n       z-index: 10;\n    }\n    .line_up {\n      position: absolute;\n      top:2vw;\n    }\n    .line_down {\n      position: absolute;\n      top:8vw;\n    }\n  "],
+                        template: "\n<div class=\"container\">\n\n  <div class=\"header\">\n<div class=\"line line_up\"></div>\n  <div *ngIf=\"_userServe.getLanguage()==='en'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getMonth()+1}}/{{date.getDate()}}/{{date.getFullYear()}}</div>\n  <div *ngIf=\"_userServe.getLanguage()==='ru'\" class=\"calendar\" (touchend)=\"goCalendar()\">{{date.getDate()}}/{{date.getMonth()+1}}/{{date.getFullYear()}}</div>\n<div class=\"line line_down\"></div>\n  </div>\n\n  <fm-side-bar [(isOpen)]=\"sideBarIsOpen\"></fm-side-bar>\n  <router-outlet></router-outlet>\n</div>\n\n" }),
                     router_1.RouteConfig([
                         { path: '/', name: 'Start', component: start_component_1.StartComponent, useAsDefault: true },
                         { path: '/food', name: 'Food', component: food_component_1.FoodComponent },
@@ -198,7 +194,37 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'point': 'Point',
                     'ccal': 'ccal',
                     'name': 'Name',
-                    'menu': 'menu'
+                    'menu': 'menu',
+                    'minimum': 'minimum or abscence',
+                    '3times': '3 times a week',
+                    '5times': '5 times a week',
+                    '5times.intensity': '5 times a week high intensity',
+                    'every.day': 'every day',
+                    'every.day.intensity': 'every day intensity or 2 times a day',
+                    'lose.weight.intensity': 'lose weight intensity',
+                    'lose.weight': 'lose weight',
+                    'keep.weight': 'keep weight',
+                    'gain.weight': 'gain weight',
+                    'January': 'January',
+                    'February': 'February',
+                    'March': 'March',
+                    'April': 'April',
+                    'May': 'May',
+                    'June': 'June',
+                    'July': 'July',
+                    'August': 'August',
+                    'September': 'September',
+                    'October': 'October',
+                    'November': 'November',
+                    'December': 'December',
+                    'Sun': 'Sun',
+                    'Mon': 'Mon',
+                    'Tue': 'Tue',
+                    'Wed': 'Wed',
+                    'Thu': 'Thu',
+                    'Fri': 'Fri',
+                    'Sat': 'Sat',
+                    'today': 'Today'
                 },
                 'ru': {
                     'food': 'Питание',
@@ -249,7 +275,37 @@ System.register(['angular2/core', 'angular2/router', '../food-page/food.componen
                     'point': 'Цель',
                     'ccal': 'ккал',
                     'name': 'Название',
-                    'menu': 'меню'
+                    'menu': 'меню',
+                    'minimum': 'минимум или отсутствие',
+                    '3times': '3 раза в неделю',
+                    '5times': '5 раз в неделю',
+                    '5times.intensity': 'интенсивно 5 раз в неделю',
+                    'every.day': 'каждый день',
+                    'every.day.intensity': 'интенсивно каждый день или 2 раза в день',
+                    'lose.weight.intensity': 'интенсивно худеть',
+                    'lose.weight': 'худеть',
+                    'keep.weight': 'сохранять текущий вес',
+                    'gain.weight': 'набирать',
+                    'January': 'Январь',
+                    'February': 'Февраль',
+                    'March': 'Март',
+                    'April': 'Апрель',
+                    'May': 'Май',
+                    'June': 'Июнь',
+                    'July': 'Июль',
+                    'August': 'Август',
+                    'September': 'Сентябрь',
+                    'October': 'Октябрь',
+                    'November': 'Ноябрь',
+                    'December': 'Декабрь',
+                    'Sun': 'Вс',
+                    'Mon': 'Пн',
+                    'Tue': 'Вт',
+                    'Wed': 'Ср',
+                    'Thu': 'Чт',
+                    'Fri': 'Пт',
+                    'Sat': 'Сб',
+                    'today': 'Сегодня'
                 }
             };
         }

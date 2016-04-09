@@ -1,4 +1,4 @@
-System.register(['angular2/core', '../../shared/services/storage/storage.service', '../user/user.service'], function(exports_1, context_1) {
+System.register(['angular2/core', '../../shared/services/storage/storage.service', '../user/user.service', 'angular2/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, storage_service_1, user_service_1;
+    var core_1, storage_service_1, user_service_1, router_1;
     var SportService, sportVendor;
     return {
         setters:[
@@ -22,16 +22,28 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
             },
             function (user_service_1_1) {
                 user_service_1 = user_service_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             SportService = (function () {
-                function SportService(_storageService, _userServe) {
+                function SportService(_storageService, _userServe, _router) {
+                    var _this = this;
                     this._storageService = _storageService;
                     this._userServe = _userServe;
+                    this._router = _router;
                     this.sport = sportVendor;
                     this.userSport = [];
                     this.allSport = [];
                     this.userTrain = [];
+                    this.stopwatch = {
+                        'hours': 0,
+                        'minutes': 0,
+                        'seconds': 0,
+                        'mseconds': 0
+                    };
+                    this.stopwatchBussy = false;
                     this.storageKeys = {
                         'userSport': 'userSport',
                         'userTrain': 'userTrain'
@@ -43,7 +55,78 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                         this.userTrain = this._storageService.getItem(this.storageKeys.userTrain);
                     }
                     this.prepareSport();
+                    document.addEventListener("deviceready", function () {
+                        var timeStart, timeEnd, diff, hours, minutes, seconds;
+                        cordova.plugins.backgroundMode.onactivate = function () {
+                            if (_this.stopwatchBussy) {
+                                _this.startTimer();
+                                timeStart = new Date();
+                                _this.timerBussyToggle();
+                            }
+                        };
+                        cordova.plugins.backgroundMode.ondeactivate = function () {
+                            if (_this.stopwatchBussy) {
+                                timeEnd = new Date();
+                                diff = timeEnd.getTime() - timeStart.getTime();
+                                hours = Math.floor(diff / 1000 / 60 / 60);
+                                minutes = Math.floor(diff / 1000 / 60 % 60);
+                                seconds = Math.floor(diff / 1000 - Math.floor(diff / 1000 / 60) * 60);
+                                _this.stopwatch['seconds'] = _this.stopwatch['seconds'] + seconds;
+                                _this.stopwatch['minutes'] = _this.stopwatch['minutes'] + minutes;
+                                _this.stopwatch['hours'] = _this.stopwatch['hours'] + hours;
+                                if (_this.stopwatch['seconds'] >= 60) {
+                                    _this.stopwatch['minutes'] = _this.stopwatch['minutes'] + Math.floor(_this.stopwatch['seconds'] / 60);
+                                    _this.stopwatch['seconds'] = _this.stopwatch['seconds'] - Math.floor(_this.stopwatch['seconds'] / 60) * 60;
+                                }
+                                if (_this.stopwatch['minutes'] >= 60) {
+                                    _this.stopwatch['hours'] = _this.stopwatch['hours'] + Math.floor(_this.stopwatch['minutes'] / 60);
+                                    _this.stopwatch['minutes'] = _this.stopwatch['minutes'] - Math.floor(_this.stopwatch['minutes'] / 60) * 60;
+                                }
+                                _this.timerBussyToggle();
+                                _this.startTimer();
+                                _this._router.navigate(['Start']);
+                            }
+                        };
+                    }, false);
                 }
+                SportService.prototype.startTimer = function () {
+                    var _this = this;
+                    if (!this.stopwatchBussy) {
+                        this.stopwatchVendor = setInterval(function () {
+                            _this.stopwatch['mseconds']++;
+                            if (_this.stopwatch['mseconds'] >= 100) {
+                                _this.stopwatch['seconds']++;
+                                _this.stopwatch['mseconds'] = 0;
+                            }
+                            if (_this.stopwatch['seconds'] >= 60) {
+                                _this.stopwatch['minutes']++;
+                                _this.stopwatch['seconds'] = 0;
+                            }
+                            if (_this.stopwatch['minutes'] >= 60) {
+                                _this.stopwatch['hours']++;
+                                _this.stopwatch['minutes'] = 0;
+                            }
+                        }, 10);
+                    }
+                    else {
+                        clearInterval(this.stopwatchVendor);
+                    }
+                    this.timerBussyToggle();
+                };
+                SportService.prototype.timerReset = function () {
+                    for (var key in this.stopwatch) {
+                        this.stopwatch[key] = 0;
+                    }
+                };
+                SportService.prototype.getTimer = function () {
+                    return this.stopwatch;
+                };
+                SportService.prototype.getTimerBussy = function () {
+                    return this.stopwatchBussy;
+                };
+                SportService.prototype.timerBussyToggle = function () {
+                    this.stopwatchBussy = !this.stopwatchBussy;
+                };
                 SportService.prototype.getAllSport = function () {
                     this.prepareSport();
                     return this.allSport;
@@ -157,7 +240,7 @@ System.register(['angular2/core', '../../shared/services/storage/storage.service
                 };
                 SportService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService])
+                    __metadata('design:paramtypes', [storage_service_1.StorageService, user_service_1.UserService, router_1.Router])
                 ], SportService);
                 return SportService;
             }());

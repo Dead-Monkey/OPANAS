@@ -87,6 +87,9 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       width: 10vw;
       float: left;
       background: url('./src/img/en.png') no-repeat center center;
+      box-sizing: border-box;
+      border: 2px solid #ff9d2d;
+      border-radius: 50%;
       background-size: cover;
       left: 4vw;
     }
@@ -96,6 +99,9 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       width: 10vw;
       float: left;
       background: url('./src/img/ru.png') no-repeat center center;
+      box-sizing: border-box;
+      border: 2px solid #ff9d2d;
+      border-radius: 50%;
       background-size: cover;
       left: 4vw;
     }

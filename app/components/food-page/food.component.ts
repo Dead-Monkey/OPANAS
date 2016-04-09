@@ -51,9 +51,11 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     right: 0;
     height: 12vw;
     width: 12vw;
-    background: url('./src/img/check-off.png') no-repeat center center;
+    background: url('./src/img/Go_off.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
     color: #0d0e15;
     border: 2px solid #0C1017;
     border-radius: 7px;
@@ -61,9 +63,11 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
   .food_inputButton_on {
     position: absolute;
     right: 0;
-    height: 11vw;
+    height: 12vw;
     width: 12vw;
-    background: url('./src/img/check-on.png') no-repeat center center;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
+    background: url('./src/img/Go_on.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
@@ -127,7 +131,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     margin-top: 2vw;
     margin-right: 2vw;
     height: 12vw;
-    width: 15vw;
+    width: 14vw;
     line-height: 12vw;
     background-color: #3f414a;
     box-sizing: border-box;
@@ -144,7 +148,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     margin-top: 2vw;
     height: 12vw;
     width: 12vw;
-    background: url('./src/img/check-on.png') no-repeat center center;
+    background: url('./src/img/Go_on.png') no-repeat center center;
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
@@ -156,7 +160,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     margin-top: 2vw;
     height: 12vw;
     width: 12vw;
-    background: url('./src/img/check-off.png') no-repeat center center;
+    background: url('./src/img/Go_off.png') no-repeat center center;
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;

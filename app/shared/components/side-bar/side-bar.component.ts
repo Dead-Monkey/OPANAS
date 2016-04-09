@@ -45,8 +45,10 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     background: url('./src/img/newMenu.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
-    width: 15vw;
-    height: 15vw;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
+    width: 14vw;
+    height: 14vw;
     z-index: 999;
   }
   .sideBarSwipePlace {
@@ -79,6 +81,9 @@ import {TranslatePipe} from '../../services/translate/translate.service';
     text-decoration: none;
     margin-top: 7vw;
     margin-bottom: 11vw;
+    box-sizing: border-box;
+    border: 2px solid #ff9d2d;
+    border-radius: 50%;
   }
   .sidebar_foodButton {
     background: url('./src/img/food.png') no-repeat center center;
