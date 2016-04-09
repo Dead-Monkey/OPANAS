@@ -4,7 +4,7 @@
     "module": "system",
     "moduleResolution": "node",
     "outDir":"dist",
-    /*"outFile":"dist/build/main.js",*/
+    "outFile":"dist/build/main.js",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
