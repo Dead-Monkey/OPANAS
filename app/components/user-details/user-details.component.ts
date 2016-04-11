@@ -64,7 +64,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       font-weight: bolder;
       color: #ff9d2d;
       border: 2px solid #ff9d2d;
-      border-radius: 3vw;
+      border-radius: 7px;
     }
     .user_lang {
       position: absolute;
@@ -82,30 +82,35 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       margin: 2vw;
       border-radius:5px;
     }
-    .user_langEnIcon {
+    .user_langIcon {
       position: relative;
       height: 10vw;
       width: 10vw;
       float: left;
-      background: url('./src/img/en.png') no-repeat center center;
       box-sizing: border-box;
-      border: 2px solid #ff9d2d;
       border-radius: 50%;
-      background-size: cover;
       left: 4vw;
     }
-    .user_langRuIcon {
-      position: relative;
-      height: 10vw;
-      width: 10vw;
-      float: left;
-      background: url('./src/img/ru.png') no-repeat center center;
-      box-sizing: border-box;
-      border: 2px solid #ff9d2d;
-      border-radius: 50%;
+.en_on {
+    background: url('./src/img/en.png') no-repeat center center;
+    background-size: cover;
+    border: 2px solid #ff9d2d;
+  }
+  .en_off {
+      background: url('./src/img/en_off.png') no-repeat center center;
       background-size: cover;
-      left: 4vw;
+      border: 2px solid #3c3f49;
     }
+    .ru_on {
+        background: url('./src/img/ru.png') no-repeat center center;
+        background-size: cover;
+        border: 2px solid #ff9d2d;
+      }
+      .ru_off {
+          background: url('./src/img/en.png') no-repeat center center;
+          background-size: cover;
+          border: 2px solid #3c3f49;
+        }
     .user_langText {
       position: relative;
       width: 20vw;
@@ -149,11 +154,11 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       {{'language'|translate}}
     </div>
     <div [style.background-color]="(lang === 'en')? 'rgba(255, 157, 45, 0.3)':''" (touchend)="changeLang('en')" class="user_langName">
-      <div class="user_langEnIcon"></div>
+      <div class="user_langIcon  en_on"></div>
       <div class="user_langText">English</div>
     </div>
     <div [style.background-color]="(lang === 'ru')? 'rgba(255, 157, 45, 0.3)':''" (touchend)="changeLang('ru')" class="user_langName">
-      <div class="user_langRuIcon"></div>
+      <div class="user_langIcon ru_on"></div>
       <div class="user_langText">Russian</div>
     </div>
   </div>
