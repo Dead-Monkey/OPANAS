@@ -237,7 +237,7 @@ float: left;
     </div>
 
 <div class="opapa">
-  <div class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
+  <div (click)="calculate()"  class="calculator_result">{{model.foodSets.calories.full}} {{'ccal'|translate}}</div>
     <div (click)="calculate()" class="calculator_resultApply">OK</div>
   </div>
 
