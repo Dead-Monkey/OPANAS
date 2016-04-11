@@ -107,7 +107,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
         border: 2px solid #ff9d2d;
       }
       .ru_off {
-          background: url('./src/img/en.png') no-repeat center center;
+          background: url('./src/img/ru_off.png') no-repeat center center;
           background-size: cover;
           border: 2px solid #3c3f49;
         }
