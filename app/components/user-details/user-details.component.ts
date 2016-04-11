@@ -80,6 +80,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
       height: 10vw;
       width: 50vw;
       margin: 2vw;
+      border-radius:5px;
     }
     .user_langEnIcon {
       position: relative;
@@ -147,11 +148,11 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
     <div class="user_nameInput">
       {{'language'|translate}}
     </div>
-    <div (touchend)="changeLang('en')" class="user_langName">
+    <div [style.background-color]="(lang === 'en')? 'rgba(255, 157, 45, 0.3)':''" (touchend)="changeLang('en')" class="user_langName">
       <div class="user_langEnIcon"></div>
       <div class="user_langText">English</div>
     </div>
-    <div (touchend)="changeLang('ru')" class="user_langName">
+    <div [style.background-color]="(lang === 'ru')? 'rgba(255, 157, 45, 0.3)':''" (touchend)="changeLang('ru')" class="user_langName">
       <div class="user_langRuIcon"></div>
       <div class="user_langText">Russian</div>
     </div>
@@ -161,14 +162,17 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
 })
 export class UserDetailsComponent implements OnInit {
     private sets: Object;
+    private lang;
     constructor(private _userServe: UserService, private _translator: TranslateService) { }
     ngOnInit() {
         this.sets = this._userServe.getUserSets();
+        this.lang = this._userServe.getLanguage();
     }
 
     changeLang(lang) {
         this._userServe.setLanguage(lang)
         this._translator.setCurrentLanguage(this._userServe.getLanguage())
+        this.lang = this._userServe.getLanguage();
     }
     changeSets() {
         setTimeout(() => {

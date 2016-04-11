@@ -51,7 +51,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     right: 0;
     height: 12vw;
     width: 12vw;
-    background: url('./src/img/Ok_off.png') no-repeat center center;
+    background: url('./src/img/ok_off.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
     border: 2px solid #ff9d2d;
@@ -67,7 +67,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     width: 12vw;
     border: 2px solid #ff9d2d;
     border-radius: 50%;
-    background: url('./src/img/Ok_on.png') no-repeat center center;
+    background: url('./src/img/ok_on.png') no-repeat center center;
     background-size: cover;
     box-sizing: border-box;
     color: #0d0e15;
