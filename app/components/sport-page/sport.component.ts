@@ -38,7 +38,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         right: 0;
         height: 12vw;
         width: 14vw;
-        background: url('./src/img/Go_off.png') no-repeat center center;
+        background: url('./src/img/Ok_off.png') no-repeat center center;
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
@@ -50,7 +50,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
         right: 0;
         height: 12vw;
         width: 14vw;
-        background: url('./src/img/Go_on.png') no-repeat center center;
+        background: url('./src/img/Ok_on.png') no-repeat center center;
         background-size: cover;
         box-sizing: border-box;
         color: #0d0e15;
@@ -174,7 +174,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
       float: left;
       height: 14vw;
       width: 14vw;
-      background: url('./src/img/Go_on.png') no-repeat center center;
+      background: url('./src/img/check-on.png') no-repeat center center;
       background-color: #3f414a;
       background-size: cover;
       box-sizing: border-box;
@@ -199,7 +199,7 @@ import {SwipeDeleteSideDirective} from '../../shared/directives/swipe-delete-sid
     height: 14vw;
     width: 14vw;
     margin-top: 2vw;
-    background: url('./src/img/Go_off.png') no-repeat center center;
+    background: url('./src/img/check-off.png') no-repeat center center;
     background-color: #3f414a;
     background-size: cover;
     box-sizing: border-box;
